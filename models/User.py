@@ -16,6 +16,9 @@ class User:
 
 
 class Student(User):
-    def has_this_Test(test: Test):
-        # 返回
-        pass
+    def has_this_Test(self, test: Test):
+        """
+        返回该学生是否有本次考试
+
+        :return True or False
+        """

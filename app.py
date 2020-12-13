@@ -10,7 +10,7 @@ app.config.from_pyfile('config.py')
 # 全局错误处理
 
 
-#使用pycharm运行flask环境时不能加__name__ == '__main__'的判断
+# 使用pycharm运行flask环境时不能加__name__ == '__main__'的判断
 
 # 为了避免循环引用，延时初始化数据库
 app.app_context().push()
