@@ -1,3 +1,8 @@
+-- ----------------------------
+-- 含有密码字段的表均加入了两种记录：未加密版本和MD5加密版本
+-- 且密码均为123456
+-- 用于支持系统开发的不同阶段的测试工作
+-- ----------------------------
 INSERT INTO `admin`(`Ano`, `Apassword`) VALUES ('admin', '123456');
 INSERT INTO `admin`(`Ano`, `Apassword`) VALUES ('admin_en', 'e10adc3949ba59abbe56e057f20f883e');
 
