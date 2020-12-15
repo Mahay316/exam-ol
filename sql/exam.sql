@@ -61,9 +61,9 @@ DROP TABLE IF EXISTS `paper`;
 CREATE TABLE `paper` (
   `Pno` varchar(20) NOT NULL COMMENT '试卷的编号',
   `Pname` varchar(30) DEFAULT NULL COMMENT '试卷名',
+  `Subno` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '科目编号',
   `Preference` int DEFAULT '0' COMMENT '试卷被引用的次数',
   `Pisdeleted` tinyint(1) NOT NULL DEFAULT '0' COMMENT '真：隐藏 假：显示',
-  `Subno` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '科目编号',
   PRIMARY KEY (`Pno`),
   KEY `Subno` (`Subno`),
   CONSTRAINT `paper_ibfk_1` FOREIGN KEY (`Subno`) REFERENCES `subject` (`Subno`) ON DELETE SET NULL ON UPDATE CASCADE
@@ -161,7 +161,7 @@ CREATE TABLE `test` (
   `Tname` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '考试的名称',
   `Tstart` timestamp NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '考试开始时间',
   `Tend` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '考试结束时间',
-  `Pno` varchar(20) DEFAULT NULL COMMENT '引用的试卷编号',
+  `Pno` varchar(20) NOT NULL COMMENT '引用的试卷编号',
   `Cno` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '所属的课程编号',
   PRIMARY KEY (`Tno`),
   KEY `Pno` (`Pno`),
