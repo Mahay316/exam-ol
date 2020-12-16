@@ -14,8 +14,7 @@ from sqlalchemy.dialects.mysql import TINYINT
 from sqlalchemy.orm import relationship
 
 from models.database import Base
-from models.QuesrionPaperModel import QuestionPaper
-from utils import commons
+from common import commons
 
 metadata = Base.metadata
 

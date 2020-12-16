@@ -23,6 +23,7 @@ def get_mysql_engine():
                            )
     return engine
 
+
 def get_mysql_session(engine):
     Session = scoped_session(sessionmaker(bind=engine))
     return Session

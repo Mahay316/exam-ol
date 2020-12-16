@@ -1,7 +1,7 @@
-from sqlalchemy import CHAR, Column, ForeignKey, TIMESTAMP
+from sqlalchemy import Column, ForeignKey, TIMESTAMP
 from sqlalchemy.dialects.mysql import VARCHAR
 from sqlalchemy.orm import relationship
-from utils import commons
+from common import commons
 from models.PaperModel import Paper
 from models.QuestionModel import Question
 

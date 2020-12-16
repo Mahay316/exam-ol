@@ -1,7 +1,6 @@
 from sqlalchemy import Column, ForeignKey, String, text
 from sqlalchemy.dialects.mysql import INTEGER, TINYINT, ENUM
-from sqlalchemy.orm import relationship
-from utils import commons
+from common import commons
 
 from models.database import Base
 metadata = Base.metadata
