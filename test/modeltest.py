@@ -12,9 +12,12 @@
 
 from models import Paper
 from models import Test
+from models import Question
 
 def qt():
-    print(Test.get_all_question_id('t01'))
+    t = Test.get_test('t0001')
+    for x in t.get_all_questions():
+        print(x.Qstem)
 
 
 

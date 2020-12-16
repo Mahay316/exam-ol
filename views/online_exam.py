@@ -104,11 +104,11 @@ def questions():
         res = []
         for q in test.get_all_questions():
             cur_dict = {
-                'questionID': q.qno,
+                'questionID': q.Qno,
                 'code': 200,
-                'type': q.qtype,
-                'stem': q.qstem, # 题干字符串
-                'choices': json.dumps(q.qanswer), # qanswer为json格式字符串(在数据库中存储即是json字符串)
+                'type': q.Qtype,
+                'stem': q.Qstem, # 题干字符串
+                'choices': json.dumps(q.Qanswer), # qanswer为json格式字符串(在数据库中存储即是json字符串)
                 'cache': ""
             }
 
@@ -118,7 +118,7 @@ def questions():
 
             # 用户已作答的缓存
             if q.qno in cached_questionID:
-                cur_dict['cache'] = session[q.qno]
+                cur_dict['cache'] = session[q.Qno]
 
             res.append(cur_dict)
 

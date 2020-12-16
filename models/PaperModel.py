@@ -23,17 +23,22 @@ metadata = Base.metadata
 class Paper(Base):
     __tablename__ = 'paper'
 
-    Pno = Column(String(20), primary_key=True, comment='试卷的编号')
-    Pname = Column(String(30), comment='试卷名')
+    Pno = Column(String(20, 'utf8mb4_general_ci'), primary_key=True, comment='试卷的编号')
+    Pname = Column(String(30, 'utf8mb4_general_ci'), comment='试卷名')
+    Subno = Column(ForeignKey('subject.Subno', ondelete='SET NULL', onupdate='CASCADE'), index=True, comment='科目编号')
     Preference = Column(Integer, server_default=text("'0'"), comment='试卷被引用的次数')
     Pisdeleted = Column(TINYINT(1), nullable=False, server_default=text("'0'"), comment='真：隐藏 假：显示')
-    Subno = Column(ForeignKey('subject.Subno', ondelete='SET NULL', onupdate='CASCADE'), index=True, comment='科目编号')
 
     # subject = relationship('Subject')
     questionpaper = relationship('QuestionPaper', backref='paper')
 
     @classmethod
     def get_questions_id(cls, Pno: str) -> list:
+        '''
+            返回试卷的全部试题号
+        :param Pno:
+        :return:【Qno】
+        '''
         engine = commons.get_mysql_engine()
         session = commons.get_mysql_session(engine)
 

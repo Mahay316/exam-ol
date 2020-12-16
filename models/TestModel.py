@@ -13,12 +13,13 @@ metadata = Base.metadata
 class Test(Base):
     __tablename__ = 'test'
 
-    Tno = Column(CHAR(20), primary_key=True, comment='考试的编号')
+    Tno = Column(VARCHAR(20), primary_key=True, comment='考试的编号')
     Tname = Column(VARCHAR(20), nullable=False, comment='考试的名称')
     Tstart = Column(TIMESTAMP, nullable=False, comment='考试开始时间')
     Tend = Column(TIMESTAMP, comment='考试结束时间')
-    Pno = Column(ForeignKey('paper.Pno', ondelete='RESTRICT', onupdate='CASCADE'), index=True, comment='引用的试卷编号')
-    Cno = Column(ForeignKey('class.Cno', ondelete='RESTRICT', onupdate='CASCADE'), index=True, comment='所属的课程编号')
+    Pno = Column(ForeignKey('paper.Pno', ondelete='RESTRICT', onupdate='CASCADE'), nullable=False, index=True,
+                 comment='引用的试卷编号')
+    Cno = Column(ForeignKey('course.Cno', ondelete='RESTRICT', onupdate='CASCADE'), index=True, comment='所属的课程编号')
 
     # course = relationship('Course')
     paper = relationship('Paper')
@@ -96,4 +97,5 @@ class Test(Base):
 
         :return: 返回list[Question]
         """
-        Qnos = Paper.get_questionspapers()
+        Qnos = Paper.get_questions_id(self.Pno)
+        return Question.get_questions(Qnos)
