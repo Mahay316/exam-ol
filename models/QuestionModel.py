@@ -1,6 +1,6 @@
 from sqlalchemy import Column, ForeignKey, String, text
 from sqlalchemy.dialects.mysql import INTEGER, TINYINT, ENUM
-from common import commons
+from common import model_common
 
 from models.database import Base
 metadata = Base.metadata
@@ -27,8 +27,8 @@ class Question(Base):
 
         :return: True if 是填空题 else False
         """
-        engine = commons.get_mysql_engine()
-        session = commons.get_mysql_session(engine)
+        engine = model_common.get_mysql_engine()
+        session = model_common.get_mysql_session(engine)
 
         try:
             if self.Qtype == 'fill':
@@ -43,8 +43,8 @@ class Question(Base):
     @classmethod
     def get_questions(cls, Qnos: list):
 
-        engine = commons.get_mysql_engine()
-        session = commons.get_mysql_session(engine)
+        engine = model_common.get_mysql_engine()
+        session = model_common.get_mysql_session(engine)
 
         try:
             questions = []

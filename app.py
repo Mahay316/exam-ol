@@ -1,5 +1,6 @@
 from flask import Flask
 from models import init_db
+from views import exam_bp
 
 app = Flask(__name__)
 app.config.from_pyfile('config.py')
@@ -15,4 +16,5 @@ if __name__ == '__main__':
     init_db(app)
 
     # 在此处注册蓝图
-    # app.register_blueprint(auth)
+    app.register_blueprint(exam_bp, url_prefix='/exam')
+    app.run(debug=True)

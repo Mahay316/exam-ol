@@ -169,16 +169,3 @@ CREATE TABLE `test` (
   CONSTRAINT `test_ibfk_1` FOREIGN KEY (`Pno`) REFERENCES `paper` (`Pno`) ON DELETE RESTRICT ON UPDATE CASCADE,
   CONSTRAINT `test_ibfk_2` FOREIGN KEY (`Cno`) REFERENCES `course` (`Cno`) ON DELETE RESTRICT ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-DROP TRIGGER IF EXISTS `qr_delete`;
-DELIMITER ;;
-CREATE TRIGGER `qr_delete` AFTER DELETE ON `question_paper` FOR EACH ROW BEGIN
-	DECLARE ref_count INT;
-	DECLARE hidden TINYINT(1);
-	UPDATE question SET Qreference = Qreference - 1 WHERE question.Qno = OLD.Qno;
-	SELECT Qreference, Qisdeleted INTO ref_count, hidden FROM question WHERE question.Qno = OLD.Qno;
-	IF ref_count = 0 AND hidden = TRUE THEN
-		DELETE FROM question WHERE question.Qno = OLD.Qno;
-	END IF;
-END
-;;
-DELIMITER ;

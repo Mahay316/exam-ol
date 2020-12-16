@@ -1,7 +1,7 @@
 from sqlalchemy import Column, ForeignKey, TIMESTAMP
 from sqlalchemy.dialects.mysql import VARCHAR
 from sqlalchemy.orm import relationship
-from common import commons
+from common import model_common
 from models.PaperModel import Paper
 from models.QuestionModel import Question
 
@@ -32,8 +32,8 @@ class Test(Base):
         :param Tno:
         :return: 返回Test对象，如果考试不存在则返回None
         """
-        engine = commons.get_mysql_engine()
-        session = commons.get_mysql_session(engine)
+        engine = model_common.get_mysql_engine()
+        session = model_common.get_mysql_session(engine)
 
         try:
             filter_list = []
@@ -58,8 +58,8 @@ class Test(Base):
         :return: 所有id做成一个list返回，每个id均为str类型
         """
 
-        engine = commons.get_mysql_engine()
-        session = commons.get_mysql_session(engine)
+        engine = model_common.get_mysql_engine()
+        session = model_common.get_mysql_session(engine)
 
         try:
             filter_list = []

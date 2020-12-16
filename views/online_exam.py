@@ -5,7 +5,7 @@ from datetime import datetime
 import json
 
 exam_bp = Blueprint('exam_bp', __name__)
-cached_questionID = set()
+# cached_questionID = set()
 
 
 def permission_inadequate_or_exam_not_exists(test: Test):
@@ -22,11 +22,12 @@ def permission_inadequate_or_exam_not_exists(test: Test):
         res['msg'] = '考试不存在'
         return jsonify(res)
 
-    if not (current_user.is_student() and current_user.has_this_exam(test)):
-        # 无权访问
-        res['code'] = 403
-        res['msg'] = '无权访问'
-        return jsonify(res)
+    # TODO：用户权限验证，使用session实现
+    # if not (current_user.is_student() and current_user.has_this_exam(test)):
+    #     # 无权访问
+    #     res['code'] = 403
+    #     res['msg'] = '无权访问'
+    #     return jsonify(res)
     return None
 
 
@@ -68,14 +69,14 @@ def get_exam_time_info():
     time_passed = 0
 
     if cur_time >= elapsed_time:
-        time_passed = (cur_time - elapsed_time).timestamp()
+        time_passed = (cur_time - elapsed_time).total_seconds()
     res['elapsedTime'] = int(time_passed)
 
     end_time = test.get_end_time()
     res['timeLeft'] = -time_passed
     res['hasLimit'] = False
     if end_time is not None:
-        res['timeLeft'] = int((end_time - cur_time).timestamp())
+        res['timeLeft'] = int((end_time - cur_time).total_seconds())
         res['hasLimit'] = True
 
     res['code'] = 200
@@ -90,7 +91,7 @@ def questions():
     :return: json格式数据
     """
     if request.method == 'GET':
-        examID = request.form['examID']
+        examID = request.args['examID']
 
         test = Test.get_test(examID)
         validated = permission_inadequate_or_exam_not_exists(test)
@@ -101,11 +102,14 @@ def questions():
         if validated is not None:
             return validated
 
-        res = []
+        res_dict = {
+            'code': 200,
+            'questions': []
+        }
+        res = res_dict['questions']
         for q in test.get_all_questions():
             cur_dict = {
                 'questionID': q.Qno,
-                'code': 200,
                 'type': q.Qtype,
                 'stem': q.Qstem, # 题干字符串
                 'choices': json.dumps(q.Qanswer), # qanswer为json格式字符串(在数据库中存储即是json字符串)
@@ -117,7 +121,7 @@ def questions():
                 cur_dict['choices'] = ""
 
             # 用户已作答的缓存
-            if q.qno in cached_questionID:
+            if q.Qno in session.keys():
                 cur_dict['cache'] = session[q.Qno]
 
             res.append(cur_dict)
@@ -132,7 +136,7 @@ def questions():
         #     'cache': {'choice': ['A', 'B'], 'submitTime': '1607591913'}
         # }
 
-        return jsonify(res)
+        return jsonify(res_dict)
 
     elif request.method == 'POST':
         examID = request.form['examID']
@@ -148,6 +152,11 @@ def questions():
         if validated is not None:
             return validated
 
+        # session缓存已保存的题目id
+        if 'cached_questionID' not in session:
+            # 由于session需要序列化因此不能用set(), 在这里用list然后返回时用set去重
+            session['cached_questionID'] = list()
+
         # 获得的result是个list，元素为dict
         result = json.loads(request.form['result'])
         assert isinstance(result, list)
@@ -155,14 +164,20 @@ def questions():
         # 将内容缓存
         for per_res in result:
             assert isinstance(per_res, dict)
+            # TODO 未判断题目是否存在
             questionID = per_res.pop('questionID')
-            cached_questionID.add(questionID)
+            # cached_questionID.add(questionID)
             session[questionID] = per_res
+            session['cached_questionID'].append(questionID)
+
+        # session缓存所有题目id
+        if 'all_question_id' not in session:
+            session['all_question_id'] = Test.get_all_question_id(examID)
 
         res = {
             'code': 200,
-            'cached': list(cached_questionID),
-            'all': Test.get_all_question_id(examID)
+            'cached': list(set(session['cached_questionID'])),
+            'all': list(session['all_question_id'])
         }
 
         return jsonify(res)

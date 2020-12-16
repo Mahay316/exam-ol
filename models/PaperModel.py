@@ -14,7 +14,7 @@ from sqlalchemy.dialects.mysql import TINYINT
 from sqlalchemy.orm import relationship
 
 from models.database import Base
-from common import commons
+from common import model_common
 
 metadata = Base.metadata
 
@@ -38,8 +38,8 @@ class Paper(Base):
         :param Pno:
         :return:【Qno】
         '''
-        engine = commons.get_mysql_engine()
-        session = commons.get_mysql_session(engine)
+        engine = model_common.get_mysql_engine()
+        session = model_common.get_mysql_session(engine)
 
         try:
             filter_list = []
