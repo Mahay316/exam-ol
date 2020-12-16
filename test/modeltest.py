@@ -9,10 +9,14 @@
 '''
 @file function:
 '''
-from models.QuestionModel import Question
+
+from models import Paper
+from models import Test
 
 def qt():
-    print(Question.is_fill_in_blanks(2))
+    print(Test.get_all_question_id('t01'))
+
+
 
 if __name__ == '__main__':
     qt()

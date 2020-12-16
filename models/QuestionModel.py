@@ -4,7 +4,7 @@ from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
 from utils import commons
 
-Base = declarative_base()
+from models.database import Base
 metadata = Base.metadata
 
 
@@ -42,6 +42,29 @@ class Question(Base):
                 raise Exception('无该条记录')
 
             return questions.first().Qtype
+
+        except Exception as e:
+            session.rollback()
+            raise e
+
+    @classmethod
+    def get_questions(cls, Qnos: list):
+
+        engine = commons.get_mysql_engine()
+        session = commons.get_mysql_session(engine)
+
+        try:
+            questions = []
+            for Qno in Qnos:
+                filter_list = []
+                filter_list.append(cls.Qno == Qno)
+
+                question = session.query(cls).filter(*filter_list)
+                if not questions.first():
+                    raise Exception("无该条记录")
+                questions.append(question.first())
+
+            return questions
 
         except Exception as e:
             session.rollback()
