@@ -27,8 +27,6 @@ class Question(Base):
 
         :return: True if 是填空题 else False
         """
-        engine = model_common.get_mysql_engine()
-        session = model_common.get_mysql_session(engine)
 
         try:
             if self.Qtype == 'fill':
@@ -37,7 +35,6 @@ class Question(Base):
                 return False
 
         except Exception as e:
-            session.rollback()
             raise e
 
     @classmethod
