@@ -1,13 +1,17 @@
-from flask import Flask
+from flask import Flask, render_template
 from models import init_db
 from views import exam_bp
 
 app = Flask(__name__)
 app.config.from_pyfile('config.py')
 
+
 # 全局拦截器
 
 # 全局错误处理
+@app.route('/')
+def index():
+    return render_template('exam_online.html')
 
 
 if __name__ == '__main__':

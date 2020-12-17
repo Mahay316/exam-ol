@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>在线考试</title>
+
+    <!-- Bootstrap JQuery依赖 -->
+    <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css"/>
+
+    <script src="/static/js/jquery-3.5.1.min.js"></script>
+    <script src="/static/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- 侧边栏跟随组件 -->
+    <script src="../static/js/accessory.js"></script>
+
+    <style>
+        /* 以下为顶部标题栏样式 */
+        .header {
+            position: fixed;
+            background: #fcfcfc;
+            z-index: 999;
+            height: 62px;
+            top: 0;
+            left: 0;
+        }
+
+        .exam-title {
+            position: absolute;
+            top: 50%;
+            transform: translate(0, -50%);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            font-size: 17px;
+        }
+
+        .exam-info {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            text-align: center;
+            transform: translate(-50%, -50%);
+            padding: 0;
+        }
+
+        .exam-info .exam-time {
+            font-weight: 600;
+            color: dodgerblue;
+        }
+
+        .exam-info .time-alert {
+            color: red;
+        }
+
+        /* 以下为选项或答题卡中题号的样式 */
+        .num {
+            width: 34px;
+            height: 34px;
+            box-sizing: content-box;
+            outline: none;
+            border-radius: 50%;
+            background-color: #aaaaaa;
+            line-height: 34px;
+            text-align: center;
+            color: white;
+            border: 1px solid #333333;
+            padding: 0;
+        }
+
+        /* 选中或已作答 */
+        .chosen {
+            background-color: #559bf5 !important;
+        }
+
+        /* 以下为答题卡相关样式 */
+        .answer-card {
+            padding: 0;
+            background-color: #fafafa;
+            border: 1px solid #dddddd;
+            box-shadow: 3px 3px 20px #dddddd;
+        }
+
+        .card-item {
+            padding: 5px 11px;
+        }
+
+        .card-item .list {
+            overflow: hidden;
+            padding: 0;
+        }
+
+        .card-item .list a {
+            display: block;
+            float: left;
+            text-decoration: none;
+            margin: 8px;
+        }
+
+        /* 以下为完整的一道题的样式 */
+        .question {
+            margin-bottom: 15px;
+            background-color: #fafafa;
+            border: 1px solid #dddddd;
+            box-shadow: 0 0 10px #dddddd;
+        }
+
+        .topic_type em {
+            float: left;
+            width: 5px;
+            height: 22px;
+            margin: 4px 20px 0 0;
+            background: #31c6ce;
+        }
+
+        .topic_type h2 {
+            height: 30px;
+            line-height: 30px;
+            font-size: 16px;
+            font-weight: bold;
+            overflow: hidden;
+        }
+
+        .topic_type h2 span {
+            font-size: 12px;
+            color: #999;
+            line-height: 12px;
+            margin-left: 15px;
+        }
+
+        .question .question_content {
+            padding: 10px 15px;
+            font-size: 14px;
+        }
+
+        .question_content .question_select {
+            margin-top: 10px;
+        }
+
+        .question_select .select_item {
+            height: 50px;
+        }
+
+        .select_item span {
+            line-height: 50px;
+            white-space: nowrap;
+            margin-left: 10px;
+        }
+
+        /* 以下为页面footer的样式 */
+        .decoration-line {
+            border-bottom: 1px solid #dddddd;
+            height: 25px;
+            margin: 15px 100px 60px;
+            text-align: center;
+        }
+
+        .end {
+            padding: 0 10px;
+            background-color: #ffffff;
+            line-height: 50px;
+            font-size: 18px;
+            color: #666666;
+        }
+    </style>
+</head>
+<body>
+<!-- 顶部固定标题栏 -->
+<div class="container-fluid shadow header" style="border: 0px solid red;">
+    <div class="container" style="border: 0px solid red; padding: 12px 15px;">
+        <div class="row">
+            <div class="col-2 exam-title">数据库原理期末考试</div>
+            <div class="col-3 exam-info">
+                <span class="exam-limit">考试不限时间&nbsp;&nbsp;</span>
+                <span class="exam-time time-alert">00:10:19</span>
+            </div>
+            <button type="button" class="btn btn-success col-1 offset-11">我要交卷</button>
+        </div>
+    </div>
+</div>
+
+<!-- 试卷内容部分 -->
+<div id="main" class="container" style="border: 0px solid red; margin-top: 85px;">
+    <div class="row" style="border: 0px solid blue">
+        <!-- 试卷主体 -->
+        <div class="col-9">
+            <div style="border: 0px solid blue;">
+                <div class="question" id="paper_1">
+                    <div class="topic_type">
+                        <em></em>
+                        <h2>多项选择题 <span>（本题1分）</span></h2>
+                    </div>
+                    <div class="question_content">
+                        <div class="question_stem">
+                            <span>1. </span>龙胆科的主要特征是
+                        </div>
+                        <div class="question_select">
+                            <div class="select_item">
+                                <input class="num" type="button" name="question_1" value="A">
+                                <span>雄蕊5枚</span>
+                            </div>
+                            <div class="select_item">
+                                <input class="num chosen" type="button" name="question_1" value="B">
+                                <span>雄蕊5枚</span>
+                            </div>
+                            <div class="select_item">
+                                <input class="num" type="button" name="question_1" value="C">
+                                <span>雄蕊5枚</span>
+                            </div>
+                            <div class="select_item">
+                                <input class="num chosen" type="button" name="question_1" value="D">
+                                <span>雄蕊5枚</span>
+                            </div>
+                        </div>
+                        <form>
+                            <input type="hidden" name="questionID" value="id_XK09012005j_mchoose_0072_201013">
+                            <input type="hidden" class="tmp" name="selectedAnswer" value="">
+                            <input type="hidden" name="basic" value="2">
+                        </form>
+                    </div>
+                </div>
+                <div class="question" id="paper_2">
+                    <div class="topic_type">
+                        <em></em>
+                        <h2>多项选择题 <span>（本题1分）</span></h2>
+                    </div>
+                    <div class="question_content">
+                        <div class="question_stem">
+                            <span>1. </span>龙胆科的主要特征是
+                        </div>
+                        <div class="question_select">
+                            <div class="select_item">
+                                <input class="num" type="button" name="question_1" value="A">
+                                <span>雄蕊5枚</span>
+                            </div>
+                            <div class="select_item">
+                                <input class="num" type="button" name="question_1" value="B">
+                                <span>雄蕊5枚</span>
+                            </div>
+                            <div class="select_item">
+                                <input class="num" type="button" name="question_1" value="C">
+                                <span>雄蕊5枚</span>
+                            </div>
+                            <div class="select_item">
+                                <input class="num" type="button" name="question_1" value="D">
+                                <span>雄蕊5枚</span>
+                            </div>
+                        </div>
+                        <form>
+                            <input type="hidden" name="questionID" value="id_XK09012005j_mchoose_0072_201013">
+                            <input type="hidden" class="tmp" name="selectedAnswer" value="">
+                            <input type="hidden" name="basic" value="2">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 答题卡 -->
+        <div class="col-3" style="padding: 0;">
+            <div id="sidebar" class="answer-card">
+                <h3 style="text-align: center; margin-top: 16px;">答题卡</h3>
+                <hr/>
+                <div class="card-item">
+                    <h6>单项选择题</h6>
+                    <div class="list">
+                        <a href="#paper_1" class="num chosen">1</a>
+                        <a href="#paper2" class="num">2</a>
+                        <a href="#" class="num">1</a>
+                        <a href="#" class="num">1</a>
+                        <a href="#" class="num">1</a>
+                        <a href="#" class="num">991</a>
+                        <a href="#" class="num">991</a>
+                        <a href="#" class="num">991</a>
+                        <a href="#" class="num">991</a>
+                        <a href="#" class="num">991</a>
+                        <a href="#" class="num">991</a>
+                    </div>
+                </div>
+                <div class="card-item">
+                    <h6>多项选择题</h6>
+                    <div class="list">
+                        <a href="#" class="num">1</a>
+                        <a href="#" class="num">1</a>
+                        <a href="#" class="num">1</a>
+                        <a href="#" class="num">1</a>
+                        <a href="#" class="num">991</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="decoration-line">
+    <span class="end">试卷到达结尾</span>
+</div>
+</body>
+</html>
