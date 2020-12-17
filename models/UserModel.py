@@ -81,20 +81,33 @@ class Student(User, Base):
 
     studenttest = relationship('StudentTest', backref='student')
 
-    def has_this_Test(self, test):
-        """
-        返回该学生是否有本次考试
-        :return True or False
-        """
+    # TODO 应该是用不到这个函数了
+    #  (之前使用flask_login.current_user判定学生是否含有本次考试，现由于使用session实现登录,
+    #  使用新的get_all_test_ids方法实现该操作)
+    # def has_this_Test(self, test):
+    #     """
+    #     返回该学生是否有本次考试
+    #     :return True or False
+    #     """
+    #
+    #     Tnos = []
+    #     for t in self.studenttest:
+    #         Tnos.append(t.Tno)
+    #
+    #     if test.Tno in Tnos:
+    #         return True
+    #     else:
+    #         return False
 
-        Tnos = []
-        for t in self.studenttest:
-            Tnos.append(t.Tno)
 
-        if test.Tno in Tnos:
-            return True
-        else:
-            return False
+    # TODO 待实现
+    def get_all_test_ids(self):
+        """
+        学生对象调用此方法，返回该学生含有的所有考试id号
+
+        :return: list[str]
+        """
+        pass
 
 
     @classmethod

@@ -8,8 +8,10 @@ def save_session(role, user, remember_me: bool):
     :param role: str类型，需要和Config中的定义一致
     :param user: User类型
     """
+    session.clear()
+
     session['role'] = role
-    session.permanent = remember_me
+    session.permanent = True if remember_me == 'true' else False
     if role == STUDENT:
         session['no'] = user.Sno
         session['name'] = user.Sname

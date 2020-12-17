@@ -1,16 +1,21 @@
-from flask import Blueprint, render_template, session, flash, request, url_for, redirect
-from models.UserModel import User, Mentor, Student, Admin
+from flask import Blueprint, render_template, session, jsonify, request, url_for, redirect
+from models.UserModel import Mentor, Student, Admin
 from common import save_session
 from common.Role import *
 
 auth = Blueprint('auth', __name__)
 
 
-@auth.route('/login', method=['GET', 'POST'])
+@auth.route('/login', methods=['GET', 'POST'])
 def login():
+    if 'role' in session:
+        # TODO 用户已经登录过如何处理
+        redirect(url_for('index'))
+
     if request.method == 'POST':
         username, password = request.form['username'], request.form['password']
         role = request.form['role']
+        user = None
         if role == STUDENT:
             user = Student.get_user(username)
         elif role == MENTOR:
@@ -29,7 +34,9 @@ def login():
             #     resp.set_cookie('password', password)
             #     resp.set_cookie('role', role)
 
-            return redirect(url_for('login'))
+            return jsonify({'code': 200})
+        # 登录失败
+        return jsonify({'code': 403})
 
     return render_template('login.html')
 
