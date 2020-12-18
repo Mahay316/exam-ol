@@ -11,7 +11,12 @@ app.config.from_pyfile('config.py')
 # 全局错误处理
 @app.route('/')
 def index():
-    return render_template('exam_online.html')
+    return render_template('teacher_adm.html')
+
+
+@app.route('/class')
+def get_class():
+    return render_template('class_manage.html')
 
 
 if __name__ == '__main__':
