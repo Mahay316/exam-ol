@@ -28,7 +28,7 @@ def permission_inadequate_or_exam_not_exists(test: Test):
         # 缓存学生所有考试，判断是否含有本次考试(避免每次都从数据库查找)
         session['test_ids'] = Student.get_user(session['no']).get_all_test_ids()
 
-    if test.Tno not in session['test_ids']:
+    if session['test_ids'] is None or test.Tno not in session['test_ids']:
         # 无权访问
         res['code'] = 403
         res['msg'] = '无权访问'
