@@ -11,7 +11,7 @@ app.config.from_pyfile('config.py')
 # 全局错误处理
 @app.route('/')
 def index():
-    return render_template('login_test.html')
+    return render_template('exam_list.html')
 
 
 @app.route('/class')
@@ -21,7 +21,7 @@ def get_class():
 
 @app.errorhandler(404)
 def page_not_found(err):
-    """定制404页面"""
+    """自定义404页面"""
     return render_template('error-404.html')
 
 
