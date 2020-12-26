@@ -14,8 +14,9 @@ def teacher_admin():
     """
     展示全部班级
 
-    :return 全部班级信息的json
+    :return html页面
     """
+    return render_template('teacher_adm.html')
 
 
 @mentor_bp.route('/class/<string:class_id>', methods=['GET', 'POST'])

@@ -1,6 +1,6 @@
 from flask import Flask, render_template
 from models import init_db
-from views import exam_bp, mentor_bp
+from views import exam_bp, mentor_bp, utils_bp
 
 app = Flask(__name__)
 app.config.from_pyfile('config.py')
@@ -31,6 +31,7 @@ if __name__ == '__main__':
     init_db(app)
 
     # 在此处注册蓝图
+    app.register_blueprint(utils_bp)
     app.register_blueprint(mentor_bp, url_prefix='/mentor')
     app.register_blueprint(exam_bp, url_prefix='/exam')
     app.run(debug=True)
