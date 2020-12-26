@@ -10,7 +10,7 @@ auth = Blueprint('auth', __name__)
 def login():
     if 'role' in session:
         # TODO 用户已经登录过如何处理
-        redirect(url_for('index'))
+        return redirect(url_for('index'))
 
     if request.method == 'POST':
         username, password = request.form['username'], request.form['password']

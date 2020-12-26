@@ -1,4 +1,5 @@
 import os
+from datetime import timedelta
 
 SECRET_KEY = os.urandom(24)
 
@@ -22,3 +23,6 @@ POOL_SIZE = 5
 
 # 连接池最大溢出容量，该容量+初始容量=最大容量。超出会堵塞等待，等待时间为timeout参数值默认30
 MAX_OVERFLOW = 10
+
+# 设置session过期时间
+PERMANENT_SESSION_LIFETIME = timedelta(days=15)

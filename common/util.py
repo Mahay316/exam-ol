@@ -2,7 +2,7 @@ from flask import session
 from common.Role import *
 
 
-def save_session(role, user, remember_me: bool):
+def save_session(role, user, remember_me: str):
     """
     用户登录后存储session
     :param role: str类型，需要和Config中的定义一致
