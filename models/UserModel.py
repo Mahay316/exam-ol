@@ -100,14 +100,16 @@ class Student(User, Base):
     #         return False
 
 
-    # TODO 待实现
     def get_all_test_ids(self):
         """
         学生对象调用此方法，返回该学生含有的所有考试id号
 
         :return: list[str]
         """
-        pass
+        Tnos = []
+        for t in self.studenttest:
+            Tnos.append(t.Tno)
+        return Tnos
 
 
     @classmethod
