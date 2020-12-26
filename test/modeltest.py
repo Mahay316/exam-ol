@@ -13,11 +13,11 @@
 from models import Paper
 from models import Test
 from models import Question
+from models import Student
 
 def qt():
-    t = Test.get_test('t0001')
-    for x in t.get_all_questions():
-        print(x.Qstem)
+    x = Student.get_user('student3')
+    print(x.get_all_test_ids())
 
 
 
