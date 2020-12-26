@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" charset="UTF-8">
+    <title>在线考试系统登录</title>
+
+    <!-- Bootstrap JQuery依赖 -->
+    <link rel="stylesheet" href="../static/bootstrap/css/bootstrap.min.css">
+    <script src="../static/js/jquery-3.5.1.js"></script>
+    <script src="../static/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../static/js/bootbox.min.js"></script>
+
+    <!--md5依赖-->
+    <script src="../static/js/md5.js"></script>
+
+    <!--popover依赖-->
+    <link rel="stylesheet" href="../static/css/popovers.css">
+
+    <!--登录事件处理-->
+    <script src="../static/js/login-processing.js"></script>
+
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&amp;display=fallback">
+    <link rel="stylesheet" href="../static/adminlte/plugins/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="../static/adminlte/css/adminlte.min.css">
+    <!--页面样式-->
+    <style>
+        .register {
+            margin-top: 20px;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .form-group{
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body class="bg-light">
+    <nav class=" navbar navbar-expand navbar-white navbar-light shadow">
+    <!-- Left navbar links -->
+    <ul class="navbar-nav">
+        <li class="nav-item d-none d-sm-inline-block">
+            <a href="#" class="nav-link active"><span class="text-muted mt-1 font-weight-bold">Exam_ol</span></a>
+        </li>
+    </ul>
+    <ul class="navbar-nav ml-auto">
+        <a href="#" class="nav-link active"><span class="text-muted mt-1">关于我们</span></a>
+    </ul>
+</nav>
+    <div class="row">
+        <div class="col text-center py-4 mt-2" style="padding-bottom: 5px; ">
+            <img class="img-fluid img-circle img-bordered" src="../static/img/logo_blacksmall.png" alt="image" style="height: 80px;">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col text-center">
+            <h2 class="text-muted font-weight-light mt-1 "><strong>&nbsp;&nbsp;&nbsp;Exam_Online</strong></h2>
+        </div>
+    </div>
+    <div class="row row-custom align-content-center">
+        <div class="col-4 offset-4">
+            <div class="bg-white p-4 mt-3 border rounded">
+                <form>
+                    <div class="form-group">
+                        <label for="inputAccount" style="margin-bottom: 15px;">用户名</label>
+                        <input type="text" class="form-control" id="inputAccount" placeholder="用户名或电子邮件">
+                    </div>
+                    <div class="form-group">
+                        <label for="inputPassword" style="margin-bottom: 15px;">密码</label>
+                        <input type="password" class="form-control" id="inputPassword" placeholder="请输入密码">
+                    </div>
+                    <div class="form-group form-check" style="margin-bottom: 30px;">
+                        <input type="checkbox" class="form-check-input" id="remember">
+                        <label class="form-check-label" for="remember">记住我</label>
+                        <a href="#" style="float: right; padding-right: 10px">忘记密码?</a>
+                    </div>
+                    <div class="form-group" style="text-align: center">
+                        <div class="custom-control custom-radio">
+                            <input class="custom-control-input" type="radio" id="teacherButton" name="customRadio" style="display: block; margin-right: auto; margin-left: auto;">
+                            <label for="teacherButton" class="custom-control-label">教师端登录</label>
+                        </div>
+                        <div class="custom-control custom-radio">
+                            <input class="custom-control-input" type="radio" id="studentButton" name="customRadio" checked="" style="display: block; margin-right: auto; margin-left: auto;">
+                            <label for="studentButton" class="custom-control-label">学生端登录</label>
+                        </div>
+                        <div class="custom-control custom-radio">
+                            <input class="custom-control-input" type="radio" id="systemAdmButton" name="customRadio" style="display: block; margin-right: auto; margin-left: auto;">
+                            <label for="systemAdmButton" class="custom-control-label">系统管理端</label>
+                        </div>
+                    </div>
+                    <button  type="button" id="loginBtn" class="btn btn-primary col-12 register">登录</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+</html>
