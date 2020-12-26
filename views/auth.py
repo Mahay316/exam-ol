@@ -3,10 +3,10 @@ from models.UserModel import Mentor, Student, Admin
 from common import save_session
 from common.Role import *
 
-auth = Blueprint('auth', __name__)
+auth_bp = Blueprint('auth', __name__)
 
 
-@auth.route('/login', methods=['GET', 'POST'])
+@auth_bp.route('/login', methods=['GET', 'POST'])
 def login():
     if 'role' in session:
         # TODO 用户已经登录过如何处理
@@ -41,7 +41,7 @@ def login():
     return render_template('login.html')
 
 
-@auth.route('/logout')
+@auth_bp.route('/logout')
 def logout():
     session.permanent = False
     session.clear()
