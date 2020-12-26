@@ -1,6 +1,6 @@
 from flask import Flask, render_template
 from models import init_db
-from views import exam_bp
+from views import exam_bp, mentor_bp
 
 app = Flask(__name__)
 app.config.from_pyfile('config.py')
@@ -9,9 +9,9 @@ app.config.from_pyfile('config.py')
 # 全局拦截器
 
 # 全局错误处理
-@app.route('/')
-def index():
-    return render_template('login_test.html')
+# @app.route('/')
+# def index():
+#     return render_template('login_test.html')
 
 
 @app.route('/class')
@@ -31,5 +31,6 @@ if __name__ == '__main__':
     init_db(app)
 
     # 在此处注册蓝图
+    app.register_blueprint(mentor_bp, url_prefix='/mentor')
     app.register_blueprint(exam_bp, url_prefix='/exam')
     app.run(debug=True)

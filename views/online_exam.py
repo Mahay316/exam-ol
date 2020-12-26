@@ -1,5 +1,4 @@
 from flask import Blueprint, request, jsonify, session
-from flask_login import current_user
 from models import Test
 from datetime import datetime
 import json
