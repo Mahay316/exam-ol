@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>试卷管理</title>
+
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="../static/adminlte/plugins/fontawesome-free/css/all.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="../static/adminlte/css/adminlte.min.css">
+
+    <style>
+        tr{
+            text-align: center;
+        }
+    </style>
+</head>
+<body class="hold-transition sidebar-mini layout-fixed">
+
+    <div class="wrapper">
+        <nav class="main-header navbar navbar-expand navbar-white navbar-light shadow">
+            <!-- Left navbar links -->
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="pushmenu" href="#" role="button">
+                        <i class="fas fa-bars">
+                        </i>
+                    </a>
+                </li>
+                <li class="nav-item d-none d-sm-inline-block">
+                    <a href="#" class="nav-link active">教师首页</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+                        <i class="fas fa-expand-arrows-alt"></i>
+                    </a>
+                </li>
+                <button class="btn btn-outline-dark" type=button>退出</button>
+            </ul>
+        </nav>
+
+        <!-- Main Sidebar Container -->
+        <aside class="main-sidebar sidebar-dark-primary elevation-4 layout-fixed" style="height:auto;">
+            <a href="#" class="brand-link">
+                <img src="../static/img/logo_finalversion.png" alt="Logo" class="brand-image img-md elevation-3" style="opacity: .8">
+                <h3 class="brand-text font-weight-bold" style="color: white">Exam_Online</h3>
+            </a>
+
+            <div class="sidebar">
+                <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                    <div class="image">
+                        <img src="../static/img/portrait.png" class="img-circle elevation-2" alt="User Image">
+                    </div>
+                    <div class="info">
+                        <a href="#" class="d-block" >郑玲老师，您好!</a>
+                    </div>
+                </div>
+                <nav class="mt-2">
+                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+                        data-accordion="false">
+                        <li class="nav-header">管理</li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link active">
+                                <i class="nav-icon fas fa-paper-plane"></i>
+                                <p>
+                                    班级管理
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-paperclip"></i>
+                                <p>
+                                    试卷管理
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-pen"></i>
+                                <p>
+                                    试题管理
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-header">账号</li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-door-open"></i>
+                                <p>
+                                    退出登录
+                                </p>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </aside>
+
+        <div class="content-wrapper" style="min-height: 1332.2px;">
+            <!-- Content Header (Page header) -->
+            <section class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1>试卷库</h1>
+                        </div>
+                        <div class="col-sm-6">
+                            <ol class="breadcrumb float-sm-right">
+                                <li class="breadcrumb-item"><a href="#" style="color: black">刷新</a></li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Main content -->
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <button type="button" class="btn btn-outline-success" style="margin-right: 20px;">新建试卷</button>
+                                    <button type="button" class="btn btn-outline-success">新建考试</button>
+                                </div>
+                                <!-- /.card-header -->
+                                <div class="card-body">
+                                    <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                                        <div class="row" style="margin-bottom: 15px;">
+                                            <div class="col-sm-12 col-md-6">
+                                                <div class="dt-buttons btn-group flex-wrap">
+                                                    <div class="dropdown">
+                                                        <a class="btn btn-outline-primary  dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                            按科目筛选
+                                                        </a>
+
+                                                        <div class="dropdown-menu " aria-labelledby="dropdownMenuLink">
+                                                            <a class="dropdown-item btn-outline-primary" href="#">数据库</a>
+                                                            <a class="dropdown-item btn-outline-primary" href="#">软件工程</a>
+                                                            <a class="dropdown-item btn-outline-primary" href="#">计算机组成原理</a>
+                                                        </div>
+                                                    </div>
+                                                    <button type="button" class="btn btn-outline-primary buttons-html5">
+                                                        <span>按未使用试卷筛选</span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12 col-md-2">
+                                                <div id="example1_filter" class="dataTables_filter">
+                                                    <input type="search" class="form-control form-control-sm" placeholder="按试卷号搜索" aria-controls="example1">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12 col-md-1">
+                                                <button type="button" class="btn btn-outline-primary">搜索</button>
+                                            </div>
+                                            <div class="col-sm-12 col-md-2">
+                                                <div id="example2_filter" class="dataTables_filter">
+                                                    <input type="search" class="form-control form-control-sm" placeholder="按试卷名搜索" aria-controls="example1">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12 col-md-1">
+                                                <button type="button" class="btn btn-outline-primary">搜索</button>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
+                                                    <thead>
+                                                        <tr role="row">
+                                                            <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">试卷号</th>
+                                                            <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">试卷名</th>
+                                                            <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">是否已使用</th>
+                                                            <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">学科</th>
+                                                            <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" style="width: 270px;">操作</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr role="row" class="odd">
+                                                            <td class="dtr-control sorting_1" tabindex="0"><strong>1001</strong></td>
+                                                            <td><strong>软件1801数据库期末考</strong></td>
+                                                            <td><strong>已使用</strong></td>
+                                                            <td><strong>数据库</strong></td>
+                                                            <td>
+                                                                <div class="container">
+                                                                    <button type="button" class="btn btn-outline-success" style="margin-right: 20px;">预览</button>
+                                                                    <button type="button" class="btn btn-outline-primary" style="margin-right: 20px;">编辑</button>
+                                                                    <button type="button" class="btn btn-outline-danger">删除</button>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr role="row" class="even">
+                                                            <td class="dtr-control sorting_1" tabindex="0"><strong>1001</strong></td>
+                                                            <td><strong>软件1801数据库期末考</strong></td>
+                                                            <td><strong>已使用</strong></td>
+                                                            <td><strong>数据库</strong></td>
+                                                            <td>
+                                                                <div class="container">
+                                                                    <button type="button" class="btn btn-outline-success" style="margin-right: 20px;">预览</button>
+                                                                    <button type="button" class="btn btn-outline-primary" style="margin-right: 20px;">编辑</button>
+                                                                    <button type="button" class="btn btn-outline-danger">删除</button>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr role="row" class="odd">
+                                                            <td class="dtr-control sorting_1" tabindex="0"><strong>1001</strong></td>
+                                                            <td><strong>软件1801数据库期末考</strong></td>
+                                                            <td><strong>已使用</strong></td>
+                                                            <td><strong>数据库</strong></td>
+                                                            <td>
+                                                                <div class="container">
+                                                                    <button type="button" class="btn btn-outline-success" style="margin-right: 20px;">预览</button>
+                                                                    <button type="button" class="btn btn-outline-primary" style="margin-right: 20px;">编辑</button>
+                                                                    <button type="button" class="btn btn-outline-danger">删除</button>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr role="row" class="even">
+                                                            <td class="dtr-control sorting_1" tabindex="0"><strong>1001</strong></td>
+                                                            <td><strong>软件1801数据库期末考</strong></td>
+                                                            <td><strong>已使用</strong></td>
+                                                            <td><strong>数据库</strong></td>
+                                                            <td>
+                                                                <div class="container">
+                                                                    <button type="button" class="btn btn-outline-success" style="margin-right: 20px;">预览</button>
+                                                                    <button type="button" class="btn btn-outline-primary" style="margin-right: 20px;">编辑</button>
+                                                                    <button type="button" class="btn btn-outline-danger">删除</button>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr role="row" class="odd">
+                                                            <td class="dtr-control sorting_1" tabindex="0"><strong>1001</strong></td>
+                                                            <td><strong>软件1801数据库期末考</strong></td>
+                                                            <td><strong>已使用</strong></td>
+                                                            <td><strong>数据库</strong></td>
+                                                            <td>
+                                                                <div class="container">
+                                                                    <button type="button" class="btn btn-outline-success" style="margin-right: 20px;">预览</button>
+                                                                    <button type="button" class="btn btn-outline-primary" style="margin-right: 20px;">编辑</button>
+                                                                    <button type="button" class="btn btn-outline-danger">删除</button>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr role="row" class="even">
+                                                            <td class="dtr-control sorting_1" tabindex="0"><strong>1001</strong></td>
+                                                            <td><strong>软件1801数据库期末考</strong></td>
+                                                            <td><strong>已使用</strong></td>
+                                                            <td><strong>数据库</strong></td>
+                                                            <td>
+                                                                <div class="container">
+                                                                    <button type="button" class="btn btn-outline-success" style="margin-right: 20px;">预览</button>
+                                                                    <button type="button" class="btn btn-outline-primary" style="margin-right: 20px;">编辑</button>
+                                                                    <button type="button" class="btn btn-outline-danger">删除</button>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr role="row" class="odd">
+                                                            <td class="dtr-control sorting_1" tabindex="0"><strong>1001</strong></td>
+                                                            <td><strong>软件1801数据库期末考</strong></td>
+                                                            <td><strong>已使用</strong></td>
+                                                            <td><strong>数据库</strong></td>
+                                                            <td>
+                                                                <div class="container">
+                                                                    <button type="button" class="btn btn-outline-success" style="margin-right: 20px;">预览</button>
+                                                                    <button type="button" class="btn btn-outline-primary" style="margin-right: 20px;">编辑</button>
+                                                                    <button type="button" class="btn btn-outline-danger">删除</button>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr role="row" class="even">
+                                                            <td class="dtr-control sorting_1" tabindex="0"><strong>1001</strong></td>
+                                                            <td><strong>软件1801数据库期末考</strong></td>
+                                                            <td><strong>已使用</strong></td>
+                                                            <td><strong>数据库</strong></td>
+                                                            <td>
+                                                                <div class="container">
+                                                                    <button type="button" class="btn btn-outline-success" style="margin-right: 20px;">预览</button>
+                                                                    <button type="button" class="btn btn-outline-primary" style="margin-right: 20px;">编辑</button>
+                                                                    <button type="button" class="btn btn-outline-danger">删除</button>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr role="row" class="odd">
+                                                            <td class="dtr-control sorting_1" tabindex="0"><strong>1001</strong></td>
+                                                            <td><strong>软件1801数据库期末考</strong></td>
+                                                            <td><strong>已使用</strong></td>
+                                                            <td><strong>数据库</strong></td>
+                                                            <td>
+                                                                <div class="container">
+                                                                    <button type="button" class="btn btn-outline-success" style="margin-right: 20px;">预览</button>
+                                                                    <button type="button" class="btn btn-outline-primary" style="margin-right: 20px;">编辑</button>
+                                                                    <button type="button" class="btn btn-outline-danger">删除</button>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr role="row" class="even">
+                                                            <td class="dtr-control sorting_1" tabindex="0"><strong>1001</strong></td>
+                                                            <td><strong>软件1801数据库期末考</strong></td>
+                                                            <td><strong>已使用</strong></td>
+                                                            <td><strong>数据库</strong></td>
+                                                            <td>
+                                                                <div class="container">
+                                                                    <button type="button" class="btn btn-outline-success" style="margin-right: 20px;">预览</button>
+                                                                    <button type="button" class="btn btn-outline-primary" style="margin-right: 20px;">编辑</button>
+                                                                    <button type="button" class="btn btn-outline-danger">删除</button>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                    <tfoot>
+                                                        <tr role="row">
+                                                            <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">试卷号</th>
+                                                            <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">试卷名</th>
+                                                            <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">是否已使用</th>
+                                                            <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">学科</th>
+                                                            <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">操作</th>
+                                                        </tr>
+                                                    </tfoot>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-12 col-md-5">
+                                                <div class="dataTables_info" id="example1_info" role="status" aria-live="polite">
+                                                    当前展示<span id="begin">1</span>到 <span id="end">10</span>条记录，共 <span id="sum">57</span> 条
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12 col-md-7">
+                                                <div class="dataTables_paginate paging_simple_numbers" id="example1_paginate">
+                                                    <ul class="pagination">
+                                                        <li class="paginate_button page-item previous disabled" id="example1_previous">
+                                                            <a href="#" aria-controls="example1" data-dt-idx="0" tabindex="0" class="page-link">
+                                                                前一页
+                                                            </a>
+                                                        </li>
+                                                        <li class="paginate_button page-item active">
+                                                            <a href="#" aria-controls="example1" data-dt-idx="1" tabindex="0" class="page-link">
+                                                                1
+                                                            </a>
+                                                        </li>
+                                                        <li class="paginate_button page-item ">
+                                                            <a href="#" aria-controls="example1" data-dt-idx="2" tabindex="0" class="page-link">
+                                                                2
+                                                            </a>
+                                                        </li>
+                                                        <li class="paginate_button page-item ">
+                                                            <a href="#" aria-controls="example1" data-dt-idx="3" tabindex="0" class="page-link">
+                                                                3
+                                                            </a>
+                                                        </li>
+                                                        <li class="paginate_button page-item ">
+                                                            <a href="#" aria-controls="example1" data-dt-idx="4" tabindex="0" class="page-link">
+                                                                4
+                                                            </a>
+                                                        </li>
+                                                        <li class="paginate_button page-item ">
+                                                            <a href="#" aria-controls="example1" data-dt-idx="5" tabindex="0" class="page-link">
+                                                                5
+                                                            </a>
+                                                        </li>
+                                                        <li class="paginate_button page-item ">
+                                                            <a href="#" aria-controls="example1" data-dt-idx="6" tabindex="0" class="page-link">
+                                                                6
+                                                            </a>
+                                                        </li>
+                                                        <li class="paginate_button page-item next" id="example1_next">
+                                                            <a href="#" aria-controls="example1" data-dt-idx="7" tabindex="0" class="page-link">
+                                                                下一页
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /.card-body -->
+                            </div>
+                            <!-- /.card -->
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                    <!-- /.row -->
+                </div>
+                <!-- /.container-fluid -->
+            </section>
+            <!-- /.content -->
+        </div>
+
+        <footer class="main-footer">
+            <div class="float-right d-none d-sm-block">
+                <b>Version</b> 1.0.0
+            </div>
+            <strong>Copyright © 2014-2020 <a href="#">Exam_Online</a>.</strong> All rights reserved.
+        </footer>
+    </div>
+
+    <!-- REQUIRED SCRIPTS -->
+
+    <!-- jQuery -->
+    <script src="../static/adminlte/plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap 4 -->
+    <script src="../static/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="../static/adminlte/js/adminlte.min.js"></script>
+</body>
+</html>
