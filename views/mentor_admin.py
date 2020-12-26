@@ -1,22 +1,9 @@
 from flask import Blueprint, request, jsonify, session, redirect, url_for, abort, render_template
-from models import Class, Mentor
-from datetime import datetime
+from models import Class, Mentor, StudentTest
 from common.Role import *
 from decorators import should_be
-import json
 
 mentor_bp = Blueprint('mentor_bp', __name__)
-
-
-# @mentor_bp.route('/class')
-# @should_be([MENTOR])
-# def teacher_admin():
-#     """
-#     展示全部班级
-#
-#     :return html页面
-#     """
-#
 
 
 @mentor_bp.route('/class/<string:class_id>', methods=['GET', 'POST'])
@@ -38,4 +25,10 @@ def class_management(class_id: str):
 
         return render_template('class_manage.html', tests=tests, students=students)
     elif request.method == 'POST':
-        pass
+        test_no = request.form.get('test_no')
+        if test_no is None:
+            abort(404)
+
+        results = StudentTest.get_st_by_tno(test_no)
+        res_json = {'code': 200, 'results': results}
+        return jsonify(res_json)

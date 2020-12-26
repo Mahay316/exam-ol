@@ -30,3 +30,17 @@ class StudentTest(Base):
 
     # student = relationship('Student')
     test = relationship('Test')
+
+
+    #TODO 待实现
+    @classmethod
+    def get_st_by_tno(cls, tno):
+        """
+        给出test表的id, 返回该考试的所有学生号、学生名、学生成绩
+
+        返回数据的格式为list[dict], 每个dict有三个字段'sno'(str), 'sname'(str), 'stgrade'(int)
+        例如, [{'sno': '1', 'sname': '王子轩', 'stgrade': 90}, {...}, {...}]
+
+        :param tno: test_no考试号
+        :return: list[dict](无数据则返回空list)
+        """

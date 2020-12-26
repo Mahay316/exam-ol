@@ -64,7 +64,6 @@ $(function () {
             identity = 'admin';
 
         password = hex_md5(password);
-        document.write(identity + '<br>');
         $.ajax({
             url: '/auth/login',
             method: 'post',
