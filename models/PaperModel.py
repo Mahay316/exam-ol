@@ -56,3 +56,12 @@ class Paper(Base):
         except Exception as e:
             raise e
 
+
+    # TODO 待实现
+    @classmethod
+    def get_all_papers(cls):
+        """
+        获取全部试卷
+
+        :return: list[Paper](没有则返回空list)
+        """

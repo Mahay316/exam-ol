@@ -140,6 +140,16 @@ class Student(User, Base):
         """
 
 
+    # TODO 待实现
+    @classmethod
+    def has_this_class(cls, student_no, cls_no):
+        """
+        判断学生是否有某门课程
+
+        :return: True or False
+        """
+
+
 class Mentor(User, Base):
     __tablename__ = 'mentor'
 
@@ -174,6 +184,16 @@ class Mentor(User, Base):
 
         :param no: 教师号
         :return: list[Course](没有课程则返回空列表)
+        """
+
+
+    # TODO 待实现
+    @classmethod
+    def has_this_class(cls, mentor_no, cls_no):
+        """
+        判断老师是否有某门课程
+
+        :return: True or False
         """
 
 

@@ -1,5 +1,5 @@
 from flask import jsonify, Blueprint, request, jsonify, session, redirect, url_for, abort, render_template
-from models import Test, Student, Mentor
+from models import Test, Student, Mentor, Paper
 from datetime import datetime
 from common.Role import *
 from decorators import should_be
@@ -31,6 +31,29 @@ def get_classes():
             'cno': cur_cls.Cno,
             'cname': cur_cls.Cname,
             'csubject': cur_cls.Csubject
+        })
+
+    return jsonify(res_json)
+
+
+@utils_bp.route('/get_papers')
+@should_be([MENTOR, STUDENT])
+def get_papers():
+    """
+    获取全部考试
+
+    :return: json
+    """
+    papers = Paper.get_all_papers()
+
+    res_json = {'code': 200, 'papers': []}
+    res_papers = res_json['papers']
+
+    for paper in papers:
+        res_papers.append({
+            'pno': paper.Cno,
+            'pname': paper.Cname,
+            'psubject': paper.Csubject
         })
 
     return jsonify(res_json)
