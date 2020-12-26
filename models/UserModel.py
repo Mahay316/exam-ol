@@ -129,6 +129,17 @@ class Student(User, Base):
             raise e
 
 
+    # TODO 实现学生的课程获取函数
+    @classmethod
+    def get_classes(cls, no) -> list:
+        """
+        获取某学生的全部课程对象
+
+        :param no: 学号
+        :return: list[Course](没有课程则返回空列表)
+        """
+
+
 class Mentor(User, Base):
     __tablename__ = 'mentor'
 
@@ -153,6 +164,17 @@ class Mentor(User, Base):
         except Exception as e:
             session.rollback()
             raise e
+
+
+    # TODO 实现教师的课程获取函数
+    @classmethod
+    def get_classes(cls, no) -> list:
+        """
+        获取某教师的全部课程对象
+
+        :param no: 教师号
+        :return: list[Course](没有课程则返回空列表)
+        """
 
 
 class Admin(User, Base):

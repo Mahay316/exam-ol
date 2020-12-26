@@ -24,7 +24,7 @@ def index():
         # TODO 跳转学生主页
         pass
     elif role == MENTOR:
-        return redirect(url_for('mentor_bp.class'))
+        return redirect(url_for('mentor_bp.teacher_admin'))
     elif role == ADMIN:
         # TODO 跳转管理员主页
         pass
