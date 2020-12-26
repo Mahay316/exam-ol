@@ -1,13 +1,15 @@
 from flask import Blueprint, request, jsonify, session
-from flask_login import current_user
 from models import Test
 from datetime import datetime
 import json
+from models import Student
+from decorators import should_be
+from common.Role import *
 
 exam_bp = Blueprint('exam_bp', __name__)
-# cached_questionID = set()
 
 
+@should_be([STUDENT])
 def permission_inadequate_or_exam_not_exists(test: Test):
     """
     检查访问是否合法
@@ -22,12 +24,15 @@ def permission_inadequate_or_exam_not_exists(test: Test):
         res['msg'] = '考试不存在'
         return jsonify(res)
 
-    # TODO：用户权限验证，使用session实现
-    # if not (current_user.is_student() and current_user.has_this_exam(test)):
-    #     # 无权访问
-    #     res['code'] = 403
-    #     res['msg'] = '无权访问'
-    #     return jsonify(res)
+    if 'test_ids' not in session:
+        # 缓存学生所有考试，判断是否含有本次考试(避免每次都从数据库查找)
+        session['test_ids'] = Student.get_user(session['no']).get_all_test_ids()
+
+    if session['test_ids'] is None or test.Tno not in session['test_ids']:
+        # 无权访问
+        res['code'] = 403
+        res['msg'] = '无权访问'
+        return jsonify(res)
     return None
 
 
@@ -50,6 +55,7 @@ def guarantee_exam_begin(test: Test):
 
 
 @exam_bp.route('/time', methods=['GET'])
+@should_be([STUDENT])
 def get_exam_time_info():
     """
     获得考试时间信息
@@ -84,6 +90,7 @@ def get_exam_time_info():
 
 
 @exam_bp.route('/questions', methods=['GET', 'POST'])
+@should_be([STUDENT])
 def questions():
     """
     请求题目内容或者缓存考生作答情况

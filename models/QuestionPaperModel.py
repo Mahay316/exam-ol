@@ -3,7 +3,7 @@
 # @Time    : 2020/12/15 19:10
 # @Author  : kiwanter
 # @Email   : kiwanter@163.com
-# @File    : QuesrionPaperModel.py
+# @File    : QuestionPaperModel.py
 # @software: pycharm
 
 '''
