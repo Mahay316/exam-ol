@@ -13,10 +13,13 @@
 
 from models import Course
 from models import StudentTest
+from models import Subject
+from models import Question
 
 def qt():
-    x = StudentTest.get_st_by_tno('t0001')
-    print(x)
+    qs = Question.select_questions_by(content='多选')
+    for q in qs:
+        print(q.Qno)
 
 def fg():
     x=Course.get_class('c0001')
