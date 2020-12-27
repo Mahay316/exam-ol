@@ -5,14 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>组卷页面</title>
 
-    <!-- Google Font: Source Sans Pro -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome Icons -->
-    <link rel="stylesheet" href="../static/adminlte/plugins/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="/static/fontawesome/css/all.min.css">
     <!-- Theme style -->
-    <link rel="stylesheet" href="../static/adminlte/css/adminlte.min.css">
+    <link rel="stylesheet" href="/static/adminlte/css/adminlte.min.css">
 
     <style type="text/css">
+        .shadow-lg{
+            box-shadow: 0 0 5rem rgba(0,0,0,.175) !important;
+        }
 
         tr{
             text-align: center;
@@ -21,7 +22,7 @@
 
     </style>
 </head>
-<body class="sidebar-mini layout-fixed hold-transition">
+<body class="sidebar-mini layout-fixed hold-transition layout-footer-fixed">
 
     <div class="wrapper">
 
@@ -44,20 +45,19 @@
                         <i class="fas fa-expand-arrows-alt"></i>
                     </a>
                 </li>
-                <button class="btn btn-outline-dark" type=button>退出</button>
             </ul>
         </nav>
 
         <aside class="main-sidebar sidebar-dark-primary elevation-4 layout-fixed" style="height:auto;">
             <a href="#" class="brand-link">
-                <img src="../static/img/logo_finalversion.png" alt="Logo" class="brand-image img-md elevation-3" style="opacity: .8">
+                <img src="../static/img/logo_white.png" alt="Logo" class="brand-image img-md elevation-3" style="opacity: .8">
                 <h3 class="brand-text font-weight-bold" style="color: white">Exam_Online</h3>
             </a>
 
             <div class="sidebar">
                 <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                     <div class="image">
-                        <img src="../static/img/portrait.png" class="img-circle elevation-2" alt="User Image">
+                        <img src="../static/img/avatar.png" class="img-circle elevation-2" alt="User Image">
                     </div>
                     <div class="info">
                         <a href="#" class="d-block" >郑玲老师，您好!</a>
@@ -132,21 +132,6 @@
                                 <form>
                                     <div class="card-body">
                                         <div class="row" style="margin-bottom: 15px;">
-                                            <div class="col-md-3">
-                                                <span><strong>已选单选题数量: </strong><span class="numOfOption"><strong>0</strong></span><strong> 题</strong></span>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <span><strong>已选多选题数量: </strong><span class="numOfMulOption"><strong>0</strong></span><strong> 题</strong></span>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <span><strong>已选填空题数量: </strong><span class="numOfCompletion"><strong>0</strong></span><strong> 题</strong></span>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <span><strong>目前总分: </strong><span class="sumOfPaper"><strong>0</strong></span><strong> 分</strong></span>
-                                            </div>
-                                        </div>
-                                        <hr style="margin-bottom: 15px;">
-                                        <div class="row" style="margin-bottom: 15px;">
                                             <div class="col-sm-12 col-md-6">
                                                 <div class="dt-buttons btn-group flex-wrap">
                                                     <div class="dropdown">
@@ -171,15 +156,9 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-sm-12 col-md-2">
-                                                <div id="example1_filter" class="dataTables_filter">
-                                                    <input type="search" class="form-control form-control-sm" placeholder="按题号搜索" aria-controls="example1">
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-12 col-md-1">
-                                                <button type="button" class="btn btn-outline-primary">搜索</button>
-                                            </div>
-                                            <div class="col-sm-12 col-md-2">
+
+
+                                            <div class="col-sm-12 col-md-2 offset-3">
                                                 <div id="example2_filter" class="dataTables_filter">
                                                     <input type="search" class="form-control form-control-sm" placeholder="按内容搜索" aria-controls="example1">
                                                 </div>
@@ -193,63 +172,299 @@
                                                 <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
                                                     <thead>
                                                     <tr role="row">
-                                                        <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" style="width: 100px;">试题号</th>
+{#                                                        <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" style="width: 100px;">试题号</th>#}
                                                         <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" width="55%">题干</th>
                                                         <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" style="width: 100px;">题目类型</th>
                                                         <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" style="width: 100px;">科目</th>
                                                         <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" style="width: 100px">预览</th>
-                                                        <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" width="5%">加入试卷</th>
+                                                        <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">加入试卷</th>
                                                         <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">分值</th>
                                                     </tr>
                                                     </thead>
                                                     <tbody>
-                                                    <tr role="row" class="odd">
-                                                        <td class="dtr-control sorting_1" tabindex="0"><strong>1001</strong></td>
-                                                        <td title="在数据库的三级模式结构中，(      )是用户与数据库系统的接口，是用户用到的那部分数据的描述。"><strong>在数据库的三级模式结构中，(      )是用户与数据库系统的接口，是用户用到的那部分数据的描述。mahaymahaymahaymahyamahyamahay</strong></td>
-                                                        <td><strong>选择题</strong></td>
-                                                        <td><strong>数据库</strong></td>
-                                                        <td>
-                                                            <div class="container">
-                                                                <button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#preview">预览</button>
-                                                            </div>
-                                                        </td>
-                                                        <td style=" justify-content: center; vertical-align: center; margin-top: 5px;">
-                                                            <input type="checkbox" style="zoom: 200%;">
-                                                        </td>
-                                                        <td>
-                                                            <input type="text" placeholder="输入分值" aria-label="Username" aria-describedby="basic-addon1" size="4">
-                                                        </td>
-                                                    </tr>
-                                                    <tr role="row" class="even">
-                                                        <td class="dtr-control sorting_1" tabindex="0"><strong>1001</strong></td>
-                                                        <td title="在数据库的三级模式结构中，(      )是用户与数据库系统的接口，是用户用到的那部分数据的描述。"><strong>在数据库的三级模式结构中，(      )是用户与数据库系统的接口，是用户用到的那部分数据的描述。</strong></td>
-                                                        <td><strong>选择题</strong></td>
-                                                        <td><strong>数据库</strong></td>
-                                                        <td>
-                                                            <div class="container">
-                                                                <button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#preview">预览</button>
-                                                            </div>
-                                                        </td>
-                                                        <td style="display: flex; justify-content: center; vertical-align: center; margin-top: 5px;">
-                                                            <input type="checkbox" style="zoom: 200%;">
-                                                        </td>
-                                                        <td>
-                                                            <input type="text" placeholder="输入分值" aria-label="Username" aria-describedby="basic-addon1" size="4">
-                                                        </td>
-                                                    </tr>
+                                                        <tr role="row" class="odd">
+                                                            <td title="在数据库的三级模式结构中，(      )是用户与数据库系统的接口，是用户用到的那部分数据的描述。"><strong>在数据库的三级模式结构中，(      )是用户与数据库系统的接口，是用户用到的那部分数据的描述。mahaymahaymahaymahyamahyamahay</strong></td>
+                                                            <td><strong>选择题</strong></td>
+                                                            <td><strong>数据库</strong></td>
+                                                            <td>
+                                                                <div class="container">
+                                                                    <button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#preview">预览</button>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <button type="button" class="btn btn-outline-primary check-btn">未加入</button>
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" placeholder=" 输入分值" aria-label="Username" aria-describedby="basic-addon1" size="8">
+                                                            </td>
+                                                        </tr>
+                                                        <tr role="row" class="odd">
+                                                            <td title="在数据库的三级模式结构中，(      )是用户与数据库系统的接口，是用户用到的那部分数据的描述。"><strong>在数据库的三级模式结构中，(      )是用户与数据库系统的接口，是用户用到的那部分数据的描述。mahaymahaymahaymahyamahyamahay</strong></td>
+                                                            <td><strong>选择题</strong></td>
+                                                            <td><strong>数据库</strong></td>
+                                                            <td>
+                                                                <div class="container">
+                                                                    <button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#preview">预览</button>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <button class="btn check-btn btn-outline-primary">未加入</button>
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" placeholder=" 输入分值" aria-label="Username" aria-describedby="basic-addon1" size="8">
+                                                            </td>
+                                                        </tr>
+                                                        <tr role="row" class="odd">
+                                                            <td title="在数据库的三级模式结构中，(      )是用户与数据库系统的接口，是用户用到的那部分数据的描述。">
+                                                                <strong>在数据库的三级模式结构中，(      )是用户与数据库系统的接口，是用户用到的那部分数据的描述。mahaymahaymahaymahyamahyamahay</strong>
+                                                            </td>
+                                                            <td><strong>选择题</strong></td>
+                                                            <td><strong>数据库</strong></td>
+                                                            <td>
+                                                                <div class="container">
+                                                                    <button type="button"
+                                                                            class="btn btn-outline-success"
+                                                                            data-toggle="modal" data-target="#preview">
+                                                                        预览
+                                                                    </button>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <button class="btn check-btn btn-outline-primary">未加入
+                                                                </button>
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" placeholder=" 输入分值"
+                                                                       aria-label="Username"
+                                                                       aria-describedby="basic-addon1" size="8">
+                                                            </td>
+                                                        </tr>
+                                                        <tr role="row" class="odd">
+                                                            <td title="在数据库的三级模式结构中，(      )是用户与数据库系统的接口，是用户用到的那部分数据的描述。">
+                                                                <strong>在数据库的三级模式结构中，(      )是用户与数据库系统的接口，是用户用到的那部分数据的描述。mahaymahaymahaymahyamahyamahay</strong>
+                                                            </td>
+                                                            <td><strong>选择题</strong></td>
+                                                            <td><strong>数据库</strong></td>
+                                                            <td>
+                                                                <div class="container">
+                                                                    <button type="button"
+                                                                            class="btn btn-outline-success"
+                                                                            data-toggle="modal" data-target="#preview">
+                                                                        预览
+                                                                    </button>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <button class="btn check-btn btn-outline-primary">未加入
+                                                                </button>
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" placeholder=" 输入分值"
+                                                                       aria-label="Username"
+                                                                       aria-describedby="basic-addon1" size="8">
+                                                            </td>
+                                                        </tr>
+                                                        <tr role="row" class="odd">
+                                                            <td title="在数据库的三级模式结构中，(      )是用户与数据库系统的接口，是用户用到的那部分数据的描述。">
+                                                                <strong>在数据库的三级模式结构中，(      )是用户与数据库系统的接口，是用户用到的那部分数据的描述。mahaymahaymahaymahyamahyamahay</strong>
+                                                            </td>
+                                                            <td><strong>选择题</strong></td>
+                                                            <td><strong>数据库</strong></td>
+                                                            <td>
+                                                                <div class="container">
+                                                                    <button type="button"
+                                                                            class="btn btn-outline-success"
+                                                                            data-toggle="modal" data-target="#preview">
+                                                                        预览
+                                                                    </button>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <button class="btn check-btn btn-outline-primary">未加入
+                                                                </button>
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" placeholder=" 输入分值"
+                                                                       aria-label="Username"
+                                                                       aria-describedby="basic-addon1" size="8">
+                                                            </td>
+                                                        </tr>
+                                                        <tr role="row" class="odd">
+                                                            <td title="在数据库的三级模式结构中，(      )是用户与数据库系统的接口，是用户用到的那部分数据的描述。">
+                                                                <strong>在数据库的三级模式结构中，(      )是用户与数据库系统的接口，是用户用到的那部分数据的描述。mahaymahaymahaymahyamahyamahay</strong>
+                                                            </td>
+                                                            <td><strong>选择题</strong></td>
+                                                            <td><strong>数据库</strong></td>
+                                                            <td>
+                                                                <div class="container">
+                                                                    <button type="button"
+                                                                            class="btn btn-outline-success"
+                                                                            data-toggle="modal" data-target="#preview">
+                                                                        预览
+                                                                    </button>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <button class="btn check-btn btn-outline-primary">未加入
+                                                                </button>
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" placeholder=" 输入分值"
+                                                                       aria-label="Username"
+                                                                       aria-describedby="basic-addon1" size="8">
+                                                            </td>
+                                                        </tr>
+                                                        <tr role="row" class="odd">
+                                                            <td title="在数据库的三级模式结构中，(      )是用户与数据库系统的接口，是用户用到的那部分数据的描述。">
+                                                                <strong>在数据库的三级模式结构中，(      )是用户与数据库系统的接口，是用户用到的那部分数据的描述。mahaymahaymahaymahyamahyamahay</strong>
+                                                            </td>
+                                                            <td><strong>选择题</strong></td>
+                                                            <td><strong>数据库</strong></td>
+                                                            <td>
+                                                                <div class="container">
+                                                                    <button type="button"
+                                                                            class="btn btn-outline-success"
+                                                                            data-toggle="modal" data-target="#preview">
+                                                                        预览
+                                                                    </button>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <button class="btn check-btn btn-outline-primary">未加入
+                                                                </button>
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" placeholder=" 输入分值"
+                                                                       aria-label="Username"
+                                                                       aria-describedby="basic-addon1" size="8">
+                                                            </td>
+                                                        </tr>
+                                                        <tr role="row" class="odd">
+                                                            <td title="在数据库的三级模式结构中，(      )是用户与数据库系统的接口，是用户用到的那部分数据的描述。">
+                                                                <strong>在数据库的三级模式结构中，(      )是用户与数据库系统的接口，是用户用到的那部分数据的描述。mahaymahaymahaymahyamahyamahay</strong>
+                                                            </td>
+                                                            <td><strong>选择题</strong></td>
+                                                            <td><strong>数据库</strong></td>
+                                                            <td>
+                                                                <div class="container">
+                                                                    <button type="button"
+                                                                            class="btn btn-outline-success"
+                                                                            data-toggle="modal" data-target="#preview">
+                                                                        预览
+                                                                    </button>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <button class="btn check-btn btn-outline-primary">未加入
+                                                                </button>
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" placeholder=" 输入分值"
+                                                                       aria-label="Username"
+                                                                       aria-describedby="basic-addon1" size="8">
+                                                            </td>
+                                                        </tr>
+                                                        <tr role="row" class="odd">
+                                                            <td title="在数据库的三级模式结构中，(      )是用户与数据库系统的接口，是用户用到的那部分数据的描述。">
+                                                                <strong>在数据库的三级模式结构中，(      )是用户与数据库系统的接口，是用户用到的那部分数据的描述。mahaymahaymahaymahyamahyamahay</strong>
+                                                            </td>
+                                                            <td><strong>选择题</strong></td>
+                                                            <td><strong>数据库</strong></td>
+                                                            <td>
+                                                                <div class="container">
+                                                                    <button type="button"
+                                                                            class="btn btn-outline-success"
+                                                                            data-toggle="modal" data-target="#preview">
+                                                                        预览
+                                                                    </button>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <button class="btn check-btn btn-outline-primary">未加入
+                                                                </button>
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" placeholder=" 输入分值"
+                                                                       aria-label="Username"
+                                                                       aria-describedby="basic-addon1" size="8">
+                                                            </td>
+                                                        </tr>
+                                                        <tr role="row" class="odd">
+                                                            <td title="在数据库的三级模式结构中，(      )是用户与数据库系统的接口，是用户用到的那部分数据的描述。">
+                                                                <strong>在数据库的三级模式结构中，(      )是用户与数据库系统的接口，是用户用到的那部分数据的描述。mahaymahaymahaymahyamahyamahay</strong>
+                                                            </td>
+                                                            <td><strong>选择题</strong></td>
+                                                            <td><strong>数据库</strong></td>
+                                                            <td>
+                                                                <div class="container">
+                                                                    <button type="button"
+                                                                            class="btn btn-outline-success"
+                                                                            data-toggle="modal" data-target="#preview">
+                                                                        预览
+                                                                    </button>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <button class="btn check-btn btn-outline-primary">未加入
+                                                                </button>
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" placeholder=" 输入分值"
+                                                                       aria-label="Username"
+                                                                       aria-describedby="basic-addon1" size="8">
+                                                            </td>
+                                                        </tr>
+                                                        <tr role="row" class="odd">
+                                                            <td title="在数据库的三级模式结构中，(      )是用户与数据库系统的接口，是用户用到的那部分数据的描述。">
+                                                                <strong>在数据库的三级模式结构中，(      )是用户与数据库系统的接口，是用户用到的那部分数据的描述。mahaymahaymahaymahyamahyamahay</strong>
+                                                            </td>
+                                                            <td><strong>选择题</strong></td>
+                                                            <td><strong>数据库</strong></td>
+                                                            <td>
+                                                                <div class="container">
+                                                                    <button type="button"
+                                                                            class="btn btn-outline-success"
+                                                                            data-toggle="modal" data-target="#preview">
+                                                                        预览
+                                                                    </button>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <button class="btn check-btn btn-outline-primary">未加入
+                                                                </button>
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" placeholder=" 输入分值"
+                                                                       aria-label="Username"
+                                                                       aria-describedby="basic-addon1" size="8">
+                                                            </td>
+                                                        </tr>
+                                                        <tr role="row" class="odd">
+                                                            <td title="在数据库的三级模式结构中，(      )是用户与数据库系统的接口，是用户用到的那部分数据的描述。">
+                                                                <strong>在数据库的三级模式结构中，(      )是用户与数据库系统的接口，是用户用到的那部分数据的描述。mahaymahaymahaymahyamahyamahay</strong>
+                                                            </td>
+                                                            <td><strong>选择题</strong></td>
+                                                            <td><strong>数据库</strong></td>
+                                                            <td>
+                                                                <div class="container">
+                                                                    <button type="button"
+                                                                            class="btn btn-outline-success"
+                                                                            data-toggle="modal" data-target="#preview">
+                                                                        预览
+                                                                    </button>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <button class="btn check-btn btn-outline-primary">未加入
+                                                                </button>
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" placeholder=" 输入分值"
+                                                                       aria-label="Username"
+                                                                       aria-describedby="basic-addon1" size="8">
+                                                            </td>
+                                                        </tr>
                                                     </tbody>
-                                                    <tfoot>
-                                                    <tr role="row">
-                                                        <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" style="width: 100px;">试题号</th>
-                                                        <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">题干</th>
-                                                        <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" style="width: 100px;">题目类型</th>
-                                                        <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" style="width: 100px;">科目</th>
-                                                        <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" style="width: 100px">预览</th>
-                                                        <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" style="width: 200px;">加入试卷</th>
-                                                        <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" style="width: 100px;">分值</th>
-
-                                                    </tr>
-                                                    </tfoot>
                                                 </table>
                                             </div>
                                         </div>
@@ -306,29 +521,6 @@
                                                 </div>
                                             </div>
                                         </div>
-
-                                        <hr>
-                                        <div class="row" style="margin-bottom: 15px;">
-                                            <div class="col-md-3">
-                                                <span><strong>已选单选题数量: </strong><span class="numOfOption"><strong>0</strong></span><strong> 题</strong></span>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <span><strong>已选多选题数量: </strong><span class="numOfMulOption"><strong>0</strong></span><strong> 题</strong></span>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <span><strong>已选填空题数量: </strong><span class="numOfCompletion"><strong>0</strong></span><strong> 题</strong></span>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <span><strong>目前总分: </strong><span class="sumOfPaper"><strong>0</strong></span><strong> 分</strong></span>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="card-footer" >
-                                        <div class="float-right">
-                                            <button type="button" class="btn btn-success" style="margin-right: 10px;">预览试卷</button>
-                                            <button type="button" class="btn btn-primary">发布试卷</button>
-                                        </div>
                                     </div>
                                 </form>
                             </div>
@@ -339,24 +531,51 @@
 
         </div>
 
-        <footer class="main-footer">
-            <div class="float-right d-none d-sm-block">
-                <b>Version</b> 1.0.0
+        <footer class="main-footer shadow-lg">
+            <div class="container-fluid" style="height: 40px; line-height: 40px;">
+                <span class="col-2" style="margin-right: 50px;"><strong>已选单选题数量: </strong><span class="numOfOption"><strong>0</strong></span><strong> 题</strong></span>
+                <span class="col-2" style="margin-right: 50px;"><strong>已选多选题数量: </strong><span class="numOfMulOption"><strong>0</strong></span><strong> 题</strong></span>
+                <span class="col-2" style="margin-right: 50px;"><strong>已选填空题数量: </strong><span class="numOfCompletion"><strong>0</strong></span><strong> 题</strong></span>
+                <span class="col-2" style="margin-right: 50px;"><strong>目前总题数: </strong><span class="sumOfPaper"><strong>0</strong></span><strong> 题</strong></span>
+                <span class="col-2"><strong>目前总分: </strong><span class="sumOfPaper"><strong>0</strong></span><strong> 分</strong></span>
+                <div class="float-right">
+                    <button type="button" class="btn btn-success" style="margin-right: 10px;">预览试卷</button>
+                    <button type="button" class="btn btn-primary">发布试卷</button>
+                </div>
             </div>
-            <strong>Copyright © 2014-2020 <a href="#">Exam_Online</a>.</strong> All rights reserved.
         </footer>
+
     </div>
 
-    <!-- REQUIRED SCRIPTS -->
+        <!-- REQUIRED SCRIPTS -->
+
 
     <!-- jQuery -->
-    <script src="../static/adminlte/plugins/jquery/jquery.min.js"></script>
+    <script src="/static/js/jquery-3.5.1.min.js"></script>
     <!-- Bootstrap 4 -->
-    <script src="../static/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/static/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- AdminLTE App -->
-    <script src="../static/adminlte/js/adminlte.min.js"></script>
-    <!-- Bootstrap 4 -->
-    <script src="../static/adminlte/plugins/bootstrap/js/bootstrap.min.js"></script>
-    <script src="../static/js/add_question.js"></script>
+    <script src="/static/adminlte/js/adminlte.min.js"></script>
+    <script src="/static/js/add_question.js"></script>
+    <script src="/static/js/add_question.js"></script>
+    <script>
+        $(function () {
+            $('.check-btn').click(function () {
+                if ($(this).attr('checked')) {
+                    $(this).removeAttr('checked');
+                    $(this).text('未加入');
+                    $(this).removeClass('btn-primary');
+                    $(this).addClass('btn-outline-primary');
+                } else {
+                    $(this).attr('checked', 'true');
+                    $(this).text('已加入');
+                    $(this).removeClass('btn-outline-primary');
+                    $(this).addClass('btn-primary');
+                }
+
+                console.log('checked: ', $('.check-btn[checked]').length);
+            });
+        });
+    </script>
 </body>
 </html>
