@@ -10,17 +10,20 @@
 @file function:
 '''
 
-from models import Paper
-from models import Test
-from models import Question
-from models import Student
+
+from models import Course
+from models import StudentTest
 
 def qt():
-    x = Student.get_user('student3')
-    print(x.get_all_test_ids())
+    x = StudentTest.get_st_by_tno('t0001')
+    print(x)
 
+def fg():
+    x=Course.get_class('c0001')
+    print(x.Cname)
 
 
 if __name__ == '__main__':
     qt()
+    # fg()
     pass

@@ -17,6 +17,8 @@ from sqlalchemy.orm import relationship
 
 from models.database import Base
 from models.TestModel import Test
+from common import model_common
+
 
 
 class StudentTest(Base):
@@ -32,7 +34,6 @@ class StudentTest(Base):
     test = relationship('Test')
 
 
-    #TODO 待实现
     @classmethod
     def get_st_by_tno(cls, tno):
         """
@@ -44,3 +45,27 @@ class StudentTest(Base):
         :param tno: test_no考试号
         :return: list[dict](无数据则返回空list)
         """
+
+        engine = model_common.get_mysql_engine()
+        session = model_common.get_mysql_session(engine)
+
+        try:
+            student_list = []
+
+            filter_list = []
+            filter_list.append(cls.Tno == tno)
+
+            sts = session.query(cls).filter(*filter_list).all()
+
+            from models.UserModel import Student
+            for st in sts:
+                student = Student.get_user(st.Sno)
+                student_dict = {
+                    'sno':student.Sno,
+                    'sname':student.Sname,
+                    'stgrade':st.STgrade
+                }
+                student_list.append(student_dict)
+            return student_list
+        except Exception as e:
+            raise e

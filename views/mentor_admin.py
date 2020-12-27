@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify, session, redirect, url_for, abort, render_template
-from models import Class, Mentor, StudentTest
+from models import Course, Mentor, StudentTest
 from common.Role import *
 from decorators import should_be
 
@@ -20,8 +20,8 @@ def class_management(class_id: str):
 
     if request.method == 'GET':
         # GET中使用jinja直接渲染试题列表和学生信息列表
-        tests = Class.get_tests_by_no(class_id)
-        students = Class.get_students_by_no(class_id)
+        tests = Course.get_tests_by_no(class_id)
+        students = Course.get_students_by_no(class_id)
 
         return render_template('class_manage.html', tests=tests, students=students)
     elif request.method == 'POST':
