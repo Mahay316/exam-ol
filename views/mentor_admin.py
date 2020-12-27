@@ -41,28 +41,29 @@ def get_questions():
     根据筛选条件返回筛选出的试题
     """
     form = request.form
-    subject, qtype, qno, content = '', '', '', ''
+    # TODO 无法记录筛选时的条件，分页会出错
+    subject, qtype, qno, content, page = '', '', '', '', 1
     try:
         subject = form['subject']
         qtype = form['type']
         qno = form['qno']
         content = form['content']
+        page = form['page']
     except Exception:
         abort(404)
 
     res_json = {'code': 200, 'questions':[]}
 
-    results = []
     if subject != '':
-        results = Question.select_questions_by(subject=subject)
+        results = Question.select_questions_by(page, subject=subject)
     elif qtype != '':
-        results = Question.select_questions_by(qtype=qtype)
+        results = Question.select_questions_by(page, qtype=qtype)
     elif qno != '':
-        results = Question.select_questions_by(qno=qno)
+        results = Question.select_questions_by(page, qno=qno)
     elif content != '':
-        results = Question.select_questions_by(content=content)
+        results = Question.select_questions_by(page, content=content)
     else:
-        abort(404)
+        results = Question.select_questions_by(page)
 
     for result in results:
         res_json['questions'].append({

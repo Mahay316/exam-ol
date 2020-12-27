@@ -63,10 +63,12 @@ class Question(Base):
 
     # TODO 待实现
     @classmethod
-    def select_questions_by(cls, subject=None, qtype=None, qno=None, content=None):
+    def select_questions_by(cls, page=1, subject=None, qtype=None, qno=None, content=None):
         """
-        通过筛选条件筛出所需试题，只有一个参数不为None
+        通过筛选条件筛出所需试题，如果无筛选即全部搜索，有筛选则只有一个参数不为None
+        注意隐去is_deleted
 
+        :param page: 页码编号
         :param subject: 科目筛选字符串，直接全字匹配
         :param qtype: 类型筛选，'select', 'multi', 'fill'三种其一
         :param qno: 按题号直接搜索
