@@ -6,136 +6,159 @@
     <title>添加试题</title>
 
     <!-- Google Font: Source Sans Pro -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="../static/adminlte/plugins/fontawesome-free/css/all.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="../static/adminlte/css/adminlte.min.css">
 
     <style>
-        .alternative{
+        .alternative {
             margin-bottom: 10px;
         }
-        option{
+
+        option {
             border: 1px solid black;
+        }
+
+        .check-btn[checked] span {
+            background-color: red;
         }
     </style>
 </head>
 <body class="sidebar-mini layout-fixed hold-transition">
-    <div class="wrapper">
+<div class="wrapper">
 
-        <nav class="main-header navbar navbar-expand navbar-white navbar-light shadow">
-            <!-- Left navbar links -->
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" data-widget="pushmenu" href="#" role="button">
-                        <i class="fas fa-bars">
-                        </i>
-                    </a>
-                </li>
-                <li class="nav-item d-none d-sm-inline-block">
-                    <a href="#" class="nav-link active">教师首页</a>
-                </li>
-            </ul>
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" data-widget="fullscreen" href="#" role="button">
-                        <i class="fas fa-expand-arrows-alt"></i>
-                    </a>
-                </li>
-                <button class="btn btn-outline-dark" type=button>退出</button>
-            </ul>
-        </nav>
+    <nav class="main-header navbar navbar-expand navbar-white navbar-light shadow">
+        <!-- Left navbar links -->
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" data-widget="pushmenu" href="#" role="button">
+                    <i class="fas fa-bars">
+                    </i>
+                </a>
+            </li>
+            <li class="nav-item d-none d-sm-inline-block">
+                <a href="#" class="nav-link active">教师首页</a>
+            </li>
+        </ul>
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+                    <i class="fas fa-expand-arrows-alt"></i>
+                </a>
+            </li>
+            <button class="btn btn-outline-dark" type=button>退出</button>
+        </ul>
+    </nav>
 
-        <!-- Main Sidebar Container -->
-        <aside class="main-sidebar sidebar-dark-primary elevation-4 layout-fixed" style="height:auto;">
-            <a href="#" class="brand-link">
-                <img src="../static/img/logo_finalversion.png" alt="Logo" class="brand-image img-md elevation-3" style="opacity: .8">
-                <h3 class="brand-text font-weight-bold" style="color: white">Exam_Online</h3>
-            </a>
+    <!-- Main Sidebar Container -->
+    <aside class="main-sidebar sidebar-dark-primary elevation-4 layout-fixed" style="height:auto;">
+        <a href="#" class="brand-link">
+            <img src="../static/img/logo_finalversion.png" alt="Logo" class="brand-image img-md elevation-3"
+                 style="opacity: .8">
+            <h3 class="brand-text font-weight-bold" style="color: white">Exam_Online</h3>
+        </a>
 
-            <div class="sidebar">
-                <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-                    <div class="image">
-                        <img src="../static/img/portrait.png" class="img-circle elevation-2" alt="User Image">
-                    </div>
-                    <div class="info">
-                        <a href="#" class="d-block" >郑玲老师，您好!</a>
-                    </div>
+        <div class="sidebar">
+            <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                <div class="image">
+                    <img src="../static/img/portrait.png" class="img-circle elevation-2" alt="User Image">
                 </div>
-                <nav class="mt-2">
-                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
-                        data-accordion="false">
-                        <li class="nav-header">管理</li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-paper-plane"></i>
-                                <p>
-                                    班级管理
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-paperclip"></i>
-                                <p>
-                                    试卷管理
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link active">
-                                <i class="nav-icon fas fa-pen"></i>
-                                <p>
-                                    试题管理
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-header">账号</li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-door-open"></i>
-                                <p>
-                                    退出登录
-                                </p>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
+                <div class="info">
+                    <a href="#" class="d-block">郑玲老师，您好!</a>
+                </div>
             </div>
-        </aside>
+            <nav class="mt-2">
+                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+                    data-accordion="false">
+                    <li class="nav-header">管理</li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-paper-plane"></i>
+                            <p>
+                                班级管理
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-paperclip"></i>
+                            <p>
+                                试卷管理
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link active">
+                            <i class="nav-icon fas fa-pen"></i>
+                            <p>
+                                试题管理
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-header">账号</li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-door-open"></i>
+                            <p>
+                                退出登录
+                            </p>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </aside>
 
-        <div class="content-wrapper" style="min-height: 1332.2px;">
-            <!-- Content Header (Page header) -->
-            <section class="content-header">
-                <div class="container-fluid">
-                    <div class="row mb-2">
-                        <div class="col-sm-6">
-                            <h1>试题管理</h1>
-                        </div>
-                        <div class="col-sm-6">
-                            <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item"><a href="#" style="color: black">刷新</a></li>
-                            </ol>
-                        </div>
+    <div class="content-wrapper" style="min-height: 1332.2px;">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1>试题管理</h1>
+                    </div>
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="#" style="color: black">刷新</a></li>
+                        </ol>
                     </div>
                 </div>
-            </section>
+            </div>
+        </section>
 
-            <!-- Main content -->
-            <section class="content">
-                <div class="container-fluid">
-                    <div class="col-6">
-                        <div class="card card-success">
-                            <div class="card-header">
-                                <h3 class="card-title">添加试题</h3>
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <div class="col-6">
+                    <div class="card card-success">
+                        <div class="card-header">
+                            <h3 class="card-title">添加试题</h3>
+                        </div>
+                        <div class="card-body col-12">
+                            <div style="margin-bottom: 15px;">
+                                <button type="button" id="option" href="#" class="btn btn-outline-primary"
+                                        style="margin-right: 10px;">单选题
+                                </button>
+                                <button type="button" id="multi-option" href="#" class="btn btn-outline-success"
+                                        style="margin-right: 10px;">多选题
+                                </button>
+                                <button type="button" id="completion" href="#" class="btn btn-outline-warning"
+                                        style="margin-right: 10px;">填空题
+                                </button>
                             </div>
-                            <div class="card-body col-12">
-                                <div style="margin-bottom: 15px;">
-                                    <button type="button" id="option" href="#" class="btn btn-outline-primary" style="margin-right: 10px;">单选题</button>
-                                    <button type="button" id="multi-option" href="#" class="btn btn-outline-success" style="margin-right: 10px;">多选题</button>
-                                    <button type="button" id="completion" href="#" class="btn btn-outline-warning" style="margin-right: 10px;">填空题</button>
+                            <div id="temp1" style="display: block;" class="typeofquestion">
+                                <div class="form-group">
+                                    <label>试题科目</label>
+                                    <select class="form-control">
+                                        <option value="1">数据库</option>
+                                        <option value="2">计算机组成原理</option>
+                                        <option value="3">软件工程</option>
+                                    </select>
                                 </div>
+<<<<<<< HEAD
                                 <div id="temp1" style="display: block;" class="typeofquestion">
                                     <div class="form-group">
                                         <h5><strong>单选题模板</strong></h5>
@@ -194,8 +217,43 @@
                                             <option value="3">C</option>
                                             <option value="4">D</option>
                                         </select>
-                                    </div>
+=======
+                                <div class="form-group">
+                                    <button type="button" class="btn btn-outline-primary" style="margin-right: 10px;">
+                                        添加标记位置
+                                    </button>
+                                    <button type="button" class="btn btn-outline-success" style="margin-right: 10px;">
+                                        添加备选选项
+                                    </button>
+                                    <button type="button" class="btn btn-outline-danger" style="margin-right: 10px;">
+                                        删除备选选项
+                                    </button>
                                 </div>
+                                <div class="input-group" style="height: 150px; margin-bottom: 15px;">
+                                    <span class="input-group-text"><strong>题干输入部分</strong></span>
+                                    <textarea class="form-control" aria-label="With textarea"
+                                              placeholder="最多输入255个字符"></textarea>
+                                </div>
+                                <div id="alternative-1" class="input-group">
+                                    <div class="input-group-prepend check-btn">
+                                        <span class="input-group-text alternative"><strong>A</strong></span>
+                                    </div>
+                                    <input type="text" class="form-control" placeholder="输入A选项内容">
+                                </div>
+                                <div id="alternative-2" class="input-group">
+                                    <div class="input-group-prepend check-btn">
+                                        <span class="input-group-text alternative"><strong>B</strong></span>
+                                    </div>
+                                    <input type="text" class="form-control" placeholder="输入B选项内容">
+                                </div>
+                                <div id="alternative-3" class="input-group">
+                                    <div class="input-group-prepend check-btn">
+                                        <span class="input-group-text alternative"><strong>C</strong></span>
+>>>>>>> 0dcfcad06f94d8c84fd7b7b9d289849d5f0b35d1
+                                    </div>
+                                    <input type="text" class="form-control" placeholder="输入C选项内容">
+                                </div>
+<<<<<<< HEAD
                                 <div id="temp2" style="display: none;" class="typeofquestion">
                                     <div class="form-group">
                                         <h5><strong>多选题模板</strong></h5>
@@ -304,41 +362,84 @@
                                     </div>
 
                                 </div>
+=======
+                                <div id="alternative-4" class="input-group btn-group">
+                                    <div class="input-group-prepend check-btn">
+                                        <span class="input-group-text alternative"><strong>D</strong></span>
+                                    </div>
+                                    <input type="text" class="form-control" placeholder="输入D选项内容">
+                                </div>
+                                <div class="form-group" style="margin-bottom: 15px;">
+                                    <label>正确答案</label>
+                                    <select class="form-control">
+                                        <option value="1">A</option>
+                                        <option value="2">B</option>
+                                        <option value="3">C</option>
+                                        <option value="4">D</option>
+                                    </select>
+                                </div>
                             </div>
-                            <div class="card-footer col-12">
-                                <button type="button" class="btn btn-outline-success float-right">提交</button>
+                            <div id="temp2" style="display: none;" class="typeofquestion">
+                                <div class="form-group">
+                                    <label>试题科目</label>
+                                    <select class="form-control">
+                                        <option value="1">数据库</option>
+                                        <option value="2">计算机组成原理</option>
+                                        <option value="3">软件工程</option>
+                                    </select>
+                                </div>
+>>>>>>> 0dcfcad06f94d8c84fd7b7b9d289849d5f0b35d1
+                            </div>
+                            <div id="temp3" style="display: none;" class="typeofquestion">
+                                <div class="form-group">
+                                    <label>试题科目</label>
+                                    <select class="form-control">
+                                        <option value="1">数据库</option>
+                                        <option value="2">计算机组成原理</option>
+                                        <option value="3">软件工程</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
+                        <div class="card-footer col-12">
+                            <button type="button" class="btn btn-outline-success float-right">提交</button>
+                        </div>
                     </div>
-
-
                 </div>
-                <!-- /.container-fluid -->
-            </section>
-            <!-- /.content -->
-
-
-        </div>
-
-        <footer class="main-footer">
-            <div class="float-right d-none d-sm-block">
-                <b>Version</b> 1.0.0
             </div>
-            <strong>Copyright © 2014-2020 <a href="#">Exam_Online</a>.</strong> All rights reserved.
-        </footer>
+            <!-- /.container-fluid -->
+        </section>
+        <!-- /.content -->
+
 
     </div>
 
-    <!-- REQUIRED SCRIPTS -->
+    <footer class="main-footer">
+        <div class="float-right d-none d-sm-block">
+            <b>Version</b> 1.0.0
+        </div>
+        <strong>Copyright © 2014-2020 <a href="#">Exam_Online</a>.</strong> All rights reserved.
+    </footer>
 
+    <!-- REQUIRED SCRIPTS -->
     <!-- jQuery -->
-    <script src="../static/adminlte/plugins/jquery/jquery.min.js"></script>
+    <script src="/static/js/jquery-3.5.1.min.js"></script>
     <!-- Bootstrap 4 -->
-    <script src="../static/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/static/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- AdminLTE App -->
-    <script src="../static/adminlte/js/adminlte.min.js"></script>
-    <!-- Bootstrap 4 -->
-    <script src="../static/adminlte/plugins/bootstrap/js/bootstrap.min.js"></script>
-    <script src="../static/js/add_question.js"></script>
+    <script src="/static/adminlte/js/adminlte.min.js"></script>
+    <script>
+        $(function () {
+            $('.check-btn').click(function () {
+                if ($(this).attr('checked'))
+                    $(this).removeAttr('checked')
+                else
+                    $(this).attr('checked', 'true');
+
+                console.log('checked: ', $('.check-btn[checked]').length);
+            });
+        });
+    </script>
+</div>
 </body>
 </html>
