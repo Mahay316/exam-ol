@@ -14,14 +14,14 @@ def get_classes():
     教师和学生在'{role}/class'页面均请求该接口
     """
     if 'role' not in session:
-        abort(404)
+        abort(403)
 
     if session['role'] == STUDENT:
         classes = Student.get_classes(session['no'])
     elif session['role'] == MENTOR:
         classes = Mentor.get_classes(session['no'])
     else:
-        abort(404)
+        abort(403)
 
     res_json = {'code': 200, 'classes': []}
     res_classes = res_json['classes']

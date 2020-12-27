@@ -59,3 +59,17 @@ class Question(Base):
         except Exception as e:
             session.rollback()
             raise e
+
+
+    # TODO 待实现
+    @classmethod
+    def select_questions_by(cls, subject=None, qtype=None, qno=None, content=None):
+        """
+        通过筛选条件筛出所需试题，只有一个参数不为None
+
+        :param subject: 科目筛选字符串，直接全字匹配
+        :param qtype: 类型筛选，'select', 'multi', 'fill'三种其一
+        :param qno: 按题号直接搜索
+        :param content: 按内容搜索模糊匹配
+        :return: list[Question](无内容则返回空list)
+        """

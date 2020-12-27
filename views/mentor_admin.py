@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify, session, redirect, url_for, abort, render_template
-from models import Class, Mentor, StudentTest
+from models import Class, Mentor, StudentTest, Question
 from common.Role import *
 from decorators import should_be
 
@@ -16,7 +16,7 @@ def class_management(class_id: str):
     - POST方法给出考试id，返回考试统计结果
     """
     if not Mentor.has_this_class(session['no'], class_id):
-        abort(404)
+        abort(403)
 
     if request.method == 'GET':
         # GET中使用jinja直接渲染试题列表和学生信息列表
@@ -27,8 +27,51 @@ def class_management(class_id: str):
     elif request.method == 'POST':
         test_no = request.form.get('test_no')
         if test_no is None:
-            abort(404)
+            abort(403)
 
         results = StudentTest.get_st_by_tno(test_no)
         res_json = {'code': 200, 'results': results}
         return jsonify(res_json)
+
+
+@mentor_bp.route('/get_questions', methods=['POST'])
+@should_be([MENTOR])
+def get_questions():
+    """
+    根据筛选条件返回筛选出的试题
+    """
+    form = request.form
+    subject, qtype, qno, content = '', '', '', ''
+    try:
+        subject = form['subject']
+        qtype = form['type']
+        qno = form['qno']
+        content = form['content']
+    except Exception:
+        abort(404)
+
+    res_json = {'code': 200, 'questions':[]}
+
+    results = []
+    if subject != '':
+        results = Question.select_questions_by(subject=subject)
+    elif qtype != '':
+        results = Question.select_questions_by(qtype=qtype)
+    elif qno != '':
+        results = Question.select_questions_by(qno=qno)
+    elif content != '':
+        results = Question.select_questions_by(content=content)
+    else:
+        abort(404)
+
+    for result in results:
+        res_json['questions'].append({
+            'qno': result.Qno,
+            'qtype': result.Qtype,
+            'qstem': result.Qstem,
+            'qselect': result.Qselect,
+            'qanswer': result.Qanswer,
+            'qsubject': result.Qsubject
+        })
+
+    return jsonify(res_json)
