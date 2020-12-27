@@ -138,6 +138,10 @@
                                 </div>
                                 <div id="temp1" style="display: block;" class="typeofquestion">
                                     <div class="form-group">
+                                        <h5><strong>单选题模板</strong></h5>
+                                        <HR>
+                                    </div>
+                                    <div class="form-group">
                                         <label>试题科目</label>
                                         <select class="form-control">
                                             <option value="1">数据库</option>
@@ -154,30 +158,34 @@
                                         <span class="input-group-text"><strong>题干输入部分</strong></span>
                                         <textarea class="form-control" aria-label="With textarea" placeholder="最多输入255个字符"></textarea>
                                     </div>
-                                    <div id="alternative-1" class="input-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text alternative"><strong>A</strong></span>
+
+                                    <div class="form-group">
+                                        <div id="option-alternative-1" class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text alternative"><strong>A</strong></span>
+                                            </div>
+                                            <input type="text" class="form-control" placeholder="输入A选项内容">
                                         </div>
-                                        <input type="text" class="form-control" placeholder="输入A选项内容">
-                                    </div>
-                                    <div id="alternative-2" class="input-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text alternative"><strong>B</strong></span>
+                                        <div id="option-alternative-2" class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text alternative"><strong>B</strong></span>
+                                            </div>
+                                            <input type="text" class="form-control" placeholder="输入B选项内容">
                                         </div>
-                                        <input type="text" class="form-control" placeholder="输入B选项内容">
-                                    </div>
-                                    <div id="alternative-3" class="input-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text alternative"><strong>C</strong></span>
+                                        <div id="option-alternative-3" class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text alternative"><strong>C</strong></span>
+                                            </div>
+                                            <input type="text" class="form-control" placeholder="输入C选项内容">
                                         </div>
-                                        <input type="text" class="form-control" placeholder="输入C选项内容">
-                                    </div>
-                                    <div id="alternative-4" class="input-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text alternative"><strong>D</strong></span>
+                                        <div id="option-alternative-4" class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text alternative"><strong>D</strong></span>
+                                            </div>
+                                            <input type="text" class="form-control" placeholder="输入D选项内容">
                                         </div>
-                                        <input type="text" class="form-control" placeholder="输入D选项内容">
                                     </div>
+
                                     <div class="form-group" style="margin-bottom: 15px;">
                                         <label>正确答案</label>
                                         <select class="form-control">
@@ -190,15 +198,9 @@
                                 </div>
                                 <div id="temp2" style="display: none;" class="typeofquestion">
                                     <div class="form-group">
-                                        <label>试题科目</label>
-                                        <select class="form-control">
-                                            <option value="1">数据库</option>
-                                            <option value="2">计算机组成原理</option>
-                                            <option value="3">软件工程</option>
-                                        </select>
+                                        <h5><strong>多选题模板</strong></h5>
+                                        <HR>
                                     </div>
-                                </div>
-                                <div id="temp3" style="display: none;" class="typeofquestion">
                                     <div class="form-group">
                                         <label>试题科目</label>
                                         <select class="form-control">
@@ -206,7 +208,102 @@
                                             <option value="2">计算机组成原理</option>
                                             <option value="3">软件工程</option>
                                         </select>
-                                    </div>                                </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <button type="button" class="btn btn-outline-primary" style="margin-right: 10px;">添加标记位置</button>
+                                        <button type="button" class="btn btn-outline-success" style="margin-right: 10px;">添加备选选项</button>
+                                        <button type="button" class="btn btn-outline-danger" style="margin-right: 10px;">删除备选选项</button>
+                                    </div>
+                                    <div class="input-group" style="height: 150px; margin-bottom: 15px;">
+                                        <span class="input-group-text"><strong>题干输入部分</strong></span>
+                                        <textarea class="form-control" aria-label="With textarea" placeholder="最多输入255个字符"></textarea>
+                                    </div>
+                                    <div id="multi-option-alternative-1" class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text alternative"><strong>A</strong></span>
+                                        </div>
+                                        <input type="text" class="form-control" placeholder="输入A选项内容">
+                                    </div>
+                                    <div id="multi-option-alternative-2" class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text alternative"><strong>B</strong></span>
+                                        </div>
+                                        <input type="text" class="form-control" placeholder="输入B选项内容">
+                                    </div>
+                                    <div id="multi-option-alternative-3" class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text alternative"><strong>C</strong></span>
+                                        </div>
+                                        <input type="text" class="form-control" placeholder="输入C选项内容">
+                                    </div>
+                                    <div id="multi-option-alternative-4" class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text alternative"><strong>D</strong></span>
+                                        </div>
+                                        <input type="text" class="form-control" placeholder="输入D选项内容">
+                                    </div>
+                                    <div class="form-group" style="margin-bottom: 15px;">
+                                        <label>正确答案</label>
+                                        <div class="input-group mb-3">
+                                            <input type="text" class="form-control" placeholder="大写字母表示答案，每个答案中间用;（分号）分隔">
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="custom-control custom-checkbox">
+                                                <input class="custom-control-input" type="checkbox" id="customCheckbox1" value="option1">
+                                                <label for="customCheckbox1" class="custom-control-label"><strong>A</strong></label>
+                                            </div>
+                                            <div class="custom-control custom-checkbox">
+                                                <input class="custom-control-input" type="checkbox" id="customCheckbox2" checked="option2">
+                                                <label for="customCheckbox2" class="custom-control-label"><strong>B</strong></label>
+                                            </div>
+                                            <div class="custom-control custom-checkbox">
+                                                <input class="custom-control-input" type="checkbox" id="customCheckbox3" checked="option3">
+                                                <label for="customCheckbox3" class="custom-control-label"><strong>C</strong></label>
+                                            </div>
+                                            <div class="custom-control custom-checkbox">
+                                                <input class="custom-control-input" type="checkbox" id="customCheckbox4" checked="option4">
+                                                <label for="customCheckbox4" class="custom-control-label"><strong>D</strong></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="temp3" style="display: none;" class="typeofquestion">
+                                    <div class="form-group">
+                                        <h5><strong>填空题模板</strong></h5>
+                                        <HR>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>试题科目</label>
+                                        <select class="form-control">
+                                            <option value="1">数据库</option>
+                                            <option value="2">计算机组成原理</option>
+                                            <option value="3">软件工程</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <button type="button" class="btn btn-outline-primary" style="margin-right: 10px;">添加标记位置</button>
+                                    </div>
+                                    <div class="input-group" style="height: 150px; margin-bottom: 15px;">
+                                        <span class="input-group-text"><strong>题干输入部分</strong></span>
+                                        <textarea class="form-control" aria-label="With textarea" placeholder="最多输入255个字符"></textarea>
+                                    </div>
+                                    <div class="form-group" style="margin-bottom: 15px;">
+                                        <label>正确答案</label>
+                                        <div id="completion-1" class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text alternative"><strong>1</strong></span>
+                                            </div>
+                                            <input type="text" class="form-control" placeholder="输入填空答案，/分隔相似答案">
+                                        </div>
+                                        <div id="completion-2" class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text alternative"><strong>2</strong></span>
+                                            </div>
+                                            <input type="text" class="form-control" placeholder="输入填空答案，/分隔相似答案">
+                                        </div>
+                                    </div>
+
+                                </div>
                             </div>
                             <div class="card-footer col-12">
                                 <button type="button" class="btn btn-outline-success float-right">提交</button>
@@ -230,17 +327,18 @@
             <strong>Copyright © 2014-2020 <a href="#">Exam_Online</a>.</strong> All rights reserved.
         </footer>
 
-        <!-- REQUIRED SCRIPTS -->
-
-        <!-- jQuery -->
-        <script src="../static/adminlte/plugins/jquery/jquery.min.js"></script>
-        <!-- Bootstrap 4 -->
-        <script src="../static/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-        <!-- AdminLTE App -->
-        <script src="../static/adminlte/js/adminlte.min.js"></script>
-        <!-- Bootstrap 4 -->
-        <script src="../static/adminlte/plugins/bootstrap/js/bootstrap.min.js"></script>
-        <script src="../static/js/add_question.js"></script>
     </div>
+
+    <!-- REQUIRED SCRIPTS -->
+
+    <!-- jQuery -->
+    <script src="../static/adminlte/plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap 4 -->
+    <script src="../static/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="../static/adminlte/js/adminlte.min.js"></script>
+    <!-- Bootstrap 4 -->
+    <script src="../static/adminlte/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../static/js/add_question.js"></script>
 </body>
 </html>
