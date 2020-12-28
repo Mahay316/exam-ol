@@ -157,12 +157,13 @@ CREATE TABLE `subject` (
 -- ----------------------------
 DROP TABLE IF EXISTS `test`;
 CREATE TABLE `test` (
-  `Tno` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '考试的编号',
-  `Tname` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '考试的名称',
-  `Tstart` timestamp NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '考试开始时间',
-  `Tend` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '考试结束时间',
-  `Pno` varchar(20) COLLATE utf8mb4_general_ci NOT NULL COMMENT '引用的试卷编号',
-  `Cno` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '所属的课程编号',
+  `Tno` varchar(20) NOT NULL COMMENT '考试的编号',
+  `Tname` varchar(20) NOT NULL COMMENT '考试的名称',
+  `Tdesc` varchar(255) COMMENT '考试说明',
+  `Tstart` timestamp NOT NULL COMMENT '考试开始时间',
+  `Tend` timestamp NULL DEFAULT NULL COMMENT '考试结束时间',
+  `Pno` varchar(20) NOT NULL COMMENT '引用的试卷编号',
+  `Cno` varchar(20) DEFAULT NULL COMMENT '所属的课程编号',
   PRIMARY KEY (`Tno`),
   KEY `Pno` (`Pno`),
   KEY `Cno` (`Cno`),
