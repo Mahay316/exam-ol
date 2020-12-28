@@ -1,5 +1,5 @@
 from flask import Flask, render_template, session, redirect, jsonify, url_for, request
-from models import init_db
+from models import init_db, Subject
 from views import exam_bp, auth_bp, class_bp, paper_bp, question_bp
 from common.Role import *
 from decorators import login_required
@@ -34,6 +34,18 @@ def index():
 @app.route('/class')
 def get_class():
     return render_template('class_manage.html')
+
+
+@app.route('/subjects')
+def get_subjects():
+    subjects = Subject.get_all_subs()
+    res_json = {'code': 200, 'subjects': []}
+    for sub in subjects:
+        res_json['subjects'].append({
+            'subno': sub.Subno,
+            'subname': sub.Subname
+        })
+    return jsonify(res_json)
 
 
 @app.errorhandler(404)

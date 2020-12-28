@@ -90,9 +90,25 @@ class Paper(Base):
     def add_paper(cls, questions, pname, subno):
         """
         组卷
+        接口计算pscore和pnum
 
         :param questions: [{'qno': '001', 'qpscore': 3}, {...}, {...}]
         :param pname: 试卷名
         :param subno: 试卷科目
         :return: 成功返回True，失败False
+        """
+
+    # TODO 待实现
+    @classmethod
+    def delete_paper(cls, pno):
+        """
+        删除试卷
+        """
+
+
+    # TODO 待实现
+    @classmethod
+    def get_paper_num(cls) -> int:
+        """
+        获取所有试卷数量
         """

@@ -3,6 +3,8 @@ from models import Paper
 from common.Role import *
 from decorators import should_be, login_required
 import json
+from config import PAGE_SIZE
+from math import ceil
 
 paper_bp = Blueprint('paper_bp', __name__)
 
@@ -31,16 +33,20 @@ def get_paper():
 
     res_json = {'code': 200, 'questions': []}
 
+    select_dict = {}
     if subject is not None:
-        results = Paper.select_papers_by(page, subject=subject)
+        select_dict['subject'] = subject
+        # results = Paper.select_papers_by(page, subject=subject)
     elif used is not None:
-        results = Paper.select_papers_by(page, used=used)
+        select_dict['used'] = used
+        # results = Paper.select_papers_by(page, used=used)
     elif pno is not None:
-        results = Paper.select_papers_by(page, pno=pno)
+        select_dict['pno'] = pno
+        # results = Paper.select_papers_by(page, pno=pno)
     elif pname is not None:
-        results = Paper.select_papers_by(page, pname=pname)
-    else:
-        results = Paper.select_papers_by(page)
+        select_dict['pname'] = pname
+        # results = Paper.select_papers_by(page, pname=pname)
+    results = Paper.select_papers_by(page, **select_dict)
 
     for result in results:
         res_json['questions'].append({
@@ -67,3 +73,35 @@ def add_paper():
     if flag:
         return jsonify({'code': 200})
     return jsonify({'code': 403})
+
+
+@paper_bp.route('/', methods=['DELETE'])
+@should_be([MENTOR])
+def delete_paper():
+    pno = request.form['DELETE']
+    Paper.delete_paper(pno)
+    return jsonify({'code': 200})
+
+
+@paper_bp.route('/preview', methods=['GET', 'POST'])
+@should_be([MENTOR])
+def preview_paper():
+    """
+    预览试卷。POST方法用于正在组卷的预览，GET用于预览已存在的卷子
+    """
+    if request.method == 'GET':
+        pno = request.args['pno']
+        paper = Paper.select_papers_by(1, pno=pno)
+        res_json = {}
+    # TODO to implement
+    else:
+        pass
+
+
+@paper_bp.route('page_num')
+@should_be([MENTOR])
+def get_paper_page_num():
+    return jsonify({
+        'code': 200,
+        'page_num': ceil(Paper.get_paper_num() / PAGE_SIZE)
+    })

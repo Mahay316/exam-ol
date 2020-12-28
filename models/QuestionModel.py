@@ -117,3 +117,32 @@ class Question(Base):
         :param qselect: 转义过的json字符串，直接存储即可。
         :return: 成功添加返回True，否则Flase
         """
+
+
+    # TODO 待实现
+    @classmethod
+    def delete_question(cls, qno):
+        """
+        删除试题
+        """
+
+
+    # TODO 待实现
+    @classmethod
+    def update_question(cls, old_qno, qtype, qstem, qanswer, qselect, qsubject):
+        """
+        更新试题
+        除了old_qno其他参数均为新题目的信息
+
+        使用存储过程实现，目前还未完成
+
+        :param old_qno: 待修改的试题号
+        """
+
+
+    # TODO 待实现
+    @classmethod
+    def get_question_num(cls):
+        """
+        获取所有试卷数目
+        """

@@ -2,8 +2,19 @@ from flask import Blueprint, request, jsonify, session, redirect, url_for, abort
 from models import Question
 from common.Role import *
 from decorators import should_be, login_required
+from math import ceil
+from config import PAGE_SIZE
 
 question_bp = Blueprint('question_bp', __name__)
+
+
+@question_bp.route('/manage')
+@login_required('redirect')
+def question_index():
+    if session['role'] == MENTOR:
+        return render_template('question_repo.html')
+    else:
+        abort(404)
 
 
 @question_bp.route('/', methods=['POST'])
@@ -32,25 +43,28 @@ def get_questions():
     根据筛选条件返回筛选出的试题
     """
     args = request.args
-    subject, qtype, qno, content, page = None, None, None, None, 1
+    subject, qtype, content, page = None, None, None, 1
     subject = args.get('subject')
     qtype = args.get('type')
-    qno = args.get('qno')
     content = args.get('content')
     page = args.get('page')
 
     res_json = {'code': 200, 'questions': []}
+    select_dict = {}
 
     if subject is not None:
-        results = Question.select_questions_by(page, subject=subject)
+        select_dict['subject'] = subject
+        # results = Question.select_questions_by(page, subject=subject)
     elif qtype is not None:
-        results = Question.select_questions_by(page, qtype=qtype)
-    elif qno is not None:
-        results = Question.select_questions_by(page, qno=qno)
+        select_dict['qtype'] = qtype
+        # results = Question.select_questions_by(page, qtype=qtype)
+    # elif qno is not None:
+    #     results = Question.select_questions_by(page, qno=qno)
     elif content is not None:
-        results = Question.select_questions_by(page, content=content)
-    else:
-        results = Question.select_questions_by(page)
+        select_dict['content'] = content
+        # results = Question.select_questions_by(page, content=content)
+
+    results = Question.select_questions_by(page, **select_dict)
 
     for result in results:
         res_json['questions'].append({
@@ -65,10 +79,37 @@ def get_questions():
     return jsonify(res_json)
 
 
-@question_bp.route('/manage')
-@login_required('redirect')
-def question_index():
-    if session['role'] == MENTOR:
-        return render_template('question_repo.html')
-    else:
-        abort(404)
+@question_bp.route('/', methods=['DELETE'])
+@should_be([MENTOR])
+def delete_question():
+    """
+    删除试题
+    """
+    qno = request.form['qno']
+    Question.delete_question(qno)
+    return jsonify({'code': 200})
+
+
+@question_bp.route('/', methods=['PUT'])
+@should_be([MENTOR])
+def update_question():
+    """
+    更新试题
+    """
+    form = request.form
+    qno = form['qno']
+    qtype = form['qtype']
+    qstem = form['qstem']
+    qanswer = form['qanswer']
+    qselect = form['qselect']
+    qsubject = form['qsubject']
+    Question.update_question(qno, qtype, qstem, qanswer, qselect, qsubject)
+    return jsonify({'code': 200})
+
+
+@question_bp.route('/page_num')
+def get_question_page_num():
+    return jsonify({
+        'code': 200,
+        'page_num': ceil(Question.get_question_num() / PAGE_SIZE)
+    })
