@@ -119,13 +119,13 @@ def questions():
                 'questionID': q.Qno,
                 'type': q.Qtype,
                 'stem': q.Qstem, # 题干字符串
-                'choices': json.dumps(q.Qanswer), # qanswer为json格式字符串(在数据库中存储即是json字符串)
+                'choices': "", # 选择题的选项，填空题无
                 'cache': ""
             }
 
             # 如果是选择题则choices置空
-            if q.is_fill_in_blanks():
-                cur_dict['choices'] = ""
+            if not q.is_fill_in_blanks():
+                cur_dict['choices'] = json.dumps(q.Qselect)
 
             # 用户已作答的缓存
             if q.Qno in session.keys():
@@ -203,26 +203,3 @@ def questions():
 #     """
 #     判卷，判卷完成后清楚服务端的作答缓存
 #     """
-
-
-@exam_bp.route('/get_papers')
-@should_be([MENTOR, STUDENT])
-def get_papers():
-    """
-    获取全部试卷
-
-    :return: json
-    """
-    papers = Paper.get_all_papers()
-
-    res_json = {'code': 200, 'papers': []}
-    res_papers = res_json['papers']
-
-    for paper in papers:
-        res_papers.append({
-            'pno': paper.Cno,
-            'pname': paper.Cname,
-            'psubject': paper.Csubject
-        })
-
-    return jsonify(res_json)

@@ -181,3 +181,12 @@ class Question(Base):
         """
         获取所有试卷数目
         """
+
+
+    # TODO
+    @classmethod
+    def get_questions_by_pno(cls, pno):
+        """
+        通过试卷号获取该试卷的全部试题
+        :return: list[Question]
+        """
