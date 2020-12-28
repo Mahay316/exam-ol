@@ -57,7 +57,7 @@ def get_exam_list_page():
     return render_template('test_list.html')
 
 
-@class_bp.route('/member')
+@class_bp.route('/member', methods=['GET'])
 @login_required('json')
 def get_class_member():
     cno = request.args.get('cno')

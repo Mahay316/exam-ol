@@ -39,7 +39,7 @@ def get_class():
 @app.errorhandler(404)
 def page_not_found(err):
     """自定义404页面"""
-    return render_template('error-404.html')
+    return render_template('error_404.html')
 
 
 if __name__ == '__main__':
