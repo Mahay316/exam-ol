@@ -139,7 +139,7 @@ class Question(Base):
                                 Qtype=qtype,
                                 Qstem=qstem,
                                 Qanswer=qanswer,
-                                Qselect=qselect,)
+                                Qselect=qselect)
                                 # Subno=qsubject)
             session.add(question)
             session.commit()
@@ -147,7 +147,8 @@ class Question(Base):
 
         except:
             session.rollback()
-            return 'eer'
+            raise e
+            return False
 
         finally:
             engine.dispose()
