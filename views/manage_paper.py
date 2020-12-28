@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify, session, redirect, url_for, abort, render_template
-from models import Paper
+from models import Paper, Question
 from common.Role import *
 from decorators import should_be, login_required
 import json
@@ -91,10 +91,24 @@ def preview_paper():
     """
     if request.method == 'GET':
         pno = request.args['pno']
-        paper = Paper.select_papers_by(1, pno=pno)
-        res_json = {}
-    # TODO to implement
+        res_json = {
+            'code': 200,
+            'questions': []
+        }
+
+        questions = Question.get_questions_by_pno(pno)
+        for q in questions:
+            res_json['questions'].append({
+                'qno': q.Qno,
+                'qtype': q.Qtype,
+                'qstem': q.Qstem,
+                'qanswer': q.Qanswer,
+                'qselect': q.Qselect
+            })
+
+        return jsonify(res_json)
     else:
+        # TODO 用于正在组卷的预览
         pass
 
 
