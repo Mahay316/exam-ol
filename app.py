@@ -1,6 +1,6 @@
 from flask import Flask, render_template, session, abort, redirect, url_for, request
 from models import init_db
-from views import exam_bp, mentor_bp, utils_bp, auth_bp
+from views import exam_bp, utils_bp, auth_bp, class_bp, paper_bp
 from common.Role import *
 
 app = Flask(__name__)
@@ -12,6 +12,10 @@ app.config.from_pyfile('config.py')
 # 全局错误处理
 @app.route('/')
 def redirect_to_index():
+    # return render_template('add_question.html')
+    # return render_template('paper_preview.html')
+    # return render_template('new_paper.html')
+    # return render_template('exam_detail.html')
     return redirect(url_for('index'))
 
 
@@ -69,7 +73,8 @@ if __name__ == '__main__':
 
     # 在此处注册蓝图
     app.register_blueprint(utils_bp)
-    app.register_blueprint(mentor_bp, url_prefix='/mentor')
+    app.register_blueprint(paper_bp, url_prefix='/paper')
+    app.register_blueprint(class_bp, url_prefix='/class')
     app.register_blueprint(exam_bp, url_prefix='/exam')
     app.register_blueprint(auth_bp, url_prefix='/auth')
     app.run(debug=True)

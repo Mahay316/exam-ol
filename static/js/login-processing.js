@@ -64,13 +64,16 @@ $(function () {
             identity = 'admin';
 
         password = hex_md5(password);
+
+        let remember_me = $('#remember').prop('checked');
+
         $.ajax({
             url: '/auth/login',
             method: 'post',
             data: {
                 'username': account,
                 'password': password,
-                'remember_me': $('#remember').prop('checked'),
+                'remember_me': remember_me,
                 'role': identity
             },
             success: function (data) {
@@ -102,9 +105,10 @@ $(function () {
                     $('.popover').removeClass('popover-danger-top')
                         .addClass('popover-danger popover-danger-left');
                 }
-
             }
         });
+
+
 
         // let data = 'fa';
         //
