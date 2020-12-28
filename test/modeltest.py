@@ -18,9 +18,11 @@ from common import model_common
 
 
 def qt():
-
-
     # print(Question.add_question(qtype='select', qstem='aaaa', qanswer='sdsd', qselect='BD', qsubject='软件工程'))
+
+    # print(Course.add_class_member('c0003','student1'))
+
+    # print(Course.del_class_member('c0001','student2'))
 
 
 

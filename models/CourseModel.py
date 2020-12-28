@@ -87,7 +87,6 @@ class Course(Base):
             engine.dispose()
             session.remove()
 
-    # TODO 待实现
     @classmethod
     def add_class_member(cls, cno, sno):
         """
@@ -98,9 +97,8 @@ class Course(Base):
         :return: 成功返回True， 学生已存在返回False
         """
 
-        StudentCourse.add_class_member(cno=cno, sno=sno)
+        return StudentCourse.add_class_member(cno=cno, sno=sno)
 
-    # TODO 待实现
     @classmethod
     def del_class_member(cls, cno, sno):
         """
@@ -110,3 +108,5 @@ class Course(Base):
         :param sno: 学生学号
         :return: 成功返回True，学生不存在返回False
         """
+
+        return StudentCourse.del_class_member(cno=cno, sno=sno)
