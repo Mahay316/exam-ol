@@ -1,0 +1,37 @@
+/* popovers indicate different state */
+.popover-danger {
+    background-color: #d9534f;
+    border-color: #d43f3a;
+    color: white !important;
+}
+
+.popover-danger-top .arrow:after {
+    border-top-color: #d9534f;
+}
+
+.popover-danger-left .arrow:after {
+    border-left-color: #d9534f;
+}
+
+.popover-danger-right .arrow:after {
+    border-right-color: #d9534f;
+}
+
+.popover-danger .popover-body {
+    color: white !important;
+}
+
+/*输入框成功状态提示的popover*/
+.popover-success {
+    background-color: #28a745;
+    border-color: #1d9539;
+    color: white !important;
+}
+
+.popover-success-left .arrow:after {
+    border-left-color: #28a745;
+}
+
+.popover-success .popover-body {
+    color: white !important;
+}
