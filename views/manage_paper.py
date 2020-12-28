@@ -21,7 +21,7 @@ def get_questions():
         content = form['content']
         page = form['page']
     except Exception:
-        abort(404)
+        return jsonify({'code': 403})
 
     res_json = {'code': 200, 'questions': []}
 

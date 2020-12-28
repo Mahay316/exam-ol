@@ -22,3 +22,27 @@ class Class:
         :param cls_no: 课程号
         :return: list[Student]
         """
+
+
+    # TODO 待实现
+    @classmethod
+    def add_class_member(cls, cno, sno):
+        """
+        为班级增加学生
+
+        :param cno: 课程号
+        :param sno: 学生学号
+        :return: 成功返回True， 学生已存在返回False
+        """
+
+
+    # TODO 待实现
+    @classmethod
+    def del_class_member(cls, cno, sno):
+        """
+        为班级删除学生
+
+        :param cno: 课程号
+        :param sno: 学生学号
+        :return: 成功返回True，学生不存在返回False
+        """

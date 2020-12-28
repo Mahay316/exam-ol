@@ -1,6 +1,6 @@
-from flask import Flask, render_template, session, abort, redirect, url_for, request
+from flask import Flask, render_template, session, redirect, jsonify, url_for, request
 from models import init_db
-from views import exam_bp, utils_bp, auth_bp, class_bp, paper_bp
+from views import exam_bp, auth_bp, class_bp, paper_bp
 from common.Role import *
 
 app = Flask(__name__)
@@ -19,7 +19,7 @@ def redirect_to_index():
     return redirect(url_for('index'))
 
 
-@app.route('/index', methods=['GET', 'POST'])
+@app.route('/index', methods=['GET'])
 def index():
     """
     负责根据用户身份在后端进行重定向，将不同身份用户定向到对应首页
@@ -39,20 +39,7 @@ def index():
             # TODO 跳转管理员主页
             pass
         else:
-            abort(404)
-    elif request.method == 'POST':
-        target = request.form.get('target')
-        if target is None:
-            abort(404)
-
-        if target == 'class_management':
-            return render_template('teacher_adm.html')
-        elif target == 'paper_management':
-            return render_template('test_paper.html')
-        elif target == 'question_management':
-            return render_template('test_question.html')
-        else:
-            abort(404)
+            return jsonify({'code': 403})
 
 
 @app.route('/class')
@@ -72,7 +59,6 @@ if __name__ == '__main__':
     init_db(app)
 
     # 在此处注册蓝图
-    app.register_blueprint(utils_bp)
     app.register_blueprint(paper_bp, url_prefix='/paper')
     app.register_blueprint(class_bp, url_prefix='/class')
     app.register_blueprint(exam_bp, url_prefix='/exam')

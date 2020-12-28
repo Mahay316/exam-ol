@@ -2,7 +2,7 @@ from flask import Blueprint, request, jsonify, session
 from models import Test
 from datetime import datetime
 import json
-from models import Student
+from models import Student, Paper
 from decorators import should_be
 from common.Role import *
 
@@ -203,3 +203,26 @@ def questions():
 #     """
 #     判卷，判卷完成后清楚服务端的作答缓存
 #     """
+
+
+@exam_bp.route('/get_papers')
+@should_be([MENTOR, STUDENT])
+def get_papers():
+    """
+    获取全部考试
+
+    :return: json
+    """
+    papers = Paper.get_all_papers()
+
+    res_json = {'code': 200, 'papers': []}
+    res_papers = res_json['papers']
+
+    for paper in papers:
+        res_papers.append({
+            'pno': paper.Cno,
+            'pname': paper.Cname,
+            'psubject': paper.Csubject
+        })
+
+    return jsonify(res_json)

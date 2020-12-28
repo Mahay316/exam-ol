@@ -1,33 +1,105 @@
-from flask import Blueprint, request, jsonify, session, redirect, url_for, abort, render_template
-from models import Class, Mentor, StudentTest, Question
+from flask import Blueprint, request, jsonify, abort, session, redirect, url_for, render_template
+from models import Class, Mentor, StudentTest, Student
 from common.Role import *
-from decorators import should_be
+from decorators import should_be, login_required
 
 class_bp = Blueprint('class_bp', __name__)
 
-@class_bp.route('/<string:class_id>', methods=['GET', 'POST'])
+
+def has_this_class(cno):
+    role = session.get('role')
+    if role == STUDENT:
+        if_has = Student.has_this_class(session['no'], cno)
+    elif role == MENTOR:
+        if_has = Mentor.has_this_class(session['no'], cno)
+    else:
+        if_has = False
+
+    return if_has
+
+
+@class_bp.route('/list')
+@login_required('json')
+def get_classes():
+    """
+    返回全部班级的信息
+    """
+    if session['role'] == STUDENT:
+        classes = Student.get_classes(session['no'])
+    elif session['role'] == MENTOR:
+        classes = Mentor.get_classes(session['no'])
+    else:
+        return jsonify({'code': 403})
+
+    res_json = {'code': 200, 'classes': []}
+    res_classes = res_json['classes']
+
+    for cur_cls in classes:
+        res_classes.append({
+            'cno': cur_cls.Cno,
+            'cname': cur_cls.Cname,
+            'csubject': cur_cls.Csubject
+        })
+
+    return jsonify(res_json)
+
+
+@class_bp.route('/detail')
+@login_required('redirect')
+def get_exam_list_page():
+    cno = request.args.get('cno')
+    if cno is None:
+        abort(404)
+
+    if not has_this_class(cno):
+        abort(404)
+
+    return render_template('test_list.html')
+
+
+@class_bp.route('/member')
+@login_required('json')
+def get_class_member():
+    cno = request.args.get('cno')
+    page = request.args.get('page')
+
+    if cno is None or page is None:
+        abort(404)
+
+    if not has_this_class(cno):
+        abort(404)
+
+    members = Class.get_students_by_no(cno)
+    res_json = {'code': 200, 'members': []}
+    res_members = res_json['members']
+    for member in members:
+        res_members.append({
+            'sno': member.Sno,
+            'sname': member.Sname
+        })
+
+    return jsonify(res_json)
+
+
+@class_bp.route('/member', methods=['POST', 'DELETE'])
 @should_be([MENTOR])
-def class_management(class_id: str):
-    """
-    班级信息管理
+def change_student():
+    cno = request.form['cno']
+    sno = request.form['sno']
 
-    - GET方法返回html，用jinja后端渲染学生信息和考试下拉列表
-    - POST方法给出考试id，返回考试统计结果
-    """
-    if not Mentor.has_this_class(session['no'], class_id):
-        abort(403)
+    if not Mentor.has_this_class(session['no'], cno):
+        return jsonify({'code': 204})
 
-    if request.method == 'GET':
-        # GET中使用jinja直接渲染试题列表和学生信息列表
-        tests = Class.get_tests_by_no(class_id)
-        students = Class.get_students_by_no(class_id)
+    if request.method == 'POST':
+        flag = Class.add_class_member(cno, sno)
+        if not flag:
+            # 学生已存在
+            return jsonify({'code': 203})
+        return jsonify({'code': 200})
 
-        return render_template('class_manage.html', tests=tests, students=students)
-    elif request.method == 'POST':
-        test_no = request.form.get('test_no')
-        if test_no is None:
-            abort(403)
-
-        results = StudentTest.get_st_by_tno(test_no)
-        res_json = {'code': 200, 'results': results}
-        return jsonify(res_json)
+    elif request.method == 'DELETE':
+        flag = Class.del_class_member(cno, sno)
+        if not flag:
+            # 学生不存在
+            return jsonify({'code': 204})
+        return jsonify({'code': 200})
