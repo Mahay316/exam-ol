@@ -42,3 +42,13 @@ class Subject(Base):
         finally:
             engine.dispose()
             session.remove()
+
+
+    # TODO to be implemented
+    @classmethod
+    def get_all_subs(cls):
+        """
+        获取全部科目对象
+
+        :return: list[Subject]
+        """
