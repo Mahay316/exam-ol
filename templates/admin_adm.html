@@ -3,26 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>试卷管理</title>
+    <title>系统管理员页面</title>
 
-    <!-- Google Font: Source Sans Pro -->
-    <link rel="stylesheet"
-          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="/static/fontawesome/css/all.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="/static/adminlte/css/adminlte.min.css">
-    <link rel="stylesheet" href="/static/daterangepicker/daterangepicker.css">
+
 
     <style>
         tr {
             text-align: center;
         }
+        .alternative {
+            margin-bottom: 10px;
+        }
+
+        option {
+            border: 1px solid black;
+        }
+
+        .check-btn[checked] span {
+            background-color: red;
+        }
+
+        textarea {
+            resize: none;
+        }
+
+        .modal-dialog {
+            min-width: 700px !important;
+        }
+
+        .modal-header {
+            border: none;
+            padding: 5px 15px 10px;
+        }
+
+        .modal-header .nav-tabs {
+            width: 100%;
+        }
+
+        .modal-header .nav-tabs .active {
+            border-top: 3px solid #007bff !important;
+        }
+
+        .modal-header .nav-tabs .nav-link {
+            padding: 8px 20px;
+        }
+
+        .modal-header .nav-tabs .nav-link:hover {
+            border-top: 3px solid #dee2e6;
+        }
     </style>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
-
 <div class="wrapper">
+    <!-- Navbar -->
     <nav class="main-header navbar navbar-expand navbar-white navbar-light shadow">
         <!-- Left navbar links -->
         <ul class="navbar-nav">
@@ -33,35 +70,34 @@
                 </a>
             </li>
             <li class="nav-item d-none d-sm-inline-block">
-                <a href="#" class="nav-link active">教师首页</a>
-            </li>
-        </ul>
-        <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-                <a class="nav-link" data-widget="fullscreen" href="#" role="button">
-                    <i class="fas fa-expand-arrows-alt"></i>
-                </a>
+                <a href="/" class="nav-link active">首页</a>
             </li>
         </ul>
     </nav>
+    <!-- /.navbar -->
 
     <!-- Main Sidebar Container -->
-    <aside class="main-sidebar sidebar-dark-primary elevation-4 layout-fixed" style="height:auto;">
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+        <!-- Brand Logo -->
         <a href="#" class="brand-link">
-            <img src="../static/img/logo_white.png" alt="Logo" class="brand-image img-md elevation-3"
+            <img src="/static/img/logo_white.png" alt="Logo" class="brand-image img-md elevation-3"
                  style="opacity: .8">
-            <h3 class="brand-text font-weight-bold" style="color: white">Exam_Online</h3>
+            <span class="brand-text font-weight-light">在线考试系统</span>
         </a>
 
+        <!-- Sidebar -->
         <div class="sidebar">
+            <!-- Sidebar user panel (optional) -->
             <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                 <div class="image">
-                    <img src="../static/img/avatar.png" class="img-circle elevation-2" alt="User Image">
+                    <img src="/static/img/avatar.png" class="img-circle elevation-2" alt="User Image">
                 </div>
                 <div class="info">
-                    <a href="#" class="d-block">郑玲老师，您好!</a>
+                    <a href="#" class="d-block">系统管理员，您好！</a>
                 </div>
             </div>
+
+            <!-- Sidebar Menu -->
             <nav class="mt-2">
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                     data-accordion="false">
@@ -70,7 +106,7 @@
                         <a href="#" class="nav-link active">
                             <i class="nav-icon fas fa-paper-plane"></i>
                             <p>
-                                班级管理
+                                教师管理
                             </p>
                         </a>
                     </li>
@@ -78,15 +114,7 @@
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-paperclip"></i>
                             <p>
-                                试卷管理
-                            </p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="nav-icon fas fa-pen"></i>
-                            <p>
-                                试题管理
+                                学生管理
                             </p>
                         </a>
                     </li>
@@ -101,8 +129,14 @@
                     </li>
                 </ul>
             </nav>
+            <!-- /.sidebar-menu -->
+
+            </nav>
+            <!-- /.sidebar-menu -->
         </div>
+        <!-- /.sidebar -->
     </aside>
+
 
     <div class="content-wrapper" style="min-height: 1332.2px;">
         <!-- Content Header (Page header) -->
@@ -110,11 +144,11 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>试卷库</h1>
+                        <h1>教师信息管理</h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="#" style="color: black">刷新</a></li>
+                            <li class="breadcrumb-item"><a href="#" style="color: black">刷新教师列表</a></li>
                         </ol>
                     </div>
                 </div>
@@ -128,8 +162,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <button type="button" class="btn btn-outline-success" style="margin-right: 20px;">新建试卷
-                                </button>
+                                <button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#newteacher">添加教师</button>
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
@@ -139,28 +172,23 @@
                                             <div class="dt-buttons btn-group flex-wrap">
                                                 <div class="dropdown">
                                                     <a class="btn btn-outline-primary  dropdown-toggle" href="#"
-                                                       role="button" id="dropdownMenuLink" data-toggle="dropdown"
+                                                       role="button" id="dropdownMenuLink1" data-toggle="dropdown"
                                                        aria-haspopup="true" aria-expanded="false">
-                                                        按科目筛选
+                                                        按职称筛选
                                                     </a>
-
                                                     <div class="dropdown-menu " aria-labelledby="dropdownMenuLink">
-                                                        <a class="dropdown-item btn-outline-primary" href="#">数据库</a>
-                                                        <a class="dropdown-item btn-outline-primary" href="#">软件工程</a>
-                                                        <a class="dropdown-item btn-outline-primary"
-                                                           href="#">计算机组成原理</a>
+                                                        <a class="dropdown-item btn-outline-primary" href="#">全部</a>
+                                                        <a class="dropdown-item btn-outline-primary" href="#">讲师</a>
+                                                        <a class="dropdown-item btn-outline-primary" href="#">副教授</a>
+                                                        <a class="dropdown-item btn-outline-primary" href="#">教授</a>
                                                     </div>
                                                 </div>
-                                                <button type="button"
-                                                        class="btn btn-outline-primary buttons-html5 check-btn">
-                                                    <span>按未使用试卷筛选</span>
-                                                </button>
                                             </div>
                                         </div>
                                         <div class="col-sm-12 col-md-2 offset-3">
                                             <div id="example2_filter" class="dataTables_filter">
                                                 <input type="search" class="form-control form-control-sm"
-                                                       placeholder="按试卷名搜索" aria-controls="example1">
+                                                       placeholder="按教师姓名搜索" aria-controls="example1">
                                             </div>
                                         </div>
                                         <div class="col-sm-12 col-md-1">
@@ -175,32 +203,34 @@
                                                 <thead>
                                                 <tr role="row">
                                                     <th class="sorting" tabindex="0" aria-controls="example1"
-                                                        rowspan="1" colspan="1">试卷名
+                                                        rowspan="1" colspan="1">教师编号
                                                     </th>
                                                     <th class="sorting" tabindex="0" aria-controls="example1"
-                                                        rowspan="1" colspan="1">是否已使用
+                                                        rowspan="1" colspan="1" style="width: 100px;">教师姓名
                                                     </th>
                                                     <th class="sorting" tabindex="0" aria-controls="example1"
-                                                        rowspan="1" colspan="1">学科
+                                                        rowspan="1" colspan="1" style="width: 100px;">教师性别
                                                     </th>
                                                     <th class="sorting" tabindex="0" aria-controls="example1"
-                                                        rowspan="1" colspan="1" style="width: 340px;">操作
+                                                        rowspan="1" colspan="1" style="width: 270px;">教师职称
+                                                    </th>
+                                                    <th class="sorting" tabindex="0" aria-controls="example1"
+                                                        rowspan="1" colspan="1" style="width: 270px;">操作
                                                     </th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
                                                 <tr role="row" class="odd">
-                                                    <td><strong>软件1801数据库期末考</strong></td>
-                                                    <td><strong>已使用</strong></td>
-                                                    <td><strong>数据库</strong></td>
+                                                    <td>
+                                                        <strong>1001</strong>
+                                                    </td>
+                                                    <td><strong>郑玲</strong></td>
+                                                    <td><strong>女</strong></td>
+                                                    <td><strong>教授</strong></td>
                                                     <td>
                                                         <div class="container">
-                                                            <button type="button" class="btn btn-outline-success"
-                                                                    style="margin-right: 20px;">预览
-                                                            </button>
                                                             <button type="button" class="btn btn-outline-primary"
-                                                                    style="margin-right: 20px;" data-toggle="modal"
-                                                                    data-target="#release">发布考试
+                                                                    style="margin-right: 20px;" data-toggle="modal" data-target="#editteacher">编辑
                                                             </button>
                                                             <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#delete">删除
                                                             </button>
@@ -289,51 +319,124 @@
             <!-- /.container-fluid -->
         </section>
         <!-- /.content -->
+    </div>
 
-        <div class="modal fade" id="release" style="display: none;" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">发布考试</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label>选择考试班级：</label>
-                            <select class="form-control">
-                                <option>软件工程1班</option>
-                                <option>数据库2班</option>
-                                <option>计算机组成3班</option>
+
+    <div class="modal fade" id="newteacher" data-backdrop="static" data-keyboard="false"
+         tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <span><strong>添加教师信息</strong></span>
+                </div>
+                <div class="modal-body" style="min-height: 200px;">
+                    <div class="tab-content" id="custom-tabs-four-tabContent">
+                        <div class="input-group" style="margin-bottom: 20px;">
+                            <span class="input-group-text" style="height: 40px;"><strong>教师名称</strong></span>
+                            <input class="form-control" aria-label="With textarea"
+                                   placeholder="请输入教师名称" style="height: 40px;">
+                        </div>
+
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text"
+                                       for="inputGroupSelect01">职称</label>
+                            </div>
+                            <select class="custom-select" id="inputGroupSelect01">
+                                <option value="1">讲师</option>
+                                <option value="2">副教授</option>
+                                <option value="3">教授</option>
                             </select>
                         </div>
-                        <div class="form-group">
-                            <label>设定考试起始截止时间：</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="far fa-clock"></i></span>
-                                </div>
-                                <input type="text" class="form-control float-right" id="reservationtime">
+
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text"
+                                       for="inputGroupSelect01">性别</label>
                             </div>
-                            <!-- /.input group -->
+                            <select class="custom-select" id="inputGroupSelect01">
+                                <option value="1">男</option>
+                                <option value="2">女</option>
+                            </select>
                         </div>
-                    </div>
-                    <div class="modal-footer justify-content-end">
-                        <button type="button" class="btn btn-outline-danger" data-dismiss="modal">取消</button>
-                        <button type="button" class="btn btn-outline-success">发布</button>
+
+                        <div class="input-group">
+                            <span class="input-group-text" style="height: 40px;"><strong>教师密码</strong></span>
+                            <input class="form-control" aria-label="With textarea"
+                                      placeholder="请输入教师名称" style="height: 40px;" type="password">
+                        </div>
+
+
                     </div>
                 </div>
-                <!-- /.modal-content -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary">添加教师信息</button>
+                </div>
             </div>
-            <!-- /.modal-dialog -->
         </div>
+    </div>
 
-        <div class="modal fade" id="delete" style="display: none;" aria-hidden="true">
+    <div class="modal fade" id="editteacher" data-backdrop="static" data-keyboard="false"
+         tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <span><strong>添加教师信息</strong></span>
+                </div>
+                <div class="modal-body" style="min-height: 200px;">
+                    <div class="tab-content" id="custom-tabs-four-tabContent">
+                        <div class="input-group" style="margin-bottom: 20px;">
+                            <span class="input-group-text" style="height: 40px;"><strong>教师名称</strong></span>
+                            <input class="form-control" aria-label="With textarea"
+                                   placeholder="请输入教师名称" style="height: 40px;">
+                        </div>
+
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text"
+                                       for="inputGroupSelect01">职称</label>
+                            </div>
+                            <select class="custom-select" id="inputGroupSelect01">
+                                <option value="1">讲师</option>
+                                <option value="2">副教授</option>
+                                <option value="3">教授</option>
+                            </select>
+                        </div>
+
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text"
+                                       for="inputGroupSelect01">性别</label>
+                            </div>
+                            <select class="custom-select" id="inputGroupSelect01">
+                                <option value="1">男</option>
+                                <option value="2">女</option>
+                            </select>
+                        </div>
+
+                        <div class="input-group">
+                            <span class="input-group-text" style="height: 40px;"><strong>教师密码</strong></span>
+                            <input class="form-control" aria-label="With textarea"
+                                      placeholder="请输入教师名称" style="height: 40px;" type="password">
+                        </div>
+
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary">添加教师信息</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="delete" style="display: none;" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <p class="modal-title">删除试卷警告</p>
+                        <p class="modal-title">删除教师信息警告</p>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <i class="fas fa-times"></i>
                         </button>
@@ -341,7 +444,7 @@
                     <div class="modal-body">
                         <div class="form-group" style="text-align: center;">
                             <br>
-                            <label><h4>确认删除试卷吗？</h4></label>
+                            <label><h4>确认删除教师信息吗吗？</h4></label>
                         </div>
                     </div>
                     <div class="modal-footer justify-content-end">
@@ -355,20 +458,17 @@
             <!-- /.modal-dialog -->
         </div>
 
-
-    </div>
-
     <footer class="main-footer">
         <div class="float-right d-none d-sm-block">
             <b>Version</b> 1.0.0
         </div>
         <strong>Copyright © 2014-2020 <a href="#">Exam_Online</a>.</strong> All rights reserved.
     </footer>
+
+
+
 </div>
-
-
 <!-- REQUIRED SCRIPTS -->
-
 
 <!-- jQuery -->
 <script src="/static/js/jquery-3.5.1.min.js"></script>
@@ -376,38 +476,5 @@
 <script src="/static/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->
 <script src="/static/adminlte/js/adminlte.min.js"></script>
-<script src="/static/js/add_question.js"></script>
-<script src="/static/moment/moment.min.js"></script>
-
-<script src="/static/daterangepicker/daterangepicker.js"></script>
-<script>
-    $(function () {
-        $('.check-btn').click(function () {
-            if ($(this).attr('checked')) {
-                $(this).removeAttr('checked');
-                $(this).removeClass('btn-primary');
-                $(this).addClass('btn-outline-primary');
-            } else {
-                $(this).attr('checked', 'true');
-                $(this).removeClass('btn-outline-primary');
-                $(this).addClass('btn-primary');
-            }
-            console.log('checked: ', $('.check-btn[checked]').length);
-        });
-    });
-</script>
-<script>
-  $(function () {
-
-      $('#reservationtime').daterangepicker({
-          timePicker: true,
-          timePickerIncrement: 30,
-          locale: {
-              format: 'MM/DD/YYYY hh:mm A'
-          }
-      })
-  })
-</script>
-
 </body>
 </html>
