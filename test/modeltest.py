@@ -10,20 +10,29 @@
 @file function:
 '''
 
-
 from models import Course
 from models import StudentTest
 from models import Subject
 from models import Question
+from common import model_common
+
 
 def qt():
-    qs = Question.select_questions_by(content='多选')
-    for q in qs:
-        print(q.Qno)
+    # print(Question.add_question(qtype='select', qstem='aaaa', qanswer='sdsd', qselect='BD', qsubject='软件工程'))
+
+    # print(Course.add_class_member('c0003','student1'))
+
+    # print(Course.del_class_member('c0001','student2'))
+
+    
+
+    pass
+
 
 def fg():
-    x=Course.get_class('c0001')
-    print(x.Cname)
+    s = Question.select_questions_by(page=3, content='这是')
+    for x in s:
+        print(x.Qno)
 
 
 if __name__ == '__main__':

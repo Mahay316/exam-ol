@@ -101,7 +101,6 @@ class Student(User, Base):
     #     else:
     #         return False
 
-
     def get_all_test_ids(self):
         """
         学生对象调用此方法，返回该学生含有的所有考试id号
@@ -112,7 +111,6 @@ class Student(User, Base):
         for t in self.studenttest:
             Tnos.append(t.Tno)
         return Tnos
-
 
     @classmethod
     def get_user(cls, no):
@@ -130,6 +128,9 @@ class Student(User, Base):
             session.rollback()
             raise e
 
+        finally:
+            engine.dispose()
+            session.remove()
 
     @classmethod
     def get_classes(cls, no) -> list:
@@ -153,7 +154,6 @@ class Student(User, Base):
 
         except Exception as e:
             raise e
-
 
     @classmethod
     def has_this_class(cls, student_no, course_no):
@@ -203,6 +203,9 @@ class Mentor(User, Base):
             session.rollback()
             raise e
 
+        finally:
+            engine.dispose()
+            session.remove()
 
     @classmethod
     def get_classes(cls, no) -> list:
@@ -221,7 +224,6 @@ class Mentor(User, Base):
 
         except Exception as e:
             raise e
-
 
     @classmethod
     def has_this_class(cls, mentor_no, course_no):
@@ -262,3 +264,7 @@ class Admin(User, Base):
         except Exception as e:
             session.rollback()
             raise e
+
+        finally:
+            engine.dispose()
+            session.remove()

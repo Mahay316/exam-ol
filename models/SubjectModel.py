@@ -21,7 +21,7 @@ class Subject(Base):
     Subname = Column(VARCHAR(25), nullable=False, comment='科目名称')
 
     @classmethod
-    def get_subnos_by_subname(cls, subname):
+    def get_subno_by_subname(cls, subname):
 
         engine = model_common.get_mysql_engine()
         session = model_common.get_mysql_session(engine)
@@ -36,9 +36,12 @@ class Subject(Base):
             else:
                 raise Exception('没有该名称的学科信息')
 
-
         except Exception as e:
             return e
+
+        finally:
+            engine.dispose()
+            session.remove()
 
 
     # TODO to be implemented

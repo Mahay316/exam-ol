@@ -1,12 +1,12 @@
-from sqlalchemy import Column,String,ForeignKey
+from sqlalchemy import Column, String, ForeignKey
 from sqlalchemy.orm import relationship
 
 from models.database import Base
 from models.StudentCourseModel import StudentCourse
 from common import model_common
 
-class Course(Base):
 
+class Course(Base):
     __tablename__ = 'course'
 
     Cno = Column(String(20, 'utf8mb4_general_ci'), primary_key=True, comment='课程编号')
@@ -36,7 +36,6 @@ class Course(Base):
                 raise Exception('没有该课程号记录')
             return course.tests
 
-
         except Exception as e:
             raise e
 
@@ -62,7 +61,6 @@ class Course(Base):
         except Exception as e:
             raise e
 
-
     @classmethod
     def get_class(cls, Cno: str):
         """
@@ -85,8 +83,10 @@ class Course(Base):
             session.rollback()
             raise e
 
+        finally:
+            engine.dispose()
+            session.remove()
 
-    # TODO 待实现
     @classmethod
     def add_class_member(cls, cno, sno):
         """
@@ -97,7 +97,8 @@ class Course(Base):
         :return: 成功返回True， 学生已存在返回False
         """
 
-    # TODO 待实现
+        return StudentCourse.add_class_member(cno=cno, sno=sno)
+
     @classmethod
     def del_class_member(cls, cno, sno):
         """
@@ -107,3 +108,5 @@ class Course(Base):
         :param sno: 学生学号
         :return: 成功返回True，学生不存在返回False
         """
+
+        return StudentCourse.del_class_member(cno=cno, sno=sno)

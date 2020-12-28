@@ -61,8 +61,10 @@ class Question(Base):
             session.rollback()
             raise e
 
+        finally:
+            engine.dispose()
+            session.remove()
 
-    # TODO 待实现
     @classmethod
     def select_questions_by(cls, page=1, subject=None, qtype=None, qno=None, content=None):
         """
@@ -83,7 +85,7 @@ class Question(Base):
             filter_list = []
 
             if subject:
-                subno = Subject.get_subnos_by_subname(subject)
+                subno = Subject.get_subno_by_subname(subject)
                 filter_list.append(cls.Subno == subno)
 
             elif qtype:
@@ -93,19 +95,21 @@ class Question(Base):
                 filter_list.append(cls.Qno == qno)
 
             elif content:
-                filter_list.append(cls.Qstem.like('%'+content+'%'))
+                filter_list.append(cls.Qstem.like('%' + content + '%'))
 
             else:
                 return []
 
-            return session.query(cls).filter(*filter_list).all()
-
+            questions = session.query(cls).filter(*filter_list).all()
+            return model_common.get_page_by_list(questions, page)
 
         except Exception as e:
             raise e
 
+        finally:
+            engine.dispose()
+            session.remove()
 
-    # TODO 待实现
     @classmethod
     def add_question(cls, qtype, qstem, qanswer, qselect, qsubject):
         """
@@ -117,6 +121,37 @@ class Question(Base):
         :param qselect: 转义过的json字符串，直接存储即可。
         :return: 成功添加返回True，否则Flase
         """
+        engine = model_common.get_mysql_engine()
+        session = model_common.get_mysql_session(engine)
+
+        try:
+            questions = session.query(cls).all()
+            if not questions:
+                qno = 'q00001'
+            else:
+                lastid = questions[-1].Qno[1:]
+                qid = int(lastid) + 1
+                qno = 'q' + str(qid).zfill(5)
+
+            subno = Subject.get_subno_by_subname(qsubject)
+
+            question = Question(Qno=qno,
+                                Qtype=qtype,
+                                Qstem=qstem,
+                                Qanswer=qanswer,
+                                Qselect=qselect,
+                                Subno=subno)
+            session.add(question)
+            session.commit()
+            return True
+
+        except Exception as e:
+            session.rollback()
+            return False
+
+        finally:
+            engine.dispose()
+            session.remove()
 
 
     # TODO 待实现
