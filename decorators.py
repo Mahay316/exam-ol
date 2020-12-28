@@ -30,7 +30,7 @@ def should_be(roles:list):
         def decorated_function(*args, **kwargs):
             cur_role = session.get('role')
             if cur_role is None:
-                return redirect(url_for('auth.login'))
+                return redirect(url_for('auth_bp.login'))
 
             if cur_role not in roles:
                 return jsonify({'code': 403})
@@ -52,7 +52,7 @@ def login_required(do: str='redirect'):
             cur_role = session.get('role')
             if cur_role is None:
                 if do == 'redirect':
-                    return redirect(url_for('auth.login'))
+                    return redirect(url_for('auth_bp.login'))
                 elif do == 'json':
                     return jsonify({'code': 403})
                 else:

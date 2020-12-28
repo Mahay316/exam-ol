@@ -209,7 +209,7 @@ def questions():
 @should_be([MENTOR, STUDENT])
 def get_papers():
     """
-    获取全部考试
+    获取全部试卷
 
     :return: json
     """

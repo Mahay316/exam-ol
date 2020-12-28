@@ -1,7 +1,8 @@
 from flask import Blueprint, request, jsonify, session, redirect, url_for, abort, render_template
-from models import Question
+from models import Paper
 from common.Role import *
 from decorators import should_be, login_required
+import json
 
 paper_bp = Blueprint('paper_bp', __name__)
 
@@ -15,44 +16,54 @@ def paper_index():
         abort(404)
 
 
-@paper_bp.route('/get_questions', methods=['POST'])
+@paper_bp.route('/', methods=['GET'])
 @should_be([MENTOR])
-def get_questions():
-    """
-    根据筛选条件返回筛选出的试题
-    """
-    form = request.form
-    subject, qtype, qno, content, page = '', '', '', '', 1
-    try:
-        subject = form['subject']
-        qtype = form['type']
-        qno = form['qno']
-        content = form['content']
-        page = form['page']
-    except Exception:
-        return jsonify({'code': 403})
+def get_paper():
+    args = request.args
+    subject = args.get('subject')
+    used = args.get('used')
+    pno = args.get('pno')
+    pname = args.get('pname')
+    page = args.get('page')
+
+    if page is None:
+        page = 1
 
     res_json = {'code': 200, 'questions': []}
 
-    if subject != '':
-        results = Question.select_questions_by(page, subject=subject)
-    elif qtype != '':
-        results = Question.select_questions_by(page, qtype=qtype)
-    elif qno != '':
-        results = Question.select_questions_by(page, qno=qno)
-    elif content != '':
-        results = Question.select_questions_by(page, content=content)
+    if subject is not None:
+        results = Paper.select_papers_by(page, subject=subject)
+    elif used is not None:
+        results = Paper.select_papers_by(page, used=used)
+    elif pno is not None:
+        results = Paper.select_papers_by(page, pno=pno)
+    elif pname is not None:
+        results = Paper.select_papers_by(page, pname=pname)
     else:
-        results = Question.select_questions_by(page)
+        results = Paper.select_papers_by(page)
 
     for result in results:
         res_json['questions'].append({
-            'qno': result.Qno,
-            'qtype': result.Qtype,
-            'qstem': result.Qstem,
-            'qselect': result.Qselect,
-            'qanswer': result.Qanswer,
-            'qsubject': result.Qsubject
+            'pno': result.Pno,
+            'pname': result.Pname,
+            'preferenced': result.Preferenced,
+            'psubject': result.psubject
         })
 
     return jsonify(res_json)
+
+
+@paper_bp.route('/', methods=['POST'])
+@should_be([MENTOR])
+def add_paper():
+    form = request.form
+    questions = form.get('questions')
+    pname = form.get('pname')
+    subno = form.get('subno')
+
+    questions = json.loads(questions)
+    flag = Paper.add_paper(questions, pname, subno)
+
+    if flag:
+        return jsonify({'code': 200})
+    return jsonify({'code': 403})
