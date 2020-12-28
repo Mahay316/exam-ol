@@ -62,6 +62,8 @@ CREATE TABLE `paper` (
   `Pno` varchar(20) COLLATE utf8mb4_general_ci NOT NULL COMMENT '试卷的编号',
   `Pname` varchar(30) COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '试卷名',
   `Subno` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '科目编号',
+  `Pnum` int NOT NULL COMMENT '试卷包含的题目数量',
+  `Pscore` int NOT NULL COMMENT '试卷总分',
   `Preference` int DEFAULT '0' COMMENT '试卷被引用的次数',
   `Pisdeleted` tinyint(1) NOT NULL DEFAULT '0' COMMENT '真：隐藏 假：显示',
   PRIMARY KEY (`Pno`),
