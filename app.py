@@ -1,13 +1,28 @@
-from flask import Flask
+from flask import Flask, render_template
 from models import init_db
 from views import exam_bp, auth_bp
 
 app = Flask(__name__)
 app.config.from_pyfile('config.py')
 
+
 # 全局拦截器
 
 # 全局错误处理
+@app.route('/')
+def index():
+    return render_template('paper_preview.html')
+
+
+@app.route('/class')
+def get_class():
+    return render_template('test_stat.html')
+
+
+@app.errorhandler(404)
+def page_not_found(err):
+    """自定义404页面"""
+    return render_template('error_404.html')
 
 
 if __name__ == '__main__':
