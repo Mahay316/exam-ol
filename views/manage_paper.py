@@ -1,9 +1,18 @@
 from flask import Blueprint, request, jsonify, session, redirect, url_for, abort, render_template
 from models import Class, Mentor, StudentTest, Question
 from common.Role import *
-from decorators import should_be
+from decorators import should_be, login_required
 
 paper_bp = Blueprint('paper_bp', __name__)
+
+
+@paper_bp.route('/manage')
+@login_required('redirect')
+def paper_index():
+    if session['role'] == MENTOR:
+        return render_template('paper_repo.html')
+    else:
+        abort(404)
 
 
 @paper_bp.route('/get_questions', methods=['POST'])

@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="/static/fontawesome/css/all.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="/static/adminlte/css/adminlte.min.css">
-    <link rel="stylesheet" href="/static/calender/css/tempusdominus-bootstrap-4.min.css">
+    <link rel="stylesheet" href="/static/daterangepicker/daterangepicker.css">
 
     <style>
         tr {
@@ -202,7 +202,7 @@
                                                                     style="margin-right: 20px;" data-toggle="modal"
                                                                     data-target="#release">发布考试
                                                             </button>
-                                                            <button type="button" class="btn btn-outline-danger">删除
+                                                            <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#delete">删除
                                                             </button>
                                                         </div>
                                                     </td>
@@ -301,8 +301,15 @@
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
-                            <label>Date and time range:</label>
-
+                            <label>选择考试班级：</label>
+                            <select class="form-control">
+                                <option>软件工程1班</option>
+                                <option>数据库2班</option>
+                                <option>计算机组成3班</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>设定考试起始截止时间：</label>
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="far fa-clock"></i></span>
@@ -312,9 +319,34 @@
                             <!-- /.input group -->
                         </div>
                     </div>
-                    <div class="modal-footer justify-content-between">
-                        <button type="button" class="btn btn-outline-primary">编辑</button>
-                        <button type="button" class="btn btn-outline-danger">删除</button>
+                    <div class="modal-footer justify-content-end">
+                        <button type="button" class="btn btn-outline-danger" data-dismiss="modal">取消</button>
+                        <button type="button" class="btn btn-outline-success">发布</button>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+
+        <div class="modal fade" id="delete" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <p class="modal-title">删除试卷警告</p>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group" style="text-align: center;">
+                            <br>
+                            <label><h4>确认删除试卷吗？</h4></label>
+                        </div>
+                    </div>
+                    <div class="modal-footer justify-content-end">
+                        <button type="button" class="btn btn-outline-primary" data-dismiss="modal">取消</button>
+                        <button type="button" class="btn btn-outline-danger">确认删除</button>
                         <!--                            <button type="button" class="btn btn-outline-dark">关闭</button>-->
                     </div>
                 </div>
@@ -322,6 +354,7 @@
             </div>
             <!-- /.modal-dialog -->
         </div>
+
 
     </div>
 
@@ -333,8 +366,6 @@
     </footer>
 </div>
 
-
-<div class="daterangepicker ltr show-calendar opensright"><div class="ranges"></div><div class="drp-calendar left"><div class="calendar-table"></div><div class="calendar-time"></div></div><div class="drp-calendar right"><div class="calendar-table"></div><div class="calendar-time"></div></div><div class="drp-buttons"><span class="drp-selected"></span><button class="cancelBtn btn btn-sm btn-default" type="button">Cancel</button><button class="applyBtn btn btn-sm btn-primary" disabled="disabled" type="button">Apply</button> </div></div>
 
 <!-- REQUIRED SCRIPTS -->
 
@@ -348,7 +379,7 @@
 <script src="/static/js/add_question.js"></script>
 <script src="/static/moment/moment.min.js"></script>
 
-<script src="/static/calender/js/tempusdominus-bootstrap-4.min.js"></script>
+<script src="/static/daterangepicker/daterangepicker.js"></script>
 <script>
     $(function () {
         $('.check-btn').click(function () {

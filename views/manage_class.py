@@ -103,3 +103,12 @@ def change_student():
             # 学生不存在
             return jsonify({'code': 204})
         return jsonify({'code': 200})
+
+
+@class_bp.route('stat')
+def get_exam_stat():
+    cno = request.args.get('cno')
+    if cno is None or not has_this_class(cno):
+        abort(404)
+
+    return render_template('test_stat.html')
