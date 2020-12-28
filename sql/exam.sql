@@ -137,6 +137,8 @@ DROP TABLE IF EXISTS `student_test`;
 CREATE TABLE `student_test` (
   `Tno` varchar(20) COLLATE utf8mb4_general_ci NOT NULL COMMENT '考试编号',
   `Sno` varchar(20) COLLATE utf8mb4_general_ci NOT NULL COMMENT '学生编号',
+  `STwrong` int DEFAULT NULL COMMENT '错题数量',
+  `STblank` int DEFAULT NULL COMMENT '未作答题数',
   `STgrade` int DEFAULT NULL COMMENT '学生考试成绩',
   PRIMARY KEY (`Tno`,`Sno`),
   KEY `Sno` (`Sno`),
