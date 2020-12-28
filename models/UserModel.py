@@ -6,6 +6,8 @@ from models.database import Base
 from common import model_common
 from common.Role import *
 from models.StudentTestModel import StudentTest
+from models.StudentCourseModel import StudentCourse
+from models.CourseModel import Course
 
 
 class User:
@@ -80,8 +82,8 @@ class Student(User, Base):
     Spassword = Column(String(32, 'utf8mb4_general_ci'), nullable=False, comment='学生登陆密码')
 
     studenttest = relationship('StudentTest', backref='student')
+    studentcourse = relationship('StudentCourse', backref='student')
 
-    # TODO 应该是用不到这个函数了
     #  (之前使用flask_login.current_user判定学生是否含有本次考试，现由于使用session实现登录,
     #  使用新的get_all_test_ids方法实现该操作)
     # def has_this_Test(self, test):
@@ -129,7 +131,6 @@ class Student(User, Base):
             raise e
 
 
-    # TODO 实现学生的课程获取函数
     @classmethod
     def get_classes(cls, no) -> list:
         """
@@ -139,15 +140,40 @@ class Student(User, Base):
         :return: list[Course](没有课程则返回空列表)
         """
 
+        classes = []
 
-    # TODO 待实现
+        try:
+            student = Student.get_user(no)
+            if not student:
+                raise Exception('没有该学生号记录')
+            for sc in student.studentcourse:
+                course = Course.get_class(sc.Cno)
+                classes.append(course)
+            return classes
+
+        except Exception as e:
+            raise e
+
+
     @classmethod
-    def has_this_class(cls, student_no, cls_no):
+    def has_this_class(cls, student_no, course_no):
         """
         判断学生是否有某门课程
 
         :return: True or False
         """
+
+        try:
+            student = Student.get_user(student_no)
+            if not student:
+                raise Exception('没有该学生号记录')
+            for sc in student.studentcourse:
+                if course_no == sc.Cno:
+                    return True
+            return False
+
+        except Exception as e:
+            raise e
 
 
 class Mentor(User, Base):
@@ -158,6 +184,8 @@ class Mentor(User, Base):
     Mgender = Column(String(3, 'utf8mb4_general_ci'), comment='教师性别')
     Mtitle = Column(String(10, 'utf8mb4_general_ci'), comment='教师职称')
     Mpassword = Column(String(32, 'utf8mb4_general_ci'), nullable=False, comment='教师登陆密码')
+
+    course = relationship('Course', backref='mentor')
 
     @classmethod
     def get_user(cls, no):
@@ -176,7 +204,6 @@ class Mentor(User, Base):
             raise e
 
 
-    # TODO 实现教师的课程获取函数
     @classmethod
     def get_classes(cls, no) -> list:
         """
@@ -186,15 +213,32 @@ class Mentor(User, Base):
         :return: list[Course](没有课程则返回空列表)
         """
 
+        try:
+            mentor = Mentor.get_user(no)
+            if not mentor:
+                raise Exception('没有该教师号记录')
+            return mentor.course
 
-    # TODO 待实现
+        except Exception as e:
+            raise e
+
+
     @classmethod
-    def has_this_class(cls, mentor_no, cls_no):
+    def has_this_class(cls, mentor_no, course_no):
         """
         判断老师是否有某门课程
 
         :return: True or False
         """
+        try:
+            classes = Mentor.get_classes(mentor_no)
+            for course in classes:
+                if course_no == course.Cno:
+                    return True
+            return False
+
+        except Exception as e:
+            raise e
 
 
 class Admin(User, Base):

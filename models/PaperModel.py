@@ -16,7 +16,7 @@ from sqlalchemy.orm import relationship
 from models.database import Base
 from common import model_common
 
-metadata = Base.metadata
+
 
 
 class Paper(Base):
@@ -57,7 +57,6 @@ class Paper(Base):
             raise e
 
 
-    # TODO 待实现
     @classmethod
     def get_all_papers(cls):
         """
@@ -65,3 +64,14 @@ class Paper(Base):
 
         :return: list[Paper](没有则返回空list)
         """
+
+        engine = model_common.get_mysql_engine()
+        session = model_common.get_mysql_session(engine)
+
+        try:
+            filter_list = []
+
+            return session.query(cls).filter(*filter_list).all()
+
+        except Exception as e:
+            raise e

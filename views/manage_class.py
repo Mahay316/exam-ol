@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify, abort, session, redirect, url_for, render_template
-from models import Class, Mentor, StudentTest, Student
+from models import Mentor, Student, Course
 from common.Role import *
 from decorators import should_be, login_required
 
@@ -69,7 +69,7 @@ def get_class_member():
     if not has_this_class(cno):
         abort(404)
 
-    members = Class.get_students_by_no(cno)
+    members = Course.get_students_by_no(cno)
     res_json = {'code': 200, 'members': []}
     res_members = res_json['members']
     for member in members:
@@ -91,14 +91,14 @@ def change_student():
         return jsonify({'code': 204})
 
     if request.method == 'POST':
-        flag = Class.add_class_member(cno, sno)
+        flag = Course.add_class_member(cno, sno)
         if not flag:
             # 学生已存在
             return jsonify({'code': 203})
         return jsonify({'code': 200})
 
     elif request.method == 'DELETE':
-        flag = Class.del_class_member(cno, sno)
+        flag = Course.del_class_member(cno, sno)
         if not flag:
             # 学生不存在
             return jsonify({'code': 204})

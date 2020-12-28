@@ -3,7 +3,8 @@ from sqlalchemy.dialects.mysql import INTEGER, TINYINT, ENUM
 from common import model_common
 
 from models.database import Base
-metadata = Base.metadata
+from common import model_common
+from models.SubjectModel import Subject
 
 
 class Question(Base):
@@ -75,6 +76,33 @@ class Question(Base):
         :param content: 按内容搜索模糊匹配
         :return: list[Question](无内容则返回空list)
         """
+        engine = model_common.get_mysql_engine()
+        session = model_common.get_mysql_session(engine)
+
+        try:
+            filter_list = []
+
+            if subject:
+                subno = Subject.get_subnos_by_subname(subject)
+                filter_list.append(cls.Subno == subno)
+
+            elif qtype:
+                filter_list.append(cls.Qtype == qtype)
+
+            elif qno:
+                filter_list.append(cls.Qno == qno)
+
+            elif content:
+                filter_list.append(cls.Qstem.like('%'+content+'%'))
+
+            else:
+                return []
+
+            return session.query(cls).filter(*filter_list).all()
+
+
+        except Exception as e:
+            raise e
 
 
     # TODO 待实现

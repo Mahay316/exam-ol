@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify, session, redirect, url_for, abort, render_template
-from models import Class, Mentor, StudentTest, Question
+from models import Question
 from common.Role import *
 from decorators import should_be, login_required
 

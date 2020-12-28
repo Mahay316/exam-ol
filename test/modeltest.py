@@ -10,17 +10,23 @@
 @file function:
 '''
 
-from models import Paper
-from models import Test
+
+from models import Course
+from models import StudentTest
+from models import Subject
 from models import Question
-from models import Student
 
 def qt():
-    x = Student.get_user('student3')
-    print(x.get_all_test_ids())
+    qs = Question.select_questions_by(content='多选')
+    for q in qs:
+        print(q.Qno)
 
+def fg():
+    x=Course.get_class('c0001')
+    print(x.Cname)
 
 
 if __name__ == '__main__':
     qt()
+    # fg()
     pass
