@@ -21,7 +21,7 @@ class Subject(Base):
     Subname = Column(VARCHAR(25), nullable=False, comment='科目名称')
 
     @classmethod
-    def get_subnos_by_subname(cls, subname):
+    def get_subno_by_subname(cls, subname):
 
         engine = model_common.get_mysql_engine()
         session = model_common.get_mysql_session(engine)

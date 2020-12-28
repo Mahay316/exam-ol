@@ -85,7 +85,7 @@ class Question(Base):
             filter_list = []
 
             if subject:
-                subno = Subject.get_subnos_by_subname(subject)
+                subno = Subject.get_subno_by_subname(subject)
                 filter_list.append(cls.Subno == subno)
 
             elif qtype:
@@ -110,7 +110,6 @@ class Question(Base):
             engine.dispose()
             session.remove()
 
-    # TODO Subno属性添加待实现
     @classmethod
     def add_question(cls, qtype, qstem, qanswer, qselect, qsubject):
         """
@@ -127,7 +126,6 @@ class Question(Base):
         session = model_common.get_mysql_session(engine)
 
         try:
-            raise Exception('ss')
             questions = session.query(cls).all()
             if not questions:
                 qno = 'q00001'
@@ -135,19 +133,21 @@ class Question(Base):
                 lastid = questions[-1].Qno[1:]
                 qid = int(lastid) + 1
                 qno = 'q' + str(qid).zfill(5)
+
+            subno = Subject.get_subno_by_subname(qsubject)
+
             question = Question(Qno=qno,
                                 Qtype=qtype,
                                 Qstem=qstem,
                                 Qanswer=qanswer,
-                                Qselect=qselect)
-                                # Subno=qsubject)
+                                Qselect=qselect,
+                                Subno=subno)
             session.add(question)
             session.commit()
             return True
 
-        except:
+        except Exception as e:
             session.rollback()
-            raise e
             return False
 
         finally:

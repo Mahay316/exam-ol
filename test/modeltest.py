@@ -18,7 +18,13 @@ from common import model_common
 
 
 def qt():
-    print(Question.add_question(qtype='select', qstem='aaaa', qanswer='sdsd', qselect='BD', qsubject=1))
+
+
+    # print(Question.add_question(qtype='select', qstem='aaaa', qanswer='sdsd', qselect='BD', qsubject='软件工程'))
+
+
+
+    pass
 
 
 def fg():
