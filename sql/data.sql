@@ -36,10 +36,10 @@ INSERT INTO `course`(`Cno`, `Cname`, `Subno`, `Mno`) VALUES ('c0003', '数据库
 INSERT INTO `course`(`Cno`, `Cname`, `Subno`, `Mno`) VALUES ('c0004', '流体力学1', 's0004', 'teacher2');
 INSERT INTO `course`(`Cno`, `Cname`, `Subno`, `Mno`) VALUES ('c0005', '流体力学2', 's0004', 'teacher2_en');
 
-INSERT INTO `paper`(`Pno`, `Pname`, `Preference`, `Pisdeleted`, `Subno`) VALUES ('p0001', '数据库基础卷', 0, 0, 's0002');
-INSERT INTO `paper`(`Pno`, `Pname`, `Preference`, `Pisdeleted`, `Subno`) VALUES ('p0002', '数据库提高卷', 0, 0, 's0002');
-INSERT INTO `paper`(`Pno`, `Pname`, `Preference`, `Pisdeleted`, `Subno`) VALUES ('p0003', '流体力学基础卷', 0, 1, 's0004');
-INSERT INTO `paper`(`Pno`, `Pname`, `Preference`, `Pisdeleted`, `Subno`) VALUES ('p0004', '软件工程提高卷', 0, 0, 's0001');
+INSERT INTO `paper`(`Pno`, `Pname`, `Pnum`, `Pscore`, `Preference`, `Pisdeleted`, `Subno`) VALUES ('p0001', '数据库基础卷', 3, 17, 0, 0, 's0002');
+INSERT INTO `paper`(`Pno`, `Pname`, `Pnum`, `Pscore`, `Preference`, `Pisdeleted`, `Subno`) VALUES ('p0002', '数据库提高卷', 0, 0, 0, 0, 's0002');
+INSERT INTO `paper`(`Pno`, `Pname`, `Pnum`, `Pscore`, `Preference`, `Pisdeleted`, `Subno`) VALUES ('p0003', '流体力学基础卷', 1, 4, 0, 1, 's0004');
+INSERT INTO `paper`(`Pno`, `Pname`, `Pnum`, `Pscore`, `Preference`, `Pisdeleted`, `Subno`) VALUES ('p0004', '软件工程提高卷', 0, 0, 0, 0, 's0001');
 
 INSERT INTO `question`(`Qno`, `Qtype`, `Qstem`, `Qanswer`, `Qselect`, `Subno`, `Qreference`, `Qisdeleted`) VALUES ('q00001', 'select', '这是一道数据库单选题()', '{\"A\": \"我是A\", \"B\": \"我是B\", \"C\": \"我是C\". \"D\": \"我是D\"}', 'A', 's0002', 0, 1);
 INSERT INTO `question`(`Qno`, `Qtype`, `Qstem`, `Qanswer`, `Qselect`, `Subno`, `Qreference`, `Qisdeleted`) VALUES ('q00002', 'multi', '这是一道流体力学多选题()', '{\"A\": \"我是A\", \"B\": \"我是B\", \"C\": \"我是C\". \"D\": \"我是D\", \"E\": \"我是E\"}', 'ABC', 's0001', 0, 0);
@@ -57,11 +57,11 @@ INSERT INTO `student_course`(`Cno`, `Sno`) VALUES ('c0001', 'student3');
 INSERT INTO `student_course`(`Cno`, `Sno`) VALUES ('c0004', 'student3');
 INSERT INTO `student_course`(`Cno`, `Sno`) VALUES ('c0003', 'student4_en');
 
-INSERT INTO `test`(`Tno`, `Tname`, `Tstart`, `Tend`, `Pno`, `Cno`) VALUES ('t0001', '数据库期末考试', '2020-12-15 15:57:42', '2020-12-15 15:57:42', 'p0002', 'c0001');
-INSERT INTO `test`(`Tno`, `Tname`, `Tstart`, `Tend`, `Pno`, `Cno`) VALUES ('t0003', '流体力学期中考试', '2020-12-18 15:00:00', '2020-12-19 15:00:00', 'p0003', 'c0004');
+INSERT INTO `test`(`Tno`, `Tname`, `Tdesc`, `Tstart`, `Tend`, `Pno`, `Cno`) VALUES ('t0001', '数据库期末考试', NULL, '2020-12-15 15:57:42', '2020-12-15 15:57:42', 'p0002', 'c0001');
+INSERT INTO `test`(`Tno`, `Tname`, `Tdesc`, `Tstart`, `Tend`, `Pno`, `Cno`) VALUES ('t0003', '流体力学期中考试', '考试说明测试','2020-12-18 15:00:00', '2020-12-19 15:00:00', 'p0003', 'c0004');
 
 INSERT INTO `student_test`(`Tno`, `Sno`, `STgrade`) VALUES ('t0001', 'student1', NULL);
-INSERT INTO `student_test`(`Tno`, `Sno`, `STgrade`) VALUES ('t0001', 'student1_en', 95);
-INSERT INTO `student_test`(`Tno`, `Sno`, `STgrade`) VALUES ('t0001', 'student3', 78);
+INSERT INTO `student_test`(`Tno`, `Sno`, `STwrong`, `STblank`, `STgrade`) VALUES ('t0001', 'student1_en', 0, 0, 95);
+INSERT INTO `student_test`(`Tno`, `Sno`, `STwrong`, `STblank`, `STgrade`) VALUES ('t0001', 'student3', 1, 1, 78);
 INSERT INTO `student_test`(`Tno`, `Sno`, `STgrade`) VALUES ('t0003', 'student2', NULL);
 INSERT INTO `student_test`(`Tno`, `Sno`, `STgrade`) VALUES ('t0003', 'student3', NULL);
