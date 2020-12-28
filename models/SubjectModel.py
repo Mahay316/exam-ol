@@ -36,6 +36,9 @@ class Subject(Base):
             else:
                 raise Exception('没有该名称的学科信息')
 
-
         except Exception as e:
             return e
+
+        finally:
+            engine.dispose()
+            session.remove()

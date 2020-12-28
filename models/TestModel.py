@@ -49,6 +49,10 @@ class Test(Base):
             session.rollback()
             raise e
 
+        finally:
+            engine.dispose()
+            session.remove()
+
     @classmethod
     def get_all_question_id(cls, Tno: str) -> list:
         """
@@ -74,6 +78,10 @@ class Test(Base):
         except Exception as e:
             session.rollback()
             raise e
+
+        finally:
+            engine.dispose()
+            session.remove()
 
     def get_begin_time(self):
         """

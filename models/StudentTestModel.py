@@ -69,3 +69,7 @@ class StudentTest(Base):
             return student_list
         except Exception as e:
             raise e
+
+        finally:
+            engine.dispose()
+            session.remove()

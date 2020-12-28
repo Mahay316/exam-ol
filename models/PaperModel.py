@@ -17,8 +17,6 @@ from models.database import Base
 from common import model_common
 
 
-
-
 class Paper(Base):
     __tablename__ = 'paper'
 
@@ -52,10 +50,12 @@ class Paper(Base):
                 qnos.append(x.Qno)
             return qnos
 
-
         except Exception as e:
             raise e
 
+        finally:
+            engine.dispose()
+            session.remove()
 
     @classmethod
     def get_all_papers(cls):
@@ -75,3 +75,7 @@ class Paper(Base):
 
         except Exception as e:
             raise e
+
+        finally:
+            engine.dispose()
+            session.remove()
