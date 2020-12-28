@@ -73,6 +73,13 @@
                 <a href="/" class="nav-link active">首页</a>
             </li>
         </ul>
+        <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+                        <i class="fas fa-expand-arrows-alt"></i>
+                    </a>
+                </li>
+            </ul>
     </nav>
     <!-- /.navbar -->
 
@@ -340,7 +347,7 @@
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <label class="input-group-text"
-                                       for="inputGroupSelect01">职称</label>
+                                       for="inputGroupSelect01">教师职称</label>
                             </div>
                             <select class="custom-select" id="inputGroupSelect01">
                                 <option value="1">讲师</option>
@@ -352,7 +359,7 @@
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <label class="input-group-text"
-                                       for="inputGroupSelect01">性别</label>
+                                       for="inputGroupSelect01">教师性别</label>
                             </div>
                             <select class="custom-select" id="inputGroupSelect01">
                                 <option value="1">男</option>
@@ -370,8 +377,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
-                    <button type="button" class="btn btn-primary">添加教师信息</button>
+                    <button type="button" class="btn btn-outline-danger" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-outline-primary">添加教师信息</button>
                 </div>
             </div>
         </div>
@@ -383,6 +390,9 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <span><strong>添加教师信息</strong></span>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
                 <div class="modal-body" style="min-height: 200px;">
                     <div class="tab-content" id="custom-tabs-four-tabContent">
@@ -395,7 +405,7 @@
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <label class="input-group-text"
-                                       for="inputGroupSelect01">职称</label>
+                                       for="inputGroupSelect01">教师职称</label>
                             </div>
                             <select class="custom-select" id="inputGroupSelect01">
                                 <option value="1">讲师</option>
@@ -407,7 +417,7 @@
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <label class="input-group-text"
-                                       for="inputGroupSelect01">性别</label>
+                                       for="inputGroupSelect01">教师性别</label>
                             </div>
                             <select class="custom-select" id="inputGroupSelect01">
                                 <option value="1">男</option>
@@ -425,8 +435,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
-                    <button type="button" class="btn btn-primary">添加教师信息</button>
+                    <button type="button" class="btn btn-outline-danger" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-outline-primary">添加教师信息</button>
                 </div>
             </div>
         </div>
@@ -438,7 +448,7 @@
                     <div class="modal-header">
                         <p class="modal-title">删除教师信息警告</p>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <i class="fas fa-times"></i>
+                            <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
@@ -450,7 +460,6 @@
                     <div class="modal-footer justify-content-end">
                         <button type="button" class="btn btn-outline-primary" data-dismiss="modal">取消</button>
                         <button type="button" class="btn btn-outline-danger">确认删除</button>
-                        <!--                            <button type="button" class="btn btn-outline-dark">关闭</button>-->
                     </div>
                 </div>
                 <!-- /.modal-content -->

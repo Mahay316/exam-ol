@@ -18,6 +18,10 @@
         tr {
             text-align: center;
         }
+
+        textarea {
+            resize: none;
+        }
     </style>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -33,7 +37,7 @@
                 </a>
             </li>
             <li class="nav-item d-none d-sm-inline-block">
-                <a href="#" class="nav-link active">教师首页</a>
+                <a href="#" class="nav-link active">首页</a>
             </li>
         </ul>
         <ul class="navbar-nav ml-auto">
@@ -50,7 +54,7 @@
         <a href="#" class="brand-link">
             <img src="../static/img/logo_white.png" alt="Logo" class="brand-image img-md elevation-3"
                  style="opacity: .8">
-            <h3 class="brand-text font-weight-bold" style="color: white">Exam_Online</h3>
+            <span class="brand-text font-weight-light">在线考试系统</span>
         </a>
 
         <div class="sidebar">
@@ -114,7 +118,7 @@
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="#" style="color: black">刷新</a></li>
+                            <li class="breadcrumb-item"><a href="#" style="color: black">刷新试卷列表</a></li>
                         </ol>
                     </div>
                 </div>
@@ -128,7 +132,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <button type="button" class="btn btn-outline-success" style="margin-right: 20px;">新建试卷
+                                <button type="button" class="btn btn-outline-success" style="margin-right: 20px;" data-toggle="modal" data-target="#createPaper">新建试卷
                                 </button>
                             </div>
                             <!-- /.card-header -->
@@ -142,6 +146,7 @@
                                                        role="button" id="dropdownMenuLink" data-toggle="dropdown"
                                                        aria-haspopup="true" aria-expanded="false">
                                                         按科目筛选
+{#                                                        TODO 筛选功能需要修改#}
                                                     </a>
 
                                                     <div class="dropdown-menu " aria-labelledby="dropdownMenuLink">
@@ -308,6 +313,16 @@
                                 <option>计算机组成3班</option>
                             </select>
                         </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text"
+                                       for="inputGroupSelect01">是否限时</label>
+                            </div>
+                            <select class="custom-select" id="inputGroupSelect01">
+                                <option value="1">是</option>
+                                <option value="2">否</option>
+                            </select>
+                        </div>
                         <div class="form-group">
                             <label>设定考试起始截止时间：</label>
                             <div class="input-group">
@@ -317,6 +332,14 @@
                                 <input type="text" class="form-control float-right" id="reservationtime">
                             </div>
                             <!-- /.input group -->
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group"
+                                 style="height: 150px; margin-bottom: 15px;">
+                                <span class="input-group-text"><strong>考试说明</strong></span>
+                                <textarea class="form-control" aria-label="With textarea"
+                                          placeholder="最多输入255个字符"></textarea>
+                            </div>
                         </div>
                     </div>
                     <div class="modal-footer justify-content-end">
@@ -355,6 +378,31 @@
             <!-- /.modal-dialog -->
         </div>
 
+        <div class="modal fade" id="createPaper" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <p class="modal-title">组卷提示</p>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group" style="text-align: center;">
+                            <br>
+                            <label><h5>继续上一次未提交的组卷，或者重新开始组卷。</h5></label>
+                        </div>
+                    </div>
+                    <div class="modal-footer justify-content-end">
+                        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">取消</button>
+                        <button type="button" class="btn btn-outline-success">继续组卷</button>
+                        <button type="button" class="btn btn-outline-primary">新建试卷</button>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
 
     </div>
 
@@ -376,7 +424,6 @@
 <script src="/static/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->
 <script src="/static/adminlte/js/adminlte.min.js"></script>
-<script src="/static/js/add_question.js"></script>
 <script src="/static/moment/moment.min.js"></script>
 
 <script src="/static/daterangepicker/daterangepicker.js"></script>

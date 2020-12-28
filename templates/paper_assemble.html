@@ -36,7 +36,7 @@
                     </a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a href="#" class="nav-link active">教师首页</a>
+                    <a href="#" class="nav-link active">首页</a>
                 </li>
             </ul>
             <ul class="navbar-nav ml-auto">
@@ -51,7 +51,7 @@
         <aside class="main-sidebar sidebar-dark-primary elevation-4 layout-fixed" style="height:auto;">
             <a href="#" class="brand-link">
                 <img src="../static/img/logo_white.png" alt="Logo" class="brand-image img-md elevation-3" style="opacity: .8">
-                <h3 class="brand-text font-weight-bold" style="color: white">Exam_Online</h3>
+                <span class="brand-text font-weight-light">在线考试系统</span>
             </a>
 
             <div class="sidebar">
@@ -136,7 +136,8 @@
                                                 <div class="dt-buttons btn-group flex-wrap">
                                                     <div class="dropdown">
                                                         <a class="btn btn-outline-primary  dropdown-toggle" href="#" role="button" id="dropdownMenuLink1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                            按科目筛选
+                                                            筛选未完成
+{#                                                        TODO 筛选功能未修改#}
                                                         </a>
                                                         <div class="dropdown-menu " aria-labelledby="dropdownMenuLink">
                                                             <a class="dropdown-item btn-outline-primary" href="#">数据库</a>
@@ -536,7 +537,7 @@
                         <div class="modal-header">
                             <h4 class="modal-title">试题号：1001</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">X</span>
+                                <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                         <div class="modal-body">
@@ -548,10 +549,8 @@
                             <br>
                             <p id="answer">答案： A</p>
                         </div>
-                        <div class="modal-footer justify-content-between">
-                            <button type="button" class="btn btn-outline-primary" >编辑</button>
-                            <button type="button" class="btn btn-outline-danger" >删除</button>
-<!--                            <button type="button" class="btn btn-outline-dark">关闭</button>-->
+                        <div class="modal-footer justify-content-end">
+                           <button type="button" class="btn btn-outline-dark" data-dismiss="modal">关闭</button>
                         </div>
                     </div>
                     <!-- /.modal-content -->
@@ -585,8 +584,6 @@
     <script src="/static/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- AdminLTE App -->
     <script src="/static/adminlte/js/adminlte.min.js"></script>
-    <script src="/static/js/add_question.js"></script>
-    <script src="/static/js/add_question.js"></script>
     <script>
         $(function () {
             $('.check-btn').click(function () {

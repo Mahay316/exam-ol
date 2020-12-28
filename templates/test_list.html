@@ -149,7 +149,7 @@
                                 </div>
                                 <div class="timeline-footer text-right">
                                     <a class="btn btn-primary">查看统计</a>
-                                    <a class="btn btn-danger ml-2">删除</a>
+                                    <a class="btn btn-danger ml-2" data-toggle="modal" data-target="#delete">删除</a>
                                 </div>
                             </div>
                         </div>
@@ -200,6 +200,33 @@
             </div>
         </div>
     </section>
+
+
+    <div class="modal fade" id="delete" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <p class="modal-title">删除考试警告</p>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group" style="text-align: center;">
+                        <br>
+                        <label><h4>确认删除考试吗？</h4></label>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-end">
+                    <button type="button" class="btn btn-outline-primary" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-outline-danger">确认删除</button>
+                    <!--                            <button type="button" class="btn btn-outline-dark">关闭</button>-->
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
 </div>
 
 <footer class="main-footer">

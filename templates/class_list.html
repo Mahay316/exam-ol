@@ -1,8 +1,4 @@
 <!DOCTYPE html>
-<!--
-This is a starter template page. Use this page to start your new project from
-scratch. This page gets rid of all links and provides the needed markup only.
--->
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -42,8 +38,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <a href="/" class="nav-link active">首页</a>
             </li>
         </ul>
+
         <ul class="navbar-nav ml-auto" style="padding-right: 17px;">
-            <button class="btn btn-outline-success" type=button>创建班级</button>
+            <li class="nav-item">
+                <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+                    <i class="fas fa-expand-arrows-alt"></i>
+                </a>
+            </li>
+            <button class="btn btn-outline-success" type="button" data-toggle="modal" data-target="#createcourse">创建班级</button>
         </ul>
     </nav>
     <!-- /.navbar -->
@@ -191,6 +193,48 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </div>
             </div>
         </section>
+
+        <div class="modal fade" id="createcourse" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">新建班级</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="tab-content" id="custom-tabs-four-tabContent">
+                        <div class="input-group" style="margin-bottom: 20px;">
+                            <span class="input-group-text" style="height: 40px;"><strong>班级名称</strong></span>
+                            <input class="form-control" aria-label="With textarea"
+                                   placeholder="请输入班级名称" style="height: 40px;">
+                        </div>
+
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text"
+                                       for="inputGroupSelect01">班级科目</label>
+                            </div>
+                            <select class="custom-select" id="inputGroupSelect01">
+                                <option value="1">软件工程</option>
+                                <option value="2">数据库</option>
+                                <option value="3">高等数学</option>
+                            </select>
+                        </div>
+
+                    </div>
+                        </div>
+                        <div class="modal-footer justify-content-end">
+                            <button type="button" class="btn btn-outline-danger" data-dismiss="modal">取消</button>
+                            <button type="button" class="btn btn-outline-success">确认</button>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+
     </div>
 
     <footer class="main-footer">
@@ -208,5 +252,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <script src="/static/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->
 <script src="/static/adminlte/js/adminlte.min.js"></script>
+
 </body>
 </html>
