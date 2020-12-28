@@ -28,6 +28,8 @@ class StudentTest(Base):
                  comment='考试编号')
     Sno = Column(ForeignKey('student.Sno', ondelete='CASCADE', onupdate='CASCADE'), primary_key=True, nullable=False,
                  index=True, comment='学生编号')
+    STwrong = Column(Integer, comment='错题数量')
+    STblank = Column(Integer, comment='未作答题数')
     STgrade = Column(Integer, comment='学生考试成绩')
 
     # student = relationship('Student')

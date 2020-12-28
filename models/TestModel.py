@@ -15,6 +15,7 @@ class Test(Base):
 
     Tno = Column(VARCHAR(20), primary_key=True, comment='考试的编号')
     Tname = Column(VARCHAR(20), nullable=False, comment='考试的名称')
+    Tdesc = Column(VARCHAR(55), comment='考试说明')
     Tstart = Column(TIMESTAMP, nullable=False, comment='考试开始时间')
     Tend = Column(TIMESTAMP, comment='考试结束时间')
     Pno = Column(ForeignKey('paper.Pno', ondelete='RESTRICT', onupdate='CASCADE'), nullable=False, index=True,

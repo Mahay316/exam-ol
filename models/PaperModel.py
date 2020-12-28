@@ -23,6 +23,8 @@ class Paper(Base):
     Pno = Column(String(20, 'utf8mb4_general_ci'), primary_key=True, comment='试卷的编号')
     Pname = Column(String(30, 'utf8mb4_general_ci'), comment='试卷名')
     Subno = Column(ForeignKey('subject.Subno', ondelete='SET NULL', onupdate='CASCADE'), index=True, comment='科目编号')
+    Pnum = Column(Integer, comment='试卷包含的题目数量')
+    Pscore = Column(Integer, comment='试卷总分')
     Preference = Column(Integer, server_default=text("'0'"), comment='试卷被引用的次数')
     Pisdeleted = Column(TINYINT(1), nullable=False, server_default=text("'0'"), comment='真：隐藏 假：显示')
 
