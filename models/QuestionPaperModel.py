@@ -17,7 +17,7 @@ from models.database import Base
 # from models.PaperModel import Paper
 # from models.QuestionModel import Question
 
-metadata = Base.metadata
+from common import model_common
 
 class QuestionPaper(Base):
     __tablename__ = 'question_paper'
@@ -31,3 +31,27 @@ class QuestionPaper(Base):
 
     # paper = relationship('Paper')
     # question = relationship('Question')
+
+    @classmethod
+    def add_question_to_paper(cls, pno, qno, score, position):
+        engine = model_common.get_mysql_engine()
+        session = model_common.get_mysql_session(engine)
+
+        try:
+            qp = QuestionPaper(
+                Pno=pno,
+                Qno=qno,
+                QPscore=score,
+                QPposition=position
+            )
+            session.add(qp)
+            session.commit()
+            return True
+
+        except Exception as e:
+            session.rollback()
+            return False
+
+        finally:
+            engine.dispose()
+            session.remove()

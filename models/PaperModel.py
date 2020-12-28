@@ -53,6 +53,7 @@ class Paper(Base):
             return qnos
 
         except Exception as e:
+            session.rollback()
             raise e
 
         finally:
@@ -76,20 +77,51 @@ class Paper(Base):
             return session.query(cls).filter(*filter_list).all()
 
         except Exception as e:
+            session.rollback()
             raise e
 
         finally:
             engine.dispose()
             session.remove()
 
-    # TODO 待实现
     @classmethod
     def select_papers_by(cls, page=1, subject=None, used=None, pno=None, pname=None):
+
         """
         模式和Question里的select_questions_by很类似
         """
 
+        engine = model_common.get_mysql_engine()
+        session = model_common.get_mysql_session(engine)
 
+        try:
+            filter_list = []
+
+            if subject:
+                filter_list.append(cls.Subno == subject)
+
+            if used == False:
+                filter_list.append(cls.Preference == 0)
+
+            elif used == True:
+                filter_list.append(cls.Preference != 0)
+
+            if pno:
+                filter_list.append(cls.Pno == pno)
+
+            if pname:
+                filter_list.append(cls.Pname.like('%' + pname + '%'))
+
+            papers = session.query(cls).filter(*filter_list).all()
+            return model_common.get_page_by_list(papers, page)
+
+        except Exception as e:
+            session.rollback()
+            raise e
+
+        finally:
+            engine.dispose()
+            session.remove()
 
     # TODO 待实现
     @classmethod
@@ -102,3 +134,32 @@ class Paper(Base):
         :param subno: 试卷科目
         :return: 成功返回True，失败False
         """
+
+        engine = model_common.get_mysql_engine()
+        session = model_common.get_mysql_session(engine)
+
+        try:
+            papers = session.query(cls).all()
+            if not papers:
+                pno = 'p0001'
+            else:
+                lastid = papers[-1].Pno[1:]
+                pid = int(lastid) + 1
+                pno = 'q' + str(pid).zfill(4)
+
+            # subno = Subject.get_subno_by_subname(qsubject)
+
+
+
+            paper = Paper
+            session.add(paper)
+            session.commit()
+            return True
+
+        except Exception as e:
+            session.rollback()
+            return False
+
+        finally:
+            engine.dispose()
+            session.remove()

@@ -15,6 +15,7 @@ from models import StudentTest
 from models import Subject
 from models import Question
 from common import model_common
+from models import Paper
 
 
 def qt():
@@ -24,7 +25,24 @@ def qt():
 
     # print(Course.del_class_member('c0001','student2'))
 
-    
+    # q = Question.select_questions_by(content='这是',qno='q00002')
+    # for x in q:
+    #     print(x.Qno)
+
+    # q = True
+    #
+    # if q == None:
+    #     print('1')
+    #
+    # elif q == False:
+    #     print('2')
+    #
+    # elif q == True:
+    #     print('3')
+
+    # ps = Paper.select_papers_by(pname='数据',subject='s0002')
+    # for x in ps:
+    #     print(x.Pno)
 
     pass
 

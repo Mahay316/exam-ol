@@ -83,22 +83,19 @@ class Question(Base):
 
         try:
             filter_list = []
+            filter_list.append(cls.Qisdeleted == 0)
 
             if subject:
-                subno = Subject.get_subno_by_subname(subject)
-                filter_list.append(cls.Subno == subno)
+                filter_list.append(cls.Subno == subject)
 
-            elif qtype:
+            if qtype:
                 filter_list.append(cls.Qtype == qtype)
 
-            elif qno:
+            if qno:
                 filter_list.append(cls.Qno == qno)
 
-            elif content:
+            if content:
                 filter_list.append(cls.Qstem.like('%' + content + '%'))
-
-            else:
-                return []
 
             questions = session.query(cls).filter(*filter_list).all()
             return model_common.get_page_by_list(questions, page)
@@ -134,7 +131,8 @@ class Question(Base):
                 qid = int(lastid) + 1
                 qno = 'q' + str(qid).zfill(5)
 
-            subno = Subject.get_subno_by_subname(qsubject)
+            # subno = Subject.get_subno_by_subname(qsubject)
+            subno = qsubject
 
             question = Question(Qno=qno,
                                 Qtype=qtype,
