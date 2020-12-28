@@ -75,3 +75,17 @@ class Question(Base):
         :param content: 按内容搜索模糊匹配
         :return: list[Question](无内容则返回空list)
         """
+
+
+    # TODO 待实现
+    @classmethod
+    def add_question(cls, qtype, qstem, qanswer, qselect, qsubject):
+        """
+        增加试题
+        stem，answer，select字段含义有所改动，具体见接口文档的模块十一
+
+        :param qstem: 含义不变，为纯文本
+        :param qanswer: 转义过的json字符串，直接存储即可。选择题是选项数组，填空题是按照空的顺序的数组
+        :param qselect: 转义过的json字符串，直接存储即可。
+        :return: 成功添加返回True，否则Flase
+        """
