@@ -1,0 +1,120 @@
+from flask import Blueprint, request, jsonify, session, redirect, url_for, abort, render_template
+from models import Question
+from common.Role import *
+from decorators import should_be, login_required
+from math import ceil
+from config import PAGE_SIZE
+
+question_bp = Blueprint('question_bp', __name__)
+
+
+@question_bp.route('/manage')
+@login_required('redirect')
+def question_index():
+    if session['role'] == MENTOR:
+        return render_template('question_repo.html')
+    else:
+        abort(404)
+
+
+@question_bp.route('/', methods=['POST'])
+@should_be([MENTOR])
+def add_question():
+    """
+    向试卷库添加question
+    """
+    form = request.form
+    filed = ['code', 'qtype', 'qstem', 'qanswer', 'qselect', 'qsubject']
+    try:
+        code, qtype, qstem, qanswer, qselect, qsubject = list(map(lambda x: form[x], filed))
+    except:
+        return jsonify({'code': 204})
+
+    flag = Question.add_question(qtype, qstem, qanswer, qselect, qsubject)
+    if flag:
+        return jsonify({'code': 200})
+    return jsonify({'code': 403})
+
+
+@question_bp.route('/', methods=['GET'])
+@should_be([MENTOR])
+def get_questions():
+    """
+    根据筛选条件返回筛选出的试题
+    """
+    args = request.args
+    subject, qtype, content, page = None, None, None, 1
+    subject = args.get('subject')
+    qtype = args.get('type')
+    content = args.get('content')
+    page = args.get('page')
+
+    if page is None:
+        page = 1
+
+    res_json = {'code': 200, 'questions': []}
+    select_dict = {}
+
+    if subject is not None:
+        select_dict['subject'] = subject
+        # results = Question.select_questions_by(page, subject=subject)
+    elif qtype is not None:
+        select_dict['qtype'] = qtype
+        # results = Question.select_questions_by(page, qtype=qtype)
+    # elif qno is not None:
+    #     results = Question.select_questions_by(page, qno=qno)
+    elif content is not None:
+        select_dict['content'] = content
+        # results = Question.select_questions_by(page, content=content)
+
+    results = Question.select_questions_by(int(page), **select_dict)
+
+    for result in results:
+        res_json['questions'].append({
+            'qno': result.Qno,
+            'qtype': result.Qtype,
+            'qstem': result.Qstem,
+            'qselect': result.Qselect,
+            'qanswer': result.Qanswer,
+            'qsubject': result.Subno
+        })
+
+    return jsonify(res_json)
+
+
+@question_bp.route('/', methods=['DELETE'])
+@should_be([MENTOR])
+def delete_question():
+    """
+    删除试题
+    """
+    qno = request.form['qno']
+    Question.delete_question(qno)
+    return jsonify({'code': 200})
+
+
+@question_bp.route('/', methods=['PUT'])
+@should_be([MENTOR])
+def update_question():
+    """
+    更新试题
+    """
+    form = request.form
+    qno = form['qno']
+    qtype = form['qtype']
+    qstem = form['qstem']
+    qanswer = form['qanswer']
+    qselect = form['qselect']
+    qsubject = form['qsubject']
+    Question.update_question(qno, qtype, qstem, qanswer, qselect, qsubject)
+    return jsonify({'code': 200})
+
+
+@question_bp.route('/page_num')
+def get_question_page_num():
+    num = Question.get_question_num()
+    return jsonify({
+        'code': 200,
+        'page_num': ceil(num / PAGE_SIZE),
+        'info_num': num
+    })

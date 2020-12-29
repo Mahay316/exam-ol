@@ -5,3 +5,5 @@ from .QuestionModel import Question
 from .QuestionPaperModel import QuestionPaper
 from .UserModel import User, Mentor, Student, Admin
 from .StudentTestModel import StudentTest
+from .SubjectModel import Subject
+from .CourseModel import Course

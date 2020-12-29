@@ -3,7 +3,7 @@ from models.UserModel import Mentor, Student, Admin
 from common import save_session
 from common.Role import *
 
-auth_bp = Blueprint('auth', __name__)
+auth_bp = Blueprint('auth_bp', __name__)
 
 
 @auth_bp.route('/login', methods=['GET', 'POST'])
@@ -41,8 +41,11 @@ def login():
     return render_template('login.html')
 
 
-@auth_bp.route('/logout')
+@auth_bp.route('/logout', methods=['POST'])
 def logout():
+    if 'role' not in session:
+        return jsonify({'code': 403})
+
     session.permanent = False
     session.clear()
 
@@ -52,4 +55,12 @@ def logout():
     # resp.delete_cookie('password')
     # resp.delete_cookie('role')
 
-    return redirect(url_for('login'))
+    return jsonify({'code': 200})
+
+
+@auth_bp.route('/role', methods=['GET'])
+def get_role():
+    if 'role' not in session:
+        return jsonify({'code': 403})
+
+    return jsonify({'code': 200, 'role': session['role']})

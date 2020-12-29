@@ -27,3 +27,17 @@ def get_mysql_engine():
 def get_mysql_session(engine):
     Session = scoped_session(sessionmaker(bind=engine))
     return Session
+
+
+def get_page_by_list(list: list, page=1):
+    pagesize = config.PAGE_SIZE
+    length = len(list)
+
+    if page <= 0:
+        return []
+    elif (page-1) * pagesize > length:
+        return []
+    elif page * pagesize > length:
+        return list[((page-1)*pagesize):]
+    else:
+        return list[((page-1)*pagesize):(page*pagesize)]
