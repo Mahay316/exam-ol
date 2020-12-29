@@ -16,7 +16,7 @@ Date: 2020-12-16 09:34:36
 -- ----------------------------
 -- Create database with specific charset and collate
 -- ----------------------------
-CREATE DATABASE IF NOT EXISTS exam DEFAULT CHARSET utf8mb4 COLLATE utf8_general_ci;
+CREATE DATABASE IF NOT EXISTS exam DEFAULT CHARSET utf8mb4 COLLATE utf8mb4_general_ci;
 
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -26,8 +26,8 @@ SET FOREIGN_KEY_CHECKS=0;
 -- ----------------------------
 DROP TABLE IF EXISTS `admin`;
 CREATE TABLE `admin` (
-  `Ano` varchar(20) COLLATE utf8mb4_general_ci NOT NULL COMMENT '管理员账号',
-  `Apassword` varchar(32) COLLATE utf8mb4_general_ci NOT NULL COMMENT '管理员密码',
+  `Ano` INT NOT NULL AUTO_INCREMENT COMMENT '管理员账号',
+  `Apassword` varchar(32) NOT NULL COMMENT '管理员密码',
   PRIMARY KEY (`Ano`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -36,10 +36,10 @@ CREATE TABLE `admin` (
 -- ----------------------------
 DROP TABLE IF EXISTS `course`;
 CREATE TABLE `course` (
-  `Cno` varchar(20) COLLATE utf8mb4_general_ci NOT NULL COMMENT '课程编号',
-  `Cname` varchar(20) COLLATE utf8mb4_general_ci NOT NULL COMMENT '课程名称',
-  `Subno` varchar(5) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '课程所属科目',
-  `Mno` varchar(20) COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '教授该课程教师号',
+  `Cno` INT NOT NULL AUTO_INCREMENT COMMENT '课程编号',
+  `Cname` varchar(20) NOT NULL COMMENT '课程名称',
+  `Subno` INT DEFAULT NULL COMMENT '课程所属科目',
+  `Mno` INT DEFAULT NULL COMMENT '教授该课程教师号',
   PRIMARY KEY (`Cno`),
   KEY `Mno` (`Mno`),
   KEY `Subno` (`Subno`),
@@ -52,11 +52,11 @@ CREATE TABLE `course` (
 -- ----------------------------
 DROP TABLE IF EXISTS `mentor`;
 CREATE TABLE `mentor` (
-  `Mno` varchar(20) COLLATE utf8mb4_general_ci NOT NULL COMMENT '教师编号',
-  `Mname` varchar(10) COLLATE utf8mb4_general_ci NOT NULL COMMENT '教师姓名',
-  `Mgender` varchar(3) COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '教师性别',
-  `Mtitle` varchar(10) COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '教师职称',
-  `Mpassword` varchar(32) COLLATE utf8mb4_general_ci NOT NULL COMMENT '教师登陆密码',
+  `Mno` INT NOT NULL AUTO_INCREMENT COMMENT '教师编号',
+  `Mname` varchar(10) NOT NULL COMMENT '教师姓名',
+  `Mgender` char(1) DEFAULT NULL COMMENT '教师性别',
+  `Mtitle` varchar(10) DEFAULT NULL COMMENT '教师职称',
+  `Mpassword` varchar(32) NOT NULL COMMENT '教师登陆密码',
   PRIMARY KEY (`Mno`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -65,9 +65,9 @@ CREATE TABLE `mentor` (
 -- ----------------------------
 DROP TABLE IF EXISTS `paper`;
 CREATE TABLE `paper` (
-  `Pno` varchar(20) COLLATE utf8mb4_general_ci NOT NULL COMMENT '试卷的编号',
-  `Pname` varchar(30) COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '试卷名',
-  `Subno` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '科目编号',
+  `Pno` INT NOT NULL AUTO_INCREMENT COMMENT '试卷的编号',
+  `Pname` varchar(30) DEFAULT NULL COMMENT '试卷名',
+  `Subno` INT DEFAULT NULL COMMENT '科目编号',
   `Pnum` int NOT NULL COMMENT '试卷包含的题目数量',
   `Pscore` int NOT NULL COMMENT '试卷总分',
   `Preference` int DEFAULT '0' COMMENT '试卷被引用的次数',
@@ -82,12 +82,12 @@ CREATE TABLE `paper` (
 -- ----------------------------
 DROP TABLE IF EXISTS `question`;
 CREATE TABLE `question` (
-  `Qno` varchar(20) NOT NULL COMMENT '题库中的编号',
-  `Qtype` enum('select','multi','fill') COLLATE utf8mb4_general_ci NOT NULL COMMENT '题目类型 select-单选 multi-多选 fill-填空',
+  `Qno` INT NOT NULL AUTO_INCREMENT COMMENT '题库中的编号',
+  `Qtype` enum('select','multi','fill') NOT NULL COMMENT '题目类型 select-单选 multi-多选 fill-填空',
   `Qstem` varchar(255) NOT NULL COMMENT '题目的内容',
   `Qanswer` varchar(255) NOT NULL COMMENT 'JSON列表，题目的答案',
   `Qselect` varchar(255) NULL COMMENT 'JSON列表，选择题的备选项',
-  `Subno` varchar(5) DEFAULT NULL COMMENT '题目所属的科目',
+  `Subno` INT DEFAULT NULL COMMENT '题目所属的科目',
   `Qreference` int unsigned NOT NULL DEFAULT '0' COMMENT '题目被引用的次数',
   `Qisdeleted` tinyint(1) NOT NULL DEFAULT '0' COMMENT '真：隐藏 假：显示',
   PRIMARY KEY (`Qno`),
@@ -100,8 +100,8 @@ CREATE TABLE `question` (
 -- ----------------------------
 DROP TABLE IF EXISTS `question_paper`;
 CREATE TABLE `question_paper` (
-  `Pno` varchar(20) COLLATE utf8mb4_general_ci NOT NULL COMMENT '题库中的编号',
-  `Qno` varchar(20) COLLATE utf8mb4_general_ci NOT NULL COMMENT '试卷的编号',
+  `Pno` INT NOT NULL COMMENT '题库中的编号',
+  `Qno` INT NOT NULL COMMENT '试卷的编号',
   `QPscore` int DEFAULT '0' COMMENT '试题的分值',
   `QPposition` int DEFAULT NULL COMMENT '题目在试卷中的位置',
   PRIMARY KEY (`Pno`,`Qno`),
@@ -115,11 +115,11 @@ CREATE TABLE `question_paper` (
 -- ----------------------------
 DROP TABLE IF EXISTS `student`;
 CREATE TABLE `student` (
-  `Sno` varchar(20) COLLATE utf8mb4_general_ci NOT NULL COMMENT '学生编号',
-  `Sname` varchar(10) COLLATE utf8mb4_general_ci NOT NULL COMMENT '学生姓名',
-  `Sgender` enum('男','女') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '学生性别',
-  `Smajor` varchar(20) COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '学生专业',
-  `Spassword` varchar(32) COLLATE utf8mb4_general_ci NOT NULL COMMENT '学生登陆密码',
+  `Sno` INT NOT NULL AUTO_INCREMENT COMMENT '学生编号',
+  `Sname` varchar(10) NOT NULL COMMENT '学生姓名',
+  `Sgender` enum('男','女') DEFAULT NULL COMMENT '学生性别',
+  `Smajor` varchar(20) DEFAULT NULL COMMENT '学生专业',
+  `Spassword` varchar(32) NOT NULL COMMENT '学生登陆密码',
   PRIMARY KEY (`Sno`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -128,8 +128,8 @@ CREATE TABLE `student` (
 -- ----------------------------
 DROP TABLE IF EXISTS `student_course`;
 CREATE TABLE `student_course` (
-  `Cno` varchar(20) COLLATE utf8mb4_general_ci NOT NULL COMMENT '课程编号',
-  `Sno` varchar(20) COLLATE utf8mb4_general_ci NOT NULL COMMENT '学生编号',
+  `Cno` INT NOT NULL COMMENT '课程编号',
+  `Sno` INT NOT NULL COMMENT '学生编号',
   PRIMARY KEY (`Cno`,`Sno`),
   KEY `student_course_ibfk_2` (`Sno`),
   CONSTRAINT `student_course_ibfk_1` FOREIGN KEY (`Cno`) REFERENCES `course` (`Cno`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -141,8 +141,8 @@ CREATE TABLE `student_course` (
 -- ----------------------------
 DROP TABLE IF EXISTS `student_test`;
 CREATE TABLE `student_test` (
-  `Tno` varchar(20) COLLATE utf8mb4_general_ci NOT NULL COMMENT '考试编号',
-  `Sno` varchar(20) COLLATE utf8mb4_general_ci NOT NULL COMMENT '学生编号',
+  `Tno` INT NOT NULL COMMENT '考试编号',
+  `Sno` INT NOT NULL COMMENT '学生编号',
   `STwrong` int DEFAULT NULL COMMENT '错题数量',
   `STblank` int DEFAULT NULL COMMENT '未作答题数',
   `STgrade` int DEFAULT NULL COMMENT '学生考试成绩',
@@ -157,8 +157,8 @@ CREATE TABLE `student_test` (
 -- ----------------------------
 DROP TABLE IF EXISTS `subject`;
 CREATE TABLE `subject` (
-  `Subno` varchar(5) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '科目编号',
-  `Subname` varchar(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '科目名称',
+  `Subno` INT NOT NULL AUTO_INCREMENT COMMENT '科目编号',
+  `Subname` varchar(25) NOT NULL COMMENT '科目名称',
   PRIMARY KEY (`Subno`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -167,13 +167,13 @@ CREATE TABLE `subject` (
 -- ----------------------------
 DROP TABLE IF EXISTS `test`;
 CREATE TABLE `test` (
-  `Tno` varchar(20) NOT NULL COMMENT '考试的编号',
+  `Tno` INT NOT NULL AUTO_INCREMENT COMMENT '考试的编号',
   `Tname` varchar(20) NOT NULL COMMENT '考试的名称',
   `Tdesc` varchar(255) COMMENT '考试说明',
   `Tstart` timestamp NOT NULL COMMENT '考试开始时间',
-  `Tend` timestamp NULL DEFAULT NULL COMMENT '考试结束时间',
-  `Pno` varchar(20) NOT NULL COMMENT '引用的试卷编号',
-  `Cno` varchar(20) DEFAULT NULL COMMENT '所属的课程编号',
+  `Tend` timestamp DEFAULT NULL COMMENT '考试结束时间',
+  `Pno` INT NOT NULL COMMENT '引用的试卷编号',
+  `Cno` INT NOT NULL COMMENT '所属的课程编号',
   PRIMARY KEY (`Tno`),
   KEY `Pno` (`Pno`),
   KEY `Cno` (`Cno`),
