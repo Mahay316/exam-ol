@@ -82,12 +82,12 @@ CREATE TABLE `paper` (
 -- ----------------------------
 DROP TABLE IF EXISTS `question`;
 CREATE TABLE `question` (
-  `Qno` varchar(20) COLLATE utf8mb4_general_ci NOT NULL COMMENT '题库中的编号',
+  `Qno` varchar(20) NOT NULL COMMENT '题库中的编号',
   `Qtype` enum('select','multi','fill') COLLATE utf8mb4_general_ci NOT NULL COMMENT '题目类型 select-单选 multi-多选 fill-填空',
-  `Qstem` varchar(255) COLLATE utf8mb4_general_ci NOT NULL COMMENT '题目的内容',
-  `Qanswer` varchar(255) COLLATE utf8mb4_general_ci NOT NULL COMMENT 'JSON格式的题目的答案，选择题的备选项，填空题的答案',
-  `Qselect` varchar(10) COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '选择题的正确选项',
-  `Subno` varchar(5) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '题目所属的科目',
+  `Qstem` varchar(255) NOT NULL COMMENT '题目的内容',
+  `Qanswer` varchar(255) NOT NULL COMMENT 'JSON列表，题目的答案',
+  `Qselect` varchar(255) NULL COMMENT 'JSON列表，选择题的备选项',
+  `Subno` varchar(5) DEFAULT NULL COMMENT '题目所属的科目',
   `Qreference` int unsigned NOT NULL DEFAULT '0' COMMENT '题目被引用的次数',
   `Qisdeleted` tinyint(1) NOT NULL DEFAULT '0' COMMENT '真：隐藏 假：显示',
   PRIMARY KEY (`Qno`),
