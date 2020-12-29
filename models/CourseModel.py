@@ -29,8 +29,16 @@ class Course(Base):
         :param course_no: 课程号
         :return: list[Test]
         """
+        engine = model_common.get_mysql_engine()
+        session = model_common.get_mysql_session(engine)
+
         try:
-            course = Course.get_class(course_no)
+
+            filter_list = []
+            filter_list.append(cls.Cno == course_no)
+
+            course = session.query(cls).filter(*filter_list).first()
+
             if not course:
                 raise Exception('没有该课程号记录')
             return course.tests
@@ -47,9 +55,17 @@ class Course(Base):
         :return: list[Student]
         """
 
+        engine = model_common.get_mysql_engine()
+        session = model_common.get_mysql_session(engine)
+
         try:
+            filter_list = []
+            filter_list.append(cls.Cno == course_no)
+
             students = []
-            course = Course.get_class(course_no)
+
+            course = session.query(cls).filter(*filter_list).first()
+
             if not course:
                 raise Exception('没有该课程号记录')
 

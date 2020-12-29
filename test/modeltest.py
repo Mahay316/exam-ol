@@ -95,7 +95,12 @@ def fg():
 
     # print(Test.set_test_grade(2,'student',4,2,77))
 
-    print(Mentor.get_classes('teacher1_en'))
+    #print(Mentor.get_classes('teacher1_en'))
+
+    #print(Course.get_tests_by_no(4)[0].Tno)
+
+    for x in Course.get_students_by_no(4):
+        print(x.Sno)
     pass
 
 
