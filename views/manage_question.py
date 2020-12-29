@@ -94,7 +94,7 @@ def delete_question():
     """
     删除试题
     """
-    qno = int(request.form['qno'])
+    qno = int(request.args['qno'])
     Question.delete_question(qno)
     return jsonify({'code': 200})
 
@@ -105,13 +105,13 @@ def update_question():
     """
     更新试题
     """
-    form = request.form
-    qno = int(form['qno'])
-    qtype = form['qtype']
-    qstem = form['qstem']
-    qanswer = form['qanswer']
-    qselect = form['qselect']
-    qsubject = int(form['qsubject'])
+    args = request.args
+    qno = int(args['qno'])
+    qtype = args['qtype']
+    qstem = args['qstem']
+    qanswer = args['qanswer']
+    qselect = args['qselect']
+    qsubject = int(args['qsubject'])
     Question.update_question(qno, qtype, qstem, qanswer, qselect, qsubject)
     return jsonify({'code': 200})
 
