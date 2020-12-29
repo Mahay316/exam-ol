@@ -13,6 +13,12 @@ File Encoding         : 65001
 Date: 2020-12-16 09:34:36
 */
 
+-- ----------------------------
+-- Create database with specific charset and collate
+-- ----------------------------
+CREATE DATABASE IF NOT EXISTS exam DEFAULT CHARSET utf8mb4 COLLATE utf8_general_ci;
+
+
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
