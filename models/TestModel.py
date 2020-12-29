@@ -111,3 +111,27 @@ class Test(Base):
         """
         Qnos = Paper.get_questions_id(self.Pno)
         return Question.get_questions(Qnos)
+
+
+    # TODO to be implemented
+    @classmethod
+    def get_paper_by_tno(cls, tno) -> Paper:
+        """
+        通过test_no获取Paper对象
+
+        :return: Paper or None
+        """
+
+
+    # TODO to be implemented
+    @classmethod
+    def set_test_grade(cls, tno, sno, st_wrong, st_blank, st_grade):
+        """
+        设置本次考试的学生成绩
+
+        :param tno: test_no
+        :param sno: student_no
+        :param st_wrong: 错误题数
+        :param st_blank: 空题数
+        :param st_grade: 考试成绩
+        """
