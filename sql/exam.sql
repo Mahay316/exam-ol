@@ -26,7 +26,7 @@ SET FOREIGN_KEY_CHECKS=0;
 -- ----------------------------
 DROP TABLE IF EXISTS `admin`;
 CREATE TABLE `admin` (
-  `Ano` INT NOT NULL AUTO_INCREMENT COMMENT '管理员账号',
+  `Ano` varchar(20) NOT NULL COMMENT '管理员账号',
   `Apassword` varchar(32) NOT NULL COMMENT '管理员密码',
   PRIMARY KEY (`Ano`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -39,7 +39,7 @@ CREATE TABLE `course` (
   `Cno` INT NOT NULL AUTO_INCREMENT COMMENT '课程编号',
   `Cname` varchar(20) NOT NULL COMMENT '课程名称',
   `Subno` INT DEFAULT NULL COMMENT '课程所属科目',
-  `Mno` INT DEFAULT NULL COMMENT '教授该课程教师号',
+  `Mno` varchar(20) DEFAULT NULL COMMENT '教授该课程教师号',
   PRIMARY KEY (`Cno`),
   KEY `Mno` (`Mno`),
   KEY `Subno` (`Subno`),
@@ -52,7 +52,7 @@ CREATE TABLE `course` (
 -- ----------------------------
 DROP TABLE IF EXISTS `mentor`;
 CREATE TABLE `mentor` (
-  `Mno` INT NOT NULL AUTO_INCREMENT COMMENT '教师编号',
+  `Mno` varchar(20) NOT NULL COMMENT '教师编号',
   `Mname` varchar(10) NOT NULL COMMENT '教师姓名',
   `Mgender` char(1) DEFAULT NULL COMMENT '教师性别',
   `Mtitle` varchar(10) DEFAULT NULL COMMENT '教师职称',
@@ -115,7 +115,7 @@ CREATE TABLE `question_paper` (
 -- ----------------------------
 DROP TABLE IF EXISTS `student`;
 CREATE TABLE `student` (
-  `Sno` INT NOT NULL AUTO_INCREMENT COMMENT '学生编号',
+  `Sno` varchar(20) NOT NULL COMMENT '学生编号',
   `Sname` varchar(10) NOT NULL COMMENT '学生姓名',
   `Sgender` enum('男','女') DEFAULT NULL COMMENT '学生性别',
   `Smajor` varchar(20) DEFAULT NULL COMMENT '学生专业',
@@ -129,7 +129,7 @@ CREATE TABLE `student` (
 DROP TABLE IF EXISTS `student_course`;
 CREATE TABLE `student_course` (
   `Cno` INT NOT NULL COMMENT '课程编号',
-  `Sno` INT NOT NULL COMMENT '学生编号',
+  `Sno` varchar(20) NOT NULL COMMENT '学生编号',
   PRIMARY KEY (`Cno`,`Sno`),
   KEY `student_course_ibfk_2` (`Sno`),
   CONSTRAINT `student_course_ibfk_1` FOREIGN KEY (`Cno`) REFERENCES `course` (`Cno`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -142,7 +142,7 @@ CREATE TABLE `student_course` (
 DROP TABLE IF EXISTS `student_test`;
 CREATE TABLE `student_test` (
   `Tno` INT NOT NULL COMMENT '考试编号',
-  `Sno` INT NOT NULL COMMENT '学生编号',
+  `Sno` varchar(20) NOT NULL COMMENT '学生编号',
   `STwrong` int DEFAULT NULL COMMENT '错题数量',
   `STblank` int DEFAULT NULL COMMENT '未作答题数',
   `STgrade` int DEFAULT NULL COMMENT '学生考试成绩',
