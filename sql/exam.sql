@@ -58,6 +58,7 @@ CREATE TABLE `mentor` (
   `Mtitle` varchar(10) DEFAULT NULL COMMENT '教师职称',
   `Mpassword` varchar(32) NOT NULL COMMENT '教师登陆密码',
   PRIMARY KEY (`Mno`)
+  KEY `Mname` (`Mname`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- ----------------------------
@@ -74,6 +75,7 @@ CREATE TABLE `paper` (
   `Pisdeleted` tinyint(1) NOT NULL DEFAULT '0' COMMENT '真：隐藏 假：显示',
   PRIMARY KEY (`Pno`),
   KEY `Subno` (`Subno`),
+  KEY `Pname` (`Pname`),
   CONSTRAINT `paper_ibfk_1` FOREIGN KEY (`Subno`) REFERENCES `subject` (`Subno`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -92,6 +94,7 @@ CREATE TABLE `question` (
   `Qisdeleted` tinyint(1) NOT NULL DEFAULT '0' COMMENT '真：隐藏 假：显示',
   PRIMARY KEY (`Qno`),
   KEY `Subno` (`Subno`),
+  KEY `Qquery` (`Qno`,`Qtype`,`Qstem`,`Qanswer`) USING BTREE,
   CONSTRAINT `question_ibfk_1` FOREIGN KEY (`Subno`) REFERENCES `subject` (`Subno`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -159,6 +162,7 @@ CREATE TABLE `subject` (
   `Subno` INT NOT NULL AUTO_INCREMENT COMMENT '科目编号',
   `Subname` varchar(25) NOT NULL COMMENT '科目名称',
   PRIMARY KEY (`Subno`)
+  KEY `Subname` (`Subname`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- ----------------------------
