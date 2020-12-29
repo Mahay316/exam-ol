@@ -123,7 +123,6 @@ class Paper(Base):
             engine.dispose()
             session.remove()
 
-    # TODO 待实现
     @classmethod
     def add_paper(cls, questions, pname, subno):
         """
@@ -135,6 +134,35 @@ class Paper(Base):
         :param subno: 试卷科目
         :return: 成功返回True，失败False
         """
+
+        engine = model_common.get_mysql_engine()
+        session = model_common.get_mysql_session(engine)
+
+        try:
+            pscore = 0
+            for q in questions:
+                pscore += q['qpscore']
+
+            paper = Paper(Pname=pname,
+                          Subno=subno,
+                          Pnum=len(questions),
+                          Pscore=pscore)
+
+            session.add(paper)
+            session.commit()
+
+            from models import QuestionPaper
+            QuestionPaper.add_questions_to_paper(pno=paper.Pno, questions=questions)
+
+            return True
+
+        except Exception as e:
+            session.rollback()
+            return False
+
+        finally:
+            engine.dispose()
+            session.remove()
 
     @classmethod
     def delete_paper(cls, pno):
@@ -179,6 +207,25 @@ class Paper(Base):
             filter_list.append(cls.Pisdeleted == 0)
 
             return session.query(cls).filter(*filter_list).count()
+
+        except Exception as e:
+            session.rollback()
+            raise e
+
+        finally:
+            engine.dispose()
+            session.remove()
+
+    @classmethod
+    def get_paper(cls, pno):
+        engine = model_common.get_mysql_engine()
+        session = model_common.get_mysql_session(engine)
+
+        try:
+            filter_list = []
+            filter_list.append(cls.Pno == pno)
+
+            return session.query(cls).filter(*filter_list).first()
 
         except Exception as e:
             session.rollback()

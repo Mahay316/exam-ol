@@ -118,8 +118,6 @@ class Test(Base):
 
         return l
 
-
-    # TODO to be implemented
     @classmethod
     def get_paper_by_tno(cls, tno) -> Paper:
         """
@@ -128,8 +126,27 @@ class Test(Base):
         :return: Paper or None
         """
 
+        engine = model_common.get_mysql_engine()
+        session = model_common.get_mysql_session(engine)
 
-    # TODO to be implemented
+        try:
+            filter_list = []
+            filter_list.append(cls.Tno == tno)
+
+            t = session.query(cls).filter(*filter_list).first()
+            if not t:
+                raise Exception('没有该试卷号记录')
+
+            return Paper.get_paper(t.Pno)
+
+        except Exception as e:
+            session.rollback()
+            raise e
+
+        finally:
+            engine.dispose()
+            session.remove()
+
     @classmethod
     def set_test_grade(cls, tno, sno, st_wrong, st_blank, st_grade):
         """
@@ -141,3 +158,6 @@ class Test(Base):
         :param st_blank: 空题数
         :param st_grade: 考试成绩
         """
+
+        from models.StudentTestModel import StudentTest
+        return StudentTest.add_st(tno=tno, sno=sno, stwrong=st_wrong, stblank=st_blank, stgrade=st_grade)
