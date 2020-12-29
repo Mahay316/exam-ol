@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify, abort, session, redirect, url_for, render_template
+from flask import Blueprint, request, jsonify, abort, session, render_template
 from models import Mentor, Student, Course
 from common.Role import *
 from decorators import should_be, login_required

@@ -46,7 +46,7 @@ def get_paper():
     elif pname is not None:
         select_dict['pname'] = pname
         # results = Paper.select_papers_by(page, pname=pname)
-    results = Paper.select_papers_by(page, **select_dict)
+    results = Paper.select_papers_by(int(page), **select_dict)
 
     for result in results:
         res_json['questions'].append({
@@ -115,7 +115,9 @@ def preview_paper():
 @paper_bp.route('page_num')
 @should_be([MENTOR])
 def get_paper_page_num():
+    num = Paper.get_paper_num()
     return jsonify({
         'code': 200,
-        'page_num': ceil(Paper.get_paper_num() / PAGE_SIZE)
+        'page_num': ceil(num / PAGE_SIZE),
+        'info_num': num
     })

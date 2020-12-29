@@ -100,6 +100,9 @@ class Test(Base):
 
         return self.Tend
 
+
+    # TODO 由于开始时考虑不周现更改返回数据结构
+    # 改为list[(Question, qpscore)]，即每个元素是tuple，0号元素是Question对象，1号元素是在本卷中的分值
     def get_all_questions(self) -> list:
         """
         获取本考试的所有试题

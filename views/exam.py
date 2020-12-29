@@ -89,107 +89,151 @@ def get_exam_time_info():
     return jsonify(res)
 
 
-@exam_bp.route('/questions', methods=['GET', 'POST'])
+@exam_bp.route('/questions', methods=['GET'])
 @should_be([STUDENT])
-def questions():
+def get_questions():
     """
-    请求题目内容或者缓存考生作答情况
+    请求题目内容
 
     :return: json格式数据
     """
-    if request.method == 'GET':
-        examID = request.args['examID']
+    examID = request.args['examID']
 
-        test = Test.get_test(examID)
-        validated = permission_inadequate_or_exam_not_exists(test)
-        if validated is not None:
-            return validated
+    test = Test.get_test(examID)
+    validated = permission_inadequate_or_exam_not_exists(test)
+    if validated is not None:
+        return validated
 
-        validated = guarantee_exam_begin(test)
-        if validated is not None:
-            return validated
+    validated = guarantee_exam_begin(test)
+    if validated is not None:
+        return validated
 
-        res_dict = {
-            'code': 200,
-            'questions': []
+    res_dict = {
+        'code': 200,
+        'questions': []
+    }
+    res = res_dict['questions']
+
+    if 'answer' not in session:
+        session['answer'] = {}
+
+    for tp in test.get_all_questions():
+        q = tp[0]
+        qpscore = tp[1]
+        cur_dict = {
+            'questionID': q.Qno,
+            'type': q.Qtype,
+            'stem': q.Qstem, # 题干字符串
+            'choices': "", # 选择题的选项，填空题无
+            'cache': "",
+            'qpscore': qpscore
         }
-        res = res_dict['questions']
-        for q in test.get_all_questions():
-            cur_dict = {
+
+        # 为了后面判卷不用再次访问数据库，暂时缓存下来
+        # TODO 未测试
+        session['answers'][q.Qno] = {
+            'qanswer':json.loads(q.Qanswer),
+            'qtype': q.Qtype,
+            'qpscore': qpscore
+        }
+
+        # 如果是选择题则choices置空
+        if not q.is_fill_in_blanks():
+            cur_dict['choices'] = json.dumps(q.Qselect)
+
+        # 用户已作答的缓存
+        if q.Qno in session:
+            tmp = {
                 'questionID': q.Qno,
-                'type': q.Qtype,
-                'stem': q.Qstem, # 题干字符串
-                'choices': "", # 选择题的选项，填空题无
-                'cache': ""
+                'choice': session[q.Qno]['choice'],
+                'submitTime': session[q.Qno]['submitTime']
             }
+            cur_dict['cache'] = tmp
 
-            # 如果是选择题则choices置空
-            if not q.is_fill_in_blanks():
-                cur_dict['choices'] = json.dumps(q.Qselect)
+        res.append(cur_dict)
 
-            # 用户已作答的缓存
-            if q.Qno in session.keys():
-                cur_dict['cache'] = session[q.Qno]
+    # res是个list，其每个元素为dict，格式如下
+    # cur_dict = {
+    #     'questionID': "1234",
+    #     'code': 200,
+    #     'type': "select",
+    #     'stem': "question stem",
+    #     'choices': json.dumps({"A": 1, "B": 2, "C": 3}),
+    #     'cache': {'choice': ['A', 'B'], 'submitTime': '1607591913'}
+    # }
 
-            res.append(cur_dict)
+    return jsonify(res_dict)
 
-        # res是个list，其每个元素为dict，格式如下
-        # cur_dict = {
-        #     'questionID': "1234",
-        #     'code': 200,
-        #     'type': "select",
-        #     'stem': "question stem",
-        #     'choices': json.dumps({"A": 1, "B": 2, "C": 3}),
-        #     'cache': {'choice': ['A', 'B'], 'submitTime': '1607591913'}
-        # }
 
-        return jsonify(res_dict)
+@exam_bp.route('/questions', methods=['POST'])
+def cache_questions():
+    """
+    缓存考生作答情况
+    """
+    examID = request.form['examID']
 
-    elif request.method == 'POST':
-        examID = request.form['examID']
+    test = Test.get_test(examID)
+    # 确保权限满足且考试存在
+    validated = permission_inadequate_or_exam_not_exists(test)
+    if validated is not None:
+        return validated
 
-        test = Test.get_test(examID)
-        # 确保权限满足且考试存在
-        validated = permission_inadequate_or_exam_not_exists(test)
-        if validated is not None:
-            return validated
+    # 确保考试已开始（正常使用web前端不会出现该情况）
+    validated = guarantee_exam_begin(test)
+    if validated is not None:
+        return validated
 
-        # 确保考试已开始（正常使用web前端不会出现该情况）
-        validated = guarantee_exam_begin(test)
-        if validated is not None:
-            return validated
+    # session缓存已保存的题目id
+    if 'cached_questionID' not in session:
+        # 由于session需要序列化因此不能用set(), 在这里用list然后返回时用set去重
+        session['cached_questionID'] = list()
 
-        # session缓存已保存的题目id
-        if 'cached_questionID' not in session:
-            # 由于session需要序列化因此不能用set(), 在这里用list然后返回时用set去重
-            session['cached_questionID'] = list()
+    # 获得的result是个list，元素为dict
+    result = json.loads(request.form['result'])
+    assert isinstance(result, list)
 
-        # 获得的result是个list，元素为dict
-        result = json.loads(request.form['result'])
-        assert isinstance(result, list)
+    # 将内容缓存
+    for per_res in result:
+        assert isinstance(per_res, dict)
+        # TODO 未判断题目是否存在
+        questionID = per_res.pop('questionID')
+        # cached_questionID.add(questionID)
+        session[questionID] = per_res
+        session['cached_questionID'].append(questionID)
 
-        # 将内容缓存
-        for per_res in result:
-            assert isinstance(per_res, dict)
-            # TODO 未判断题目是否存在
-            questionID = per_res.pop('questionID')
-            # cached_questionID.add(questionID)
-            session[questionID] = per_res
-            session['cached_questionID'].append(questionID)
+    # session缓存所有题目id
+    if 'all_question_id' not in session:
+        session['all_question_id'] = Test.get_all_question_id(examID)
 
-        # session缓存所有题目id
-        if 'all_question_id' not in session:
-            session['all_question_id'] = Test.get_all_question_id(examID)
+    res = {
+        'code': 200,
+        'cached': list(set(session['cached_questionID'])),
+        'all': list(session['all_question_id'])
+    }
 
-        res = {
-            'code': 200,
-            'cached': list(set(session['cached_questionID'])),
-            'all': list(session['all_question_id'])
-        }
+    return jsonify(res)
 
-        return jsonify(res)
 
-# TODO 判卷请求似乎没有
+@exam_bp.route('/grading', methods=['GET'])
+def grade_exam():
+    """
+    试卷判分接口，直接使用后端缓存的数据
+    """
+    for quiz_id in list(set(session['cached_questionID'])):
+        answer = session['answers'][quiz_id]
+        qtype = answer['qtype']
+        # ["A", "B"]
+        qanswer = answer['qanswer']
+
+        # {'choice': ["A", "B"], submitTime: }
+        user_ans = session[quiz_id]
+        if qtype == 'select':
+            pass
+        elif qtype == 'multi':
+            pass
+        elif qtype == 'fill':
+            pass
+
 
 # @exam_bp.route("/<str:exam_id>", method=['GET'])
 # def get_paper(exam_id: str):

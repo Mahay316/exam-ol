@@ -49,6 +49,9 @@ def get_questions():
     content = args.get('content')
     page = args.get('page')
 
+    if page is None:
+        page = 1
+
     res_json = {'code': 200, 'questions': []}
     select_dict = {}
 
@@ -64,7 +67,7 @@ def get_questions():
         select_dict['content'] = content
         # results = Question.select_questions_by(page, content=content)
 
-    results = Question.select_questions_by(page, **select_dict)
+    results = Question.select_questions_by(int(page), **select_dict)
 
     for result in results:
         res_json['questions'].append({
@@ -73,7 +76,7 @@ def get_questions():
             'qstem': result.Qstem,
             'qselect': result.Qselect,
             'qanswer': result.Qanswer,
-            'qsubject': result.Qsubject
+            'qsubject': result.Subno
         })
 
     return jsonify(res_json)
@@ -109,7 +112,9 @@ def update_question():
 
 @question_bp.route('/page_num')
 def get_question_page_num():
+    num = Question.get_question_num()
     return jsonify({
         'code': 200,
-        'page_num': ceil(Question.get_question_num() / PAGE_SIZE)
+        'page_num': ceil(num / PAGE_SIZE),
+        'info_num': num
     })
