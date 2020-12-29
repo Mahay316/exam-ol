@@ -83,7 +83,12 @@ def fg():
     # for x in l:
     #     print(str(x[0].Qno) + ' ' + str(x[1]))
 
-    Question.add_question('select','qwwqw','wewewew','ew','2')
+    # Question.add_question('select','qwwqw','wewewew','ew','2')
+
+    qs = [{'qno': 1, 'qpscore': 3},
+     {'qno': 2, 'qpscore': 4},
+     {'qno': 3, 'qpscore': 10}]
+    print(Paper.add_paper(questions=qs, pname='testp', subno=3))
     pass
 
 

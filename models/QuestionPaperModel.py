@@ -56,24 +56,25 @@ class QuestionPaper(Base):
             session.remove()
 
     @classmethod
-    def add_question_to_paper(cls, pno, qno, score, position):
+    def add_questions_to_paper(cls, pno, questions):
+
         engine = model_common.get_mysql_engine()
         session = model_common.get_mysql_session(engine)
 
         try:
-            qp = QuestionPaper(
-                Pno=pno,
-                Qno=qno,
-                QPscore=score,
-                QPposition=position
-            )
-            session.add(qp)
-            session.commit()
-            return True
+
+            for q in questions:
+                qp = QuestionPaper(
+                    Pno=pno,
+                    Qno=q['qno'],
+                    QPscore=q['qpscore']
+                )
+                session.add(qp)
+                session.commit()
 
         except Exception as e:
             session.rollback()
-            return False
+            raise e
 
         finally:
             engine.dispose()
