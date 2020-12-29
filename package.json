@@ -1,0 +1,23 @@
+{
+  "name": "exam-ol",
+  "version": "1.0.0",
+  "description": "数据库原理课程设计——在线考试系统",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack"
+  },
+  "devDependencies": {
+    "css-loader": "^5.0.1",
+    "vue-loader": "^15.9.6",
+    "vue-template-compiler": "^2.6.12",
+    "webpack": "^5.11.1",
+    "webpack-cli": "^4.3.0"
+  },
+  "dependencies": {
+    "vue": "^2.6.12"
+  }
+}
