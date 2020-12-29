@@ -216,14 +216,27 @@ class Mentor(Base, User):
         :return: list[Course](没有课程则返回空列表)
         """
 
+        engine = model_common.get_mysql_engine()
+        session = model_common.get_mysql_session(engine)
+
         try:
-            mentor = Mentor.get_user(no)
+
+            filter_list = []
+            filter_list.append(cls.Mno == no)
+
+            mentor = session.query(cls).filter(*filter_list).first()
+
             if not mentor:
                 raise Exception('没有该教师号记录')
             return mentor.course
 
         except Exception as e:
+            session.rollback()
             raise e
+
+        finally:
+            engine.dispose()
+            session.remove()
 
     @classmethod
     def has_this_class(cls, mentor_no, course_no):

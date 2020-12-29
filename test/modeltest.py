@@ -17,6 +17,7 @@ from models import Question
 from common import model_common
 from models import Paper
 from models import Test
+from models import Mentor
 
 
 def qt():
@@ -93,6 +94,8 @@ def fg():
     # print(Test.get_paper_by_tno(2).Pname)
 
     # print(Test.set_test_grade(2,'student',4,2,77))
+
+    print(Mentor.get_classes('teacher1_en'))
     pass
 
 
