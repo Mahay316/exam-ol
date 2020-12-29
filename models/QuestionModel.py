@@ -1,4 +1,4 @@
-from sqlalchemy import Column, ForeignKey, String, text, or_
+from sqlalchemy import Column, ForeignKey, String, text, or_, Integer, Index
 from sqlalchemy.dialects.mysql import INTEGER, TINYINT, ENUM
 from sqlalchemy.orm import relationship
 from sqlalchemy import func
@@ -12,14 +12,16 @@ from models.PaperModel import Paper
 
 class Question(Base):
     __tablename__ = 'question'
+    __table_args__ = (
+        Index('Qquery', 'Qno', 'Qtype', 'Qstem', 'Qanswer'),
+    )
 
-    Qno = Column(String(20, 'utf8mb4_general_ci'), primary_key=True, comment='题库中的编号')
+    Qno = Column(Integer, primary_key=True, comment='题库中的编号')
     Qtype = Column(ENUM('select', 'multi', 'fill'), nullable=False, comment='题目类型 select-单选 multi-多选 fill-填空')
     Qstem = Column(String(255, 'utf8mb4_general_ci'), nullable=False, comment='题目的内容')
-    Qanswer = Column(String(255, 'utf8mb4_general_ci'), nullable=False, comment='JSON格式的题目的答案，选择题的备选项，填空题的答案')
-    Qselect = Column(String(10, 'utf8mb4_general_ci'), comment='选择题的正确选项')
-    Subno = Column(ForeignKey('subject.Subno', ondelete='SET NULL', onupdate='CASCADE'), index=True,
-                   comment='题目所属的科目')
+    Qanswer = Column(String(255, 'utf8mb4_general_ci'), nullable=False, comment='JSON列表，题目的答案')
+    Qselect = Column(String(255, 'utf8mb4_general_ci'), comment='JSON列表，选择题的备选项')
+    Subno = Column(ForeignKey('subject.Subno', ondelete='SET NULL', onupdate='CASCADE'), index=True, comment='题目所属的科目')
     Qreference = Column(INTEGER, nullable=False, server_default=text("'0'"), comment='题目被引用的次数')
     Qisdeleted = Column(TINYINT(1), nullable=False, server_default=text("'0'"), comment='真：隐藏 假：显示')
 
@@ -126,19 +128,11 @@ class Question(Base):
         session = model_common.get_mysql_session(engine)
 
         try:
-            questions = session.query(cls).all()
-            if not questions:
-                qno = 'q00001'
-            else:
-                lastid = questions[-1].Qno[1:]
-                qid = int(lastid) + 1
-                qno = 'q' + str(qid).zfill(5)
 
             # subno = Subject.get_subno_by_subname(qsubject)
             subno = qsubject
 
-            question = Question(Qno=qno,
-                                Qtype=qtype,
+            question = Question(Qtype=qtype,
                                 Qstem=qstem,
                                 Qanswer=qanswer,
                                 Qselect=qselect,

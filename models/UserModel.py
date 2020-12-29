@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String
+from sqlalchemy import Column, String, CHAR
 from sqlalchemy.dialects.mysql import ENUM
 from sqlalchemy.orm import relationship
 
@@ -72,7 +72,7 @@ class User:
             raise e
 
 
-class Student(User, Base):
+class Student(Base):
     __tablename__ = 'student'
 
     Sno = Column(String(20, 'utf8mb4_general_ci'), primary_key=True, comment='学生编号')
@@ -176,12 +176,12 @@ class Student(User, Base):
             raise e
 
 
-class Mentor(User, Base):
+class Mentor(Base):
     __tablename__ = 'mentor'
 
     Mno = Column(String(20, 'utf8mb4_general_ci'), primary_key=True, comment='教师编号')
-    Mname = Column(String(10, 'utf8mb4_general_ci'), nullable=False, comment='教师姓名')
-    Mgender = Column(String(3, 'utf8mb4_general_ci'), comment='教师性别')
+    Mname = Column(String(10, 'utf8mb4_general_ci'), nullable=False, index=True, comment='教师姓名')
+    Mgender = Column(CHAR(1, 'utf8mb4_general_ci'), comment='教师性别')
     Mtitle = Column(String(10, 'utf8mb4_general_ci'), comment='教师职称')
     Mpassword = Column(String(32, 'utf8mb4_general_ci'), nullable=False, comment='教师登陆密码')
 
@@ -243,7 +243,7 @@ class Mentor(User, Base):
             raise e
 
 
-class Admin(User, Base):
+class Admin(Base):
     __tablename__ = 'admin'
 
     Ano = Column(String(20, 'utf8mb4_general_ci'), primary_key=True, comment='管理员账号')

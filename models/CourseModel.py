@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String, ForeignKey
+from sqlalchemy import Column, String, ForeignKey, Integer
 from sqlalchemy.orm import relationship
 
 from models.database import Base
@@ -9,10 +9,9 @@ from common import model_common
 class Course(Base):
     __tablename__ = 'course'
 
-    Cno = Column(String(20, 'utf8mb4_general_ci'), primary_key=True, comment='课程编号')
+    Cno = Column(Integer, primary_key=True, comment='课程编号')
     Cname = Column(String(20, 'utf8mb4_general_ci'), nullable=False, comment='课程名称')
-    Subno = Column(ForeignKey('subject.Subno', ondelete='SET NULL', onupdate='CASCADE'), index=True,
-                   comment='课程所属科目')
+    Subno = Column(ForeignKey('subject.Subno', ondelete='SET NULL', onupdate='CASCADE'), index=True, comment='课程所属科目')
     Mno = Column(ForeignKey('mentor.Mno', ondelete='SET NULL', onupdate='CASCADE'), index=True, comment='教授该课程教师号')
 
     # mentor = relationship('Mentor')
@@ -23,7 +22,7 @@ class Course(Base):
     studentcourse = relationship('StudentCourse', backref='Course')
 
     @classmethod
-    def get_tests_by_no(cls, course_no: str):
+    def get_tests_by_no(cls, course_no):
         """
         根据课程号返回该课程下所拥有的全部考试对象
 
@@ -40,7 +39,7 @@ class Course(Base):
             raise e
 
     @classmethod
-    def get_students_by_no(cls, course_no: str):
+    def get_students_by_no(cls, course_no):
         """
         根据课程号返回该课程下所拥有的全部学生对象
 
@@ -62,7 +61,7 @@ class Course(Base):
             raise e
 
     @classmethod
-    def get_class(cls, Cno: str):
+    def get_class(cls, Cno):
         """
         返回课程对象,没有则返回none
 

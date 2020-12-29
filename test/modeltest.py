@@ -16,6 +16,7 @@ from models import Subject
 from models import Question
 from common import model_common
 from models import Paper
+from models import Test
 
 
 def qt():
@@ -76,10 +77,17 @@ def fg():
 
     # print(Question.get_question_num())
 
+    # t = Test.get_test('1')
+    # l = Test.get_all_questions(t)
+    #
+    # for x in l:
+    #     print(str(x[0].Qno) + ' ' + str(x[1]))
+
+    Question.add_question('select','qwwqw','wewewew','ew','2')
     pass
 
 
 if __name__ == '__main__':
-    qt()
-    # fg()
+    # qt()
+    fg()
     pass
