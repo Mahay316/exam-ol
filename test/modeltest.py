@@ -44,13 +44,39 @@ def qt():
     # for x in ps:
     #     print(x.Pno)
 
+    # s = Subject.get_all_subs()
+    # print(s)
+
+    # Question.delete_question('q00002')
+
+    # Question.add_question('select','aaa','wewew','ewew','s0002')
+
+    # Paper.delete_paper('p0004')
+    #
+    # print(Paper.get_paper_num())
+
+    # Question.delete_question('q00003')
+    #
+    # print(Question.get_question_num())
+
     pass
 
 
 def fg():
-    s = Question.select_questions_by(page=3, content='这是')
-    for x in s:
-        print(x.Qno)
+    # s = Question.select_questions_by(page=3, content='这是')
+    # for x in s:
+    #     print(x.Qno)
+
+    # print(Question.update_question('q00004','fill','www','rere','B','s0001'))
+
+    # l = Question.get_questions_by_pno('p0001')
+    # for x in l:
+    #     print(x.Qstem)
+    # pass
+
+    # print(Question.get_question_num())
+
+    pass
 
 
 if __name__ == '__main__':

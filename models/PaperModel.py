@@ -123,8 +123,6 @@ class Paper(Base):
             engine.dispose()
             session.remove()
 
-
-
     # TODO 待实现
     @classmethod
     def add_paper(cls, questions, pname, subno):
@@ -138,17 +136,54 @@ class Paper(Base):
         :return: 成功返回True，失败False
         """
 
-    # TODO 待实现
     @classmethod
     def delete_paper(cls, pno):
         """
         删除试卷
         """
 
+        engine = model_common.get_mysql_engine()
+        session = model_common.get_mysql_session(engine)
 
-    # TODO 待实现
+        try:
+            filter_list = []
+            filter_list.append(cls.Pno == pno)
+
+            question = session.query(cls).filter(*filter_list)
+            if not question.first():
+                raise Exception('没有该试卷号记录')
+
+            question.update({'Pisdeleted': 1})
+            session.commit()
+            return True
+
+        except Exception as e:
+            session.rollback()
+            return False
+
+        finally:
+            engine.dispose()
+            session.remove()
+
     @classmethod
     def get_paper_num(cls) -> int:
         """
         获取所有试卷数量
         """
+
+        engine = model_common.get_mysql_engine()
+        session = model_common.get_mysql_session(engine)
+
+        try:
+            filter_list = []
+            filter_list.append(cls.Pisdeleted == 0)
+
+            return session.query(cls).filter(*filter_list).count()
+
+        except Exception as e:
+            session.rollback()
+            raise e
+
+        finally:
+            engine.dispose()
+            session.remove()

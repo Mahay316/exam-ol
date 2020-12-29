@@ -14,6 +14,7 @@ from sqlalchemy import Column, VARCHAR
 from models.database import Base
 from common import model_common
 
+
 class Subject(Base):
     __tablename__ = 'subject'
 
@@ -28,7 +29,7 @@ class Subject(Base):
 
         try:
             filter_list = []
-            filter_list.append(cls.Subname==subname)
+            filter_list.append(cls.Subname == subname)
 
             sub = session.query(cls).filter(*filter_list).first()
             if sub:
@@ -43,8 +44,6 @@ class Subject(Base):
             engine.dispose()
             session.remove()
 
-
-    # TODO to be implemented
     @classmethod
     def get_all_subs(cls):
         """
@@ -52,3 +51,17 @@ class Subject(Base):
 
         :return: list[Subject]
         """
+
+        engine = model_common.get_mysql_engine()
+        session = model_common.get_mysql_session(engine)
+
+        try:
+            return session.query(cls).all()
+
+        except Exception as e:
+            session.rollback()
+            raise e
+
+        finally:
+            engine.dispose()
+            session.remove()

@@ -1,10 +1,13 @@
-from sqlalchemy import Column, ForeignKey, String, text
+from sqlalchemy import Column, ForeignKey, String, text, or_
 from sqlalchemy.dialects.mysql import INTEGER, TINYINT, ENUM
-from common import model_common
+from sqlalchemy.orm import relationship
+from sqlalchemy import func
 
 from models.database import Base
 from common import model_common
 from models.SubjectModel import Subject
+from models.QuestionPaperModel import QuestionPaper
+from models.PaperModel import Paper
 
 
 class Question(Base):
@@ -21,6 +24,7 @@ class Question(Base):
     Qisdeleted = Column(TINYINT(1), nullable=False, server_default=text("'0'"), comment='真：隐藏 假：显示')
 
     # subject = relationship('Subject')
+    questionpaper = relationship('QuestionPaper', backref='question')
 
     def is_fill_in_blanks(self):
         """
@@ -151,16 +155,35 @@ class Question(Base):
             engine.dispose()
             session.remove()
 
-
-    # TODO 待实现
     @classmethod
     def delete_question(cls, qno):
         """
         删除试题
         """
 
+        engine = model_common.get_mysql_engine()
+        session = model_common.get_mysql_session(engine)
 
-    # TODO 待实现
+        try:
+            filter_list = []
+            filter_list.append(cls.Qno == qno)
+
+            question = session.query(cls).filter(*filter_list)
+            if not question.first():
+                raise Exception('没有该试题号记录')
+
+            question.update({'Qisdeleted': 1})
+            session.commit()
+            return True
+
+        except Exception as e:
+            session.rollback()
+            return False
+
+        finally:
+            engine.dispose()
+            session.remove()
+
     @classmethod
     def update_question(cls, old_qno, qtype, qstem, qanswer, qselect, qsubject):
         """
@@ -172,19 +195,84 @@ class Question(Base):
         :param old_qno: 待修改的试题号
         """
 
+        engine = model_common.get_mysql_engine()
+        session = model_common.get_mysql_session(engine)
 
-    # TODO 待实现
+        try:
+            filter_list = []
+            filter_list.append(cls.Qno == old_qno)
+
+            question = session.query(cls).filter(*filter_list)
+            if not question:
+                raise Exception('没有该试题号记录')
+
+            info_dict = {
+                'Qtype': qtype,
+                'Qstem': qstem,
+                'Qanswer': qanswer,
+                'Qselect': qselect,
+                'Subno': qsubject
+            }
+
+            question.update(info_dict)
+            session.commit()
+            return True
+
+        except Exception as e:
+            session.rollback()
+            raise e
+            return False
+
+        finally:
+            engine.dispose()
+            session.remove()
+
     @classmethod
     def get_question_num(cls):
         """
-        获取所有试卷数目
+        获取所有试题数目
         """
+        engine = model_common.get_mysql_engine()
+        session = model_common.get_mysql_session(engine)
 
+        try:
+            filter_list = []
+            filter_list.append(cls.Qisdeleted == 0)
 
-    # TODO
+            return session.query(cls).filter(*filter_list).count()
+
+        except Exception as e:
+            session.rollback()
+            raise e
+
+        finally:
+            engine.dispose()
+            session.remove()
+
     @classmethod
     def get_questions_by_pno(cls, pno):
         """
         通过试卷号获取该试卷的全部试题
         :return: list[Question]
         """
+
+        engine = model_common.get_mysql_engine()
+        session = model_common.get_mysql_session(engine)
+
+        try:
+            filter_list = []
+
+            qnos = Paper.get_questions_id(pno)
+
+            for qno in qnos:
+                filter_list.append(cls.Qno == qno)
+
+            return session.query(cls).filter(or_(*filter_list)).all()
+
+        except Exception as e:
+            session.rollback()
+            raise e
+
+        finally:
+            engine.dispose()
+            session.remove()
