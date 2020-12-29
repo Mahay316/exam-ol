@@ -16,7 +16,7 @@ new Vue({
         mainFooter
     },
     mounted() {
-        axios.get('/class/member')
+        axios.get('/class/member?cno=1&')
             .then(resp => {
                 if (resp.data.code === 200)
                     this.members = resp.data.members;

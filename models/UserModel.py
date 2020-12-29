@@ -72,7 +72,7 @@ class User:
             raise e
 
 
-class Student(Base):
+class Student(Base, User):
     __tablename__ = 'student'
 
     Sno = Column(String(20, 'utf8mb4_general_ci'), primary_key=True, comment='学生编号')
@@ -176,7 +176,7 @@ class Student(Base):
             raise e
 
 
-class Mentor(Base):
+class Mentor(Base, User):
     __tablename__ = 'mentor'
 
     Mno = Column(String(20, 'utf8mb4_general_ci'), primary_key=True, comment='教师编号')
@@ -243,7 +243,7 @@ class Mentor(Base):
             raise e
 
 
-class Admin(Base):
+class Admin(Base, User):
     __tablename__ = 'admin'
 
     Ano = Column(String(20, 'utf8mb4_general_ci'), primary_key=True, comment='管理员账号')

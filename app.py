@@ -1,6 +1,9 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, redirect, request, session, url_for
+
+from common.Role import *
+from decorators import login_required
 from models import init_db
-from views import exam_bp, auth_bp
+from views import exam_bp, auth_bp, class_bp, paper_bp, question_bp
 
 app = Flask(__name__)
 app.config.from_pyfile('config.py')
@@ -10,13 +13,23 @@ app.config.from_pyfile('config.py')
 
 # 全局错误处理
 @app.route('/')
+def redirect_to_index():
+    return redirect(url_for('index'))
+
+
+@app.route('/index', methods=['GET'])
+@login_required('redirect')
 def index():
-    return app.send_static_file('html/test_stat.html')
-
-
-@app.route('/class')
-def get_class():
-    return render_template('test_stat.html')
+    """
+    负责根据用户身份在后端进行重定向，将不同身份用户定向到对应首页
+    如果未登录则定向到登录页，异常身份则报404
+    """
+    if request.method == 'GET':
+        role = session.get('role')
+        if role == STUDENT or role == MENTOR:
+            return app.send_static_file('html/class_list.html')
+        elif role == ADMIN:
+            return app.send_static_file('html/admin.html')
 
 
 @app.errorhandler(404)
@@ -33,4 +46,7 @@ if __name__ == '__main__':
     # 在此处注册蓝图
     app.register_blueprint(exam_bp, url_prefix='/exam')
     app.register_blueprint(auth_bp, url_prefix='/auth')
+    app.register_blueprint(class_bp, url_prefix='/class')
+    app.register_blueprint(paper_bp, url_prefix='/paper')
+    app.register_blueprint(question_bp, url_prefix='/question')
     app.run(debug=True)

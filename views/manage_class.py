@@ -1,7 +1,8 @@
-from flask import Blueprint, request, jsonify, abort, session, render_template
-from models import Mentor, Student, Course
+from flask import Blueprint, request, jsonify, abort, session, render_template, current_app
+
 from common.Role import *
 from decorators import should_be, login_required
+from models import Mentor, Student, Course
 
 class_bp = Blueprint('class_bp', __name__)
 
@@ -16,6 +17,11 @@ def has_this_class(cno):
         if_has = False
 
     return if_has
+
+
+@class_bp.route('/')
+def get_class():
+    return current_app.send_static_file('html/test_stat.html')
 
 
 @class_bp.route('/list')
@@ -61,9 +67,8 @@ def get_exam_list_page():
 @login_required('json')
 def get_class_member():
     cno = request.args.get('cno')
-    page = request.args.get('page')
 
-    if cno is None or page is None:
+    if cno is None:
         abort(404)
 
     if not has_this_class(cno):
