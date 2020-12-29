@@ -125,3 +125,13 @@ class Course(Base):
         """
 
         return StudentCourse.del_class_member(cno=cno, sno=sno)
+
+
+    # TODO
+    @classmethod
+    def get_exams_by_cno(cls, cno):
+        """
+        给出cno返回该课程下的全部Test考试对象
+
+        :return: list[Test]
+        """
