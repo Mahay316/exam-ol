@@ -103,7 +103,6 @@ CREATE TABLE `question_paper` (
   `Pno` INT NOT NULL COMMENT '题库中的编号',
   `Qno` INT NOT NULL COMMENT '试卷的编号',
   `QPscore` int DEFAULT '0' COMMENT '试题的分值',
-  `QPposition` int DEFAULT NULL COMMENT '题目在试卷中的位置',
   PRIMARY KEY (`Pno`,`Qno`),
   KEY `Qno` (`Qno`),
   CONSTRAINT `question_paper_ibfk_1` FOREIGN KEY (`Pno`) REFERENCES `paper` (`Pno`) ON DELETE CASCADE ON UPDATE CASCADE,

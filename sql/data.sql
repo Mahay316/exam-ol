@@ -45,10 +45,10 @@ INSERT INTO `question`(`Qtype`, `Qstem`, `Qanswer`, `Qselect`, `Subno`, `Qrefere
 INSERT INTO `question`(`Qtype`, `Qstem`, `Qanswer`, `Qselect`, `Subno`, `Qreference`, `Qisdeleted`) VALUES ('multi', '这是一道流体力学多选题()', '{\"A\": \"我是A\", \"B\": \"我是B\", \"C\": \"我是C\". \"D\": \"我是D\", \"E\": \"我是E\"}', 'ABC', 1, 0, 0);
 INSERT INTO `question`(`Qtype`, `Qstem`, `Qanswer`, `Qselect`, `Subno`, `Qreference`, `Qisdeleted`) VALUES ('fill', '这是一道[填空]填空[填空]', '{\"A\": \"编译原理\", \"B\": \"题\"}', NULL, 3, 0, 0);
 
-INSERT INTO `question_paper`(`Pno`, `Qno`, `QPscore`, `QPposition`) VALUES (1, 1, 2, 1);
-INSERT INTO `question_paper`(`Pno`, `Qno`, `QPscore`, `QPposition`) VALUES (1, 2, 10, 3);
-INSERT INTO `question_paper`(`Pno`, `Qno`, `QPscore`, `QPposition`) VALUES (1, 3, 5, 2);
-INSERT INTO `question_paper`(`Pno`, `Qno`, `QPscore`, `QPposition`) VALUES (3, 2, 4, 1);
+INSERT INTO `question_paper`(`Pno`, `Qno`, `QPscore`) VALUES (1, 1, 2);
+INSERT INTO `question_paper`(`Pno`, `Qno`, `QPscore`) VALUES (1, 2, 10);
+INSERT INTO `question_paper`(`Pno`, `Qno`, `QPscore`) VALUES (1, 3, 5);
+INSERT INTO `question_paper`(`Pno`, `Qno`, `QPscore`) VALUES (3, 2, 4);
 
 INSERT INTO `student_course`(`Cno`, `Sno`) VALUES (1, 'student1');
 INSERT INTO `student_course`(`Cno`, `Sno`) VALUES (1, 'student1_en');
