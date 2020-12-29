@@ -90,13 +90,13 @@ def get_class_member():
 @class_bp.route('/member', methods=['POST', 'DELETE'])
 @should_be([MENTOR])
 def change_student():
-    cno = int(request.form['cno'])
-    sno = int(request.form['sno'])
-
-    if not Mentor.has_this_class(session['no'], cno):
-        return jsonify({'code': 204})
-
     if request.method == 'POST':
+        cno = int(request.form['cno'])
+        sno = request.form['sno']
+
+        if not Mentor.has_this_class(session['no'], cno):
+            return jsonify({'code': 204})
+
         flag = Course.add_class_member(cno, sno)
         if not flag:
             # 学生已存在
@@ -104,6 +104,12 @@ def change_student():
         return jsonify({'code': 200})
 
     elif request.method == 'DELETE':
+        cno = int(request.args['cno'])
+        sno = request.args['sno']
+
+        if not Mentor.has_this_class(session['no'], cno):
+            return jsonify({'code': 204})
+
         flag = Course.del_class_member(cno, sno)
         if not flag:
             # 学生不存在

@@ -82,7 +82,7 @@ def add_paper():
 @paper_bp.route('/', methods=['DELETE'])
 @should_be([MENTOR])
 def delete_paper():
-    pno = int(request.form['DELETE'])
+    pno = int(request.args['pno'])
     Paper.delete_paper(pno)
     return jsonify({'code': 200})
 
