@@ -215,3 +215,22 @@ class Paper(Base):
         finally:
             engine.dispose()
             session.remove()
+
+    @classmethod
+    def get_paper(cls, pno):
+        engine = model_common.get_mysql_engine()
+        session = model_common.get_mysql_session(engine)
+
+        try:
+            filter_list = []
+            filter_list.append(cls.Pno == pno)
+
+            return session.query(cls).filter(*filter_list).first()
+
+        except Exception as e:
+            session.rollback()
+            raise e
+
+        finally:
+            engine.dispose()
+            session.remove()

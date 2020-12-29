@@ -73,3 +73,26 @@ class StudentTest(Base):
         finally:
             engine.dispose()
             session.remove()
+
+    @classmethod
+    def add_st(cls, tno, sno, stwrong, stblank, stgrade):
+        engine = model_common.get_mysql_engine()
+        session = model_common.get_mysql_session(engine)
+
+        try:
+            st = StudentTest(Tno=tno,
+                             Sno=sno,
+                             STwrong=stwrong,
+                             STblank=stblank,
+                             STgrade=stgrade)
+            session.add(st)
+            session.commit()
+            return True
+
+        except Exception as e:
+            session.rollback()
+            return False
+
+        finally:
+            engine.dispose()
+            session.remove()
