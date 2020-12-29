@@ -14,7 +14,9 @@ app.config.from_pyfile('config.py')
 # 全局错误处理
 @app.route('/')
 def redirect_to_index():
-    return redirect(url_for('index'))
+    session['no'] = 'teacher1_en'
+    session['role'] = MENTOR
+    return redirect(url_for('class_bp.get_class'))
 
 
 @app.route('/index', methods=['GET'])

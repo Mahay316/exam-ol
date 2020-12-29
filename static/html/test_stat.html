@@ -11,6 +11,7 @@
         .delete {
             padding: 5px 8px;
             font-size: 12px;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -129,10 +130,9 @@
                                     <tbody>
                                     <tr v-for="item in members">
                                         <td>{{ item.sno }}</td>
-                                        <td>{{ item.name }}</td>
+                                        <td>{{ item.sname }}</td>
                                         <td>
-                                            <span class="badge bg-danger delete" data-toggle="modal"
-                                                  data-target="#delete">删除</span>
+                                            <span class="badge bg-danger delete" @click="deleteMember(item)">删除</span>
                                         </td>
                                     </tr>
                                     </tbody>
@@ -167,6 +167,7 @@
 <script src="/static/chart.js/Chart.min.js"></script>
 <!-- AdminLTE App -->
 <script src="/static/adminlte/js/adminlte.min.js"></script>
+<script src="/static/js/bootbox.min.js"></script>
 <script src="/static/dist/stat.js"></script>
 
 <script>
