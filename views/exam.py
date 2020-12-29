@@ -166,6 +166,7 @@ def get_questions():
 
 
 @exam_bp.route('/questions', methods=['POST'])
+@should_be([STUDENT])
 def cache_questions():
     """
     缓存考生作答情况
@@ -214,26 +215,48 @@ def cache_questions():
     return jsonify(res)
 
 
-@exam_bp.route('/grading', methods=['GET'])
+@exam_bp.route('/grading', methods=['POST'])
+@should_be([STUDENT])
 def grade_exam():
     """
     试卷判分接口，直接使用后端缓存的数据
     """
+    tno = request.form['tno']
+    # TODO 进行权限验证，即验证学生是否有该考试且考试已经开始
+    paper = Test.get_paper_by_tno(tno)
+    if paper is None:
+        return jsonify({'code': 204})
+    pnum = paper.Pnum
+    right_num, did_num, stu_grade = 0, 0, 0
+
     for quiz_id in list(set(session['cached_questionID'])):
+        did_num += 1
         answer = session['answers'][quiz_id]
         qtype = answer['qtype']
         # ["A", "B"]
         qanswer = answer['qanswer']
+        qpscore = answer['qpscore']
 
-        # {'choice': ["A", "B"], submitTime: }
-        user_ans = session[quiz_id]
+        # {'choice': ["A", "B"]}
+        user_ans = session[quiz_id]['choice']
+        flag = False
         if qtype == 'select':
-            pass
+            flag = qanswer[0] == user_ans[0]
         elif qtype == 'multi':
-            pass
+            user_ans.sort()
+            qanswer.sort()
+            flag = user_ans == qanswer
         elif qtype == 'fill':
-            pass
+            flag = user_ans == qanswer
+        if flag:
+            right_num += 1
+            stu_grade += qpscore
 
+    Test.set_test_grade(tno, session['no'], st_wrong=pnum - right_num, st_blank=pnum - did_num, st_grade=stu_grade)
+
+    # TODO 未清理session
+
+    return jsonify({'code': 200})
 
 # @exam_bp.route("/<str:exam_id>", method=['GET'])
 # def get_paper(exam_id: str):
