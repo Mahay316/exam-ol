@@ -56,6 +56,7 @@ def get_exam_list_page():
     cno = request.args.get('cno')
     if cno is None:
         abort(404)
+    cno = int(cno)
 
     if not has_this_class(cno):
         abort(404)
@@ -67,9 +68,9 @@ def get_exam_list_page():
 @login_required('json')
 def get_class_member():
     cno = request.args.get('cno')
-
     if cno is None:
         abort(404)
+    cno = int(cno)
 
     if not has_this_class(cno):
         abort(404)
@@ -89,8 +90,8 @@ def get_class_member():
 @class_bp.route('/member', methods=['POST', 'DELETE'])
 @should_be([MENTOR])
 def change_student():
-    cno = request.form['cno']
-    sno = request.form['sno']
+    cno = int(request.form['cno'])
+    sno = int(request.form['sno'])
 
     if not Mentor.has_this_class(session['no'], cno):
         return jsonify({'code': 204})
@@ -113,7 +114,7 @@ def change_student():
 @class_bp.route('stat')
 def get_exam_stat():
     cno = request.args.get('cno')
-    if cno is None or not has_this_class(cno):
+    if cno is None or not has_this_class(int(cno)):
         abort(404)
 
     return render_template('test_stat.html')

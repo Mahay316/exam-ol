@@ -30,6 +30,8 @@ def add_question():
     except:
         return jsonify({'code': 204})
 
+    qsubject = int(qsubject)
+
     flag = Question.add_question(qtype, qstem, qanswer, qselect, qsubject)
     if flag:
         return jsonify({'code': 200})
@@ -56,7 +58,7 @@ def get_questions():
     select_dict = {}
 
     if subject is not None:
-        select_dict['subject'] = subject
+        select_dict['subject'] = int(subject)
         # results = Question.select_questions_by(page, subject=subject)
     elif qtype is not None:
         select_dict['qtype'] = qtype
@@ -92,7 +94,7 @@ def delete_question():
     """
     删除试题
     """
-    qno = request.form['qno']
+    qno = int(request.form['qno'])
     Question.delete_question(qno)
     return jsonify({'code': 200})
 
@@ -104,12 +106,12 @@ def update_question():
     更新试题
     """
     form = request.form
-    qno = form['qno']
+    qno = int(form['qno'])
     qtype = form['qtype']
     qstem = form['qstem']
     qanswer = form['qanswer']
     qselect = form['qselect']
-    qsubject = form['qsubject']
+    qsubject = int(form['qsubject'])
     Question.update_question(qno, qtype, qstem, qanswer, qselect, qsubject)
     return jsonify({'code': 200})
 

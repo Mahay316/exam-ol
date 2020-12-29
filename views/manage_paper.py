@@ -35,7 +35,7 @@ def get_paper():
 
     select_dict = {}
     if subject is not None:
-        select_dict['subject'] = subject
+        select_dict['subject'] = int(subject)
         # results = Paper.select_papers_by(page, subject=subject)
     elif used is not None:
         select_dict['used'] = used
@@ -53,7 +53,7 @@ def get_paper():
             'pno': result.Pno,
             'pname': result.Pname,
             'preferenced': result.Preferenced,
-            'psubject': result.psubject
+            'psubject': result.Subno
         })
 
     num = Paper.get_paper_num()
@@ -69,7 +69,7 @@ def add_paper():
     form = request.form
     questions = form.get('questions')
     pname = form.get('pname')
-    subno = form.get('subno')
+    subno = int(form.get('subno'))
 
     questions = json.loads(questions)
     flag = Paper.add_paper(questions, pname, subno)
@@ -82,7 +82,7 @@ def add_paper():
 @paper_bp.route('/', methods=['DELETE'])
 @should_be([MENTOR])
 def delete_paper():
-    pno = request.form['DELETE']
+    pno = int(request.form['DELETE'])
     Paper.delete_paper(pno)
     return jsonify({'code': 200})
 
@@ -94,7 +94,7 @@ def preview_paper():
     预览试卷。POST方法用于正在组卷的预览，GET用于预览已存在的卷子
     """
     if request.method == 'GET':
-        pno = request.args['pno']
+        pno = int(request.args['pno'])
         res_json = {
             'code': 200,
             'questions': []
