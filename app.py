@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, request, session, url_for
+from flask import Flask, redirect, request, session, url_for
 
 from common.Role import *
 from decorators import login_required
@@ -35,7 +35,7 @@ def index():
 @app.errorhandler(404)
 def page_not_found(err):
     """自定义404页面"""
-    return render_template('error_404.html')
+    return app.send_static_file('html/error_404.html')
 
 
 if __name__ == '__main__':

@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify, session, redirect, url_for, abort, render_template
+from flask import Blueprint, request, current_app, jsonify, session, redirect, url_for, abort
 from models import Paper, Question
 from common.Role import *
 from decorators import should_be, login_required
@@ -13,7 +13,7 @@ paper_bp = Blueprint('paper_bp', __name__)
 @login_required('redirect')
 def paper_index():
     if session['role'] == MENTOR:
-        return render_template('paper_repo.html')
+        return current_app.send_static_file('html/paper_repo.html')
     else:
         abort(404)
 

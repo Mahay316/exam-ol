@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify, abort, session, render_template, current_app
+from flask import Blueprint, request, jsonify, abort, session, current_app
 
 from common.Role import *
 from decorators import should_be, login_required
@@ -61,7 +61,7 @@ def get_exam_list_page():
     if not has_this_class(cno):
         abort(404)
 
-    return render_template('test_list.html')
+    return current_app.send_static_file('html/test_list.html')
 
 
 @class_bp.route('/member', methods=['GET'])
@@ -117,4 +117,4 @@ def get_exam_stat():
     if cno is None or not has_this_class(int(cno)):
         abort(404)
 
-    return render_template('test_stat.html')
+    return current_app.send_static_file('html/test_stat.html')

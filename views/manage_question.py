@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify, session, redirect, url_for, abort, render_template
+from flask import Blueprint, request, jsonify, session, current_app, abort
 from models import Question
 from common.Role import *
 from decorators import should_be, login_required
@@ -12,7 +12,7 @@ question_bp = Blueprint('question_bp', __name__)
 @login_required('redirect')
 def question_index():
     if session['role'] == MENTOR:
-        return render_template('question_repo.html')
+        return current_app.send_static_file('html/question_repo.html')
     else:
         abort(404)
 

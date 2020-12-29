@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, session, jsonify, request, url_for, redirect
+from flask import Blueprint, current_app, session, jsonify, request, url_for, redirect
 from models.UserModel import Mentor, Student, Admin
 from common import save_session
 from common.Role import *
@@ -38,7 +38,7 @@ def login():
         # 登录失败
         return jsonify({'code': 403})
 
-    return render_template('login.html')
+    return current_app.send_static_file('html/login.html')
 
 
 @auth_bp.route('/logout', methods=['POST'])
