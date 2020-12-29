@@ -26,3 +26,5 @@ MAX_OVERFLOW = 10
 
 # 设置session过期时间
 PERMANENT_SESSION_LIFETIME = timedelta(days=15)
+
+PAGE_SIZE = 10

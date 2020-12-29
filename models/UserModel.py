@@ -105,7 +105,7 @@ class Student(Base, User):
         """
         学生对象调用此方法，返回该学生含有的所有考试id号
 
-        :return: list[str]
+        :return: list[int]
         """
         Tnos = []
         for t in self.studenttest:

@@ -56,6 +56,10 @@ def get_paper():
             'psubject': result.psubject
         })
 
+    num = Paper.get_paper_num()
+    res_json['page_num'] = ceil(num / PAGE_SIZE)
+    res_json['info_num'] = num
+
     return jsonify(res_json)
 
 

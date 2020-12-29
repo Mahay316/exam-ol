@@ -221,7 +221,7 @@ def grade_exam():
     """
     试卷判分接口，直接使用后端缓存的数据
     """
-    tno = request.form['tno']
+    tno = int(request.form['tno'])
     # TODO 进行权限验证，即验证学生是否有该考试且考试已经开始
     paper = Test.get_paper_by_tno(tno)
     if paper is None:

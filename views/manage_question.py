@@ -79,6 +79,10 @@ def get_questions():
             'qsubject': result.Subno
         })
 
+    num = Question.get_question_num()
+    res_json['page_num'] = ceil(num / PAGE_SIZE)
+    res_json['info_num'] = num
+
     return jsonify(res_json)
 
 
