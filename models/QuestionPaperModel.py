@@ -22,15 +22,38 @@ from common import model_common
 class QuestionPaper(Base):
     __tablename__ = 'question_paper'
 
-    Pno = Column(ForeignKey('paper.Pno', ondelete='CASCADE', onupdate='CASCADE'), primary_key=True, nullable=False,
-                 comment='题库中的编号')
-    Qno = Column(ForeignKey('question.Qno', ondelete='RESTRICT', onupdate='CASCADE'), primary_key=True, nullable=False,
-                 index=True, comment='试卷的编号')
-    QPscore = Column(Integer, server_default=text("'0'"), comment='试题的分值ֵ')
-    QPposition = Column(Integer, comment='题目在试卷中的位置')
+    Pno = Column(ForeignKey('paper.Pno', ondelete='CASCADE', onupdate='CASCADE'), primary_key=True, nullable=False, comment='题库中的编号')
+    Qno = Column(ForeignKey('question.Qno', ondelete='RESTRICT', onupdate='CASCADE'), primary_key=True, nullable=False, index=True, comment='试卷的编号')
+    QPscore = Column(Integer, server_default=text("'0'"), comment='试题的分值')
 
     # paper = relationship('Paper')
     # question = relationship('Question')
+
+
+    @classmethod
+    def get_qpscore(cls,pno,qno):
+
+        engine = model_common.get_mysql_engine()
+        session = model_common.get_mysql_session(engine)
+
+        try:
+          filter_list = []
+          filter_list.append(cls.Pno == pno)
+          filter_list.append(cls.Qno == qno)
+
+          qp = session.query(cls).filter(*filter_list).first()
+          if not qp:
+              raise Exception('没有该组卷信息')
+
+          return qp.QPscore
+
+        except Exception as e:
+            session.rollback()
+            raise e
+
+        finally:
+            engine.dispose()
+            session.remove()
 
     @classmethod
     def add_question_to_paper(cls, pno, qno, score, position):

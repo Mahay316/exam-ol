@@ -9,7 +9,7 @@
 '''
 @file function:
 '''
-from sqlalchemy import Column, VARCHAR
+from sqlalchemy import Column, VARCHAR, Integer, String
 
 from models.database import Base
 from common import model_common
@@ -18,8 +18,8 @@ from common import model_common
 class Subject(Base):
     __tablename__ = 'subject'
 
-    Subno = Column(VARCHAR(5), primary_key=True, comment='科目编号')
-    Subname = Column(VARCHAR(25), nullable=False, comment='科目名称')
+    Subno = Column(Integer, primary_key=True, comment='科目编号')
+    Subname = Column(String(25, 'utf8mb4_general_ci'), nullable=False, index=True, comment='科目名称')
 
     @classmethod
     def get_subno_by_subname(cls, subname):
