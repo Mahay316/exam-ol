@@ -11,7 +11,7 @@ app.config.from_pyfile('config.py')
 # 全局错误处理
 @app.route('/')
 def index():
-    return render_template('paper_preview.html')
+    return app.send_static_file('html/test_stat.html')
 
 
 @app.route('/class')

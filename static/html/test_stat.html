@@ -7,8 +7,6 @@
 
     <link rel="stylesheet" href="/static/adminlte/css/adminlte.min.css">
     <link rel="stylesheet" href="/static/fontawesome/css/all.min.css">
-    <link rel="stylesheet"
-          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
     <style>
         .delete {
             padding: 5px 8px;
@@ -17,100 +15,11 @@
     </style>
 </head>
 <body class="sidebar-mini layout-fixed" style="height: auto;">
-<div class="wrapper">
-    <!-- Navbar -->
-    <nav class="main-header navbar navbar-expand navbar-white navbar-light shadow">
-        <!-- Left navbar links -->
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link" data-widget="pushmenu" href="#" role="button">
-                    <i class="fas fa-bars">
-                    </i>
-                </a>
-            </li>
-            <li class="nav-item d-none d-sm-inline-block">
-                <a href="/" class="nav-link active">首页</a>
-            </li>
-        </ul>
-        <ul class="navbar-nav ml-auto" style="padding-right: 17px;">
-            <li class="nav-item">
-                <a class="nav-link" data-widget="fullscreen" href="#" role="button">
-                    <i class="fas fa-expand-arrows-alt"></i>
-                </a>
-            </li>
-        </ul>
-    </nav>
-    <!-- /.navbar -->
-
+<div class="wrapper" id="testStat">
+    <nav-bar></nav-bar>
     <!-- Main Sidebar Container -->
-{#    TODO 侧边栏逻辑修改#}
-    <aside class="main-sidebar sidebar-dark-primary elevation-4">
-        <!-- Brand Logo -->
-        <a href="#" class="brand-link">
-            <img src="/static/img/logo_white.png" alt="Logo" class="brand-image img-md elevation-3"
-                 style="opacity: .8">
-            <span class="brand-text font-weight-light">在线考试系统</span>
-        </a>
-
-        <!-- Sidebar -->
-        <div class="sidebar">
-            <!-- Sidebar user panel (optional) -->
-            <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-                <div class="image">
-                    <img src="/static/img/avatar.png" class="img-circle elevation-2" alt="User Image">
-                </div>
-                <div class="info">
-                    <a href="#" class="d-block">郑玲老师，您好！</a>
-                </div>
-            </div>
-
-            <!-- Sidebar Menu -->
-            <nav class="mt-2">
-                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
-                    data-accordion="false">
-                    <li class="nav-header">管理</li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link active">
-                            <i class="nav-icon fas fa-paper-plane"></i>
-                            <p>
-                                班级管理
-                            </p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="nav-icon fas fa-paperclip"></i>
-                            <p>
-                                试卷管理
-                            </p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="nav-icon fas fa-pen"></i>
-                            <p>
-                                试题管理
-                            </p>
-                        </a>
-                    </li>
-                    <li class="nav-header">账号</li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="nav-icon fas fa-door-open"></i>
-                            <p>
-                                退出登录
-                            </p>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-            <!-- /.sidebar-menu -->
-
-            </nav>
-            <!-- /.sidebar-menu -->
-        </div>
-        <!-- /.sidebar -->
-    </aside>
+    <!-- TODO 侧边栏逻辑修改-->
+    <side-bar></side-bar>
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper" style="min-height: 196px;">
@@ -218,95 +127,20 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr>
-                                        <td>120181110111</td>
-                                        <td>赵鹏飞</td>
+                                    <tr v-for="item in members">
+                                        <td>{{ item.sno }}</td>
+                                        <td>{{ item.name }}</td>
                                         <td>
-                                            <span class="badge bg-danger delete" data-toggle="modal" data-target="#delete">删除</span>
-{#                                           TODO 添加操作未完成#}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>120181110111</td>
-                                        <td>姚鹏飞</td>
-                                        <td>
-                                            <span class="badge bg-danger delete">删除</span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>120181110111</td>
-                                        <td>姚鹏飞</td>
-                                        <td>
-                                            <span class="badge bg-danger delete">删除</span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>120181110111</td>
-                                        <td style="white-space: nowrap">姚鹏飞啊</td>
-                                        <td>
-                                            <span class="badge bg-danger delete">删除</span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>120181110111</td>
-                                        <td>赵鹏飞</td>
-                                        <td>
-                                            <span class="badge bg-danger delete">删除</span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>120181110111</td>
-                                        <td>赵鹏飞</td>
-                                        <td>
-                                            <span class="badge bg-danger delete">删除</span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>120181110111</td>
-                                        <td>赵鹏飞</td>
-                                        <td>
-                                            <span class="badge bg-danger delete">删除</span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>120181110111</td>
-                                        <td>赵鹏飞</td>
-                                        <td><span class="badge bg-danger delete">删除</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td>120181110111</td>
-                                        <td>赵鹏飞</td>
-                                        <td><span class="badge bg-danger delete">删除</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td>120181110111</td>
-                                        <td>姚鹏飞</td>
-                                        <td><span class="badge bg-danger delete">删除</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td>120181110111</td>
-                                        <td>赵鹏飞</td>
-                                        <td><span class="badge bg-danger delete">删除</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td>120181110111</td>
-                                        <td>姚鹏飞</td>
-                                        <td>
-                                            <span class="badge bg-danger delete">删除</span>
+                                            <span class="badge bg-danger delete" data-toggle="modal"
+                                                  data-target="#delete">删除</span>
                                         </td>
                                     </tr>
                                     </tbody>
                                 </table>
                             </div>
-                            <!-- /.card-body -->
-                            <div class="card-footer clearfix">
-                                <ul class="pagination pagination-sm m-0 float-right">
-                                    <li class="page-item"><a class="page-link" href="#">«</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">»</a></li>
-                                </ul>
+                            <!-- 正在加载中 -->
+                            <div class="overlay" v-if="loading">
+                                <i class="fas fa-2x fa-sync-alt fa-spin"></i>
                             </div>
                         </div>
                     </div>
@@ -319,14 +153,7 @@
     </div>
     <!-- /.content-wrapper -->
 
-    <!-- Main Footer -->
-    <footer class="main-footer">
-        <div class="float-right d-none d-sm-block">
-            <b>Version</b> 1.0.0
-        </div>
-        <strong>Copyright © 2014-2020 <a href="#">Exam_Online</a>.</strong> All rights reserved.
-    </footer>
-    <div id="sidebar-overlay"></div>
+    <main-footer></main-footer>
 </div>
 <!-- ./wrapper -->
 
@@ -340,6 +167,7 @@
 <script src="/static/chart.js/Chart.min.js"></script>
 <!-- AdminLTE App -->
 <script src="/static/adminlte/js/adminlte.min.js"></script>
+<script src="/static/dist/stat.js"></script>
 
 <script>
     var areaChartCanvas = $('#areaChart').get(0).getContext('2d')
