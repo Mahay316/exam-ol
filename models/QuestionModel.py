@@ -82,7 +82,7 @@ class Question(Base):
         :param qtype: 类型筛选，'select', 'multi', 'fill'三种其一
         :param qno: 按题号直接搜索
         :param content: 按内容搜索模糊匹配
-        :return: (num, list[Question])(无内容则返回空list)
+        :return: list[Question](无内容则返回空list)
         """
         engine = model_common.get_mysql_engine()
         session = model_common.get_mysql_session(engine)
@@ -103,8 +103,9 @@ class Question(Base):
             if content:
                 filter_list.append(cls.Qstem.like('%' + content + '%'))
 
-            questions = session.query(cls).filter(*filter_list).all()
-            return model_common.get_page_by_list(questions, page)
+            questions = session.query(cls).filter(*filter_list)
+            res = (questions.count(), model_common.get_page_by_list(questions.all(), page))
+            return res
 
         except Exception as e:
             raise e
