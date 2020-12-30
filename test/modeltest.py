@@ -104,6 +104,8 @@ def fg():
 
     # for x in Course.get_exams_by_cno(4):
     #     print(x.Tno)
+
+    print(Course.get_test_info_by_cno(4))
     pass
 
 

@@ -3,6 +3,7 @@ from sqlalchemy.orm import relationship
 
 from models.database import Base
 from models.StudentCourseModel import StudentCourse
+from models.TestModel import Test
 from common import model_common
 
 
@@ -46,6 +47,10 @@ class Course(Base):
         except Exception as e:
             raise e
 
+        finally:
+            engine.dispose()
+            session.remove()
+
     @classmethod
     def get_students_by_no(cls, course_no):
         """
@@ -73,8 +78,13 @@ class Course(Base):
             for sc in course.studentcourse:
                 students.append(Student.get_user(sc.Sno))
             return students
+
         except Exception as e:
             raise e
+
+        finally:
+            engine.dispose()
+            session.remove()
 
     @classmethod
     def get_class(cls, Cno):
@@ -142,19 +152,15 @@ class Course(Base):
         }]
         """
 
-        engine = model_common.get_mysql_engine()
-        session = model_common.get_mysql_session(engine)
+        tests = Course.get_tests_by_no(cno)
 
-        try:
-
-            filter_list = []
-            filter_list.append(cls.Cno == cno)
-
-            course = session.query(cls).filter(*filter_list).first()
-
-            if not course:
-                raise Exception('没有该课程号记录')
-            return course.tests
-
-        except Exception as e:
-            raise e
+        test_list = []
+        for t in tests:
+            p = Test.get_paper_by_tno(t.Tno)
+            test_list.append({'tno': t.Tno,
+                              'tname': t.Tname,
+                              'pscore': p.Pscore,
+                              'pnum': p.Pnum,
+                              'tstart': t.Tstart.timestamp(),
+                              'tend': t.Tend.timestamp()})
+        return test_list
