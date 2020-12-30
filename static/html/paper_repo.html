@@ -71,7 +71,7 @@
                     data-accordion="false">
                     <li class="nav-header">管理</li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link active">
+                        <a href="#" class="nav-link" id="course-manage">
                             <i class="nav-icon fas fa-paper-plane"></i>
                             <p>
                                 班级管理
@@ -79,7 +79,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link">
+                        <a href="#" class="nav-link active" id="paper-manage">
                             <i class="nav-icon fas fa-paperclip"></i>
                             <p>
                                 试卷管理
@@ -87,7 +87,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link">
+                        <a href="#" class="nav-link" id="question-manage">
                             <i class="nav-icon fas fa-pen"></i>
                             <p>
                                 试题管理
@@ -96,7 +96,7 @@
                     </li>
                     <li class="nav-header">账号</li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link">
+                        <a href="#" class="nav-link" id="logout">
                             <i class="nav-icon fas fa-door-open"></i>
                             <p>
                                 退出登录
@@ -132,7 +132,8 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <button type="button" class="btn btn-outline-success" style="margin-right: 20px;" data-toggle="modal" data-target="#createPaper">新建试卷
+                                <button type="button" class="btn btn-outline-success" style="margin-right: 20px;"
+                                        data-toggle="modal" data-target="#createPaper">新建试卷
                                 </button>
                             </div>
                             <!-- /.card-header -->
@@ -146,18 +147,26 @@
                                                        role="button" id="dropdownMenuLink" data-toggle="dropdown"
                                                        aria-haspopup="true" aria-expanded="false">
                                                         按科目筛选
-{#                                                        TODO 筛选功能需要修改#}
+                                                        <!--TODO 筛选功能需要修改-->
                                                     </a>
 
                                                     <div class="dropdown-menu " aria-labelledby="dropdownMenuLink">
-                                                        <a class="dropdown-item btn-outline-primary" href="#">数据库</a>
-                                                        <a class="dropdown-item btn-outline-primary" href="#">软件工程</a>
-                                                        <a class="dropdown-item btn-outline-primary"
-                                                           href="#">计算机组成原理</a>
+                                                        <a class="dropdown-item btn-outline-primary s0000"
+                                                           href="#">全部</a>
+                                                        <a class="dropdown-item btn-outline-primary s0001"
+                                                           href="#">软件工程</a>
+                                                        <a class="dropdown-item btn-outline-primary s0002" href="#">数据库原理</a>
+                                                        <a class="dropdown-item btn-outline-primary s0003" href=b"#">编译原理</a>
+                                                        <a class="dropdown-item btn-outline-primary s0004"
+                                                           href="#">流体力学</a>
+                                                        <a class="dropdown-item btn-outline-primary s0005" href="#">工程热力学</a>
+                                                        <a class="dropdown-item btn-outline-primary s0006" href="#">C语言程序设计</a>
+                                                        <a class="dropdown-item btn-outline-primary s0007" href="#">Java高级语言程序设计</a>
                                                     </div>
                                                 </div>
                                                 <button type="button"
-                                                        class="btn btn-outline-primary buttons-html5 check-btn">
+                                                        class="btn btn-outline-primary buttons-html5 check-btn"
+                                                        checked="false" id="unusedscreen">
                                                     <span>按未使用试卷筛选</span>
                                                 </button>
                                             </div>
@@ -165,11 +174,13 @@
                                         <div class="col-sm-12 col-md-2 offset-3">
                                             <div id="example2_filter" class="dataTables_filter">
                                                 <input type="search" class="form-control form-control-sm"
-                                                       placeholder="按试卷名搜索" aria-controls="example1">
+                                                       placeholder="按试卷名搜索" aria-controls="example1" id="searchinput">
                                             </div>
                                         </div>
                                         <div class="col-sm-12 col-md-1">
-                                            <button type="button" class="btn btn-outline-primary">搜索</button>
+                                            <button type="button" class="btn btn-outline-primary" id="contentsearch">
+                                                搜索
+                                            </button>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -193,7 +204,7 @@
                                                     </th>
                                                 </tr>
                                                 </thead>
-                                                <tbody>
+                                                <tbody id="info_table">
                                                 <tr role="row" class="odd">
                                                     <td><strong>软件1801数据库期末考</strong></td>
                                                     <td><strong>已使用</strong></td>
@@ -207,7 +218,8 @@
                                                                     style="margin-right: 20px;" data-toggle="modal"
                                                                     data-target="#release">发布考试
                                                             </button>
-                                                            <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#delete">删除
+                                                            <button type="button" class="btn btn-outline-danger"
+                                                                    data-toggle="modal" data-target="#delete">删除
                                                             </button>
                                                         </div>
                                                     </td>
@@ -224,60 +236,21 @@
                                                     id="sum">57</span> 条
                                             </div>
                                         </div>
-                                        <div class="col-sm-12 col-md-7">
-                                            <div class="dataTables_paginate paging_simple_numbers"
-                                                 id="example1_paginate">
-                                                <ul class="pagination">
-                                                    <li class="paginate_button page-item previous disabled"
-                                                        id="example1_previous">
-                                                        <a href="#" aria-controls="example1" data-dt-idx="0"
-                                                           tabindex="0" class="page-link">
-                                                            前一页
-                                                        </a>
-                                                    </li>
-                                                    <li class="paginate_button page-item active">
-                                                        <a href="#" aria-controls="example1" data-dt-idx="1"
-                                                           tabindex="0" class="page-link">
-                                                            1
-                                                        </a>
-                                                    </li>
-                                                    <li class="paginate_button page-item ">
-                                                        <a href="#" aria-controls="example1" data-dt-idx="2"
-                                                           tabindex="0" class="page-link">
-                                                            2
-                                                        </a>
-                                                    </li>
-                                                    <li class="paginate_button page-item ">
-                                                        <a href="#" aria-controls="example1" data-dt-idx="3"
-                                                           tabindex="0" class="page-link">
-                                                            3
-                                                        </a>
-                                                    </li>
-                                                    <li class="paginate_button page-item ">
-                                                        <a href="#" aria-controls="example1" data-dt-idx="4"
-                                                           tabindex="0" class="page-link">
-                                                            4
-                                                        </a>
-                                                    </li>
-                                                    <li class="paginate_button page-item ">
-                                                        <a href="#" aria-controls="example1" data-dt-idx="5"
-                                                           tabindex="0" class="page-link">
-                                                            5
-                                                        </a>
-                                                    </li>
-                                                    <li class="paginate_button page-item ">
-                                                        <a href="#" aria-controls="example1" data-dt-idx="6"
-                                                           tabindex="0" class="page-link">
-                                                            6
-                                                        </a>
-                                                    </li>
-                                                    <li class="paginate_button page-item next" id="example1_next">
-                                                        <a href="#" aria-controls="example1" data-dt-idx="7"
-                                                           tabindex="0" class="page-link">
-                                                            下一页
-                                                        </a>
-                                                    </li>
-                                                </ul>
+                                        <div class="col-sm-12 col-md-5">
+                                            <button type="button" class="btn btn-outline-primary" id="prepage">前一页
+                                            </button>
+                                            <span style="margin-right: 15px; margin-left: 15px;"
+                                                  id="currentpage">1</span>
+                                            <button type="button" class="btn btn-outline-primary" id="nextpage">后一页
+                                            </button>
+                                        </div>
+                                        <div class="col-sm-12 col-md-2">
+                                            <div class="input-group input-group-sm">
+                                                <input type="text" class="form-control" placeholder="跳转页码"
+                                                       id="gotopage">
+                                                <span class="input-group-append">
+                                                    <button type="button" class="btn btn-info btn-flat" id="gotoButton">Go!</button>
+                                                </span>
                                             </div>
                                         </div>
                                     </div>
@@ -352,7 +325,8 @@
             <!-- /.modal-dialog -->
         </div>
 
-        <div class="modal fade" id="delete" style="display: none;" aria-hidden="true">
+
+        <div class="modal fade" id="modaldelete0" style="display: none;" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -369,7 +343,252 @@
                     </div>
                     <div class="modal-footer justify-content-end">
                         <button type="button" class="btn btn-outline-primary" data-dismiss="modal">取消</button>
-                        <button type="button" class="btn btn-outline-danger">确认删除</button>
+                        <button type="button" class="btn btn-outline-danger" id="confirmdelete1" data-dismiss="modal">
+                            确认删除
+                        </button>
+                        <!--                            <button type="button" class="btn btn-outline-dark">关闭</button>-->
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+        <div class="modal fade" id="modaldelete1" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <p class="modal-title">删除试卷警告</p>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group" style="text-align: center;">
+                            <br>
+                            <label><h4>确认删除试卷吗？</h4></label>
+                        </div>
+                    </div>
+                    <div class="modal-footer justify-content-end">
+                        <button type="button" class="btn btn-outline-primary" data-dismiss="modal">取消</button>
+                        <button type="button" class="btn btn-outline-danger" id="confirmdelete1" data-dismiss="modal">
+                            确认删除
+                        </button>
+                        <!--                            <button type="button" class="btn btn-outline-dark">关闭</button>-->
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+        <div class="modal fade" id="modaldelete2" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <p class="modal-title">删除试卷警告</p>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group" style="text-align: center;">
+                            <br>
+                            <label><h4>确认删除试卷吗？</h4></label>
+                        </div>
+                    </div>
+                    <div class="modal-footer justify-content-end">
+                        <button type="button" class="btn btn-outline-primary" data-dismiss="modal">取消</button>
+                        <button type="button" class="btn btn-outline-danger" id="confirmdelete2" data-dismiss="modal">
+                            确认删除
+                        </button>
+                        <!--                            <button type="button" class="btn btn-outline-dark">关闭</button>-->
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+        <div class="modal fade" id="modaldelete3" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <p class="modal-title">删除试卷警告</p>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group" style="text-align: center;">
+                            <br>
+                            <label><h4>确认删除试卷吗？</h4></label>
+                        </div>
+                    </div>
+                    <div class="modal-footer justify-content-end">
+                        <button type="button" class="btn btn-outline-primary" data-dismiss="modal">取消</button>
+                        <button type="button" class="btn btn-outline-danger" id="confirmdelete3" data-dismiss="modal">
+                            确认删除
+                        </button>
+                        <!--                            <button type="button" class="btn btn-outline-dark">关闭</button>-->
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+        <div class="modal fade" id="modaldelete4" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <p class="modal-title">删除试卷警告</p>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group" style="text-align: center;">
+                            <br>
+                            <label><h4>确认删除试卷吗？</h4></label>
+                        </div>
+                    </div>
+                    <div class="modal-footer justify-content-end">
+                        <button type="button" class="btn btn-outline-primary" data-dismiss="modal">取消</button>
+                        <button type="button" class="btn btn-outline-danger" id="confirmdelete4" data-dismiss="modal">
+                            确认删除
+                        </button>
+                        <!--                            <button type="button" class="btn btn-outline-dark">关闭</button>-->
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+        <div class="modal fade" id="modaldelete5" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <p class="modal-title">删除试卷警告</p>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group" style="text-align: center;">
+                            <br>
+                            <label><h4>确认删除试卷吗？</h4></label>
+                        </div>
+                    </div>
+                    <div class="modal-footer justify-content-end">
+                        <button type="button" class="btn btn-outline-primary" data-dismiss="modal">取消</button>
+                        <button type="button" class="btn btn-outline-danger" id="confirmdelete5" data-dismiss="modal">
+                            确认删除
+                        </button>
+                        <!--                            <button type="button" class="btn btn-outline-dark">关闭</button>-->
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+        <div class="modal fade" id="modaldelete6" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <p class="modal-title">删除试卷警告</p>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group" style="text-align: center;">
+                            <br>
+                            <label><h4>确认删除试卷吗？</h4></label>
+                        </div>
+                    </div>
+                    <div class="modal-footer justify-content-end">
+                        <button type="button" class="btn btn-outline-primary" data-dismiss="modal">取消</button>
+                        <button type="button" class="btn btn-outline-danger" id="confirmdelete6" data-dismiss="modal">
+                            确认删除
+                        </button>
+                        <!--                            <button type="button" class="btn btn-outline-dark">关闭</button>-->
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+        <div class="modal fade" id="modaldelete7" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <p class="modal-title">删除试卷警告</p>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group" style="text-align: center;">
+                            <br>
+                            <label><h4>确认删除试卷吗？</h4></label>
+                        </div>
+                    </div>
+                    <div class="modal-footer justify-content-end">
+                        <button type="button" class="btn btn-outline-primary" data-dismiss="modal">取消</button>
+                        <button type="button" class="btn btn-outline-danger" id="confirmdelete7" data-dismiss="modal">
+                            确认删除
+                        </button>
+                        <!--                            <button type="button" class="btn btn-outline-dark">关闭</button>-->
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+        <div class="modal fade" id="modaldelete8" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <p class="modal-title">删除试卷警告</p>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group" style="text-align: center;">
+                            <br>
+                            <label><h4>确认删除试卷吗？</h4></label>
+                        </div>
+                    </div>
+                    <div class="modal-footer justify-content-end">
+                        <button type="button" class="btn btn-outline-primary" data-dismiss="modal">取消</button>
+                        <button type="button" class="btn btn-outline-danger" id="confirmdelete8" data-dismiss="modal">
+                            确认删除
+                        </button>
+                        <!--                            <button type="button" class="btn btn-outline-dark">关闭</button>-->
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+        <div class="modal fade" id="modaldelete9" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <p class="modal-title">删除试卷警告</p>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group" style="text-align: center;">
+                            <br>
+                            <label><h4>确认删除试卷吗？</h4></label>
+                        </div>
+                    </div>
+                    <div class="modal-footer justify-content-end">
+                        <button type="button" class="btn btn-outline-primary" data-dismiss="modal">取消</button>
+                        <button type="button" class="btn btn-outline-danger" id="confirmdelete9" data-dismiss="modal">
+                            确认删除
+                        </button>
                         <!--                            <button type="button" class="btn btn-outline-dark">关闭</button>-->
                     </div>
                 </div>
@@ -396,7 +615,7 @@
                     <div class="modal-footer justify-content-end">
                         <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">取消</button>
                         <button type="button" class="btn btn-outline-success">继续组卷</button>
-                        <button type="button" class="btn btn-outline-primary">新建试卷</button>
+                        <button type="button" class="btn btn-outline-primary" id="createNewPaper">新建试卷</button>
                     </div>
                 </div>
                 <!-- /.modal-content -->
@@ -431,7 +650,7 @@
     $(function () {
         $('.check-btn').click(function () {
             if ($(this).attr('checked')) {
-                $(this).removeAttr('checked');
+                $(this).attr('checked', 'false');
                 $(this).removeClass('btn-primary');
                 $(this).addClass('btn-outline-primary');
             } else {
@@ -444,16 +663,429 @@
     });
 </script>
 <script>
-  $(function () {
+    $(function () {
 
-      $('#reservationtime').daterangepicker({
-          timePicker: true,
-          timePickerIncrement: 30,
-          locale: {
-              format: 'MM/DD/YYYY hh:mm A'
-          }
-      })
-  })
+        $('#reservationtime').daterangepicker({
+            timePicker: true,
+            timePickerIncrement: 30,
+            locale: {
+                format: 'MM/DD/YYYY hh:mm A'
+            }
+        })
+    })
+</script>
+
+<script type="text/javascript">
+    $(function () {
+        //存储科目信息
+        subject_dict = new Object();
+        subject_dict[0] = null;
+        subject_dict[1] = '软件工程';
+        subject_dict[2] = '数据库原理';
+        subject_dict[3] = '编译原理';
+        subject_dict[4] = '流体力学';
+        subject_dict[5] = '工程热力学';
+        subject_dict[6] = 'C语言程序设计';
+        subject_dict[7] = 'Java高级语言程序设计';
+        //当前页面初始化为1
+        current_page = 1;
+        page_num = 0;
+        let info_num = 0;
+        let info_pno_list = [];
+        let letter_list = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+        paper_list = new Array(10);
+        let url_data = new Object();
+        let temp_html;
+
+        //判断按钮是否禁用
+        function judge_button_disabled() {
+            if (current_page === 1) {
+                $('#prepage').addClass('disabled');
+                $('#prepage').attr('disabled', 'disabled');
+            } else {
+                $('#prepage').removeClass('disabled');
+                $('#prepage').removeAttr('disabled');
+            }
+
+            if (current_page === page_num) {
+                $('#nextpage').addClass('disabled');
+                $('#nextpage').attr('disabled', 'disabled');
+            } else {
+                $('#nextpage').removeClass('disabled');
+                $('#nextpage').removeAttr('disabled');
+            }
+        }
+
+        //更新页码
+        function update_page_number() {
+            //左下角数据记录修改
+            $('#begin').text((current_page - 1) * 10 + 1);
+            let after_num = info_num - (current_page - 1) * 10;
+            if (after_num >= 10)
+                $('#end').text(current_page * 10);
+            else
+                $('#end').text(info_num);
+            //当前页面修改
+            $('#currentpage').text(current_page);
+        }
+
+        //数组操作函数
+        function array_clear_out(array_list) {
+            for (let i = 0; i < array_list.length; i++) {
+                array_list[i] = null;
+            }
+        }
+
+
+        //动态载入表单
+        function load_table() {
+            $('#info_table').empty();
+            //动态载入数据
+            console.log(paper_list);
+            for (let i = 0; i < paper_list.length; i++) {
+                //TODO 保存试题号
+                info_pno_list[i] = paper_list[i]['pno'];
+                let ptype;
+
+                //表格信息html添加
+                temp_html = "<tr role='row' class='odd'>";
+                temp_html += "<td><strong>" + paper_list[i]['pname'] + "</strong></td>";
+                let is_used;
+                console.log(paper_list[i]['preference']);
+                if (paper_list[i]['preference'] === 1)
+                    is_used = '已使用';
+                else
+                    is_used = '未使用';
+                temp_html += "<td><strong>" + is_used + "</strong></td>";
+                temp_html += "<td><strong>" + subject_dict[paper_list[i]['psubject']] + "</strong></td>";
+                temp_html += "<td>";
+                temp_html += "<div class=\"container\">";
+                temp_html += "<button type=\"button\" class=\"btn btn-outline-success\" style=\"margin-right: 20px;\" id='preview" + i + "'>预览</button>";
+                temp_html += "<button type=\"button\" class=\"btn btn-outline-primary\" style=\"margin-right: 20px;\" data-toggle=\"modal\" data-target=\"#modalrelease" + i + "\">发布考试</button>\n";
+                temp_html += "<button type=\"button\" class=\"btn btn-outline-danger\" data-toggle=\"modal\" data-target=\"#modaldelete" + i + "\" id='delete" + i + "'>删除</button>";
+                temp_html += "</div>";
+                temp_html += "</td>";
+                temp_html += "</tr>";
+                $('table').append(temp_html);
+            }
+        }
+
+        //解析URL
+        function getQueryObject(url) {
+            url = url == null ? window.location.href : url;
+            let search = url.substring(url.lastIndexOf("?") + 1);
+            let obj = {};
+            let reg = /([^?&=]+)=([^?&=]*)/g;
+            search.replace(reg, function (rs, $1, $2) {
+                let name = decodeURIComponent($1);
+                let val = decodeURIComponent($2);
+                val = String(val);
+                obj[name] = val;
+                return rs;
+            });
+            return obj;
+        }
+
+        //处理url_data
+        function conductUrlData(url_data) {
+            let key;
+            for (key in url_data) {
+                if (url_data[key] === undefined) {
+                    url_data[key] = null;
+                }
+            }
+        }
+
+        //获取初始试题界面的总页数并分页
+        $.ajax({
+            url: '/paper/page_num',
+            method: 'get',
+            success: function (data) {
+                if (data['code'] === 200) {
+                    page_num = data['page_num'];
+                    info_num = data['info_num'];
+                    $('#sum').text(info_num);
+                    update_page_number();
+                } else {
+                    console.log('获取页面出错！');
+                }
+            },
+        });
+
+        array_clear_out(paper_list);
+
+        //获取初始试卷界面的第一页试卷
+        url_data['page'] = 1;
+        $.ajax({
+            url: '/paper',
+            method: 'get',
+            data: url_data,
+            success: function (data) {
+                if (data['code'] === 200) {
+                    console.log(paper_list);
+                    console.log(data['papers']);
+                    paper_list = data['papers'];
+                    load_table();
+                    //初始化翻页按钮
+                    judge_button_disabled();
+                }
+            }
+        });
+
+
+        //前翻页按钮click事件
+        $('#prepage').click(function () {
+            current_page--;
+            console.log('前翻页', current_page);
+            if (current_page <= 0 || current_page > page_num)
+                console.log("当前页码标定错误！");
+            else {
+                url_data['page'] = current_page;
+                $.ajax({
+                    url: '/paper',
+                    method: 'get',
+                    data: url_data,
+                    success: function (data) {
+                        if (data['code'] === 200) {
+                            paper_list = data['papers'];
+                            load_table();
+                        }
+                        update_page_number();
+                        judge_button_disabled();
+                    }
+                });
+            }
+
+        });
+
+        //后翻页按钮click事件
+        $('#nextpage').click(function () {
+            current_page++;
+            console.log('后翻页', current_page);
+            if (current_page <= 0 || current_page > page_num)
+                console.log("当前页码标定错误！");
+            else {
+                url_data['page'] = current_page;
+                $.ajax({
+                    url: '/paper',
+                    method: 'get',
+                    data: url_data,
+                    success: function (data) {
+                        if (data['code'] === 200) {
+                            paper_list = data['papers'];
+                            load_table();
+                            update_page_number();
+                            judge_button_disabled();
+                        }
+                    }
+                });
+            }
+
+        });
+
+        //跳转页按钮click事件
+        $('#gotoButton').click(function () {
+            let goto = parseInt($.trim($('#gotopage').val()));
+            if (goto < 1 || goto > page_num)
+                alert('页码超出范围！');
+            else {
+                url_data['page'] = current_page;
+                $.ajax({
+                    url: '/paper',
+                    method: 'get',
+                    data: url_data,
+                    success: function (data) {
+                        if (data['code'] === 200) {
+                            paper_list = data['papers'];
+                            load_table();
+                            update_page_number();
+                            judge_button_disabled();
+                        }
+                    }
+                });
+            }
+        });
+
+
+        //班级管理按钮click事件
+        $('#course-manage').click(function () {
+            location.href = '/index';
+        });
+        //试卷管理按钮click事件
+        $('#paper-manage').click(function () {
+            location.href = '/paper/manage';
+        });
+        //试题管理按钮click事件
+        $('#question-manage').click(function () {
+            location.href = '/question/manage';
+        });
+        //退出管理按钮click事件
+        $('#logout').click(function () {
+            $.ajax({
+                url: '/auth/logout',
+                method: 'post',
+                success: function (data) {
+                    if (data['code'] === 200)
+                        location.href = '/auth/login';
+                }
+            })
+        });
+
+
+        //科目筛选按钮click事件
+        for (let i = 0; i < 8; i++) {
+            let subno = 's000' + i;
+            let subnumber = '.s000' + i;
+            $(subnumber).click(function () {
+                //TODO 应ajax成功之后再修改url_data，全部都需要修改逻辑顺序
+                if (i === 0)
+                    delete url_data['subject'];
+                else
+                    url_data['subject'] = i;
+                url_data['page'] = 1;
+                $.ajax({
+                    url: '/paper',
+                    method: 'get',
+                    data: url_data,
+                    success: function (data) {
+                        if (data['code'] === 200) {
+                            info_num = data['info_num'];
+                            page_num = data['page_num'];
+                            current_page = 1;
+                            $('#sum').text(info_num);
+                            paper_list = data['papers'];
+                            load_table();
+
+                            judge_button_disabled();
+                            update_page_number();
+                        }
+                    }
+                })
+            });
+        }
+
+        //未使用试卷筛选按钮click事件
+        $('#unusedscreen').click(function () {
+            let flag = $(this).attr('checked');
+            console.log(flag);
+            if (flag === 1)
+                url_data['used'] = 'true';
+            else
+                delete url_data['used'];
+
+            url_data['page'] = 1;
+
+            $.ajax({
+                url: '/paper',
+                method: 'get',
+                data: url_data,
+                success: function (data) {
+                    if (data['code'] === 200) {
+                        info_num = data['info_num'];
+                        page_num = data['page_num'];
+                        current_page = 1;
+                        $('#sum').text(info_num);
+                        paper_list = data['papers'];
+                        load_table();
+
+                        judge_button_disabled();
+                        update_page_number();
+                    }
+                }
+            })
+        });
+
+        //试卷名搜索按钮click事件
+        $('#contentsearch').click(function () {
+            let content_input = $('#searchinput').val();
+            if (content_input === null)
+                ;
+            else {
+                url_data['pname'] = content_input;
+                url_data['page'] = 1;
+                $.ajax({
+                    url: '/paper',
+                    method: 'get',
+                    data: url_data,
+                    success: function (data) {
+                        if (data['code'] === 200) {
+                            info_num = data['info_num'];
+                            page_num = data['page_num'];
+                            current_page = 1;
+                            $('#sum').text(info_num);
+                            paper_list = data['papers'];
+                            load_table();
+
+                            judge_button_disabled();
+                            update_page_number();
+                        }
+                    }
+                })
+            }
+
+        });
+
+        //新建试卷按钮click事件
+        $('#createNewPaper').click(function () {
+            location.href = '/paper/assemble';
+        });
+
+        //预览按钮click事件
+        for (let i = 0; i < paper_list.length; i++) {
+            let name = '#preview' + i;
+            $(name).click(function () {
+                //接口修改
+                $.ajax({
+                    url: '/paper/preview',
+                    method: 'get',
+                    data:{
+                        'pno': info_pno_list[i]
+                    }
+                });
+            })
+        }
+
+        //删除按钮click事件
+        for (let i = 0; i < paper_list.length; i++) {
+            let name = '#confirmdelete' + i;
+            console.log(info_pno_list[i]);
+            $(name).click(function () {
+                console.log('当前PNO：' + info_pno_list[i]);
+                $.ajax({
+                    url: '/paper/?pno=' + info_pno_list[i],
+                    method: 'DELETE',
+                    success: function (data) {
+                        if (data['code'] === 200) {
+                            info_num--;
+                            page_num = Math.ceil(info_num);
+                            $('#sum').text(info_num);
+                            url_data['page'] = 1;
+                            $.ajax({
+                                url: '/paper',
+                                method: 'get',
+                                data: url_data,
+                                success: function (data) {
+                                    if (data['code'] === 200) {
+                                        info_num = data['info_num'];
+                                        page_num = data['page_num'];
+                                        current_page = 1;
+                                        $('#sum').text(info_num);
+                                        paper_list = data['papers'];
+                                        load_table();
+
+                                        judge_button_disabled();
+                                        update_page_number();
+                                    }
+                                }
+                            })
+                        }
+                    }
+                });
+            });
+        }
+
+
+    });
 </script>
 
 </body>
