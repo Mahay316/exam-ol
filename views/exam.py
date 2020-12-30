@@ -267,6 +267,7 @@ def get_exam_results():
     """
     role = session['role']
     if role == MENTOR:
+        # TODO 验证老师是否有考试
         tno = int(request.args['tno'])
 
         infos = Test.get_test_infos(tno)
@@ -293,7 +294,13 @@ def get_exam_results():
         res_json['segments'] = segments
         return jsonify(res_json)
     else:
-        pass
+        # TODO 验证学生是否有考试
+        tno = int(request.args['tno'])
+        sno = request.args['sno']
+        infos = Test.get_student_test_info(tno, sno)
+
+        infos['code'] = 200
+        return jsonify(infos)
 
 
 @exam_bp.route('/', methods=['POST'])

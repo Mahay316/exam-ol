@@ -174,3 +174,24 @@ class Test(Base):
         grades: 是所有参加tno的学生的考试成绩(无需学生信息)
         pscore: 卷子总分
         """
+
+
+    # TODO
+    @classmethod
+    def get_student_test_info(cls, tno, sno) -> dict:
+        """
+        获取某个学生的某次考试的信息
+        这里理应用视图，因为涉及两个对象的信息，此处为简便使用了字典，有时间可以优化
+
+        :return: {
+            'st_grade': int, 学生成绩
+            'pscore': int, 卷子总分
+            'st_wrong': int, 错误题数
+            'pnum': int, 卷子题目总数
+            'st_blank': int, 未作答题目数
+            'tstart': 时间戳
+            'tend': 时间戳
+            'tname': 考试名称
+            'tdesc':
+        }
+        """
