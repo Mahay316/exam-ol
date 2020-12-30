@@ -143,3 +143,25 @@ class StudentTest(Base):
         finally:
             engine.dispose()
             session.remove()
+
+    @classmethod
+    def add_snos_and_tno(cls, tno, snos):
+        engine = model_common.get_mysql_engine()
+        session = model_common.get_mysql_session(engine)
+
+        try:
+            for sno in snos:
+                st = StudentTest(
+                    Sno=sno,
+                    Tno=tno
+                )
+                session.add(st)
+                session.commit()
+
+        except Exception as e:
+            session.rollback()
+            raise e
+
+        finally:
+            engine.dispose()
+            session.remove()

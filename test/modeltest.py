@@ -19,10 +19,14 @@ from models import Paper
 from models import Test
 from models import Mentor
 from models.UserModel import Student
+from datetime import datetime
 
 
 def qt():
-    print(Question.update_question(3,None,  '111', 'ggb', 'A', 2))
+    x = datetime.now().timestamp()
+    print(x)
+    print(Test.add_test(pno=2, cno=1, tname='addtest', tdesc='desc说明', tstart=x, tend=(x + 1000)))
+    # print(Question.update_question(3,None,  '111', 'ggb', 'A', 2))
     # print(Question.delete_question(6))
     # for x in Paper.select_papers_by():
     #     print(x.Pno)
