@@ -114,8 +114,8 @@ def get_questions():
     }
     res = res_dict['questions']
 
-    if 'answer' not in session:
-        session['answer'] = {}
+    if 'answers' not in session:
+        session['answers'] = {}
 
     for tp in test.get_all_questions():
         q = tp[0]
@@ -203,13 +203,13 @@ def cache_questions():
         session['cached_questionID'].append(questionID)
 
     # session缓存所有题目id
-    if 'all_question_id' not in session:
-        session['all_question_id'] = Test.get_all_question_id(examID)
+    if 'all_question_ids' not in session:
+        session['all_question_ids'] = Test.get_all_question_id(examID)
 
     res = {
         'code': 200,
         'cached': list(set(session['cached_questionID'])),
-        'all': list(session['all_question_id'])
+        'all': list(session['all_question_ids'])
     }
 
     return jsonify(res)
@@ -254,19 +254,62 @@ def grade_exam():
 
     Test.set_test_grade(tno, session['no'], st_wrong=pnum - right_num, st_blank=pnum - did_num, st_grade=stu_grade)
 
-    # TODO 未清理session
+    # TODO 清理session易出错
+    for quiz_id in list(set(session['cached_questionID'])):
+        del session[quiz_id]
+    del session['cached_questionID']
+    del session['all_question_ids']
+    del session['answers']
 
     return jsonify({'code': 200})
 
 @exam_bp.route('/', methods=['GET'])
+@should_be([MENTOR, STUDENT])
 def get_exam_results():
     """
     根据身份获取考试成绩信息
     教师返回班内所有同学统计信息，学生返回本次考试成绩
     """
+    role = session['role']
+    if role == MENTOR:
+        # TODO 验证老师是否有考试
+        tno = int(request.args['tno'])
+
+        infos = Test.get_test_infos(tno)
+        res_json = {
+            'code': 200,
+            'pscore': infos['pscore']
+        }
+
+        stat_dict = {}
+        # 分10段，左闭右开，增序成绩
+        # 为处理右边界多开stat_dict[10]元素
+        for i in range(11):
+            stat_dict[i] = 0
+
+        for grade in infos['grades']:
+            stat_dict[grade // 10] += 1
+
+        stat_dict[9] += stat_dict[10]
+
+        segments = []
+        for i in range(10):
+            segments.append(stat_dict[i])
+
+        res_json['segments'] = segments
+        return jsonify(res_json)
+    else:
+        # TODO 验证学生是否有考试
+        tno = int(request.args['tno'])
+        sno = request.args['sno']
+        infos = Test.get_student_test_info(tno, sno)
+
+        infos['code'] = 200
+        return jsonify(infos)
 
 
 @exam_bp.route('/', methods=['POST'])
+@should_be([MENTOR])
 def add_exam():
     """
     发布考试
@@ -274,21 +317,8 @@ def add_exam():
 
 
 @exam_bp.route('/', methods=['DELETE'])
+@should_be([MENTOR])
 def delete_exam():
     """
     删除考试
     """
-
-
-# @exam_bp.route("/<str:exam_id>", method=['GET'])
-# def get_paper(exam_id: str):
-#     """
-#     点击试卷链接后给前端返回试卷
-#     """
-#     pass
-#
-#
-# def check_paper():
-#     """
-#     判卷，判卷完成后清楚服务端的作答缓存
-#     """

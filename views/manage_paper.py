@@ -31,14 +31,14 @@ def get_paper():
     if page is None:
         page = 1
 
-    res_json = {'code': 200, 'questions': []}
+    res_json = {'code': 200, 'papers': []}
 
     select_dict = {}
     if subject is not None:
         select_dict['subject'] = int(subject)
         # results = Paper.select_papers_by(page, subject=subject)
     elif used is not None:
-        select_dict['used'] = used
+        select_dict['used'] = True if used == 'true' else False
         # results = Paper.select_papers_by(page, used=used)
     elif pno is not None:
         select_dict['pno'] = pno
@@ -49,10 +49,10 @@ def get_paper():
     results = Paper.select_papers_by(int(page), **select_dict)
 
     for result in results:
-        res_json['questions'].append({
+        res_json['papers'].append({
             'pno': result.Pno,
             'pname': result.Pname,
-            'preference': result.Preference,
+            'preference': True if result.Preference > 0 else False,
             'psubject': result.Subno
         })
 
