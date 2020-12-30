@@ -28,7 +28,8 @@ def qt():
     # print(Test.get_student_test_info(5, 'student1_en'))
 
     # print(StudentTest.get_all_grades(1))
-    # print(Test.get_test_infos(1))
+    x= Test.get_test_infos(1)
+    print(Test.get_test_infos(1))
 
     # print(Student.has_this_class('student3',4))
     # s = Student.get_user('student1')

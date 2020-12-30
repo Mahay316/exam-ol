@@ -109,8 +109,12 @@ class StudentTest(Base):
             filter_list.append(cls.Tno == tno)
 
             sts = session.query(cls).filter(*filter_list).all()
+            grades = []
 
-            return [st.STgrade for st in sts]
+            for st in sts:
+                if st.STgrade:
+                    grades.append(st.STgrade)
+            return grades
 
         except Exception as e:
             session.rollback()
