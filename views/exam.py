@@ -259,14 +259,45 @@ def grade_exam():
     return jsonify({'code': 200})
 
 @exam_bp.route('/', methods=['GET'])
+@should_be([MENTOR, STUDENT])
 def get_exam_results():
     """
     根据身份获取考试成绩信息
     教师返回班内所有同学统计信息，学生返回本次考试成绩
     """
+    role = session['role']
+    if role == MENTOR:
+        tno = int(request.args['tno'])
+
+        infos = Test.get_test_infos(tno)
+        res_json = {
+            'code': 200,
+            'pscore': infos['pscore']
+        }
+
+        stat_dict = {}
+        # 分10段，左闭右开，增序成绩
+        # 为处理右边界多开stat_dict[10]元素
+        for i in range(11):
+            stat_dict[i] = 0
+
+        for grade in infos['grades']:
+            stat_dict[grade // 10] += 1
+
+        stat_dict[9] += stat_dict[10]
+
+        segments = []
+        for i in range(10):
+            segments.append(stat_dict[i])
+
+        res_json['segments'] = segments
+        return jsonify(res_json)
+    else:
+        pass
 
 
 @exam_bp.route('/', methods=['POST'])
+@should_be([MENTOR])
 def add_exam():
     """
     发布考试
@@ -274,21 +305,8 @@ def add_exam():
 
 
 @exam_bp.route('/', methods=['DELETE'])
+@should_be([MENTOR])
 def delete_exam():
     """
     删除考试
     """
-
-
-# @exam_bp.route("/<str:exam_id>", method=['GET'])
-# def get_paper(exam_id: str):
-#     """
-#     点击试卷链接后给前端返回试卷
-#     """
-#     pass
-#
-#
-# def check_paper():
-#     """
-#     判卷，判卷完成后清楚服务端的作答缓存
-#     """

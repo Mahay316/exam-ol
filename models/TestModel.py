@@ -161,3 +161,16 @@ class Test(Base):
 
         from models.StudentTestModel import StudentTest
         return StudentTest.add_st(tno=tno, sno=sno, stwrong=st_wrong, stblank=st_blank, stgrade=st_grade)
+
+
+    # TODO
+    @classmethod
+    def get_test_infos(cls, tno) -> dict:
+        """
+        教师端获取班级考试统计信息
+
+        :return: dict
+        {'grades': [int], 'pscore': int}
+        grades: 是所有参加tno的学生的考试成绩(无需学生信息)
+        pscore: 卷子总分
+        """
