@@ -8,7 +8,7 @@ from math import ceil
 mentor_bp = Blueprint('mentor_bp', __name__)
 
 
-@mentor_bp.route('/manage', method=['GET'])
+@mentor_bp.route('/manage', methods=['GET'])
 @should_be([ADMIN])
 def get_manage_mentor_page():
     return current_app.send_static_file('html/admin.html')

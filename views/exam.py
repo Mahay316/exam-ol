@@ -60,7 +60,7 @@ def get_exam_time_info():
     """
     获得考试时间信息
     """
-    examID = request.form.get('examID')
+    examID = int(request.args.get('examID'))
     test = Test.get_test(examID)
 
     # 检查访问合法性
@@ -75,7 +75,7 @@ def get_exam_time_info():
     time_passed = 0
 
     if cur_time >= elapsed_time:
-        time_passed = (cur_time - elapsed_time).total_seconds()
+        time_passed = int((cur_time - elapsed_time).total_seconds())
     res['elapsedTime'] = int(time_passed)
 
     end_time = test.get_end_time()
@@ -98,7 +98,7 @@ def get_questions():
 
     :return: json格式数据
     """
-    examID = request.args['examID']
+    examID = int(request.args['examID'])
 
     test = Test.get_test(examID)
     validated = permission_inadequate_or_exam_not_exists(test)
@@ -172,7 +172,7 @@ def cache_questions():
     """
     缓存考生作答情况
     """
-    examID = request.form['examID']
+    examID = int(request.args['examID'])
 
     test = Test.get_test(examID)
     # 确保权限满足且考试存在
