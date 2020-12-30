@@ -317,7 +317,6 @@ class Mentor(Base, User):
             engine.dispose()
             session.remove()
 
-    # TODO
     @classmethod
     def select_mentors_by(cls, page=1, no=None, title=None, name=None):
         """按条件筛选mentor，是None就是没传，就是不在该条件上做限制"""
