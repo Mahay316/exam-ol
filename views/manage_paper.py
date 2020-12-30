@@ -56,7 +56,7 @@ def get_paper():
             'psubject': result.Subno
         })
 
-    num = Paper.get_paper_num()
+    num = len(results)
     res_json['page_num'] = ceil(num / PAGE_SIZE)
     res_json['info_num'] = num
 
@@ -93,7 +93,7 @@ def preview_paper():
     """
     获取预览html
     """
-    return paper_bp.send_static_file('html/paper_preview.html')
+    return current_app.send_static_file('html/paper_preview.html')
 
 
 @paper_bp.route('/content', methods=['GET', 'POST'])
@@ -136,4 +136,4 @@ def get_paper_page_num():
 @paper_bp.route('/assemble')
 @should_be([MENTOR])
 def add_paper_page():
-    return paper_bp.send_static_file('html/paper_assemble.html')
+    return current_app.send_static_file('html/paper_assemble.html')

@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify, session
+from flask import Blueprint, request, jsonify, session, current_app
 from models import Test
 from datetime import datetime
 import json
@@ -349,4 +349,4 @@ def delete_exam():
 
 @exam_bp.route('/paper')
 def get_exam_page():
-    return exam_bp.send_static_file('html/test_online.html')
+    return current_app.send_static_file('html/test_online.html')

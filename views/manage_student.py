@@ -8,6 +8,24 @@ from config import PAGE_SIZE
 student_bp = Blueprint('student_bp', __name__)
 
 
+@student_bp.route('/manage', methods=['GET'])
+@should_be([ADMIN])
+def get_student_manage_page():
+    return current_app.send_static_file('html/admin.html')
+
+
+@student_bp.route('/', methods=['POST'])
+@should_be([ADMIN])
+def add_student():
+    """增加学生"""
+
+
+@student_bp.route('/', methods=['GET'])
+@should_be([ADMIN])
+def get_students():
+    pass
+
+
 @student_bp.route('/search')
 @should_be([MENTOR, ADMIN])
 def search_student():

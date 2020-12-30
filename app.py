@@ -1,9 +1,8 @@
 from flask import Flask, redirect, request, session, url_for
-
 from common.Role import *
 from decorators import login_required
 from models import init_db
-from views import exam_bp, auth_bp, class_bp, paper_bp, question_bp, student_bp
+from views import exam_bp, auth_bp, class_bp, paper_bp, question_bp, student_bp, mentor_bp
 
 app = Flask(__name__)
 app.config.from_pyfile('config.py')
@@ -29,7 +28,8 @@ def index():
         if role == STUDENT or role == MENTOR:
             return app.send_static_file('html/class_list.html')
         elif role == ADMIN:
-            return app.send_static_file('html/admin.html')
+            return redirect('/mentor/manage')
+            # return app.send_static_file('html/admin.html')
 
 
 @app.errorhandler(404)
@@ -45,6 +45,7 @@ if __name__ == '__main__':
 
     # 在此处注册蓝图
     app.register_blueprint(student_bp, url_prefix='/student')
+    app.register_blueprint(mentor_bp, url_prefix='/mentor')
     app.register_blueprint(exam_bp, url_prefix='/exam')
     app.register_blueprint(auth_bp, url_prefix='/auth')
     app.register_blueprint(class_bp, url_prefix='/class')
