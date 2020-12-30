@@ -126,8 +126,6 @@ class Course(Base):
 
         return StudentCourse.del_class_member(cno=cno, sno=sno)
 
-
-    # TODO
     @classmethod
     def get_exams_by_cno(cls, cno):
         """
@@ -135,3 +133,20 @@ class Course(Base):
 
         :return: list[Test]
         """
+
+        engine = model_common.get_mysql_engine()
+        session = model_common.get_mysql_session(engine)
+
+        try:
+
+            filter_list = []
+            filter_list.append(cls.Cno == cno)
+
+            course = session.query(cls).filter(*filter_list).first()
+
+            if not course:
+                raise Exception('没有该课程号记录')
+            return course.tests
+
+        except Exception as e:
+            raise e
