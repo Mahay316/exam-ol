@@ -38,7 +38,7 @@ def get_mentors():
     elif name is not None:
         select_dict['name'] = name
         # results = Paper.select_papers_by(page, pno=pno)
-    results = Mentor.select_mentors_by(int(page), **select_dict)
+    num, results = Mentor.select_mentors_by(int(page), **select_dict)
 
     for result in results:
         res_json['mentors'].append({
@@ -48,7 +48,6 @@ def get_mentors():
             'gender': result.Mgender,
         })
 
-    num = len(results)
     res_json['page_num'] = ceil(num / PAGE_SIZE)
     res_json['info_num'] = num
 

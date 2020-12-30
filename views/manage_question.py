@@ -69,7 +69,7 @@ def get_questions():
         select_dict['content'] = content
         # results = Question.select_questions_by(page, content=content)
 
-    results = Question.select_questions_by(int(page), **select_dict)
+    num, results = Question.select_questions_by(int(page), **select_dict)
 
     for result in results:
         res_json['questions'].append({
@@ -81,7 +81,6 @@ def get_questions():
             'qsubject': result.Subno
         })
 
-    num = len(results)
     res_json['page_num'] = ceil(num / PAGE_SIZE)
     res_json['info_num'] = num
 

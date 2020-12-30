@@ -65,7 +65,7 @@ def get_students():
     elif name is not None:
         select_dict['name'] = name
         # results = Paper.select_papers_by(page, pno=pno)
-    results = Student.select_students_by(int(page), **select_dict)
+    num, results = Student.select_students_by(int(page), **select_dict)
 
     for result in results:
         res_json['students'].append({
@@ -75,7 +75,6 @@ def get_students():
             'major': result.Smajor,
         })
 
-    num = len(results)
     res_json['page_num'] = ceil(num / PAGE_SIZE)
     res_json['info_num'] = num
 
