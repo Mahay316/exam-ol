@@ -257,7 +257,6 @@ class Test(Base):
             engine.dispose()
             session.remove()
 
-    # TODO
     @classmethod
     def add_test(cls, pno, cno, tname, tdesc, tstart, tend):
         """
