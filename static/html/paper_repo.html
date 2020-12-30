@@ -5,9 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>试卷管理</title>
 
-    <!-- Google Font: Source Sans Pro -->
-    <link rel="stylesheet"
-          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="/static/fontawesome/css/all.min.css">
     <!-- Theme style -->
@@ -156,7 +153,8 @@
                                                         <a class="dropdown-item btn-outline-primary s0001"
                                                            href="#">软件工程</a>
                                                         <a class="dropdown-item btn-outline-primary s0002" href="#">数据库原理</a>
-                                                        <a class="dropdown-item btn-outline-primary s0003" href=b"#">编译原理</a>
+                                                        <a class="dropdown-item btn-outline-primary s0003"
+                                                           href="#">编译原理</a>
                                                         <a class="dropdown-item btn-outline-primary s0004"
                                                            href="#">流体力学</a>
                                                         <a class="dropdown-item btn-outline-primary s0005" href="#">工程热力学</a>
@@ -268,7 +266,7 @@
         </section>
         <!-- /.content -->
 
-        <div class="modal fade" id="release" style="display: none;" aria-hidden="true">
+        <div class="modal fade" id="modalrelease0" style="display: none;" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -317,7 +315,531 @@
                     </div>
                     <div class="modal-footer justify-content-end">
                         <button type="button" class="btn btn-outline-danger" data-dismiss="modal">取消</button>
-                        <button type="button" class="btn btn-outline-success">发布</button>
+                        <button type="button" class="btn btn-outline-success" id="confirmrelease0"
+                                data-dismiss="'modal">发布
+                        </button>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+        <div class="modal fade" id="modalrelease1" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">发布考试</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>选择考试班级：</label>
+                            <select class="form-control">
+                                <option>软件工程1班</option>
+                                <option>数据库2班</option>
+                                <option>计算机组成3班</option>
+                            </select>
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text"
+                                       for="inputGroupSelect01">是否限时</label>
+                            </div>
+                            <select class="custom-select" id="inputGroupSelect01">
+                                <option value="1">是</option>
+                                <option value="2">否</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>设定考试起始截止时间：</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="far fa-clock"></i></span>
+                                </div>
+                                <input type="text" class="form-control float-right" id="reservationtime">
+                            </div>
+                            <!-- /.input group -->
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group"
+                                 style="height: 150px; margin-bottom: 15px;">
+                                <span class="input-group-text"><strong>考试说明</strong></span>
+                                <textarea class="form-control" aria-label="With textarea"
+                                          placeholder="最多输入255个字符"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer justify-content-end">
+                        <button type="button" class="btn btn-outline-danger" data-dismiss="modal">取消</button>
+                        <button type="button" class="btn btn-outline-success" id="confirmrelease0"
+                                data-dismiss="'modal">发布
+                        </button>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+        <div class="modal fade" id="modalrelease2" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">发布考试</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>选择考试班级：</label>
+                            <select class="form-control">
+                                <option>软件工程1班</option>
+                                <option>数据库2班</option>
+                                <option>计算机组成3班</option>
+                            </select>
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text"
+                                       for="inputGroupSelect01">是否限时</label>
+                            </div>
+                            <select class="custom-select" id="inputGroupSelect01">
+                                <option value="1">是</option>
+                                <option value="2">否</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>设定考试起始截止时间：</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="far fa-clock"></i></span>
+                                </div>
+                                <input type="text" class="form-control float-right" id="reservationtime">
+                            </div>
+                            <!-- /.input group -->
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group"
+                                 style="height: 150px; margin-bottom: 15px;">
+                                <span class="input-group-text"><strong>考试说明</strong></span>
+                                <textarea class="form-control" aria-label="With textarea"
+                                          placeholder="最多输入255个字符"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer justify-content-end">
+                        <button type="button" class="btn btn-outline-danger" data-dismiss="modal">取消</button>
+                        <button type="button" class="btn btn-outline-success" id="confirmrelease0"
+                                data-dismiss="'modal">发布
+                        </button>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+        <div class="modal fade" id="modalrelease3" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">发布考试</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>选择考试班级：</label>
+                            <select class="form-control">
+                                <option>软件工程1班</option>
+                                <option>数据库2班</option>
+                                <option>计算机组成3班</option>
+                            </select>
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text"
+                                       for="inputGroupSelect01">是否限时</label>
+                            </div>
+                            <select class="custom-select" id="inputGroupSelect01">
+                                <option value="1">是</option>
+                                <option value="2">否</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>设定考试起始截止时间：</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="far fa-clock"></i></span>
+                                </div>
+                                <input type="text" class="form-control float-right" id="reservationtime">
+                            </div>
+                            <!-- /.input group -->
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group"
+                                 style="height: 150px; margin-bottom: 15px;">
+                                <span class="input-group-text"><strong>考试说明</strong></span>
+                                <textarea class="form-control" aria-label="With textarea"
+                                          placeholder="最多输入255个字符"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer justify-content-end">
+                        <button type="button" class="btn btn-outline-danger" data-dismiss="modal">取消</button>
+                        <button type="button" class="btn btn-outline-success" id="confirmrelease0"
+                                data-dismiss="'modal">发布
+                        </button>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+        <div class="modal fade" id="modalrelease4" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">发布考试</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>选择考试班级：</label>
+                            <select class="form-control">
+                                <option>软件工程1班</option>
+                                <option>数据库2班</option>
+                                <option>计算机组成3班</option>
+                            </select>
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text"
+                                       for="inputGroupSelect01">是否限时</label>
+                            </div>
+                            <select class="custom-select" id="inputGroupSelect01">
+                                <option value="1">是</option>
+                                <option value="2">否</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>设定考试起始截止时间：</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="far fa-clock"></i></span>
+                                </div>
+                                <input type="text" class="form-control float-right" id="reservationtime">
+                            </div>
+                            <!-- /.input group -->
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group"
+                                 style="height: 150px; margin-bottom: 15px;">
+                                <span class="input-group-text"><strong>考试说明</strong></span>
+                                <textarea class="form-control" aria-label="With textarea"
+                                          placeholder="最多输入255个字符"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer justify-content-end">
+                        <button type="button" class="btn btn-outline-danger" data-dismiss="modal">取消</button>
+                        <button type="button" class="btn btn-outline-success" id="confirmrelease0"
+                                data-dismiss="'modal">发布
+                        </button>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+        <div class="modal fade" id="modalrelease5" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">发布考试</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>选择考试班级：</label>
+                            <select class="form-control">
+                                <option>软件工程1班</option>
+                                <option>数据库2班</option>
+                                <option>计算机组成3班</option>
+                            </select>
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text"
+                                       for="inputGroupSelect01">是否限时</label>
+                            </div>
+                            <select class="custom-select" id="inputGroupSelect01">
+                                <option value="1">是</option>
+                                <option value="2">否</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>设定考试起始截止时间：</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="far fa-clock"></i></span>
+                                </div>
+                                <input type="text" class="form-control float-right" id="reservationtime">
+                            </div>
+                            <!-- /.input group -->
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group"
+                                 style="height: 150px; margin-bottom: 15px;">
+                                <span class="input-group-text"><strong>考试说明</strong></span>
+                                <textarea class="form-control" aria-label="With textarea"
+                                          placeholder="最多输入255个字符"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer justify-content-end">
+                        <button type="button" class="btn btn-outline-danger" data-dismiss="modal">取消</button>
+                        <button type="button" class="btn btn-outline-success" id="confirmrelease0"
+                                data-dismiss="'modal">发布
+                        </button>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+        <div class="modal fade" id="modalrelease6" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">发布考试</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>选择考试班级：</label>
+                            <select class="form-control">
+                                <option>软件工程1班</option>
+                                <option>数据库2班</option>
+                                <option>计算机组成3班</option>
+                            </select>
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text"
+                                       for="inputGroupSelect01">是否限时</label>
+                            </div>
+                            <select class="custom-select" id="inputGroupSelect01">
+                                <option value="1">是</option>
+                                <option value="2">否</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>设定考试起始截止时间：</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="far fa-clock"></i></span>
+                                </div>
+                                <input type="text" class="form-control float-right" id="reservationtime">
+                            </div>
+                            <!-- /.input group -->
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group"
+                                 style="height: 150px; margin-bottom: 15px;">
+                                <span class="input-group-text"><strong>考试说明</strong></span>
+                                <textarea class="form-control" aria-label="With textarea"
+                                          placeholder="最多输入255个字符"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer justify-content-end">
+                        <button type="button" class="btn btn-outline-danger" data-dismiss="modal">取消</button>
+                        <button type="button" class="btn btn-outline-success" id="confirmrelease0"
+                                data-dismiss="'modal">发布
+                        </button>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+        <div class="modal fade" id="modalrelease7" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">发布考试</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>选择考试班级：</label>
+                            <select class="form-control">
+                                <option>软件工程1班</option>
+                                <option>数据库2班</option>
+                                <option>计算机组成3班</option>
+                            </select>
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text"
+                                       for="inputGroupSelect01">是否限时</label>
+                            </div>
+                            <select class="custom-select" id="inputGroupSelect01">
+                                <option value="1">是</option>
+                                <option value="2">否</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>设定考试起始截止时间：</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="far fa-clock"></i></span>
+                                </div>
+                                <input type="text" class="form-control float-right" id="reservationtime">
+                            </div>
+                            <!-- /.input group -->
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group"
+                                 style="height: 150px; margin-bottom: 15px;">
+                                <span class="input-group-text"><strong>考试说明</strong></span>
+                                <textarea class="form-control" aria-label="With textarea"
+                                          placeholder="最多输入255个字符"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer justify-content-end">
+                        <button type="button" class="btn btn-outline-danger" data-dismiss="modal">取消</button>
+                        <button type="button" class="btn btn-outline-success" id="confirmrelease0"
+                                data-dismiss="'modal">发布
+                        </button>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+        <div class="modal fade" id="modalrelease8" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">发布考试</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>选择考试班级：</label>
+                            <select class="form-control">
+                                <option>软件工程1班</option>
+                                <option>数据库2班</option>
+                                <option>计算机组成3班</option>
+                            </select>
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text"
+                                       for="inputGroupSelect01">是否限时</label>
+                            </div>
+                            <select class="custom-select" id="inputGroupSelect01">
+                                <option value="1">是</option>
+                                <option value="2">否</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>设定考试起始截止时间：</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="far fa-clock"></i></span>
+                                </div>
+                                <input type="text" class="form-control float-right" id="reservationtime">
+                            </div>
+                            <!-- /.input group -->
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group"
+                                 style="height: 150px; margin-bottom: 15px;">
+                                <span class="input-group-text"><strong>考试说明</strong></span>
+                                <textarea class="form-control" aria-label="With textarea"
+                                          placeholder="最多输入255个字符"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer justify-content-end">
+                        <button type="button" class="btn btn-outline-danger" data-dismiss="modal">取消</button>
+                        <button type="button" class="btn btn-outline-success" id="confirmrelease0"
+                                data-dismiss="'modal">发布
+                        </button>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+        <div class="modal fade" id="modalrelease9" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">发布考试</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>选择考试班级：</label>
+                            <select class="form-control">
+                                <option>软件工程1班</option>
+                                <option>数据库2班</option>
+                                <option>计算机组成3班</option>
+                            </select>
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text"
+                                       for="inputGroupSelect01">是否限时</label>
+                            </div>
+                            <select class="custom-select" id="inputGroupSelect01">
+                                <option value="1">是</option>
+                                <option value="2">否</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>设定考试起始截止时间：</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="far fa-clock"></i></span>
+                                </div>
+                                <input type="text" class="form-control float-right" id="reservationtime">
+                            </div>
+                            <!-- /.input group -->
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group"
+                                 style="height: 150px; margin-bottom: 15px;">
+                                <span class="input-group-text"><strong>考试说明</strong></span>
+                                <textarea class="form-control" aria-label="With textarea"
+                                          placeholder="最多输入255个字符"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer justify-content-end">
+                        <button type="button" class="btn btn-outline-danger" data-dismiss="modal">取消</button>
+                        <button type="button" class="btn btn-outline-success" id="confirmrelease0"
+                                data-dismiss="'modal">发布
+                        </button>
                     </div>
                 </div>
                 <!-- /.modal-content -->
@@ -649,16 +1171,16 @@
 <script>
     $(function () {
         $('.check-btn').click(function () {
-            if ($(this).attr('checked')) {
-                $(this).attr('checked', 'false');
+            if ($(this).attr('checked') === 'checked') {
+                $(this).removeAttr('checked');
                 $(this).removeClass('btn-primary');
                 $(this).addClass('btn-outline-primary');
             } else {
-                $(this).attr('checked', 'true');
+                $(this).attr('checked', true);
                 $(this).removeClass('btn-outline-primary');
                 $(this).addClass('btn-primary');
             }
-            console.log('checked: ', $('.check-btn[checked]').length);
+            //console.log('checked: ', $('.check-btn[checked]').length);
         });
     });
 </script>
@@ -688,12 +1210,12 @@
         subject_dict[6] = 'C语言程序设计';
         subject_dict[7] = 'Java高级语言程序设计';
         //当前页面初始化为1
-        current_page = 1;
-        page_num = 0;
+        let current_page = 1;
+        let page_num = 0;
         let info_num = 0;
         let info_pno_list = [];
         let letter_list = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
-        paper_list = new Array(10);
+        let paper_list = new Array(10);
         let url_data = new Object();
         let temp_html;
 
@@ -735,13 +1257,11 @@
                 array_list[i] = null;
             }
         }
-
-
         //动态载入表单
         function load_table() {
             $('#info_table').empty();
             //动态载入数据
-            console.log(paper_list);
+            // console.log(paper_list);
             for (let i = 0; i < paper_list.length; i++) {
                 //TODO 保存试题号
                 info_pno_list[i] = paper_list[i]['pno'];
@@ -751,8 +1271,8 @@
                 temp_html = "<tr role='row' class='odd'>";
                 temp_html += "<td><strong>" + paper_list[i]['pname'] + "</strong></td>";
                 let is_used;
-                console.log(paper_list[i]['preference']);
-                if (paper_list[i]['preference'] === 1)
+                //console.log(paper_list[i]['preference']);
+                if (paper_list[i]['preference'] === true)
                     is_used = '已使用';
                 else
                     is_used = '未使用';
@@ -822,8 +1342,8 @@
             data: url_data,
             success: function (data) {
                 if (data['code'] === 200) {
-                    console.log(paper_list);
-                    console.log(data['papers']);
+                    //console.log(paper_list);
+                    //console.log(data['papers']);
                     paper_list = data['papers'];
                     load_table();
                     //初始化翻页按钮
@@ -836,7 +1356,7 @@
         //前翻页按钮click事件
         $('#prepage').click(function () {
             current_page--;
-            console.log('前翻页', current_page);
+            // console.log('前翻页', current_page);
             if (current_page <= 0 || current_page > page_num)
                 console.log("当前页码标定错误！");
             else {
@@ -848,6 +1368,9 @@
                     success: function (data) {
                         if (data['code'] === 200) {
                             paper_list = data['papers'];
+                            info_num = data['info_num'];
+                            page_num = data['page_num'];
+                            $('#sum').text(info_num);
                             load_table();
                         }
                         update_page_number();
@@ -861,7 +1384,7 @@
         //后翻页按钮click事件
         $('#nextpage').click(function () {
             current_page++;
-            console.log('后翻页', current_page);
+            //console.log('后翻页', current_page);
             if (current_page <= 0 || current_page > page_num)
                 console.log("当前页码标定错误！");
             else {
@@ -873,6 +1396,9 @@
                     success: function (data) {
                         if (data['code'] === 200) {
                             paper_list = data['papers'];
+                            info_num = data['info_num'];
+                            page_num = data['page_num'];
+                            $('#sum').text(info_num);
                             load_table();
                             update_page_number();
                             judge_button_disabled();
@@ -886,9 +1412,11 @@
         //跳转页按钮click事件
         $('#gotoButton').click(function () {
             let goto = parseInt($.trim($('#gotopage').val()));
+            console.log(goto);
             if (goto < 1 || goto > page_num)
                 alert('页码超出范围！');
             else {
+                current_page = goto;
                 url_data['page'] = current_page;
                 $.ajax({
                     url: '/paper',
@@ -897,6 +1425,9 @@
                     success: function (data) {
                         if (data['code'] === 200) {
                             paper_list = data['papers'];
+                            info_num = data['info_num'];
+                            page_num = data['page_num'];
+                            $('#sum').text(info_num);
                             load_table();
                             update_page_number();
                             judge_button_disabled();
@@ -949,6 +1480,15 @@
                     data: url_data,
                     success: function (data) {
                         if (data['code'] === 200) {
+                            if (i === 0) {
+                                $('#dropdownMenuLink').text('按科目筛选');
+                                $('#dropdownMenuLink').addClass('btn-outline-primary');
+                                $('#dropdownMenuLink').removeClass('btn-primary');
+                            } else {
+                                $('#dropdownMenuLink').text('按' + subject_dict[i] + '筛选');
+                                $('#dropdownMenuLink').addClass('btn-primary');
+                                $('#dropdownMenuLink').removeClass('btn-outline-primary');
+                            }
                             info_num = data['info_num'];
                             page_num = data['page_num'];
                             current_page = 1;
@@ -968,13 +1508,15 @@
         $('#unusedscreen').click(function () {
             let flag = $(this).attr('checked');
             console.log(flag);
-            if (flag === 1)
-                url_data['used'] = 'true';
-            else
+            console.log(typeof flag);
+            if (flag === 'checked') {
+                url_data['used'] = 'false';
+                console.log(url_data['used']);
+            } else
                 delete url_data['used'];
 
             url_data['page'] = 1;
-
+            console.log(url_data);
             $.ajax({
                 url: '/paper',
                 method: 'get',
@@ -1038,7 +1580,7 @@
                 $.ajax({
                     url: '/paper/preview',
                     method: 'get',
-                    data:{
+                    data: {
                         'pno': info_pno_list[i]
                     }
                 });
@@ -1048,9 +1590,9 @@
         //删除按钮click事件
         for (let i = 0; i < paper_list.length; i++) {
             let name = '#confirmdelete' + i;
-            console.log(info_pno_list[i]);
+            //console.log(info_pno_list[i]);
             $(name).click(function () {
-                console.log('当前PNO：' + info_pno_list[i]);
+                //console.log('当前PNO：' + info_pno_list[i]);
                 $.ajax({
                     url: '/paper/?pno=' + info_pno_list[i],
                     method: 'DELETE',
@@ -1084,6 +1626,38 @@
             });
         }
 
+        //动态加载班级信息
+        let course_list = new Array();
+        let course_num_list = new Array();
+        $.ajax({
+            url: '/class/list',
+            method: 'get',
+            success: function (data) {
+                if (data['code'] === 200) {
+                    for (let i = 0; i < data['classes'].length; i++) {
+                        console.log('data: ' + data);
+                        course_list[i] = data['classes'][i]['cname'];
+                        course_num_list[i] = data['classes'][i]['cno'];
+                    }
+                    console.log('courselist in :' + course_list);
+                    let course_html;
+                    for (let i = 0; i < course_list.length; i++) {
+                        if (i === 0)
+                            course_html = "<option value=\"" + course_list[i] + "\">软件工程1班</option>\n";
+                        else
+                            course_html += "<option value=\"" + course_list[i] + "\">" + course_list[i] + "</option>";
+
+                    }
+
+                    for (let i = 0; i < paper_list.length; i++) {
+                        let temp = '#modalrelease' + i + " select .from-control";
+                        console.log($(temp));
+                        $(temp).empty();
+                        $(temp).append(course_html);
+                    }
+                }
+            }
+        });
 
     });
 </script>
