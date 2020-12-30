@@ -116,7 +116,7 @@ def preview_paper():
         pass
 
 
-@paper_bp.route('page_num')
+@paper_bp.route('/page_num')
 @should_be([MENTOR])
 def get_paper_page_num():
     num = Paper.get_paper_num()
@@ -125,3 +125,9 @@ def get_paper_page_num():
         'page_num': ceil(num / PAGE_SIZE),
         'info_num': num
     })
+
+
+@paper_bp.route('/assemble')
+@should_be([MENTOR])
+def add_paper_page():
+    return paper_bp.send_static_file('html/paper_assemble.html')
