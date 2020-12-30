@@ -20,7 +20,7 @@
     <nav-bar></nav-bar>
     <!-- Main Sidebar Container -->
     <!-- TODO 侧边栏逻辑修改-->
-    <side-bar></side-bar>
+    <side-bar my-role="mentor"></side-bar>
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper" style="min-height: 196px;">
@@ -49,16 +49,13 @@
                     <div class="col-lg-8">
                         <div class="form-group">
                             <label class="sr-only" for="test_select">选择考试</label>
-                            <select id="test_select" class="form-control">
-                                <option value="期末考试">期末考试</option>
-                                <option value="考试1">考试1</option>
-                                <option value="长考试名称测试行">长考试名称测试行</option>
-                                <option value="期中考试">期中考试</option>
+                            <select id="test_select" class="form-control" @change="handleChangeExam">
+                                <option v-for="item in exams" :value="item.tno">{{item.tname}}</option>
                             </select>
                         </div>
                         <div class="card card-primary">
                             <div class="card-header">
-                                <h5 class="card-title">折线图</h5>
+                                <h5 class="card-title">饼状图</h5>
                                 <div class="card-tools">
                                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                         <i class="fas fa-minus"></i>
@@ -83,7 +80,7 @@
 
                         <div class="card card-primary">
                             <div class="card-header">
-                                <h5 class="card-title">饼状图</h5>
+                                <h5 class="card-title">柱状图</h5>
                                 <div class="card-tools">
                                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                         <i class="fas fa-minus"></i>
@@ -95,7 +92,7 @@
                             </div>
                             <div class="card-body">
                                 <div class="chart">
-                                    <canvas id="areaChart"
+                                    <canvas id="barChart"
                                             style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%; display: block; width: 508px;"
                                             width="793" height="390" class="chartjs-render-monitor"></canvas>
                                 </div>
@@ -114,7 +111,9 @@
 
                                 <div class="card-tools">
                                     <div class="input-group input-group-sm" style="width: 150px;">
-                                        <input type="text" name="table_search" class="form-control float-right"
+                                        <label for="search" class="sr-only">搜索</label>
+                                        <input type="text" id="search" name="table_search"
+                                               class="form-control float-right"
                                                placeholder="搜索" :value="searchSno" @input="handleInput">
                                         <div class="input-group-append">
                                             <button type="button" class="btn btn-default" @click="search">

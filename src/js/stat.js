@@ -27,7 +27,8 @@ const vue = new Vue({
         inClass: false,
         searchSno: '',
         members: [],
-        cacheMembers: []
+        cacheMembers: [],
+        exams: []
     },
     components: {
         navBar,
@@ -39,6 +40,9 @@ const vue = new Vue({
             this.searchSno = event.target.value;
             this.adding = false;
             this.members = this.cacheMembers;
+        },
+        handleChangeExam(event) {
+            this.loadStat(1);
         },
         search() {
             // search按钮按一下搜索，再按一下清空搜索框
@@ -62,7 +66,6 @@ const vue = new Vue({
                 this.adding = false;
                 this.members = this.cacheMembers;
             }
-
         },
         addMember(item) {
             $.ajax({
@@ -98,7 +101,7 @@ const vue = new Vue({
         },
         loadMember(cno) {
             /* 向服务器请求班级成员列表并更新缓存 */
-            this.loading = false;
+            this.loadingMember = false;
             $.ajax({
                 url: '/class/member?cno=' + cno,
                 method: 'GET',
@@ -113,27 +116,42 @@ const vue = new Vue({
                     console.log(err);
                 },
                 complete() {
-                    vue.loading = false;
+                    vue.loadingMember = false;
+                }
+            });
+        },
+        loadStat(tno) {
+            $.ajax({
+                url: '/exam?tno=' + tno,
+                method: 'GET',
+                success(resp) {
+                    fillBarChart(barChartCanvas, barChartOptions, resp.segments, resp.pscore);
+                    fillPieChart(pieChartCanvas, pieOptions, resp.segments);
+                },
+                complete() {
+                    vue.loadingStat = false;
+                }
+            });
+        },
+        loadExam() {
+            $.ajax({
+                url: '/class/exams?cno=1',
+                method: 'GET',
+                success(resp) {
+                    if (resp.code === 200) {
+                        vue.exams = resp.exams;
+                    }
+                },
+                complete() {
+                    vue.loadingStat = false;
                 }
             });
         }
     },
-    loadStat() {
-        $.ajax({
-            url: '/exam?tno=1',
-            method: 'GET',
-            success(resp) {
-                fillBarChart(barChartCanvas, barChartOptions, resp.segments, resp.pscore);
-                fillPieChart(pieChartCanvas, pieOptions, resp.segments);
-            },
-            complete() {
-                vue.loadingStat = false;
-            }
-        });
-    },
     mounted() {
+        this.loadExam();
         this.loadMember(1);
-        this.loadStat();
+        this.loadStat(1);
     }
 });
 

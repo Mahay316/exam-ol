@@ -3,7 +3,7 @@
     <!-- Brand Logo -->
     <a href="#" class="brand-link">
       <img src="/static/img/logo_white.png" alt="Logo" class="brand-image img-md elevation-3"
-           style="opacity: .8">
+           style="opacity: 0.8">
       <span class="brand-text font-weight-light">在线考试系统</span>
     </a>
 
@@ -15,7 +15,9 @@
           <img src="/static/img/avatar.png" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">郑玲老师，您好！</a>
+          <a href="#" class="d-block" v-if="role === 'mentor'">{{ username }}老师，您好！</a>
+          <a href="#" class="d-block" v-else-if="role === 'student'">{{ username }}同学，您好！</a>
+          <a href="#" class="d-block" v-else-if="role === 'admin'">{{ username }}管理员，您好！</a>
         </div>
       </div>
 
@@ -23,31 +25,61 @@
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
             data-accordion="false">
-          <li class="nav-header">管理</li>
-          <li class="nav-item">
-            <a href="#" class="nav-link active">
-              <i class="nav-icon fas fa-paper-plane"></i>
-              <p>
-                班级管理
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-paperclip"></i>
-              <p>
-                试卷管理
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-pen"></i>
-              <p>
-                试题管理
-              </p>
-            </a>
-          </li>
+          <div v-if="role === 'mentor'">
+            <li class="nav-header">管理</li>
+            <li class="nav-item">
+              <a href="#" class="nav-link active">
+                <i class="nav-icon fas fa-paper-plane"></i>
+                <p>
+                  班级管理
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-paperclip"></i>
+                <p>
+                  试卷管理
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-pen"></i>
+                <p>
+                  试题管理
+                </p>
+              </a>
+            </li>
+          </div>
+          <div v-else-if="role === 'student'">
+            <li class="nav-item">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-paperclip"></i>
+                <p>
+                  我的班级
+                </p>
+              </a>
+            </li>
+          </div>
+          <div v-else-if="role === 'admin'">
+            <li class="nav-item">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-paperclip"></i>
+                <p>
+                  教师管理
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-pen"></i>
+                <p>
+                  学生管理
+                </p>
+              </a>
+            </li>
+          </div>
           <li class="nav-header">账号</li>
           <li class="nav-item">
             <a href="#" class="nav-link">
@@ -66,8 +98,34 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
-  name: "side-bar"
+  name: "side-bar",
+  data() {
+    return {
+      username: '',
+      role: this.myRole
+    }
+  },
+  props: {
+    myRole: {
+      required: true,
+      validator: function (value) {
+        // 用户身份必须匹配下列字符串中的一个
+        return ['mentor', 'student', 'admin'].indexOf(value) !== -1
+      }
+    }
+  },
+  mounted() {
+    axios.get('/auth/info').then(resp => {
+      let data = resp.data;
+      if (data.code === 200) {
+        this.username = data.name;
+        this.role = data.role;
+      }
+    });
+  }
 }
 </script>
 
