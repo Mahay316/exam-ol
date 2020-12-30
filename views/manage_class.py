@@ -44,7 +44,7 @@ def get_classes():
         res_classes.append({
             'cno': cur_cls.Cno,
             'cname': cur_cls.Cname,
-            'csubject': cur_cls.Csubject
+            'csubject': cur_cls.Subno
         })
 
     return jsonify(res_json)

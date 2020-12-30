@@ -216,6 +216,10 @@ class Student(Base, User):
             engine.dispose()
             session.remove()
 
+    @classmethod
+    def select_students_by(cls, page=1, no=None, name=None, major=None):
+        """查询学生"""
+
 
 class Mentor(Base, User):
     __tablename__ = 'mentor'
@@ -312,6 +316,11 @@ class Mentor(Base, User):
         finally:
             engine.dispose()
             session.remove()
+
+    # TODO
+    @classmethod
+    def select_mentors_by(cls, page=1, no=None, title=None, name=None):
+        """按条件筛选mentor，是None就是没传，就是不在该条件上做限制"""
 
 
 class Admin(Base, User):

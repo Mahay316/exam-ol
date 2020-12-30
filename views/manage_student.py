@@ -45,3 +45,45 @@ def search_student():
     }
 
     return jsonify(res_json)
+
+
+@student_bp.route('/')
+@should_be([MENTOR])
+def get_students():
+    args = request.args
+    no = args.get('no')
+    name = args.get('name')
+    major = args.get('major')
+    page = args.get('page')
+
+    if page is None:
+        page = 1
+
+    res_json = {'code': 200, 'students': []}
+
+    select_dict = {}
+    if no is not None:
+        select_dict['no'] = no
+        # results = Paper.select_papers_by(page, subject=subject)
+    elif major is not None:
+        select_dict['major'] = major
+        # results = Paper.select_papers_by(page, used=used)
+    elif name is not None:
+        select_dict['name'] = name
+        # results = Paper.select_papers_by(page, pno=pno)
+    results = Student.select_students_by(int(page), **select_dict)
+
+    for result in results:
+        res_json['students'].append({
+            'no': result.Sno,
+            'name': result.Sname,
+            'gender': result.Sgender,
+            'major': result.Smajor,
+        })
+
+    num = len(results)
+    res_json['page_num'] = ceil(num / PAGE_SIZE)
+    res_json['info_num'] = num
+
+    return jsonify(res_json)
+
