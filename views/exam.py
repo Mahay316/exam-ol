@@ -60,7 +60,7 @@ def get_exam_time_info():
     """
     获得考试时间信息
     """
-    examID = request.form.get('examID')
+    examID = int(request.args.get('examID'))
     test = Test.get_test(examID)
 
     # 检查访问合法性
@@ -133,14 +133,16 @@ def get_questions():
         # 为了后面判卷不用再次访问数据库，暂时缓存下来
         # TODO 未测试
         session['answers'][q.Qno] = {
-            'qanswer':json.loads(q.Qanswer),
+            'qanswer': json.loads(q.Qanswer),
             'qtype': q.Qtype,
             'qpscore': qpscore
         }
 
         # 如果是选择题则choices置空
         if not q.is_fill_in_blanks():
-            cur_dict['choices'] = json.dumps(q.Qselect)
+            print(q.Qselect)
+            cur_dict['choices'] = json.loads(q.Qselect)
+            print(cur_dict['choices'])
 
         # 用户已作答的缓存
         if q.Qno in session:

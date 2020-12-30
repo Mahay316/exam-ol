@@ -12,7 +12,7 @@
     <script src="/static/bootstrap/js/bootstrap.bundle.min.js"></script>
 
     <!-- 侧边栏跟随组件 -->
-    <script src="../static/js/accessory.js"></script>
+    <script src="/static/js/accessory.js"></script>
 
     <style>
         /* 以下为顶部标题栏样式 */
@@ -165,134 +165,171 @@
     </style>
 </head>
 <body>
-<!-- 顶部固定标题栏 -->
-<div class="container-fluid shadow header" style="border: 0px solid red;">
-    <div class="container" style="border: 0px solid red; padding: 12px 15px;">
-        <div class="row">
-            <div class="col-2 exam-title">数据库原理期末考试</div>
-            <div class="col-3 exam-info">
-                <span class="exam-limit">考试不限时间&nbsp;&nbsp;</span>
-                <span class="exam-time time-alert">00:10:19</span>
+<div id="pane">
+    <!-- 顶部固定标题栏 -->
+    <div class="container-fluid shadow header" style="border: 0px solid red;">
+        <div class="container" style="border: 0px solid red; padding: 12px 15px;">
+            <div class="row">
+                <div class="col-2 exam-title">{{ testName }}</div>
+                <div class="col-3 exam-info">
+                    <span class="exam-limit" v-if="timeLeft < 0">考试不限时间&nbsp;&nbsp;</span>
+                    <span v-else>
+                        <span class="exam-limit">考试剩余时间&nbsp;&nbsp;</span>
+                        <span class="exam-time time-alert">{{ timeLeft | formatTime }}</span>
+                    </span>
+                </div>
+                <button type="button" class="btn btn-success col-1 offset-11">我要交卷</button>
             </div>
-            <button type="button" class="btn btn-success col-1 offset-11">我要交卷</button>
         </div>
     </div>
-</div>
 
-<!-- 试卷内容部分 -->
-<div id="main" class="container" style="border: 0px solid red; margin-top: 85px;">
-    <div class="row" style="border: 0px solid blue">
-        <!-- 试卷主体 -->
-        <div class="col-9">
-            <div style="border: 0px solid blue;">
-                <div class="question" id="paper_1">
-                    <div class="topic_type">
-                        <em></em>
-                        <h2>多项选择题 <span>（本题1分）</span></h2>
-                    </div>
-                    <div class="question_content">
-                        <div class="question_stem">
-                            <span>1. </span>龙胆科的主要特征是
+    <!-- 试卷内容部分 -->
+    <div id="main" class="container" style="border: 0px solid red; margin-top: 85px;">
+        <div class="row" style="border: 0px solid blue">
+            <!-- 试卷主体 -->
+            <div class="col-9">
+                <div>
+                    <div class="question" v-for="(item, index) in questions" :id="'qs_' + index">
+                        <div class="topic_type">
+                            <em></em>
+                            <h2>{{ item.type | typeToStr }} <span>（本题{{ item.qpscore }}分）</span></h2>
                         </div>
-                        <div class="question_select">
-                            <div class="select_item">
-                                <input class="num" type="button" name="question_1" value="A">
-                                <span>雄蕊5枚</span>
+                        <div class="question_content">
+                            <div class="question_stem">
+                                <span>{{ index + 1 }}. </span>{{ item.stem }}
                             </div>
-                            <div class="select_item">
-                                <input class="num chosen" type="button" name="question_1" value="B">
-                                <span>雄蕊5枚</span>
-                            </div>
-                            <div class="select_item">
-                                <input class="num" type="button" name="question_1" value="C">
-                                <span>雄蕊5枚</span>
-                            </div>
-                            <div class="select_item">
-                                <input class="num chosen" type="button" name="question_1" value="D">
-                                <span>雄蕊5枚</span>
+                            <div class="question_select">
+                                <div class="select_item" v-for="(choice, cidx) in item.choices">
+                                    <input class="num" type="button" name="question_1" :value="cidx | toLetter">
+                                    <span>{{ choice }}</span>
+                                </div>
                             </div>
                         </div>
-                        <form>
-                            <input type="hidden" name="questionID" value="id_XK09012005j_mchoose_0072_201013">
-                            <input type="hidden" class="tmp" name="selectedAnswer" value="">
-                            <input type="hidden" name="basic" value="2">
-                        </form>
-                    </div>
-                </div>
-                <div class="question" id="paper_2">
-                    <div class="topic_type">
-                        <em></em>
-                        <h2>多项选择题 <span>（本题1分）</span></h2>
-                    </div>
-                    <div class="question_content">
-                        <div class="question_stem">
-                            <span>1. </span>龙胆科的主要特征是
-                        </div>
-                        <div class="question_select">
-                            <div class="select_item">
-                                <input class="num" type="button" name="question_1" value="A">
-                                <span>雄蕊5枚</span>
-                            </div>
-                            <div class="select_item">
-                                <input class="num" type="button" name="question_1" value="B">
-                                <span>雄蕊5枚</span>
-                            </div>
-                            <div class="select_item">
-                                <input class="num" type="button" name="question_1" value="C">
-                                <span>雄蕊5枚</span>
-                            </div>
-                            <div class="select_item">
-                                <input class="num" type="button" name="question_1" value="D">
-                                <span>雄蕊5枚</span>
-                            </div>
-                        </div>
-                        <form>
-                            <input type="hidden" name="questionID" value="id_XK09012005j_mchoose_0072_201013">
-                            <input type="hidden" class="tmp" name="selectedAnswer" value="">
-                            <input type="hidden" name="basic" value="2">
-                        </form>
                     </div>
                 </div>
             </div>
-        </div>
-        <!-- 答题卡 -->
-        <div class="col-3" style="padding: 0;">
-            <div id="sidebar" class="answer-card">
-                <h3 style="text-align: center; margin-top: 16px;">答题卡</h3>
-                <hr/>
-                <div class="card-item">
-                    <h6>单项选择题</h6>
-                    <div class="list">
-                        <a href="#paper_1" class="num chosen">1</a>
-                        <a href="#paper2" class="num">2</a>
-                        <a href="#" class="num">1</a>
-                        <a href="#" class="num">1</a>
-                        <a href="#" class="num">1</a>
-                        <a href="#" class="num">991</a>
-                        <a href="#" class="num">991</a>
-                        <a href="#" class="num">991</a>
-                        <a href="#" class="num">991</a>
-                        <a href="#" class="num">991</a>
-                        <a href="#" class="num">991</a>
+            <!-- 答题卡 -->
+            <div class="col-3" style="padding: 0;">
+                <div id="sidebar" class="answer-card">
+                    <h3 style="text-align: center; margin-top: 16px;">答题卡</h3>
+                    <hr/>
+                    <div class="card-item" v-if="questionRecord.select.length">
+                        <h6>单项选择题</h6>
+                        <div class="list">
+                            <a :href="'#qs_' + idx" class="num" v-for="idx in questionRecord.select">{{ idx }}</a>
+                        </div>
                     </div>
-                </div>
-                <div class="card-item">
-                    <h6>多项选择题</h6>
-                    <div class="list">
-                        <a href="#" class="num">1</a>
-                        <a href="#" class="num">1</a>
-                        <a href="#" class="num">1</a>
-                        <a href="#" class="num">1</a>
-                        <a href="#" class="num">991</a>
+                    <div class="card-item" v-if="questionRecord.multi.length">
+                        <h6>多项选择题</h6>
+                        <div class="list">
+                            <a :href="'#qs_' + idx" class="num chosen" v-for="idx in questionRecord.multi">{{ idx }}</a>
+                        </div>
+                    </div>
+                    <div class="card-item" v-if="questionRecord.fill.length">
+                        <h6>填空题</h6>
+                        <div class="list">
+                            <a :href="'#qs_' + idx" class="num chosen" v-for="idx in questionRecord.fill">{{ idx }}</a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <div class="decoration-line">
+        <span class="end">试卷到达结尾</span>
+    </div>
 </div>
 
-<div class="decoration-line">
-    <span class="end">试卷到达结尾</span>
-</div>
+<script src="/static/js/vue.js"></script>
+<script src="/static/js/axios.js"></script>
+<script>
+
+</script>
+<script>
+    new Vue({
+        el: '#pane',
+        data: {
+            testName: '',
+            timeLeft: 0,
+            questions: [],
+        },
+        computed: {
+            questionRecord() {
+                let res = {
+                    select: [],
+                    multi: [],
+                    fill: []
+                };
+                // 分别记录选择题、多选题和填空题对应的题号
+                for (let i = 0; i < this.questions.length; i++) {
+                    switch (this.questions[i].type) {
+                        case 'select':
+                            res.select.push(i + 1);
+                            break;
+                        case 'multi':
+                            res.multi.push(i + 1);
+                            break;
+                        case 'fill':
+                            res.fill.push(i + 1);
+                            break;
+                    }
+                }
+                return res;
+            }
+        },
+        filters: {
+            typeToStr(type) {
+                let res = '';
+                switch (type) {
+                    case 'select':
+                        res = '单项选择题';
+                        break;
+                    case 'multi':
+                        res = '多项选择题';
+                        break;
+                    case 'fill':
+                        res = '填空题';
+                        break;
+                }
+
+                return res;
+            },
+            toLetter(idx) {
+                return String.fromCharCode('A'.charCodeAt(0) + idx);
+            },
+            formatTime(seconds) {
+                let n = 2;
+                let hours = (Array(n).join('0') + String((seconds / 3600).toFixed(0))).slice(-n);
+                seconds %= 3600;
+                let minutes = (Array(n).join('0') + String((seconds / 60).toFixed(0))).slice(-n);
+                seconds %= 60;
+                seconds = (Array(n).join('0') + String((seconds).toFixed(0))).slice(-n);
+
+
+                return `${hours}:${minutes}:${seconds}`;
+            }
+        },
+        mounted() {
+            axios.get('/exam/questions?examID=2').then(resp => {
+                let data = resp.data;
+                if (data.code === 200) {
+                    this.questions = data.questions;
+                }
+            });
+            axios.get('/exam/time?examID=2').then(resp => {
+                let data = resp.data;
+                if (data.code === 200) {
+                    this.questions = data.questions;
+                    this.testName = data.tname;
+                    this.timeLeft = data.timeLeft.toFixed(0);
+                    if (this.timeLeft > 0) {
+                        setInterval(() => this.timeLeft--, 1000);
+                    }
+                }
+            });
+        }
+    });
+</script>
 </body>
 </html>
