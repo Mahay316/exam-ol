@@ -87,12 +87,18 @@ def delete_paper():
     return jsonify({'code': 200})
 
 
-@paper_bp.route('/preview', methods=['GET', 'POST'])
+@paper_bp.route('/preview', methods=['GET'])
 @should_be([MENTOR])
 def preview_paper():
     """
-    预览试卷。POST方法用于正在组卷的预览，GET用于预览已存在的卷子
+    获取预览html
     """
+    return paper_bp.send_static_file('html/paper_preview.html')
+
+
+@paper_bp.route('/content', methods=['GET', 'POST'])
+@should_be([MENTOR])
+def get_paper_content():
     if request.method == 'GET':
         pno = int(request.args['pno'])
         res_json = {
