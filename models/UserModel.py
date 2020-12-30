@@ -317,10 +317,36 @@ class Mentor(Base, User):
             engine.dispose()
             session.remove()
 
-    # TODO
     @classmethod
     def select_mentors_by(cls, page=1, no=None, title=None, name=None):
         """按条件筛选mentor，是None就是没传，就是不在该条件上做限制"""
+
+        engine = model_common.get_mysql_engine()
+        session = model_common.get_mysql_session(engine)
+
+        try:
+            filter_list = []
+
+            if no:
+                filter_list.append(cls.Mno == no)
+
+            if title:
+                filter_list.append(cls.Mtitle == title)
+
+            if name:
+                filter_list.append(cls.Mname == name)
+
+            mentors = session.query(cls).filter(*filter_list).all()
+
+            return model_common.get_page_by_list(mentors, page)
+
+        except Exception as e:
+            session.rollback()
+            raise e
+
+        finally:
+            engine.dispose()
+            session.remove()
 
 
 class Admin(Base, User):
