@@ -323,6 +323,20 @@ def add_exam():
     """
     发布考试
     """
+    form = request.form
+    pno = int(form.get('pno'))
+    cno = int(form.get('cno'))
+    tname = form.get('tname')
+    tdesc = form.get('tdesc')
+    tstart = form.get('tstart')
+    tend = form.get('tend')
+
+    flag = Test.add_test(pno=pno, cno=cno, tname=tname, tdesc=tdesc, tstart=tstart, tend=tend)
+
+    if not flag:
+        return jsonify({'code': 204})
+
+    return jsonify({'code': 200})
 
 
 @exam_bp.route('/', methods=['DELETE'])
@@ -331,3 +345,8 @@ def delete_exam():
     """
     删除考试
     """
+
+
+@exam_bp.route('/paper')
+def get_exam_page():
+    return exam_bp.send_static_file('html/test_online.html')

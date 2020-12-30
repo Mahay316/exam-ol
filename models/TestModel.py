@@ -254,3 +254,15 @@ class Test(Base):
         finally:
             engine.dispose()
             session.remove()
+
+
+    # TODO
+    @classmethod
+    def add_test(cls, pno, cno, tname, tdesc, tstart, tend):
+        """
+        发布考试
+
+        :param tstart: 时间戳，存入数据库应该是转成datetime吧？
+        :param tend: 时间戳，存入数据库应该是转成datetime吧？
+        :return True if succeed else False
+        """

@@ -73,6 +73,6 @@ def get_info():
         res_json['name'] = session['name']
         res_json['gender'] = session['gender']
         res_json['title'] = session['title']
-    elif role == ADMIN:
+    else:
         res_json['name'] =session['no']
     return jsonify(res_json)
