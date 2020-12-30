@@ -75,6 +75,10 @@
                                             width="793" height="390" class="chartjs-render-monitor"></canvas>
                                 </div>
                             </div>
+                            <!-- 正在加载中 -->
+                            <div class="overlay" v-if="loadingStat">
+                                <i class="fas fa-2x fa-sync-alt fa-spin"></i>
+                            </div>
                         </div>
 
                         <div class="card card-primary">
@@ -96,6 +100,10 @@
                                             width="793" height="390" class="chartjs-render-monitor"></canvas>
                                 </div>
                             </div>
+                            <!-- 正在加载中 -->
+                            <div class="overlay" v-if="loadingStat">
+                                <i class="fas fa-2x fa-sync-alt fa-spin"></i>
+                            </div>
                         </div>
                     </div>
                     <!-- /.col-md-6 -->
@@ -107,11 +115,11 @@
                                 <div class="card-tools">
                                     <div class="input-group input-group-sm" style="width: 150px;">
                                         <input type="text" name="table_search" class="form-control float-right"
-                                               placeholder="搜索">
-
+                                               placeholder="搜索" :value="searchSno" @input="handleInput">
                                         <div class="input-group-append">
-                                            <button type="submit" class="btn btn-default">
-                                                <i class="fas fa-search"></i>
+                                            <button type="button" class="btn btn-default" @click="search">
+                                                <i class="fas fa-minus" v-if="adding"></i>
+                                                <i class="fas fa-search" v-else></i>
                                             </button>
                                         </div>
                                     </div>
@@ -132,14 +140,22 @@
                                         <td>{{ item.sno }}</td>
                                         <td>{{ item.sname }}</td>
                                         <td>
-                                            <span class="badge bg-danger delete" @click="deleteMember(item)">删除</span>
+                                            <span class="badge bg-danger delete"
+                                                  @click="deleteMember(item)" v-if="!adding || inClass">
+                                                删除
+                                            </span>
+                                            <span class="badge bg-success delete" @click="addMember(item)" v-else>增加</span>
                                         </td>
+                                    </tr>
+                                    <tr v-if="!members.length">
+                                        <td colspan="3" v-if="adding">搜索的学生不存在</td>
+                                        <td colspan="3" v-else>成员列表为空</td>
                                     </tr>
                                     </tbody>
                                 </table>
                             </div>
                             <!-- 正在加载中 -->
-                            <div class="overlay" v-if="loading">
+                            <div class="overlay" v-if="loadingMember">
                                 <i class="fas fa-2x fa-sync-alt fa-spin"></i>
                             </div>
                         </div>
@@ -169,113 +185,6 @@
 <script src="/static/adminlte/js/adminlte.min.js"></script>
 <script src="/static/js/bootbox.min.js"></script>
 <script src="/static/dist/stat.js"></script>
-
-<script>
-    var areaChartCanvas = $('#areaChart').get(0).getContext('2d')
-
-    var areaChartData = {
-        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-        datasets: [
-            {
-                label: 'Digital Goods',
-                backgroundColor: 'rgba(60,141,188,0.9)',
-                borderColor: 'rgba(60,141,188,0.8)',
-                pointRadius: false,
-                pointColor: '#3b8bba',
-                pointStrokeColor: 'rgba(60,141,188,1)',
-                pointHighlightFill: '#fff',
-                pointHighlightStroke: 'rgba(60,141,188,1)',
-                data: [28, 48, 40, 19, 86, 27, 90]
-            },
-            {
-                label: 'Electronics',
-                backgroundColor: 'rgba(210, 214, 222, 1)',
-                borderColor: 'rgba(210, 214, 222, 1)',
-                pointRadius: false,
-                pointColor: 'rgba(210, 214, 222, 1)',
-                pointStrokeColor: '#c1c7d1',
-                pointHighlightFill: '#fff',
-                pointHighlightStroke: 'rgba(220,220,220,1)',
-                data: [65, 59, 80, 81, 56, 55, 40]
-            },
-        ]
-    }
-
-    var areaChartOptions = {
-        maintainAspectRatio: false,
-        responsive: true,
-        legend: {
-            display: false
-        },
-        scales: {
-            xAxes: [{
-                gridLines: {
-                    display: false,
-                }
-            }],
-            yAxes: [{
-                gridLines: {
-                    display: false,
-                }
-            }]
-        }
-    }
-
-    // This will get the first returned node in the jQuery collection.
-    new Chart(areaChartCanvas, {
-        type: 'line',
-        data: areaChartData,
-        options: areaChartOptions
-    });
-
-    var donutData = {
-        labels: [
-            'Chrome',
-            'IE',
-            'FireFox',
-            'Safari',
-            'Opera',
-            'Navigator',
-        ],
-        datasets: [
-            {
-                data: [700, 500, 400, 600, 300, 100],
-                backgroundColor: ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de'],
-            }
-        ]
-    }
-    var donutOptions = {
-        maintainAspectRatio: false,
-        responsive: true,
-    }
-
-    //-------------
-    //- PIE CHART -
-    //-------------
-    // Get context with jQuery - using jQuery's .get() method.
-    var pieChartCanvas = $('#pieChart').get(0).getContext('2d')
-    var pieData = donutData;
-    var pieOptions = {
-        maintainAspectRatio: false,
-        responsive: true,
-    }
-    //Create pie or douhnut chart
-    // You can switch between pie and douhnut using the method below.
-    new Chart(pieChartCanvas, {
-        type: 'pie',
-        data: pieData,
-        options: pieOptions
-    })
-
-    $("#test_select").change(function (e) {
-        console.log(e);
-        new Chart(pieChartCanvas, {
-            type: 'pie',
-            data: pieData,
-            options: pieOptions
-        });
-    });
-</script>
 
 </body>
 </html>
