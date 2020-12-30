@@ -86,6 +86,7 @@ def get_exam_time_info():
         res['hasLimit'] = True
 
     res['code'] = 200
+    res['tname'] = test.Tname
     return jsonify(res)
 
 
