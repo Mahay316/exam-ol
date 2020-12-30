@@ -52,7 +52,7 @@ def get_paper():
         res_json['questions'].append({
             'pno': result.Pno,
             'pname': result.Pname,
-            'preferenced': result.Preferenced,
+            'preference': result.Preference,
             'psubject': result.Subno
         })
 

@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify, abort, session, current_app
-
+from datetime import datetime
 from common.Role import *
 from decorators import should_be, login_required
 from models import Mentor, Student, Course
@@ -124,3 +124,17 @@ def get_exam_stat():
         abort(404)
 
     return current_app.send_static_file('html/test_stat.html')
+
+
+@class_bp.route('/exams')
+@should_be([MENTOR])
+def get_exam_list_data():
+    cno = int(request.args['cno'])
+
+    res_json = {
+        'code': 200,
+        'exams': []
+    }
+
+    res_json['exams'] = Course.get_test_info_by_cno(cno)
+    return jsonify(res_json)

@@ -18,9 +18,15 @@ from common import model_common
 from models import Paper
 from models import Test
 from models import Mentor
+from models.UserModel import Student
 
 
 def qt():
+
+    # print(Student.has_this_class('student3',4))
+    # s = Student.get_user('student1')
+    # print(Student.get_all_test_ids(s))
+    # print(Student.get_classes('student1'))
     # print(Question.add_question(qtype='select', qstem='aaaa', qanswer='sdsd', qselect='BD', qsubject='软件工程'))
 
     # print(Course.add_class_member('c0003','student1'))
@@ -99,12 +105,19 @@ def fg():
 
     #print(Course.get_tests_by_no(4)[0].Tno)
 
-    for x in Course.get_students_by_no(4):
-        print(x.Sno)
+    # for x in Course.get_students_by_no(4):
+    #     print(x.Sno)
+
+    # for x in Course.get_exams_by_cno(4):
+    #     print(x.Tno)
+
+    print(Course.get_test_info_by_cno(4))
+
+    # Ste
     pass
 
 
 if __name__ == '__main__':
-    # qt()
-    fg()
+    qt()
+    # fg()
     pass
