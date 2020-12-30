@@ -224,8 +224,10 @@ def grade_exam():
     tno = int(request.form['tno'])
     # TODO 进行权限验证，即验证学生是否有该考试且考试已经开始
     paper = Test.get_paper_by_tno(tno)
+
     if paper is None:
         return jsonify({'code': 204})
+
     pnum = paper.Pnum
     right_num, did_num, stu_grade = 0, 0, 0
 
@@ -254,7 +256,7 @@ def grade_exam():
 
     Test.set_test_grade(tno, session['no'], st_wrong=pnum - right_num, st_blank=pnum - did_num, st_grade=stu_grade)
 
-    # TODO 清理session易出错
+    # TODO 清理session易出错, session存储逻辑要改变，为了
     for quiz_id in list(set(session['cached_questionID'])):
         del session[quiz_id]
     del session['cached_questionID']
@@ -276,6 +278,10 @@ def get_exam_results():
         tno = int(request.args['tno'])
 
         infos = Test.get_test_infos(tno)
+
+        if infos is None:
+            return jsonify({'code': 204})
+
         res_json = {
             'code': 200,
             'pscore': infos['pscore']
@@ -303,6 +309,9 @@ def get_exam_results():
         tno = int(request.args['tno'])
         sno = request.args['sno']
         infos = Test.get_student_test_info(tno, sno)
+
+        if infos is None:
+            return jsonify({'code': 403})
 
         infos['code'] = 200
         return jsonify(infos)

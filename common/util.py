@@ -10,17 +10,19 @@ def save_session(role, user, remember_me: str):
     """
     session.clear()
 
-    session['role'] = role
     session.permanent = True if remember_me == 'true' else False
     if role == STUDENT:
+        session['role'] = role
         session['no'] = user.Sno
         session['name'] = user.Sname
         session['gender'] = user.Sgender
         session['major'] = user.Smajor
     elif role == MENTOR:
+        session['role'] = role
         session['no'] = user.Mno
         session['name'] = user.Mname
         session['gender'] = user.Mgender
         session['title'] = user.Mtitle
     elif role == ADMIN:
+        session['role'] = role
         session['no'] = user.Ano

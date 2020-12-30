@@ -58,9 +58,21 @@ def logout():
     return jsonify({'code': 200})
 
 
-@auth_bp.route('/role', methods=['GET'])
-def get_role():
+@auth_bp.route('/info', methods=['GET'])
+def get_info():
     if 'role' not in session:
         return jsonify({'code': 403})
 
-    return jsonify({'code': 200, 'role': session['role']})
+    res_json = {'code': 200, 'no': session['no']}
+    role = session['role']
+    if role == STUDENT:
+        res_json['name'] = session['name']
+        res_json['gender'] = session['gender']
+        res_json['major'] = session['major']
+    elif role == MENTOR:
+        res_json['name'] = session['name']
+        res_json['gender'] = session['gender']
+        res_json['title'] = session['title']
+    elif role == ADMIN:
+        res_json['name'] =session['no']
+    return jsonify(res_json)
