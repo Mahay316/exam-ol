@@ -14,8 +14,11 @@ def search_student():
     cno = int(request.args['cno'])
     sno = request.args['sno']
 
-    # TODO 204
     student = Student.get_user(sno)
+
+    if student is None:
+        return jsonify({'code': 204})
+
     res_json = {
         'code': 200,
         'sno': student.Sno,

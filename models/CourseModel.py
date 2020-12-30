@@ -137,8 +137,8 @@ class Course(Base):
             'tname': str
             'pscore': int
             'pnum': int
-            'tstart': datetime
-            'tend': datetime
+            'tstart': 时间戳
+            'tend': 时间戳
         }]
         """
 
