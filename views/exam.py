@@ -114,8 +114,8 @@ def get_questions():
     }
     res = res_dict['questions']
 
-    if 'answer' not in session:
-        session['answer'] = {}
+    if 'answers' not in session:
+        session['answers'] = {}
 
     for tp in test.get_all_questions():
         q = tp[0]
@@ -203,13 +203,13 @@ def cache_questions():
         session['cached_questionID'].append(questionID)
 
     # session缓存所有题目id
-    if 'all_question_id' not in session:
-        session['all_question_id'] = Test.get_all_question_id(examID)
+    if 'all_question_ids' not in session:
+        session['all_question_ids'] = Test.get_all_question_id(examID)
 
     res = {
         'code': 200,
         'cached': list(set(session['cached_questionID'])),
-        'all': list(session['all_question_id'])
+        'all': list(session['all_question_ids'])
     }
 
     return jsonify(res)
@@ -254,7 +254,12 @@ def grade_exam():
 
     Test.set_test_grade(tno, session['no'], st_wrong=pnum - right_num, st_blank=pnum - did_num, st_grade=stu_grade)
 
-    # TODO 未清理session
+    # TODO 清理session易出错
+    for quiz_id in list(set(session['cached_questionID'])):
+        del session[quiz_id]
+    del session['cached_questionID']
+    del session['all_question_ids']
+    del session['answers']
 
     return jsonify({'code': 200})
 

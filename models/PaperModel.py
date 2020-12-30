@@ -84,6 +84,7 @@ class Paper(Base):
             engine.dispose()
             session.remove()
 
+
     @classmethod
     def select_papers_by(cls, page=1, subject=None, used=None, pno=None, pname=None):
 

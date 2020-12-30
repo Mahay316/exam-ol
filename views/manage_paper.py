@@ -38,7 +38,7 @@ def get_paper():
         select_dict['subject'] = int(subject)
         # results = Paper.select_papers_by(page, subject=subject)
     elif used is not None:
-        select_dict['used'] = used
+        select_dict['used'] = True if used == 'true' else False
         # results = Paper.select_papers_by(page, used=used)
     elif pno is not None:
         select_dict['pno'] = pno
