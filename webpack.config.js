@@ -4,7 +4,8 @@ const VueLoaderPlugin = require('vue-loader/lib/plugin')
 module.exports = {
     mode: "production",
     entry: {
-        stat: './src/js/stat.js'
+        stat: './src/js/stat.js',
+        list: './src/js/list.js'
     },
     output: {
         path: path.resolve(__dirname, 'static/dist'),

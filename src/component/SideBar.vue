@@ -25,9 +25,9 @@
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
             data-accordion="false">
-          <div v-if="role === 'mentor'">
-            <li class="nav-header">管理</li>
-            <li class="nav-item">
+            <li class="nav-header" v-if="role === 'mentor' || role === 'admin'">管理</li>
+            <!-- 教师菜单 -->
+            <li class="nav-item" v-if="role === 'mentor'">
               <a href="/index" class="nav-link active">
                 <i class="nav-icon fas fa-paper-plane"></i>
                 <p>
@@ -35,7 +35,7 @@
                 </p>
               </a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item" v-if="role === 'mentor'">
               <a href="/paper/manage" class="nav-link">
                 <i class="nav-icon fas fa-paperclip"></i>
                 <p>
@@ -43,7 +43,7 @@
                 </p>
               </a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item" v-if="role === 'mentor'">
               <a href="/question/manage" class="nav-link">
                 <i class="nav-icon fas fa-pen"></i>
                 <p>
@@ -51,9 +51,10 @@
                 </p>
               </a>
             </li>
-          </div>
-          <div v-else-if="role === 'student'">
-            <li class="nav-item">
+
+            <!-- 学生菜单 -->
+            <li class="nav-header" v-if="role === 'student'">信息</li>
+            <li class="nav-item" v-if="role === 'student'">
               <a href="/index" class="nav-link">
                 <i class="nav-icon fas fa-paperclip"></i>
                 <p>
@@ -61,9 +62,9 @@
                 </p>
               </a>
             </li>
-          </div>
-          <div v-else-if="role === 'admin'">
-            <li class="nav-item">
+
+            <!-- 管理员菜单 -->
+            <li class="nav-item" v-if="role === 'admin'">
               <a href="/mentor/manage" class="nav-link">
                 <i class="nav-icon fas fa-paperclip"></i>
                 <p>
@@ -71,7 +72,7 @@
                 </p>
               </a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item" v-if="role === 'admin'">
               <a href="/student/manage" class="nav-link">
                 <i class="nav-icon fas fa-pen"></i>
                 <p>
@@ -79,9 +80,10 @@
                 </p>
               </a>
             </li>
-          </div>
-          <li class="nav-header">账号</li>
-          <li class="nav-item">
+
+            <!-- 公用操作 -->
+            <li class="nav-header">账号</li>
+            <li class="nav-item">
             <a href="#" class="nav-link" @click="logout">
               <i class="nav-icon fas fa-door-open"></i>
               <p>
@@ -110,7 +112,6 @@ export default {
   },
   props: {
     myRole: {
-      required: true,
       validator: function (value) {
         // 用户身份必须匹配下列字符串中的一个
         return ['mentor', 'student', 'admin'].indexOf(value) !== -1
