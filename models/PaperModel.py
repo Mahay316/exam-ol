@@ -97,7 +97,6 @@ class Paper(Base):
 
         try:
             filter_list = []
-            filter_list.append(cls.Pisdeleted == 0)
 
             if subject:
                 filter_list.append(cls.Subno == subject)
@@ -114,8 +113,9 @@ class Paper(Base):
             if pname:
                 filter_list.append(cls.Pname.like('%' + pname + '%'))
 
-            papers = session.query(cls).filter(*filter_list).all()
-            return model_common.get_page_by_list(papers, page)
+            papers = session.query(cls).filter(*filter_list)
+            res = (papers.count(), model_common.get_page_by_list(papers.all(), page))
+            return res
 
         except Exception as e:
             session.rollback()
