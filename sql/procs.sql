@@ -5,7 +5,7 @@ DELIMITER $
  * 输出：res 若待删除的试题号不存在，返回FALSE，否则返回TRUE
  * ### MySQL中BOOLEAN对应TINYINT(1)
  */
-CREATE PROCEDURE delete_question(IN target VARCHAR(20), OUT res BOOLEAN)
+CREATE PROCEDURE delete_question(IN target INTEGER , OUT res BOOLEAN)
 BEGIN
 	DECLARE ref_count INT;
 	SELECT Qreference INTO ref_count FROM question WHERE Qno = target;
@@ -32,7 +32,7 @@ END;$
  * 输出：res 若待更新的试题号不存在，返回FALSE，否则返回TRUE
  * ### MySQL中BOOLEAN对应TINYINT(1)
  */
-CREATE PROCEDURE update_question(IN target VARCHAR(20), IN stem VARCHAR(255), IN answer VARCHAR(255),
+CREATE PROCEDURE update_question(IN target INTEGER, IN stem VARCHAR(255), IN answer VARCHAR(255),
 	IN _select VARCHAR(255), IN subject VARCHAR(5), OUT res BOOLEAN)
 BEGIN
 	DECLARE ref_count INT;
@@ -63,7 +63,7 @@ END;$
  * 输出：res 若待删除的试卷号不存在，返回FALSE，否则返回TRUE
  * ### MySQL中BOOLEAN对应TINYINT(1)
  */
-CREATE PROCEDURE delete_paper(IN target VARCHAR(20), OUT res BOOLEAN)
+CREATE PROCEDURE delete_paper(IN target INTEGER, OUT res BOOLEAN)
 BEGIN
 	DECLARE ref_count INT;
 	SELECT Preference INTO ref_count FROM paper WHERE Pno = target;

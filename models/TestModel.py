@@ -202,7 +202,7 @@ class Test(Base):
         finally:
             engine.dispose()
             session.remove()
-    # TODO
+
     @classmethod
     def get_student_test_info(cls, tno, sno) -> dict:
         """
