@@ -129,9 +129,17 @@ class Course(Base):
 
     # TODO
     @classmethod
-    def get_exams_by_cno(cls, cno):
+    def get_test_info_by_cno(cls, cno):
         """
-        给出cno返回该课程下的全部Test考试对象
+        给出cno返回该课程下的全部考试的信息
 
-        :return: list[Test]
+        :return: list of dict, 详情如下
+        [{
+            'tno': int
+            'tname': str
+            'pscore': int
+            'pnum': int
+            'tstart': datetime
+            'tend': datetime
+        }]
         """

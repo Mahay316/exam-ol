@@ -258,6 +258,28 @@ def grade_exam():
 
     return jsonify({'code': 200})
 
+@exam_bp.route('/', methods=['GET'])
+def get_exam_results():
+    """
+    根据身份获取考试成绩信息
+    教师返回班内所有同学统计信息，学生返回本次考试成绩
+    """
+
+
+@exam_bp.route('/', methods=['POST'])
+def add_exam():
+    """
+    发布考试
+    """
+
+
+@exam_bp.route('/', methods=['DELETE'])
+def delete_exam():
+    """
+    删除考试
+    """
+
+
 # @exam_bp.route("/<str:exam_id>", method=['GET'])
 # def get_paper(exam_id: str):
 #     """

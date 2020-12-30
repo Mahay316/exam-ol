@@ -126,7 +126,7 @@ def get_exam_stat():
     return current_app.send_static_file('html/test_stat.html')
 
 
-@class_bp.route('exams')
+@class_bp.route('/exams')
 @should_be([MENTOR])
 def get_exam_list_data():
     cno = int(request.args['cno'])
@@ -136,8 +136,5 @@ def get_exam_list_data():
         'exams': []
     }
 
-    res_exams = res_json['exams']
-
-    exams = Course.get_exams_by_cno(cno)
-    for exam in exams:
-        pass
+    res_json['exams'] = Course.get_test_info_by_cno(cno)
+    return jsonify(res_json)
