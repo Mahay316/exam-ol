@@ -4,10 +4,10 @@ from sqlalchemy.orm import relationship
 from common import model_common
 from models.PaperModel import Paper
 from models.QuestionModel import Question
+from datetime import datetime
 
 from models.database import Base
 from models.QuestionPaperModel import QuestionPaper
-
 
 
 class Test(Base):
@@ -18,8 +18,10 @@ class Test(Base):
     Tdesc = Column(String(255, 'utf8mb4_general_ci'), comment='考试说明')
     Tstart = Column(TIMESTAMP, nullable=False, comment='考试开始时间')
     Tend = Column(TIMESTAMP, comment='考试结束时间')
-    Pno = Column(ForeignKey('paper.Pno', ondelete='RESTRICT', onupdate='CASCADE'), nullable=False, index=True, comment='引用的试卷编号')
-    Cno = Column(ForeignKey('course.Cno', ondelete='RESTRICT', onupdate='CASCADE'), nullable=False, index=True, comment='所属的课程编号')
+    Pno = Column(ForeignKey('paper.Pno', ondelete='RESTRICT', onupdate='CASCADE'), nullable=False, index=True,
+                 comment='引用的试卷编号')
+    Cno = Column(ForeignKey('course.Cno', ondelete='RESTRICT', onupdate='CASCADE'), nullable=False, index=True,
+                 comment='所属的课程编号')
 
     # course = relationship('Course')
     paper = relationship('Paper')
@@ -260,8 +262,39 @@ class Test(Base):
     def add_test(cls, pno, cno, tname, tdesc, tstart, tend):
         """
         发布考试
-
-        :param tstart: 时间戳，存入数据库应该是转成datetime吧？
-        :param tend: 时间戳，存入数据库应该是转成datetime吧？
+        同时将更新StudentTest
+        :param tstart: 时间戳
+        :param tend: 时间戳
         :return True if succeed else False
         """
+
+        engine = model_common.get_mysql_engine()
+        session = model_common.get_mysql_session(engine)
+
+        try:
+            from models.CourseModel import Course
+            snos = [s.Sno for s in Course.get_students_by_no(cno)]
+
+            test = Test(
+                Tname=tname,
+                Tdesc=tdesc,
+                Tstart=model_common.change_stamp_to_datatime(tstart),
+                Tend=model_common.change_stamp_to_datatime(tend),
+                Pno=pno,
+                Cno=cno
+            )
+            session.add(test)
+            session.commit()
+
+            from models.StudentTestModel import StudentTest
+            StudentTest.add_snos_and_tno(tno=test.Tno, snos=snos)
+
+            return True
+        except Exception as e:
+            session.rollback()
+            raise e
+            return False
+
+        finally:
+            engine.dispose()
+            session.remove()
