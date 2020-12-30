@@ -107,10 +107,26 @@ class Student(Base, User):
 
         :return: list[int]
         """
-        Tnos = []
-        for t in self.studenttest:
-            Tnos.append(t.Tno)
-        return Tnos
+
+        engine = model_common.get_mysql_engine()
+        session = model_common.get_mysql_session(engine)
+
+        try:
+            filter_list = []
+            filter_list.append(Student.Sno == self.Sno)
+            s = session.query(Student).filter(*filter_list).first()
+            Tnos = []
+            for t in s.studenttest:
+                Tnos.append(t.Tno)
+            return Tnos
+
+        except Exception as e:
+            session.rollback()
+            raise e
+
+        finally:
+            engine.dispose()
+            session.remove()
 
     @classmethod
     def get_user(cls, no):
@@ -141,10 +157,17 @@ class Student(Base, User):
         :return: list[Course](没有课程则返回空列表)
         """
 
+        engine = model_common.get_mysql_engine()
+        session = model_common.get_mysql_session(engine)
+
         classes = []
 
         try:
-            student = Student.get_user(no)
+            filter_list = []
+            filter_list.append(cls.Sno == no)
+
+            student = session.query(cls).filter(*filter_list).first()
+
             if not student:
                 raise Exception('没有该学生号记录')
             for sc in student.studentcourse:
@@ -153,7 +176,12 @@ class Student(Base, User):
             return classes
 
         except Exception as e:
+            session.rollback()
             raise e
+
+        finally:
+            engine.dispose()
+            session.remove()
 
     @classmethod
     def has_this_class(cls, student_no, course_no):
@@ -163,17 +191,30 @@ class Student(Base, User):
         :return: True or False
         """
 
+        engine = model_common.get_mysql_engine()
+        session = model_common.get_mysql_session(engine)
+
         try:
-            student = Student.get_user(student_no)
+            filter_list = []
+            filter_list.append(cls.Sno == student_no)
+
+            student = session.query(cls).filter(*filter_list).first()
+
             if not student:
                 raise Exception('没有该学生号记录')
+
             for sc in student.studentcourse:
                 if course_no == sc.Cno:
                     return True
             return False
 
         except Exception as e:
+            session.rollback()
             raise e
+
+        finally:
+            engine.dispose()
+            session.remove()
 
 
 class Mentor(Base, User):
@@ -245,15 +286,32 @@ class Mentor(Base, User):
 
         :return: True or False
         """
+
+        engine = model_common.get_mysql_engine()
+        session = model_common.get_mysql_session(engine)
+
         try:
-            classes = Mentor.get_classes(mentor_no)
+            filter_list = []
+            filter_list.append(cls.Mno == mentor_no)
+
+            mentor = session.query(cls).filter(*filter_list).first()
+
+            if not mentor:
+                raise Exception('没有该教师号记录')
+            classes = mentor.course
+
             for course in classes:
                 if course_no == course.Cno:
                     return True
             return False
 
         except Exception as e:
+            session.rollback()
             raise e
+
+        finally:
+            engine.dispose()
+            session.remove()
 
 
 class Admin(Base, User):
