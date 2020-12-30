@@ -159,16 +159,13 @@ class Question(Base):
         session = model_common.get_mysql_session(engine)
 
         try:
-            filter_list = []
-            filter_list.append(cls.Qno == qno)
-
-            question = session.query(cls).filter(*filter_list)
-            if not question.first():
-                raise Exception('没有该试题号记录')
-
-            question.update({'Qisdeleted': 1})
+            session.execute('CALL delete_question({}, @out)'.format(qno))
+            result = session.execute('SELECT @out').fetchone()
             session.commit()
-            return True
+            if result[0]:
+                return True
+            else:
+                return False
 
         except Exception as e:
             session.rollback()
@@ -193,28 +190,17 @@ class Question(Base):
         session = model_common.get_mysql_session(engine)
 
         try:
-            filter_list = []
-            filter_list.append(cls.Qno == old_qno)
-
-            question = session.query(cls).filter(*filter_list)
-            if not question:
-                raise Exception('没有该试题号记录')
-
-            info_dict = {
-                'Qtype': qtype,
-                'Qstem': qstem,
-                'Qanswer': qanswer,
-                'Qselect': qselect,
-                'Subno': qsubject
-            }
-
-            question.update(info_dict)
+            session.execute(
+                "CALL update_question({},'{}','{}','{}',{}, @out)".format(old_qno, qstem, qanswer, qselect, qsubject))
+            result = session.execute('SELECT @out').fetchone()
             session.commit()
-            return True
+            if result[0]:
+                return True
+            else:
+                return False
 
         except Exception as e:
             session.rollback()
-            raise e
             return False
 
         finally:
