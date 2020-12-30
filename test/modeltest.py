@@ -22,14 +22,25 @@ from models.UserModel import Student
 
 
 def qt():
+    print(Question.update_question(3,None,  '111', 'ggb', 'A', 2))
+    # print(Question.delete_question(6))
+    # for x in Paper.select_papers_by():
+    #     print(x.Pno)
+    # x = None
+    # if x == False:
+    #     print(1)
+    # else:
+    #     print(2)
+    # print(Paper.delete_paper(17))
 
+    # print([x.Pno for x in Paper.select_papers_by()])
     # print(Test.get_student_test_info(1,'student1_en'))
     # print(Test.get_student_test_info(1, 'student4'))
     # print(Test.get_student_test_info(5, 'student1_en'))
 
     # print(StudentTest.get_all_grades(1))
-    x= Test.get_test_infos(1)
-    print(Test.get_test_infos(1))
+    # x= Test.get_test_infos(1)
+    # print(Test.get_test_infos(1))
 
     # print(Student.has_this_class('student3',4))
     # s = Student.get_user('student1')
@@ -109,9 +120,9 @@ def fg():
 
     # print(Test.set_test_grade(2,'student',4,2,77))
 
-    #print(Mentor.get_classes('teacher1_en'))
+    # print(Mentor.get_classes('teacher1_en'))
 
-    #print(Course.get_tests_by_no(4)[0].Tno)
+    # print(Course.get_tests_by_no(4)[0].Tno)
 
     # for x in Course.get_students_by_no(4):
     #     print(x.Sno)

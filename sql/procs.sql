@@ -33,7 +33,7 @@ END;$
  * ### MySQL中BOOLEAN对应TINYINT(1)
  */
 CREATE PROCEDURE update_question(IN target INTEGER, IN stem VARCHAR(255), IN answer VARCHAR(255),
-	IN _select VARCHAR(255), IN subject VARCHAR(5), OUT res BOOLEAN)
+	IN _select VARCHAR(255), IN subject INTEGER, OUT res BOOLEAN)
 BEGIN
 	DECLARE ref_count INT;
 	DECLARE type ENUM('select', 'multi', 'fill');
