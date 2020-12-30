@@ -20,12 +20,6 @@ def add_student():
     """增加学生"""
 
 
-@student_bp.route('/', methods=['GET'])
-@should_be([ADMIN])
-def get_students():
-    pass
-
-
 @student_bp.route('/search')
 @should_be([MENTOR, ADMIN])
 def search_student():
