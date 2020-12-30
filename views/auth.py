@@ -63,8 +63,8 @@ def get_info():
     if 'role' not in session:
         return jsonify({'code': 403})
 
-    res_json = {'code': 200, 'no': session['no']}
     role = session['role']
+    res_json = {'code': 200, 'no': session['no'], 'role': role}
     if role == STUDENT:
         res_json['name'] = session['name']
         res_json['gender'] = session['gender']

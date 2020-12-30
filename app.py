@@ -16,6 +16,9 @@ app.config.from_pyfile('config.py')
 def redirect_to_index():
     session['no'] = 'teacher1_en'
     session['role'] = MENTOR
+    session['name'] = '张三'
+    session['gender'] = '男'
+    session['title'] = '教授'
     return redirect(url_for('class_bp.get_class'))
 
 

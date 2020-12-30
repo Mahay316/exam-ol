@@ -1,18 +1,18 @@
 import Vue from 'vue';
 import $ from 'jquery';
+import ('chart.js')
 import navBar from '../component/NavBar';
 import sideBar from '../component/SideBar';
 import mainFooter from '../component/Footer';
+import axios from "axios";
 
 // 柱形图配置
-let barChartCanvas = $('#barChart').get(0).getContext('2d')
 let barChartOptions = {
     responsive: true,
     maintainAspectRatio: false,
     datasetFill: false
 }
 // 饼图配置
-let pieChartCanvas = $('#pieChart').get(0).getContext('2d')
 let pieOptions = {
     maintainAspectRatio: false,
     responsive: true,
@@ -125,8 +125,10 @@ const vue = new Vue({
                 url: '/exam?tno=' + tno,
                 method: 'GET',
                 success(resp) {
-                    fillBarChart(barChartCanvas, barChartOptions, resp.segments, resp.pscore);
-                    fillPieChart(pieChartCanvas, pieOptions, resp.segments);
+                    if (resp.code === 200) {
+                        fillBarChart($('#barChart').get(0).getContext('2d'), barChartOptions, resp.segments, resp.pscore);
+                        fillPieChart($('#pieChart').get(0).getContext('2d'), pieOptions, resp.segments);
+                    }
                 },
                 complete() {
                     vue.loadingStat = false;
@@ -134,16 +136,9 @@ const vue = new Vue({
             });
         },
         loadExam() {
-            $.ajax({
-                url: '/class/exams?cno=1',
-                method: 'GET',
-                success(resp) {
-                    if (resp.code === 200) {
-                        vue.exams = resp.exams;
-                    }
-                },
-                complete() {
-                    vue.loadingStat = false;
+            axios.get('/class/exams?cno=1').then(resp => {
+                if (resp.data.code === 200) {
+                    this.exams = resp.data.exams;
                 }
             });
         }
@@ -161,7 +156,7 @@ function genLabels(maxScore, sliceNum) {
     for (let i = 0; i < sliceNum - 1; i++) {
         res.push(`[${step * i}, ${step * (i + 1)})`);
     }
-    res.push(`${step * (sliceNum - 1)}, ${step * sliceNum}`);
+    res.push(`[${step * (sliceNum - 1)}, ${step * sliceNum}]`);
 
     return res;
 }
@@ -186,7 +181,7 @@ function fillBarChart(canvas, options, segments, maxScore) {
             ]
         },
         options: options
-    })
+    });
 }
 
 

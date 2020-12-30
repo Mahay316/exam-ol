@@ -28,7 +28,7 @@
           <div v-if="role === 'mentor'">
             <li class="nav-header">管理</li>
             <li class="nav-item">
-              <a href="#" class="nav-link active">
+              <a href="/index" class="nav-link active">
                 <i class="nav-icon fas fa-paper-plane"></i>
                 <p>
                   班级管理
@@ -36,7 +36,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="#" class="nav-link">
+              <a href="/paper/manage" class="nav-link">
                 <i class="nav-icon fas fa-paperclip"></i>
                 <p>
                   试卷管理
@@ -44,7 +44,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="#" class="nav-link">
+              <a href="/question/manage" class="nav-link">
                 <i class="nav-icon fas fa-pen"></i>
                 <p>
                   试题管理
@@ -54,7 +54,7 @@
           </div>
           <div v-else-if="role === 'student'">
             <li class="nav-item">
-              <a href="#" class="nav-link">
+              <a href="/index" class="nav-link">
                 <i class="nav-icon fas fa-paperclip"></i>
                 <p>
                   我的班级
@@ -64,7 +64,7 @@
           </div>
           <div v-else-if="role === 'admin'">
             <li class="nav-item">
-              <a href="#" class="nav-link">
+              <a href="/mentor/manage" class="nav-link">
                 <i class="nav-icon fas fa-paperclip"></i>
                 <p>
                   教师管理
@@ -72,7 +72,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="#" class="nav-link">
+              <a href="/student/manage" class="nav-link">
                 <i class="nav-icon fas fa-pen"></i>
                 <p>
                   学生管理
@@ -82,7 +82,7 @@
           </div>
           <li class="nav-header">账号</li>
           <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="#" class="nav-link" @click="logout">
               <i class="nav-icon fas fa-door-open"></i>
               <p>
                 退出登录
@@ -115,6 +115,15 @@ export default {
         // 用户身份必须匹配下列字符串中的一个
         return ['mentor', 'student', 'admin'].indexOf(value) !== -1
       }
+    }
+  },
+  methods: {
+    logout() {
+      axios.post('/auth/logout').then(resp => {
+        if (resp.data.code === 200) {
+          setTimeout(() => location.href = '/', 500);
+        }
+      });
     }
   },
   mounted() {

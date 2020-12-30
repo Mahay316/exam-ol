@@ -50,7 +50,7 @@
                         <div class="form-group">
                             <label class="sr-only" for="test_select">选择考试</label>
                             <select id="test_select" class="form-control" @change="handleChangeExam">
-                                <option v-for="item in exams" :value="item.tno">{{item.tname}}</option>
+                                <option v-for="item in exams" :value="item.tno">{{ item.tname }}</option>
                             </select>
                         </div>
                         <div class="card card-primary">
@@ -143,7 +143,8 @@
                                                   @click="deleteMember(item)" v-if="!adding || inClass">
                                                 删除
                                             </span>
-                                            <span class="badge bg-success delete" @click="addMember(item)" v-else>增加</span>
+                                            <span class="badge bg-success delete" @click="addMember(item)"
+                                                  v-else>增加</span>
                                         </td>
                                     </tr>
                                     <tr v-if="!members.length">
@@ -179,11 +180,10 @@
 <!-- Bootstrap 4 -->
 <script src="/static/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- Chart.js -->
-<script src="/static/chart.js/Chart.min.js"></script>
+<!--<script src="/static/chart.js/Chart.min.js"></script>-->
 <!-- AdminLTE App -->
 <script src="/static/adminlte/js/adminlte.min.js"></script>
 <script src="/static/js/bootbox.min.js"></script>
 <script src="/static/dist/stat.js"></script>
-
 </body>
 </html>
