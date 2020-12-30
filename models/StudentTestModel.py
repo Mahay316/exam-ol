@@ -16,8 +16,9 @@ from sqlalchemy.dialects.mysql import ENUM, INTEGER, TINYINT, VARCHAR
 from sqlalchemy.orm import relationship
 
 from models.database import Base
-from models.TestModel import Test
+
 from common import model_common
+from models.TestModel import Test
 
 
 
@@ -88,6 +89,48 @@ class StudentTest(Base):
             session.add(st)
             session.commit()
             return True
+
+        except Exception as e:
+            session.rollback()
+            return False
+
+        finally:
+            engine.dispose()
+            session.remove()
+
+    @classmethod
+    def get_all_grades(cls, tno):
+
+        engine = model_common.get_mysql_engine()
+        session = model_common.get_mysql_session(engine)
+
+        try:
+            filter_list = []
+            filter_list.append(cls.Tno == tno)
+
+            sts = session.query(cls).filter(*filter_list).all()
+
+            return [st.STgrade for st in sts]
+
+        except Exception as e:
+            session.rollback()
+            raise e
+
+        finally:
+            engine.dispose()
+            session.remove()
+
+    @classmethod
+    def get_st(cls, tno, sno):
+        engine = model_common.get_mysql_engine()
+        session = model_common.get_mysql_session(engine)
+
+        try:
+            filter_list = []
+            filter_list.append(cls.Tno == tno)
+            filter_list.append(cls.Sno == sno)
+
+            return session.query(cls).filter(*filter_list).first()
 
         except Exception as e:
             session.rollback()

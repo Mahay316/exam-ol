@@ -9,6 +9,7 @@ from models.database import Base
 from models.QuestionPaperModel import QuestionPaper
 
 
+
 class Test(Base):
     __tablename__ = 'test'
 
@@ -162,8 +163,6 @@ class Test(Base):
         from models.StudentTestModel import StudentTest
         return StudentTest.add_st(tno=tno, sno=sno, stwrong=st_wrong, stblank=st_blank, stgrade=st_grade)
 
-
-    # TODO
     @classmethod
     def get_test_infos(cls, tno) -> dict:
         """
@@ -175,7 +174,34 @@ class Test(Base):
         pscore: 卷子总分
         """
 
+        engine = model_common.get_mysql_engine()
+        session = model_common.get_mysql_session(engine)
 
+        try:
+            filter_list = []
+            filter_list.append(cls.Tno == tno)
+
+            test = session.query(cls).filter(*filter_list).first()
+            if not test:
+                raise Exception('没有该考试号记录')
+
+            from models.StudentTestModel import StudentTest
+            grades = StudentTest.get_all_grades(tno=tno)
+
+            pscore = test.paper.Pscore
+
+            return {
+                'grades': grades,
+                'pscore': pscore
+            }
+
+        except Exception as e:
+            session.rollback()
+            raise e
+
+        finally:
+            engine.dispose()
+            session.remove()
     # TODO
     @classmethod
     def get_student_test_info(cls, tno, sno) -> dict:
@@ -195,3 +221,36 @@ class Test(Base):
             'tdesc':
         }
         """
+
+        engine = model_common.get_mysql_engine()
+        session = model_common.get_mysql_session(engine)
+
+        try:
+            filter_list = []
+            filter_list.append(cls.Tno == tno)
+
+            test = session.query(cls).filter(*filter_list).first()
+            paper = test.paper
+
+            from models.StudentTestModel import StudentTest
+            st = StudentTest.get_st(tno=tno, sno=sno)
+
+            return {
+                'st_grade': st.STgrade,
+                'pscore': paper.Pscore,
+                'st_wrong': st.STwrong,
+                'pnum': paper.Pnum,
+                'st_blank': st.STblank,
+                'tstart': test.Tstart.timestamp(),
+                'tend': test.Tend.timestamp(),
+                'tname': test.Tname,
+                'tdesc': test.Tdesc
+            }
+
+        except Exception as e:
+            session.rollback()
+            raise e
+
+        finally:
+            engine.dispose()
+            session.remove()
