@@ -23,6 +23,13 @@ from models.UserModel import Student
 
 def qt():
 
+    # print(Test.get_student_test_info(1,'student1_en'))
+    # print(Test.get_student_test_info(1, 'student4'))
+    # print(Test.get_student_test_info(5, 'student1_en'))
+
+    # print(StudentTest.get_all_grades(1))
+    # print(Test.get_test_infos(1))
+
     # print(Student.has_this_class('student3',4))
     # s = Student.get_user('student1')
     # print(Student.get_all_test_ids(s))
