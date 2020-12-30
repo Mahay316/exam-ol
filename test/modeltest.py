@@ -99,8 +99,11 @@ def fg():
 
     #print(Course.get_tests_by_no(4)[0].Tno)
 
-    for x in Course.get_students_by_no(4):
-        print(x.Sno)
+    # for x in Course.get_students_by_no(4):
+    #     print(x.Sno)
+
+    # for x in Course.get_exams_by_cno(4):
+    #     print(x.Tno)
     pass
 
 
