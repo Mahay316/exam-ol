@@ -1,9 +1,9 @@
-from flask import Blueprint, render_template, session, jsonify, request, url_for, redirect
+from flask import Blueprint, current_app, session, jsonify, request, url_for, redirect
 from models.UserModel import Mentor, Student, Admin
 from common import save_session
 from common.Role import *
 
-auth_bp = Blueprint('auth', __name__)
+auth_bp = Blueprint('auth_bp', __name__)
 
 
 @auth_bp.route('/login', methods=['GET', 'POST'])
@@ -38,11 +38,14 @@ def login():
         # 登录失败
         return jsonify({'code': 403})
 
-    return render_template('login.html')
+    return current_app.send_static_file('html/login.html')
 
 
-@auth_bp.route('/logout')
+@auth_bp.route('/logout', methods=['POST'])
 def logout():
+    if 'role' not in session:
+        return jsonify({'code': 403})
+
     session.permanent = False
     session.clear()
 
@@ -52,4 +55,24 @@ def logout():
     # resp.delete_cookie('password')
     # resp.delete_cookie('role')
 
-    return redirect(url_for('login'))
+    return jsonify({'code': 200})
+
+
+@auth_bp.route('/info', methods=['GET'])
+def get_info():
+    if 'role' not in session:
+        return jsonify({'code': 403})
+
+    role = session['role']
+    res_json = {'code': 200, 'no': session['no'], 'role': role}
+    if role == STUDENT:
+        res_json['name'] = session['name']
+        res_json['gender'] = session['gender']
+        res_json['major'] = session['major']
+    elif role == MENTOR:
+        res_json['name'] = session['name']
+        res_json['gender'] = session['gender']
+        res_json['title'] = session['title']
+    else:
+        res_json['name'] =session['no']
+    return jsonify(res_json)

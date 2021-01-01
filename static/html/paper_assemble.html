@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>组卷页面</title>
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="/static/fontawesome/css/all.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="/static/adminlte/css/adminlte.min.css">
+
+    <style type="text/css">
+        .shadow-lg {
+            box-shadow: 0 0 5rem rgba(0, 0, 0, .175) !important;
+        }
+
+        tr {
+            text-align: center;
+            vertical-align: center;
+        }
+
+    </style>
+</head>
+<body class="sidebar-mini layout-fixed hold-transition layout-footer-fixed">
+
+<div class="wrapper">
+
+    <nav class="main-header navbar navbar-expand navbar-white navbar-light shadow">
+        <!-- Left navbar links -->
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" data-widget="pushmenu" href="#" role="button">
+                    <i class="fas fa-bars">
+                    </i>
+                </a>
+            </li>
+            <li class="nav-item d-none d-sm-inline-block">
+                <a href="#" class="nav-link active">首页</a>
+            </li>
+        </ul>
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+                    <i class="fas fa-expand-arrows-alt"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <aside class="main-sidebar sidebar-dark-primary elevation-4 layout-fixed" style="height:auto;">
+        <a href="#" class="brand-link">
+            <img src="../static/img/logo_white.png" alt="Logo" class="brand-image img-md elevation-3"
+                 style="opacity: .8">
+            <span class="brand-text font-weight-light">在线考试系统</span>
+        </a>
+
+        <div class="sidebar">
+            <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                <div class="image">
+                    <img src="../static/img/avatar.png" class="img-circle elevation-2" alt="User Image">
+                </div>
+                <div class="info">
+                    <a href="#" class="d-block">张三老师，您好!</a>
+                </div>
+            </div>
+            <nav class="mt-2">
+                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+                    data-accordion="false">
+                    <li class="nav-header">管理</li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-paper-plane"></i>
+                            <p>
+                                班级管理
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-paperclip"></i>
+                            <p>
+                                试卷管理
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link active">
+                            <i class="nav-icon fas fa-pen"></i>
+                            <p>
+                                试题管理
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-header">账号</li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-door-open"></i>
+                            <p>
+                                退出登录
+                            </p>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </aside>
+
+    <div class="content-wrapper" style="min-height: 1332.2px;">
+        <section class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1>配置试卷</h1>
+                    </div>
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="#" style="color: black">刷新页面</a></li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card card-primary">
+                            <div class="card-header">
+                                <h3 class="card-title">选择试题</h3>
+                            </div>
+                            <form>
+                                <div class="card-body">
+                                    <div class="row" style="margin-bottom: 15px;">
+                                        <div class="col-sm-12 col-md-6">
+                                            <div class="dt-buttons btn-group flex-wrap">
+                                                <div class="dropdown">
+                                                    <a class="btn btn-outline-primary  dropdown-toggle" href="#"
+                                                       role="button" id="dropdownMenuLink" data-toggle="dropdown"
+                                                       aria-haspopup="true" aria-expanded="false">
+                                                        按科目筛选
+                                                        <!--TODO 筛选功能需要修改-->
+                                                    </a>
+
+                                                    <div class="dropdown-menu " aria-labelledby="dropdownMenuLink">
+                                                        <a class="dropdown-item btn-outline-primary s0000"
+                                                           href="#">全部</a>
+                                                        <a class="dropdown-item btn-outline-primary s0001"
+                                                           href="#">软件工程</a>
+                                                        <a class="dropdown-item btn-outline-primary s0002" href="#">数据库原理</a>
+                                                        <a class="dropdown-item btn-outline-primary s0003"
+                                                           href="#">编译原理</a>
+                                                        <a class="dropdown-item btn-outline-primary s0004"
+                                                           href="#">流体力学</a>
+                                                        <a class="dropdown-item btn-outline-primary s0005" href="#">工程热力学</a>
+                                                        <a class="dropdown-item btn-outline-primary s0006" href="#">C语言程序设计</a>
+                                                        <a class="dropdown-item btn-outline-primary s0007" href="#">Java高级语言程序设计</a>
+                                                    </div>
+                                                </div>
+                                                <div class="dropdown">
+                                                    <a class="btn btn-outline-primary  dropdown-toggle" href="#"
+                                                       role="button" id="dropdownMenuLink2" data-toggle="dropdown"
+                                                       aria-haspopup="true" aria-expanded="false">
+                                                        按题目类型筛选
+                                                        <!--TODO 筛选功能需要修改-->
+                                                    </a>
+
+                                                    <div class="dropdown-menu " aria-labelledby="dropdownMenuLink">
+                                                        <a class="dropdown-item btn-outline-primary t0000"
+                                                           href="#">全部</a>
+                                                        <a class="dropdown-item btn-outline-primary t0001"
+                                                           href="#">单选题</a>
+                                                        <a class="dropdown-item btn-outline-primary t0002"
+                                                           href="#">多选题</a>
+                                                        <a class="dropdown-item btn-outline-primary t0003"
+                                                           href="#">填空题</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12 col-md-2 offset-3">
+                                            <div id="example2_filter" class="dataTables_filter">
+                                                <input type="search" class="form-control form-control-sm"
+                                                       placeholder="按题干内容搜索" aria-controls="example1" id="searchinput">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12 col-md-1">
+                                            <button type="button" class="btn btn-outline-primary" id="contentsearch">
+                                                搜索
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <table id="example1"
+                                                   class="table table-bordered table-striped dataTable dtr-inline"
+                                                   role="grid" aria-describedby="example1_info">
+                                                <thead>
+                                                <tr role="row">
+                                                    <th class="sorting" tabindex="0" aria-controls="example1"
+                                                        rowspan="1" colspan="1" width="55%">题干
+                                                    </th>
+                                                    <th class="sorting" tabindex="0" aria-controls="example1"
+                                                        rowspan="1" colspan="1" style="width: 100px;">题目类型
+                                                    </th>
+                                                    <th class="sorting" tabindex="0" aria-controls="example1"
+                                                        rowspan="1" colspan="1" style="width: 100px;">科目
+                                                    </th>
+                                                    <th class="sorting" tabindex="0" aria-controls="example1"
+                                                        rowspan="1" colspan="1" style="width: 100px">预览
+                                                    </th>
+                                                    <th class="sorting" tabindex="0" aria-controls="example1"
+                                                        rowspan="1" colspan="1">加入试卷
+                                                    </th>
+                                                    <th class="sorting" tabindex="0" aria-controls="example1"
+                                                        rowspan="1" colspan="1">分值
+                                                    </th>
+                                                </tr>
+                                                </thead>
+                                                <tbody id="info_table">
+                                                <tr role="row" class="odd">
+                                                    <td title="在数据库的三级模式结构中，(      )是用户与数据库系统的接口，是用户用到的那部分数据的描述。">
+                                                        <strong>在数据库的三级模式结构中，(      )是用户与数据库系统的接口，是用户用到的那部分数据的描述。mahaymahaymahaymahyamahyamahay</strong>
+                                                    </td>
+                                                    <td><strong>选择题</strong></td>
+                                                    <td><strong>数据库</strong></td>
+                                                    <td>
+                                                        <div class="container">
+                                                            <button type="button" class="btn btn-outline-success"
+                                                                    data-toggle="modal" data-target="#preview">预览
+                                                            </button>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <button type="button" class="btn btn-outline-primary check-btn">
+                                                            未加入
+                                                        </button>
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" placeholder=" 输入分值" aria-label="Username"
+                                                               aria-describedby="basic-addon1" size="8">
+                                                    </td>
+                                                </tr>
+                                                <tr role="row" class="odd">
+                                                    <td title="在数据库的三级模式结构中，(      )是用户与数据库系统的接口，是用户用到的那部分数据的描述。">
+                                                        <strong>在数据库的三级模式结构中，(      )是用户与数据库系统的接口，是用户用到的那部分数据的描述。mahaymahaymahaymahyamahyamahay</strong>
+                                                    </td>
+                                                    <td><strong>选择题</strong></td>
+                                                    <td><strong>数据库</strong></td>
+                                                    <td>
+                                                        <div class="container">
+                                                            <button type="button" class="btn btn-outline-success"
+                                                                    data-toggle="modal" data-target="#preview">预览
+                                                            </button>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <button class="btn check-btn btn-outline-primary">未加入</button>
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" placeholder=" 输入分值" aria-label="Username"
+                                                               aria-describedby="basic-addon1" size="8">
+                                                    </td>
+                                                </tr>
+                                                <tr role="row" class="odd">
+                                                    <td title="在数据库的三级模式结构中，(      )是用户与数据库系统的接口，是用户用到的那部分数据的描述。">
+                                                        <strong>在数据库的三级模式结构中，(      )是用户与数据库系统的接口，是用户用到的那部分数据的描述。mahaymahaymahaymahyamahyamahay</strong>
+                                                    </td>
+                                                    <td><strong>选择题</strong></td>
+                                                    <td><strong>数据库</strong></td>
+                                                    <td>
+                                                        <div class="container">
+                                                            <button type="button"
+                                                                    class="btn btn-outline-success"
+                                                                    data-toggle="modal" data-target="#preview">
+                                                                预览
+                                                            </button>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <button class="btn check-btn btn-outline-primary">未加入
+                                                        </button>
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" placeholder=" 输入分值"
+                                                               aria-label="Username"
+                                                               aria-describedby="basic-addon1" size="8">
+                                                    </td>
+                                                </tr>
+                                                <tr role="row" class="odd">
+                                                    <td title="在数据库的三级模式结构中，(      )是用户与数据库系统的接口，是用户用到的那部分数据的描述。">
+                                                        <strong>在数据库的三级模式结构中，(      )是用户与数据库系统的接口，是用户用到的那部分数据的描述。mahaymahaymahaymahyamahyamahay</strong>
+                                                    </td>
+                                                    <td><strong>选择题</strong></td>
+                                                    <td><strong>数据库</strong></td>
+                                                    <td>
+                                                        <div class="container">
+                                                            <button type="button"
+                                                                    class="btn btn-outline-success"
+                                                                    data-toggle="modal" data-target="#preview">
+                                                                预览
+                                                            </button>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <button class="btn check-btn btn-outline-primary">未加入
+                                                        </button>
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" placeholder=" 输入分值"
+                                                               aria-label="Username"
+                                                               aria-describedby="basic-addon1" size="8">
+                                                    </td>
+                                                </tr>
+                                                <tr role="row" class="odd">
+                                                    <td title="在数据库的三级模式结构中，(      )是用户与数据库系统的接口，是用户用到的那部分数据的描述。">
+                                                        <strong>在数据库的三级模式结构中，(      )是用户与数据库系统的接口，是用户用到的那部分数据的描述。mahaymahaymahaymahyamahyamahay</strong>
+                                                    </td>
+                                                    <td><strong>选择题</strong></td>
+                                                    <td><strong>数据库</strong></td>
+                                                    <td>
+                                                        <div class="container">
+                                                            <button type="button"
+                                                                    class="btn btn-outline-success"
+                                                                    data-toggle="modal" data-target="#preview">
+                                                                预览
+                                                            </button>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <button class="btn check-btn btn-outline-primary">未加入
+                                                        </button>
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" placeholder=" 输入分值"
+                                                               aria-label="Username"
+                                                               aria-describedby="basic-addon1" size="8">
+                                                    </td>
+                                                </tr>
+                                                <tr role="row" class="odd">
+                                                    <td title="在数据库的三级模式结构中，(      )是用户与数据库系统的接口，是用户用到的那部分数据的描述。">
+                                                        <strong>在数据库的三级模式结构中，(      )是用户与数据库系统的接口，是用户用到的那部分数据的描述。mahaymahaymahaymahyamahyamahay</strong>
+                                                    </td>
+                                                    <td><strong>选择题</strong></td>
+                                                    <td><strong>数据库</strong></td>
+                                                    <td>
+                                                        <div class="container">
+                                                            <button type="button"
+                                                                    class="btn btn-outline-success"
+                                                                    data-toggle="modal" data-target="#preview">
+                                                                预览
+                                                            </button>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <button class="btn check-btn btn-outline-primary">未加入
+                                                        </button>
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" placeholder=" 输入分值"
+                                                               aria-label="Username"
+                                                               aria-describedby="basic-addon1" size="8">
+                                                    </td>
+                                                </tr>
+                                                <tr role="row" class="odd">
+                                                    <td title="在数据库的三级模式结构中，(      )是用户与数据库系统的接口，是用户用到的那部分数据的描述。">
+                                                        <strong>在数据库的三级模式结构中，(      )是用户与数据库系统的接口，是用户用到的那部分数据的描述。mahaymahaymahaymahyamahyamahay</strong>
+                                                    </td>
+                                                    <td><strong>选择题</strong></td>
+                                                    <td><strong>数据库</strong></td>
+                                                    <td>
+                                                        <div class="container">
+                                                            <button type="button"
+                                                                    class="btn btn-outline-success"
+                                                                    data-toggle="modal" data-target="#preview">
+                                                                预览
+                                                            </button>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <button class="btn check-btn btn-outline-primary">未加入
+                                                        </button>
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" placeholder=" 输入分值"
+                                                               aria-label="Username"
+                                                               aria-describedby="basic-addon1" size="8">
+                                                    </td>
+                                                </tr>
+                                                <tr role="row" class="odd">
+                                                    <td title="在数据库的三级模式结构中，(      )是用户与数据库系统的接口，是用户用到的那部分数据的描述。">
+                                                        <strong>在数据库的三级模式结构中，(      )是用户与数据库系统的接口，是用户用到的那部分数据的描述。mahaymahaymahaymahyamahyamahay</strong>
+                                                    </td>
+                                                    <td><strong>选择题</strong></td>
+                                                    <td><strong>数据库</strong></td>
+                                                    <td>
+                                                        <div class="container">
+                                                            <button type="button"
+                                                                    class="btn btn-outline-success"
+                                                                    data-toggle="modal" data-target="#preview">
+                                                                预览
+                                                            </button>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <button class="btn check-btn btn-outline-primary">未加入
+                                                        </button>
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" placeholder=" 输入分值"
+                                                               aria-label="Username"
+                                                               aria-describedby="basic-addon1" size="8">
+                                                    </td>
+                                                </tr>
+                                                <tr role="row" class="odd">
+                                                    <td title="在数据库的三级模式结构中，(      )是用户与数据库系统的接口，是用户用到的那部分数据的描述。">
+                                                        <strong>在数据库的三级模式结构中，(      )是用户与数据库系统的接口，是用户用到的那部分数据的描述。mahaymahaymahaymahyamahyamahay</strong>
+                                                    </td>
+                                                    <td><strong>选择题</strong></td>
+                                                    <td><strong>数据库</strong></td>
+                                                    <td>
+                                                        <div class="container">
+                                                            <button type="button"
+                                                                    class="btn btn-outline-success"
+                                                                    data-toggle="modal" data-target="#preview">
+                                                                预览
+                                                            </button>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <button class="btn check-btn btn-outline-primary">未加入
+                                                        </button>
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" placeholder=" 输入分值"
+                                                               aria-label="Username"
+                                                               aria-describedby="basic-addon1" size="8">
+                                                    </td>
+                                                </tr>
+                                                <tr role="row" class="odd">
+                                                    <td title="在数据库的三级模式结构中，(      )是用户与数据库系统的接口，是用户用到的那部分数据的描述。">
+                                                        <strong>在数据库的三级模式结构中，(      )是用户与数据库系统的接口，是用户用到的那部分数据的描述。mahaymahaymahaymahyamahyamahay</strong>
+                                                    </td>
+                                                    <td><strong>选择题</strong></td>
+                                                    <td><strong>数据库</strong></td>
+                                                    <td>
+                                                        <div class="container">
+                                                            <button type="button"
+                                                                    class="btn btn-outline-success"
+                                                                    data-toggle="modal" data-target="#preview">
+                                                                预览
+                                                            </button>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <button class="btn check-btn btn-outline-primary">未加入
+                                                        </button>
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" placeholder=" 输入分值"
+                                                               aria-label="Username"
+                                                               aria-describedby="basic-addon1" size="8">
+                                                    </td>
+                                                </tr>
+                                                <tr role="row" class="odd">
+                                                    <td title="在数据库的三级模式结构中，(      )是用户与数据库系统的接口，是用户用到的那部分数据的描述。">
+                                                        <strong>在数据库的三级模式结构中，(      )是用户与数据库系统的接口，是用户用到的那部分数据的描述。mahaymahaymahaymahyamahyamahay</strong>
+                                                    </td>
+                                                    <td><strong>选择题</strong></td>
+                                                    <td><strong>数据库</strong></td>
+                                                    <td>
+                                                        <div class="container">
+                                                            <button type="button"
+                                                                    class="btn btn-outline-success"
+                                                                    data-toggle="modal" data-target="#preview">
+                                                                预览
+                                                            </button>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <button class="btn check-btn btn-outline-primary">未加入
+                                                        </button>
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" placeholder=" 输入分值"
+                                                               aria-label="Username"
+                                                               aria-describedby="basic-addon1" size="8">
+                                                    </td>
+                                                </tr>
+                                                <tr role="row" class="odd">
+                                                    <td title="在数据库的三级模式结构中，(      )是用户与数据库系统的接口，是用户用到的那部分数据的描述。">
+                                                        <strong>在数据库的三级模式结构中，(      )是用户与数据库系统的接口，是用户用到的那部分数据的描述。</strong>
+                                                    </td>
+                                                    <td><strong>选择题</strong></td>
+                                                    <td><strong>数据库</strong></td>
+                                                    <td>
+                                                        <div class="container">
+                                                            <button type="button"
+                                                                    class="btn btn-outline-success"
+                                                                    data-toggle="modal" data-target="#preview">
+                                                                预览
+                                                            </button>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <button class="btn check-btn btn-outline-primary">未加入
+                                                        </button>
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" placeholder=" 输入分值"
+                                                               aria-label="Username"
+                                                               aria-describedby="basic-addon1" size="8">
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12 col-md-5">
+                                            <div class="dataTables_info" id="example1_info" role="status"
+                                                 aria-live="polite">
+                                                当前展示<span id="begin">1</span>到 <span id="end">10</span>条记录，共 <span
+                                                    id="sum">57</span> 条
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12 col-md-5">
+                                            <button type="button" class="btn btn-outline-primary" id="prepage">前一页
+                                            </button>
+                                            <span style="margin-right: 15px; margin-left: 15px;"
+                                                  id="currentpage">1</span>
+                                            <button type="button" class="btn btn-outline-primary" id="nextpage">后一页
+                                            </button>
+                                        </div>
+                                        <div class="col-sm-12 col-md-2">
+                                            <div class="input-group input-group-sm">
+                                                <input type="text" class="form-control" placeholder="跳转页码"
+                                                       id="gotopage">
+                                                <span class="input-group-append">
+                                                    <button type="button" class="btn btn-info btn-flat" id="gotoButton">Go!</button>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <div class="modal fade" id="preview" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">试题号：1001</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>    在数据库的三级模式结构中，(      )是用户与数据库系统的接口，是用户用到的那部分数据的描述。</p>
+                        <p id="sectionA">A.外模式</p>
+                        <p id="sectionB">B.内模式</p>
+                        <p id="sectionC">C.存储模式</p>
+                        <p id="sectionD">D.模式</p>
+                        <br>
+                        <p id="answer">答案： A</p>
+                    </div>
+                    <div class="modal-footer justify-content-end">
+                        <button type="button" class="btn btn-outline-dark" data-dismiss="modal">关闭</button>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+    </div>
+
+    <footer class="main-footer shadow-lg">
+        <div class="container-fluid" style="height: 40px; line-height: 40px;">
+            <span class="col-2" style="margin-right: 50px;"><strong>已选单选题数量: </strong><span class="numOfOption"><strong id="selecetnum">0</strong></span><strong> 题</strong></span>
+            <span class="col-2" style="margin-right: 50px;"><strong>已选多选题数量: </strong><span class="numOfMulOption"><strong id="multinum">0</strong></span><strong> 题</strong></span>
+            <span class="col-2" style="margin-right: 50px;"><strong>已选填空题数量: </strong><span class="numOfCompletion"><strong id="fillnum">0</strong></span><strong> 题</strong></span>
+            <span class="col-2" style="margin-right: 50px;"><strong>目前总题数: </strong><span class="sumOfPaper"><strong id="sumnum">0</strong></span><strong> 题</strong></span>
+            <span class="col-2"><strong>目前总分: </strong><span class="sumOfPaper"><strong id="sumscore">0</strong></span><strong> 分</strong></span>
+            <div class="float-right">
+                <button type="button" class="btn btn-success" style="margin-right: 10px;">预览试卷</button>
+                <button type="button" class="btn btn-primary">发布试卷</button>
+            </div>
+        </div>
+    </footer>
+
+</div>
+
+<!-- REQUIRED SCRIPTS -->
+
+
+<!-- jQuery -->
+<script src="/static/js/jquery-3.5.1.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="/static/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- AdminLTE App -->
+<script src="/static/adminlte/js/adminlte.min.js"></script>
+<script>
+    $(function () {
+        $('.check-btn').click(function () {
+            if ($(this).attr('checked')) {
+                $(this).removeAttr('checked');
+                $(this).text('未加入');
+                $(this).removeClass('btn-primary');
+                $(this).addClass('btn-outline-primary');
+            } else {
+                $(this).attr('checked', 'true');
+                $(this).text('已加入');
+                $(this).removeClass('btn-outline-primary');
+                $(this).addClass('btn-primary');
+            }
+
+            console.log('checked: ', $('.check-btn[checked]').length);
+        });
+    });
+</script>
+
+<script type="text/javascript">
+    $(function () {
+        //存储科目信息
+        subject_dict = new Object();
+        subject_dict[0] = null;
+        subject_dict[1] = '软件工程';
+        subject_dict[2] = '数据库原理';
+        subject_dict[3] = '编译原理';
+        subject_dict[4] = '流体力学';
+        subject_dict[5] = '工程热力学';
+        subject_dict[6] = 'C语言程序设计';
+        subject_dict[7] = 'Java高级语言程序设计';
+
+        type_dict = new Object();
+        type_dict[0] = null;
+        type_dict[1] = 'select';
+        type_dict[2] = 'multi';
+        type_dict[3] = 'fill';
+        target_dict = new Object();
+        target_dict[1] = '单选题';
+        target_dict[2] = '多选题';
+        target_dict[3] = '填空题';
+        //当前页面初始化为1
+        let current_page = 1;
+        let page_num = 0;
+        let info_num = 0;
+        let info_qno_list = [];
+        let letter_list = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+        let question_list = new Array(10);
+        let url_data = new Object();
+        let temp_html;
+
+        //判断按钮是否禁用
+        function judge_button_disabled() {
+            if (current_page === 1) {
+                $('#prepage').addClass('disabled');
+                $('#prepage').attr('disabled', 'disabled');
+            } else {
+                $('#prepage').removeClass('disabled');
+                $('#prepage').removeAttr('disabled');
+            }
+
+            if (current_page === page_num) {
+                $('#nextpage').addClass('disabled');
+                $('#nextpage').attr('disabled', 'disabled');
+            } else {
+                $('#nextpage').removeClass('disabled');
+                $('#nextpage').removeAttr('disabled');
+            }
+        }
+
+        //更新页码
+        function update_page_number() {
+            //左下角数据记录修改
+            $('#begin').text((current_page - 1) * 10 + 1);
+            let after_num = info_num - (current_page - 1) * 10;
+            if (after_num >= 10)
+                $('#end').text(current_page * 10);
+            else
+                $('#end').text(info_num);
+            //当前页面修改
+            $('#currentpage').text(current_page);
+        }
+
+        //数组操作函数
+        function array_clear_out(array_list) {
+            for (let i = 0; i < array_list.length; i++) {
+                array_list[i] = null;
+            }
+        }
+
+        function load_select_func() {
+            for (let i = 0; i < question_list.length; i++) {
+                let selecet_name = "#isSelected" + i;
+                let score_name = "#score" + i;
+                $(selecet_name).click(function () {
+
+                    console.log($.trim($().val()));
+                    console.log(typeof $.trim($(score_name).val()));
+                    console.log(parseInt($.trim($(score_name).val())));
+                    console.log(typeof parseInt($.trim($(score_name).val())));
+
+                    if ($(selecet_name).attr('checked')) {
+                        //若选中则清空
+                        $(score_name).text('');
+                        $(selecet_name).removeAttr('checked');
+                        $(selecet_name).text('未加入');
+                        $(selecet_name).removeClass('btn-primary');
+                        $(selecet_name).addClass('btn-outline-primary');
+                    } else {
+                        if ($(score_name).text() === "")
+                            ;
+                        else {
+                            //需要把分值加给footer的sum，对应的题目数量增加
+                            //保存在list里面
+                            //按钮的样式发生改变
+                            $('#sumscore').val(parseInt($.trim($('#sumscore').val())) + parseInt($.trim($(score_name).val())));
+                            if (question_list[i]['qtype'] == '单选题')
+                                $('#selectnum').val(parseInt($.trim($('#selectnum').val())) + 1);
+                            else if (question_list[i]['qtype'] == '多选题')
+                                $('#multinum').val(parseInt($.trim($('#multinum').val())) + 1);
+                            else
+                                $('#fillnum').val(parseInt($.trim($('#fillnum').val())) + 1);
+
+                            $('#sumnum').val(parseInt( $.trim($('#sumnum').val())) + 1);
+
+                            question_num_list[question_num_list.length + 1] = info_qno_list[i];
+                            $(selecet_name).attr('checked', 'true');
+                            $(selecet_name).text('已加入');
+                            $(selecet_name).removeClass('btn-outline-primary');
+                            $(selecet_name).addClass('btn-primary');
+                        }
+                    }
+
+                });
+            }
+        }
+
+        //动态载入表单
+        function load_table() {
+            $('#info_table').empty();
+            //动态载入数据
+            // console.log(question_list);
+            for (let i = 0; i < question_list.length; i++) {
+                //TODO 保存试题号
+                info_qno_list[i] = question_list[i]['qno'];
+                let qtype;
+
+                //表格信息html添加
+                temp_html = "<tr role='row' class='odd'>";
+                temp_html += "<td title=\"" + question_list[i]['qstem'] + "\"><strong>" + question_list[i]['qstem'] + "</strong>";
+                temp_html += "</td>";
+                //console.log(question_list[i]['preference']);
+                if (question_list[i]['qtype'] === "select")
+                    qtype = '单选题';
+                else if (question_list[i]['qtype'] === "multi")
+                    qtype = '多选题';
+                else
+                    qtype = '填空题';
+                temp_html += "<td><strong>" + qtype + "</strong></td>";
+                temp_html += "<td><strong>" + subject_dict[question_list[i]['qsubject']] + "</strong></td>";
+                temp_html += "<td>";
+                temp_html += "<div class=\"container\">";
+                temp_html += "<button type=\"button\" class=\"btn btn-outline-success\" data-toggle=\"modal\" data-target=\"#modalpreview" + i + "\" id='preview" + i + "'>预览</button>";
+                temp_html += "</div>";
+                temp_html += "</td>";
+                temp_html += "<td>";
+                temp_html += "<button type=\"button\" class=\"btn btn-outline-primary check-btn\" id='isSelected" + i + "'>未加入</button>";
+                temp_html += "</td>";
+                temp_html += "<td>";
+                temp_html += "<input type=\"text\" placeholder=\" 输入分值\" size=\"8\" id='score" + i + "'>";
+                temp_html += "</td>";
+                temp_html += "</tr>";
+                $('table').append(temp_html);
+
+            }
+        }
+
+        //解析URL
+        function getQueryObject(url) {
+            url = url == null ? window.location.href : url;
+            let search = url.substring(url.lastIndexOf("?") + 1);
+            let obj = {};
+            let reg = /([^?&=]+)=([^?&=]*)/g;
+            search.replace(reg, function (rs, $1, $2) {
+                let name = decodeURIComponent($1);
+                let val = decodeURIComponent($2);
+                val = String(val);
+                obj[name] = val;
+                return rs;
+            });
+            return obj;
+        }
+
+        //处理url_data
+        function conductUrlData(url_data) {
+            let key;
+            for (key in url_data) {
+                if (url_data[key] === undefined) {
+                    url_data[key] = null;
+                }
+            }
+        }
+
+        //获取初始试题界面的总页数并分页
+        $.ajax({
+            url: '/question/page_num',
+            method: 'get',
+            success: function (data) {
+                if (data['code'] === 200) {
+                    page_num = data['page_num'];
+                    info_num = data['info_num'];
+                    $('#sum').text(info_num);
+                    update_page_number();
+                } else {
+                    console.log('获取页面出错！');
+                }
+            },
+        });
+
+        array_clear_out(question_list);
+
+        //获取初始试卷界面的第一页试卷
+        url_data['page'] = 1;
+        $.ajax({
+            url: '/question',
+            method: 'get',
+            data: url_data,
+            success: function (data) {
+                if (data['code'] === 200) {
+                    //console.log(paper_list);
+                    //console.log(data['papers']);
+                    question_list = data['questions'];
+                    load_table();
+                    //初始化翻页按钮
+                    judge_button_disabled();
+                    load_select_func();
+                }
+            }
+        });
+
+        //前翻页按钮click事件
+        $('#prepage').click(function () {
+            current_page--;
+            // console.log('前翻页', current_page);
+            if (current_page <= 0 || current_page > page_num)
+                console.log("当前页码标定错误！");
+            else {
+                url_data['page'] = current_page;
+                $.ajax({
+                    url: '/question',
+                    method: 'get',
+                    data: url_data,
+                    success: function (data) {
+                        if (data['code'] === 200) {
+                            console.log(data);
+                            console.log(current_page);
+                            question_list = data['questions'];
+                            info_num = data['info_num'];
+                            page_num = data['page_num'];
+                            $('#sum').text(info_num);
+                            load_table();
+                        }
+                        update_page_number();
+                        judge_button_disabled();
+                    }
+                });
+            }
+
+        });
+
+        //后翻页按钮click事件
+        $('#nextpage').click(function () {
+            current_page++;
+            //console.log('后翻页', current_page);
+            if (current_page <= 0 || current_page > page_num)
+                console.log("当前页码标定错误！");
+            else {
+                url_data['page'] = current_page;
+                $.ajax({
+                    url: '/question',
+                    method: 'get',
+                    data: url_data,
+                    success: function (data) {
+                        if (data['code'] === 200) {
+                            question_list = data['questions'];
+                            info_num = data['info_num'];
+                            page_num = data['page_num'];
+                            $('#sum').text(info_num);
+                            load_table();
+                            update_page_number();
+                            judge_button_disabled();
+                        }
+                    }
+                });
+            }
+
+        });
+
+
+        //跳转页按钮click事件
+        $('#gotoButton').click(function () {
+            let goto = parseInt($.trim($('#gotopage').val()));
+            if (goto < 1 || goto > page_num)
+                alert('页码超出范围！');
+            else {
+                current_page = goto;
+                url_data['page'] = current_page;
+                $.ajax({
+                    url: '/question',
+                    method: 'get',
+                    data: url_data,
+                    success: function (data) {
+                        if (data['code'] === 200) {
+                            question_list = data['questions'];
+                            info_num = data['info_num'];
+                            page_num = data['page_num'];
+                            $('#sum').text(info_num);
+                            load_table();
+                            update_page_number();
+                            judge_button_disabled();
+                        }
+                    }
+                });
+            }
+        });
+
+        //班级管理按钮click事件
+        $('#course-manage').click(function () {
+            location.href = '/index';
+        });
+        //试卷管理按钮click事件
+        $('#paper-manage').click(function () {
+            location.href = '/paper/manage';
+        });
+        //试题管理按钮click事件
+        $('#question-manage').click(function () {
+            location.href = '/question/manage';
+        });
+        //退出管理按钮click事件
+        $('#logout').click(function () {
+            $.ajax({
+                url: '/auth/logout',
+                method: 'post',
+                success: function (data) {
+                    if (data['code'] === 200)
+                        location.href = '/auth/login';
+                }
+            })
+        });
+
+        //科目筛选按钮click事件
+        for (let i = 0; i < 8; i++) {
+            let subno = 's000' + i;
+            let subnumber = '.s000' + i;
+            $(subnumber).click(function () {
+                //TODO 应ajax成功之后再修改url_data，全部都需要修改逻辑顺序
+                if (i === 0)
+                    delete url_data['subject'];
+                else
+                    url_data['subject'] = i;
+                url_data['page'] = 1;
+                $.ajax({
+                    url: '/question',
+                    method: 'get',
+                    data: url_data,
+                    success: function (data) {
+                        if (data['code'] === 200) {
+                            if (i === 0) {
+                                $('#dropdownMenuLink').text('按科目筛选');
+                                $('#dropdownMenuLink').addClass('btn-outline-primary');
+                                $('#dropdownMenuLink').removeClass('btn-primary');
+                            } else {
+                                $('#dropdownMenuLink').text('按' + subject_dict[i] + '筛选');
+                                $('#dropdownMenuLink').addClass('btn-primary');
+                                $('#dropdownMenuLink').removeClass('btn-outline-primary');
+                            }
+                            info_num = data['info_num'];
+                            page_num = data['page_num'];
+                            current_page = 1;
+                            $('#sum').text(info_num);
+                            question_list = data['questions'];
+                            load_table();
+
+                            judge_button_disabled();
+                            update_page_number();
+                        }
+                    }
+                })
+            });
+        }
+
+
+        //按题目类型筛选按钮click事件
+        for (let i = 0; i < 8; i++) {
+            let typeno = 't000' + i;
+            let typenumber = '.t000' + i;
+            $(typenumber).click(function () {
+                //TODO 应ajax成功之后再修改url_data，全部都需要修改逻辑顺序
+                if (i === 0)
+                    delete url_data['type'];
+                else
+                    url_data['type'] = type_dict[i];
+                url_data['page'] = 1;
+                $.ajax({
+                    url: '/question',
+                    method: 'get',
+                    data: url_data,
+                    success: function (data) {
+                        if (data['code'] === 200) {
+                            if (i === 0) {
+                                $('#dropdownMenuLink2').text('按题目类型筛选');
+                                $('#dropdownMenuLink2').addClass('btn-outline-primary');
+                                $('#dropdownMenuLink2').removeClass('btn-primary');
+                            } else {
+                                $('#dropdownMenuLink2').text('按' + target_dict[i] + '筛选');
+                                $('#dropdownMenuLink2').addClass('btn-primary');
+                                $('#dropdownMenuLink2').removeClass('btn-outline-primary');
+                            }
+                            info_num = data['info_num'];
+                            page_num = data['page_num'];
+                            current_page = 1;
+                            $('#sum').text(info_num);
+                            question_list = data['questions'];
+                            load_table();
+
+                            judge_button_disabled();
+                            update_page_number();
+                        }
+                    }
+                })
+            });
+        }
+
+
+        //题干内容搜索按钮click事件
+        $('#contentsearch').click(function () {
+            let content_input = $('#searchinput').val();
+            if (content_input === null)
+                ;
+            else {
+                url_data['content'] = content_input;
+                url_data['page'] = 1;
+                $.ajax({
+                    url: '/question',
+                    method: 'get',
+                    data: url_data,
+                    success: function (data) {
+                        if (data['code'] === 200) {
+                            info_num = data['info_num'];
+                            page_num = data['page_num'];
+                            current_page = 1;
+                            $('#sum').text(info_num);
+                            question_list = data['questions'];
+                            load_table();
+
+                            judge_button_disabled();
+                            update_page_number();
+                        }
+                    }
+                })
+            }
+
+        });
+
+        let question_num_list = new Object();
+
+        //isSelected按钮click事件
+
+
+
+    });
+
+
+</script>
+</body>
+</html>

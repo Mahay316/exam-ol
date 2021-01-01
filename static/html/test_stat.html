@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="cn">
+<head>
+    <meta charset="UTF-8">
+    <title>班级管理</title>
+    <link rel="shortcut icon" type="image/icon" href="/static/img/logo_black.png">
+
+    <link rel="stylesheet" href="/static/adminlte/css/adminlte.min.css">
+    <link rel="stylesheet" href="/static/fontawesome/css/all.min.css">
+    <style>
+        .delete {
+            padding: 5px 8px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body class="sidebar-mini layout-fixed" style="height: auto;">
+<div class="wrapper" id="testStat">
+    <nav-bar></nav-bar>
+    <!-- Main Sidebar Container -->
+    <!-- TODO 侧边栏逻辑修改-->
+    <side-bar my-role="mentor"></side-bar>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper" style="min-height: 196px;">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1 class="m-0">软件工程001班</h1>
+                    </div><!-- /.col -->
+                    <div class="col-sm-6" style="padding-right: 17px;">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="#">班级管理</a></li>
+                            <li class="breadcrumb-item active">软件工程</li>
+                        </ol>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content-header -->
+
+        <!-- Main content -->
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div class="form-group">
+                            <label class="sr-only" for="test_select">选择考试</label>
+                            <select id="test_select" class="form-control" @change="handleChangeExam">
+                                <option v-for="item in exams" :value="item.tno">{{ item.tname }}</option>
+                            </select>
+                        </div>
+                        <div class="card card-primary">
+                            <div class="card-header">
+                                <h5 class="card-title">饼状图</h5>
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                        <i class="fas fa-minus"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="chart">
+                                    <canvas id="pieChart"
+                                            style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%; display: block; width: 508px;"
+                                            width="793" height="390" class="chartjs-render-monitor"></canvas>
+                                </div>
+                            </div>
+                            <!-- 正在加载中 -->
+                            <div class="overlay" v-if="loadingStat">
+                                <i class="fas fa-2x fa-sync-alt fa-spin"></i>
+                            </div>
+                        </div>
+
+                        <div class="card card-primary">
+                            <div class="card-header">
+                                <h5 class="card-title">柱状图</h5>
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                        <i class="fas fa-minus"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="chart">
+                                    <canvas id="barChart"
+                                            style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%; display: block; width: 508px;"
+                                            width="793" height="390" class="chartjs-render-monitor"></canvas>
+                                </div>
+                            </div>
+                            <!-- 正在加载中 -->
+                            <div class="overlay" v-if="loadingStat">
+                                <i class="fas fa-2x fa-sync-alt fa-spin"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.col-md-6 -->
+                    <div class="col-lg-4" style="padding: 0 20px;">
+                        <div class="card" style="font-size: 0.90rem;">
+                            <div class="card-header">
+                                <h3 class="card-title">学生</h3>
+
+                                <div class="card-tools">
+                                    <div class="input-group input-group-sm" style="width: 150px;">
+                                        <label for="search" class="sr-only">搜索</label>
+                                        <input type="text" id="search" name="table_search"
+                                               class="form-control float-right"
+                                               placeholder="搜索" :value="searchSno" @input="handleInput">
+                                        <div class="input-group-append">
+                                            <button type="button" class="btn btn-default" @click="search">
+                                                <i class="fas fa-minus" v-if="adding"></i>
+                                                <i class="fas fa-search" v-else></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.card-header -->
+                            <div class="card-body p-0">
+                                <table class="table" style="text-align: center">
+                                    <thead>
+                                    <tr>
+                                        <th>学号</th>
+                                        <th>姓名</th>
+                                        <th>操作</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr v-for="item in members">
+                                        <td>{{ item.sno }}</td>
+                                        <td>{{ item.sname }}</td>
+                                        <td>
+                                            <span class="badge bg-danger delete"
+                                                  @click="deleteMember(item)" v-if="!adding || inClass">
+                                                删除
+                                            </span>
+                                            <span class="badge bg-success delete" @click="addMember(item)"
+                                                  v-else>增加</span>
+                                        </td>
+                                    </tr>
+                                    <tr v-if="!members.length">
+                                        <td colspan="3" v-if="adding">搜索的学生不存在</td>
+                                        <td colspan="3" v-else>成员列表为空</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- 正在加载中 -->
+                            <div class="overlay" v-if="loadingMember">
+                                <i class="fas fa-2x fa-sync-alt fa-spin"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.col-md-6 -->
+                </div>
+                <!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+    <main-footer></main-footer>
+</div>
+<!-- ./wrapper -->
+
+<!-- REQUIRED SCRIPTS -->
+
+<!-- jQuery -->
+<script src="/static/js/jquery-3.5.1.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="/static/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- Chart.js -->
+<!--<script src="/static/chart.js/Chart.min.js"></script>-->
+<!-- AdminLTE App -->
+<script src="/static/adminlte/js/adminlte.min.js"></script>
+<script src="/static/js/bootbox.min.js"></script>
+<script src="/static/dist/stat.js"></script>
+</body>
+</html>

@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="cn">
+<head>
+    <meta charset="UTF-8">
+    <title>在线考试</title>
+    <link rel="shortcut icon" type="image/icon" href="/static/img/logo_black.png">
+
+    <!-- Bootstrap JQuery依赖 -->
+    <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css"/>
+
+    <script src="/static/js/jquery-3.5.1.min.js"></script>
+    <script src="/static/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- 侧边栏跟随组件 -->
+    <script src="/static/js/accessory.js"></script>
+
+    <style>
+        /* 以下为顶部标题栏样式 */
+        .header {
+            position: fixed;
+            background: #fcfcfc;
+            z-index: 999;
+            height: 62px;
+            top: 0;
+            left: 0;
+        }
+
+        .exam-title {
+            position: absolute;
+            top: 50%;
+            transform: translate(0, -50%);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            font-size: 17px;
+        }
+
+        .exam-info {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            text-align: center;
+            transform: translate(-50%, -50%);
+            padding: 0;
+        }
+
+        .exam-info .exam-time {
+            font-weight: 600;
+            color: dodgerblue;
+        }
+
+        .exam-info .time-alert {
+            color: red;
+        }
+
+        /* 以下为选项或答题卡中题号的样式 */
+        .num {
+            width: 34px;
+            height: 34px;
+            box-sizing: content-box;
+            outline: none;
+            border-radius: 50%;
+            background-color: #aaaaaa;
+            line-height: 34px;
+            text-align: center;
+            color: white;
+            border: 1px solid #333333;
+            padding: 0;
+        }
+
+        /* 选中或已作答 */
+        .chosen {
+            background-color: #559bf5 !important;
+        }
+
+        /* 以下为答题卡相关样式 */
+        .answer-card {
+            padding: 0;
+            background-color: #fafafa;
+            border: 1px solid #dddddd;
+            box-shadow: 3px 3px 20px #dddddd;
+        }
+
+        .card-item {
+            padding: 5px 11px;
+        }
+
+        .card-item .list {
+            overflow: hidden;
+            padding: 0;
+        }
+
+        .card-item .list a {
+            display: block;
+            float: left;
+            text-decoration: none;
+            margin: 8px;
+        }
+
+        /* 以下为完整的一道题的样式 */
+        .question {
+            margin-bottom: 15px;
+            background-color: #fafafa;
+            border: 1px solid #dddddd;
+            box-shadow: 0 0 10px #dddddd;
+        }
+
+        .topic_type em {
+            float: left;
+            width: 5px;
+            height: 22px;
+            margin: 4px 20px 0 0;
+            background: #31c6ce;
+        }
+
+        .topic_type h2 {
+            height: 30px;
+            line-height: 30px;
+            font-size: 16px;
+            font-weight: bold;
+            overflow: hidden;
+        }
+
+        .topic_type h2 span {
+            font-size: 12px;
+            color: #999;
+            line-height: 12px;
+            margin-left: 15px;
+        }
+
+        .question .question_content {
+            padding: 10px 15px;
+            font-size: 14px;
+        }
+
+        .question_content .question_select {
+            margin-top: 10px;
+        }
+
+        .question_select .select_item {
+            height: 50px;
+        }
+
+        .select_item span {
+            line-height: 50px;
+            white-space: nowrap;
+            margin-left: 10px;
+        }
+
+        /* 以下为页面footer的样式 */
+        .decoration-line {
+            border-bottom: 1px solid #dddddd;
+            height: 25px;
+            margin: 15px 100px 60px;
+            text-align: center;
+        }
+
+        .end {
+            padding: 0 10px;
+            background-color: #ffffff;
+            line-height: 50px;
+            font-size: 18px;
+            color: #666666;
+        }
+    </style>
+</head>
+<body>
+<div id="pane">
+    <!-- 顶部固定标题栏 -->
+    <div class="container-fluid shadow header" style="border: 0px solid red;">
+        <div class="container" style="border: 0px solid red; padding: 12px 15px;">
+            <div class="row">
+                <div class="col-2 exam-title">{{ testName }}</div>
+                <div class="col-3 exam-info">
+                    <span class="exam-limit" v-if="timeLeft < 0">考试不限时间&nbsp;&nbsp;</span>
+                    <span v-else>
+                        <span class="exam-limit">考试剩余时间&nbsp;&nbsp;</span>
+                        <span class="exam-time time-alert">{{ timeLeft | formatTime }}</span>
+                    </span>
+                </div>
+                <button type="button" class="btn btn-success col-1 offset-11">我要交卷</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 试卷内容部分 -->
+    <div id="main" class="container" style="border: 0px solid red; margin-top: 85px;">
+        <div class="row" style="border: 0px solid blue">
+            <!-- 试卷主体 -->
+            <div class="col-9">
+                <div>
+                    <div class="question" v-for="(item, index) in questions" :id="'qs_' + index">
+                        <div class="topic_type">
+                            <em></em>
+                            <h2>{{ item.type | typeToStr }} <span>（本题{{ item.qpscore }}分）</span></h2>
+                        </div>
+                        <div class="question_content">
+                            <div class="question_stem">
+                                <span>{{ index + 1 }}. </span>{{ item.stem }}
+                            </div>
+                            <div class="question_select">
+                                <div class="select_item" v-for="(choice, cidx) in item.choices">
+                                    <input class="num" type="button" name="question_1" :value="cidx | toLetter">
+                                    <span>{{ choice }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 答题卡 -->
+            <div class="col-3" style="padding: 0;">
+                <div id="sidebar" class="answer-card">
+                    <h3 style="text-align: center; margin-top: 16px;">答题卡</h3>
+                    <hr/>
+                    <div class="card-item" v-if="questionRecord.select.length">
+                        <h6>单项选择题</h6>
+                        <div class="list">
+                            <a :href="'#qs_' + idx" class="num" v-for="idx in questionRecord.select">{{ idx }}</a>
+                        </div>
+                    </div>
+                    <div class="card-item" v-if="questionRecord.multi.length">
+                        <h6>多项选择题</h6>
+                        <div class="list">
+                            <a :href="'#qs_' + idx" class="num chosen" v-for="idx in questionRecord.multi">{{ idx }}</a>
+                        </div>
+                    </div>
+                    <div class="card-item" v-if="questionRecord.fill.length">
+                        <h6>填空题</h6>
+                        <div class="list">
+                            <a :href="'#qs_' + idx" class="num chosen" v-for="idx in questionRecord.fill">{{ idx }}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="decoration-line">
+        <span class="end">试卷到达结尾</span>
+    </div>
+</div>
+
+<script src="/static/js/vue.js"></script>
+<script src="/static/js/axios.js"></script>
+<script>
+
+</script>
+<script>
+    new Vue({
+        el: '#pane',
+        data: {
+            testName: '',
+            timeLeft: 0,
+            questions: [],
+        },
+        computed: {
+            questionRecord() {
+                let res = {
+                    select: [],
+                    multi: [],
+                    fill: []
+                };
+                // 分别记录选择题、多选题和填空题对应的题号
+                for (let i = 0; i < this.questions.length; i++) {
+                    switch (this.questions[i].type) {
+                        case 'select':
+                            res.select.push(i + 1);
+                            break;
+                        case 'multi':
+                            res.multi.push(i + 1);
+                            break;
+                        case 'fill':
+                            res.fill.push(i + 1);
+                            break;
+                    }
+                }
+                return res;
+            }
+        },
+        filters: {
+            typeToStr(type) {
+                let res = '';
+                switch (type) {
+                    case 'select':
+                        res = '单项选择题';
+                        break;
+                    case 'multi':
+                        res = '多项选择题';
+                        break;
+                    case 'fill':
+                        res = '填空题';
+                        break;
+                }
+
+                return res;
+            },
+            toLetter(idx) {
+                return String.fromCharCode('A'.charCodeAt(0) + idx);
+            },
+            formatTime(seconds) {
+                let n = 2;
+                let hours = (Array(n).join('0') + String((seconds / 3600).toFixed(0))).slice(-n);
+                seconds %= 3600;
+                let minutes = (Array(n).join('0') + String((seconds / 60).toFixed(0))).slice(-n);
+                seconds %= 60;
+                seconds = (Array(n).join('0') + String((seconds).toFixed(0))).slice(-n);
+
+
+                return `${hours}:${minutes}:${seconds}`;
+            }
+        },
+        mounted() {
+            axios.get('/exam/questions?examID=2').then(resp => {
+                let data = resp.data;
+                if (data.code === 200) {
+                    this.questions = data.questions;
+                }
+            });
+            axios.get('/exam/time?examID=2').then(resp => {
+                let data = resp.data;
+                if (data.code === 200) {
+                    this.questions = data.questions;
+                    this.testName = data.tname;
+                    this.timeLeft = data.timeLeft.toFixed(0);
+                    if (this.timeLeft > 0) {
+                        setInterval(() => this.timeLeft--, 1000);
+                    }
+                }
+            });
+        }
+    });
+</script>
+</body>
+</html>

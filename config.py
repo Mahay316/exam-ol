@@ -11,7 +11,7 @@ SQLALCHEMY_TRACK_MODIFICATIONS = True
 DIALECT = 'mysql'
 DRIVER = 'pymysql'
 USERNAME = 'root'
-PASSWORD = '123456'
+PASSWORD = 'mahay'
 HOST = '127.0.0.1'
 PORT = '3306'
 DATABASE = 'exam'
@@ -26,3 +26,5 @@ MAX_OVERFLOW = 10
 
 # 设置session过期时间
 PERMANENT_SESSION_LIFETIME = timedelta(days=15)
+
+PAGE_SIZE = 10

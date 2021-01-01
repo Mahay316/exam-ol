@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String
+from sqlalchemy import Column, String, CHAR
 from sqlalchemy.dialects.mysql import ENUM
 from sqlalchemy.orm import relationship
 
@@ -6,6 +6,8 @@ from models.database import Base
 from common import model_common
 from common.Role import *
 from models.StudentTestModel import StudentTest
+from models.StudentCourseModel import StudentCourse
+from models.CourseModel import Course
 
 
 class User:
@@ -70,7 +72,7 @@ class User:
             raise e
 
 
-class Student(User, Base):
+class Student(Base, User):
     __tablename__ = 'student'
 
     Sno = Column(String(20, 'utf8mb4_general_ci'), primary_key=True, comment='学生编号')
@@ -80,8 +82,8 @@ class Student(User, Base):
     Spassword = Column(String(32, 'utf8mb4_general_ci'), nullable=False, comment='学生登陆密码')
 
     studenttest = relationship('StudentTest', backref='student')
+    studentcourse = relationship('StudentCourse', backref='student')
 
-    # TODO 应该是用不到这个函数了
     #  (之前使用flask_login.current_user判定学生是否含有本次考试，现由于使用session实现登录,
     #  使用新的get_all_test_ids方法实现该操作)
     # def has_this_Test(self, test):
@@ -99,18 +101,32 @@ class Student(User, Base):
     #     else:
     #         return False
 
-
     def get_all_test_ids(self):
         """
         学生对象调用此方法，返回该学生含有的所有考试id号
 
-        :return: list[str]
+        :return: list[int]
         """
-        Tnos = []
-        for t in self.studenttest:
-            Tnos.append(t.Tno)
-        return Tnos
 
+        engine = model_common.get_mysql_engine()
+        session = model_common.get_mysql_session(engine)
+
+        try:
+            filter_list = []
+            filter_list.append(Student.Sno == self.Sno)
+            s = session.query(Student).filter(*filter_list).first()
+            Tnos = []
+            for t in s.studenttest:
+                Tnos.append(t.Tno)
+            return Tnos
+
+        except Exception as e:
+            session.rollback()
+            raise e
+
+        finally:
+            engine.dispose()
+            session.remove()
 
     @classmethod
     def get_user(cls, no):
@@ -128,15 +144,93 @@ class Student(User, Base):
             session.rollback()
             raise e
 
+        finally:
+            engine.dispose()
+            session.remove()
 
-class Mentor(User, Base):
+    @classmethod
+    def get_classes(cls, no) -> list:
+        """
+        获取某学生的全部课程对象
+
+        :param no: 学号
+        :return: list[Course](没有课程则返回空列表)
+        """
+
+        engine = model_common.get_mysql_engine()
+        session = model_common.get_mysql_session(engine)
+
+        classes = []
+
+        try:
+            filter_list = []
+            filter_list.append(cls.Sno == no)
+
+            student = session.query(cls).filter(*filter_list).first()
+
+            if not student:
+                raise Exception('没有该学生号记录')
+            for sc in student.studentcourse:
+                course = Course.get_class(sc.Cno)
+                classes.append(course)
+            return classes
+
+        except Exception as e:
+            session.rollback()
+            raise e
+
+        finally:
+            engine.dispose()
+            session.remove()
+
+    @classmethod
+    def has_this_class(cls, student_no, course_no):
+        """
+        判断学生是否有某门课程
+
+        :return: True or False
+        """
+
+        engine = model_common.get_mysql_engine()
+        session = model_common.get_mysql_session(engine)
+
+        try:
+            filter_list = []
+            filter_list.append(cls.Sno == student_no)
+
+            student = session.query(cls).filter(*filter_list).first()
+
+            if not student:
+                raise Exception('没有该学生号记录')
+
+            for sc in student.studentcourse:
+                if course_no == sc.Cno:
+                    return True
+            return False
+
+        except Exception as e:
+            session.rollback()
+            raise e
+
+        finally:
+            engine.dispose()
+            session.remove()
+
+    @classmethod
+    def select_students_by(cls, page=1, no=None, name=None, major=None):
+        """查询学生"""
+
+
+class Mentor(Base, User):
     __tablename__ = 'mentor'
 
     Mno = Column(String(20, 'utf8mb4_general_ci'), primary_key=True, comment='教师编号')
-    Mname = Column(String(10, 'utf8mb4_general_ci'), nullable=False, comment='教师姓名')
-    Mgender = Column(String(3, 'utf8mb4_general_ci'), comment='教师性别')
+    Mname = Column(String(10, 'utf8mb4_general_ci'), nullable=False, index=True, comment='教师姓名')
+    Mgender = Column(CHAR(1, 'utf8mb4_general_ci'), comment='教师性别')
     Mtitle = Column(String(10, 'utf8mb4_general_ci'), comment='教师职称')
     Mpassword = Column(String(32, 'utf8mb4_general_ci'), nullable=False, comment='教师登陆密码')
+
+    course = relationship('Course', backref='mentor')
 
     @classmethod
     def get_user(cls, no):
@@ -154,8 +248,108 @@ class Mentor(User, Base):
             session.rollback()
             raise e
 
+        finally:
+            engine.dispose()
+            session.remove()
 
-class Admin(User, Base):
+    @classmethod
+    def get_classes(cls, no) -> list:
+        """
+        获取某教师的全部课程对象
+
+        :param no: 教师号
+        :return: list[Course](没有课程则返回空列表)
+        """
+
+        engine = model_common.get_mysql_engine()
+        session = model_common.get_mysql_session(engine)
+
+        try:
+
+            filter_list = []
+            filter_list.append(cls.Mno == no)
+
+            mentor = session.query(cls).filter(*filter_list).first()
+
+            if not mentor:
+                raise Exception('没有该教师号记录')
+            return mentor.course
+
+        except Exception as e:
+            session.rollback()
+            raise e
+
+        finally:
+            engine.dispose()
+            session.remove()
+
+    @classmethod
+    def has_this_class(cls, mentor_no, course_no):
+        """
+        判断老师是否有某门课程
+
+        :return: True or False
+        """
+
+        engine = model_common.get_mysql_engine()
+        session = model_common.get_mysql_session(engine)
+
+        try:
+            filter_list = []
+            filter_list.append(cls.Mno == mentor_no)
+
+            mentor = session.query(cls).filter(*filter_list).first()
+
+            if not mentor:
+                raise Exception('没有该教师号记录')
+            classes = mentor.course
+
+            for course in classes:
+                if course_no == course.Cno:
+                    return True
+            return False
+
+        except Exception as e:
+            session.rollback()
+            raise e
+
+        finally:
+            engine.dispose()
+            session.remove()
+
+    @classmethod
+    def select_mentors_by(cls, page=1, no=None, title=None, name=None):
+        """按条件筛选mentor，是None就是没传，就是不在该条件上做限制"""
+
+        engine = model_common.get_mysql_engine()
+        session = model_common.get_mysql_session(engine)
+
+        try:
+            filter_list = []
+
+            if no:
+                filter_list.append(cls.Mno == no)
+
+            if title:
+                filter_list.append(cls.Mtitle == title)
+
+            if name:
+                filter_list.append(cls.Mname == name)
+
+            mentors = session.query(cls).filter(*filter_list).all()
+
+            return model_common.get_page_by_list(mentors, page)
+
+        except Exception as e:
+            session.rollback()
+            raise e
+
+        finally:
+            engine.dispose()
+            session.remove()
+
+
+class Admin(Base, User):
     __tablename__ = 'admin'
 
     Ano = Column(String(20, 'utf8mb4_general_ci'), primary_key=True, comment='管理员账号')
@@ -176,3 +370,7 @@ class Admin(User, Base):
         except Exception as e:
             session.rollback()
             raise e
+
+        finally:
+            engine.dispose()
+            session.remove()

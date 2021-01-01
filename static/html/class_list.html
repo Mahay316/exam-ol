@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>教师首页</title>
+    <link rel="shortcut icon" type="image/icon" href="/static/img/logo_black.png">
+
+    <link rel="stylesheet" href="/static/adminlte/css/adminlte.min.css">
+    <link rel="stylesheet" href="/static/fontawesome/css/all.min.css">
+    <style>
+        .small-box {
+            min-height: 150px;
+            margin: 0 15px 25px;
+            box-shadow: 3px 3px 10px #aaaaaa;
+        }
+
+        .small-box .small-box-footer {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body class="hold-transition sidebar-mini layout-fixed">
+<div class="wrapper" id="pane">
+    <nav-bar></nav-bar>
+
+    <side-bar></side-bar>
+
+    <div class="content-wrapper" style="min-height: 1370px;">
+        <section class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1>课程管理</h1>
+                    </div>
+                    <div class="col-sm-6" style="padding-right: 10px;">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item">
+                                <a href="javascript:location.reload();" style="color: black;">刷新课程列表</a>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-4 col-6" v-for="item in classes">
+                        <!-- small box -->
+                        <div class="small-box" :class="mapColor(item.csubject)">
+                            <div class="inner">
+                                <h4>{{ item.cname }}</h4>
+                                <p>{{ subjects[item.csubject - 1] }}<br></p>
+                            </div>
+                            <a :href="'/class/detail?cno=' + item.cno" class="small-box-footer">进入课程
+                                <i class="fas fa-arrow-circle-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <!-- ./col -->
+                </div>
+            </div>
+        </section>
+
+        <div class="modal fade" id="createcourse" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">新建班级</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="tab-content" id="custom-tabs-four-tabContent">
+                            <div class="input-group" style="margin-bottom: 20px;">
+                                <span class="input-group-text" style="height: 40px;"><strong>班级名称</strong></span>
+                                <input class="form-control" aria-label="With textarea"
+                                       placeholder="请输入班级名称" style="height: 40px;" v-model="className">
+                            </div>
+
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text"
+                                           for="inputGroupSelect01">班级科目</label>
+                                </div>
+                                <select class="custom-select" id="inputGroupSelect01" v-model="curr">
+                                    <option :value="index" v-for="(name, index) in subjects">{{ name }}</option>
+                                </select>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="modal-footer justify-content-end">
+                        <button type="button" class="btn btn-outline-danger" data-dismiss="modal">取消</button>
+                        <button type="button" class="btn btn-outline-success" @click="addCourse">确认</button>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+
+    </div>
+
+    <main-footer></main-footer>
+</div>
+<!-- REQUIRED SCRIPTS -->
+
+<!-- jQuery -->
+<script src="/static/js/jquery-3.5.1.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="/static/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- AdminLTE App -->
+<script src="/static/adminlte/js/adminlte.min.js"></script>
+<script src="/static/dist/list.js"></script>
+</body>
+</html>
