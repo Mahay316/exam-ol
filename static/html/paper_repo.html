@@ -34,7 +34,7 @@
                 </a>
             </li>
             <li class="nav-item d-none d-sm-inline-block">
-                <a href="#" class="nav-link active">首页</a>
+                <a href="/" class="nav-link active">首页</a>
             </li>
         </ul>
         <ul class="navbar-nav ml-auto">
@@ -68,7 +68,7 @@
                     data-accordion="false">
                     <li class="nav-header">管理</li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link" id="course-manage">
+                        <a href="/index" class="nav-link" id="course-manage">
                             <i class="nav-icon fas fa-paper-plane"></i>
                             <p>
                                 班级管理
@@ -76,7 +76,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link active" id="paper-manage">
+                        <a href="/paper/manage" class="nav-link active" id="paper-manage">
                             <i class="nav-icon fas fa-paperclip"></i>
                             <p>
                                 试卷管理
@@ -84,7 +84,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link" id="question-manage">
+                        <a href="/question/manage" class="nav-link" id="question-manage">
                             <i class="nav-icon fas fa-pen"></i>
                             <p>
                                 试题管理
@@ -1151,7 +1151,7 @@
         <div class="float-right d-none d-sm-block">
             <b>Version</b> 1.0.0
         </div>
-        <strong>Copyright © 2014-2020 <a href="#">Exam_Online</a>.</strong> All rights reserved.
+        <strong>2020 <a href="#">Exam_Online</a>.</strong> Practicum of Database.
     </footer>
 </div>
 
@@ -1257,6 +1257,7 @@
                 array_list[i] = null;
             }
         }
+
         //动态载入表单
         function load_table() {
             $('#info_table').empty();
@@ -1336,6 +1337,7 @@
 
         //获取初始试卷界面的第一页试卷
         url_data['page'] = 1;
+
         $.ajax({
             url: '/paper',
             method: 'get',
@@ -1356,7 +1358,7 @@
         //前翻页按钮click事件
         $('#prepage').click(function () {
             current_page--;
-            // console.log('前翻页', current_page);
+            console.log('前翻页', current_page);
             if (current_page <= 0 || current_page > page_num)
                 console.log("当前页码标定错误！");
             else {
@@ -1384,7 +1386,7 @@
         //后翻页按钮click事件
         $('#nextpage').click(function () {
             current_page++;
-            //console.log('后翻页', current_page);
+            console.log('后翻页', current_page);
             if (current_page <= 0 || current_page > page_num)
                 console.log("当前页码标定错误！");
             else {

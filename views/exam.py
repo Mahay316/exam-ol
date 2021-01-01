@@ -1,10 +1,12 @@
-from flask import Blueprint, request, jsonify, session, current_app
-from models import Test
-from datetime import datetime
 import json
-from models import Student, Paper
-from decorators import should_be
+from datetime import datetime
+
+from flask import Blueprint, request, jsonify, session, current_app
+
 from common.Role import *
+from decorators import should_be
+from models import Student
+from models import Test
 
 exam_bp = Blueprint('exam_bp', __name__)
 
@@ -124,8 +126,8 @@ def get_questions():
         cur_dict = {
             'questionID': q.Qno,
             'type': q.Qtype,
-            'stem': q.Qstem, # 题干字符串
-            'choices': "", # 选择题的选项，填空题无
+            'stem': q.Qstem,  # 题干字符串
+            'choices': "",  # 选择题的选项，填空题无
             'cache': "",
             'qpscore': qpscore
         }
@@ -218,6 +220,11 @@ def cache_questions():
     return jsonify(res)
 
 
+@exam_bp.route('/detail')
+def get_test_detail():
+    return current_app.send_static_file('html/test_detail.html')
+
+
 @exam_bp.route('/grading', methods=['POST'])
 @should_be([STUDENT])
 def grade_exam():
@@ -267,6 +274,7 @@ def grade_exam():
     del session['answers']
 
     return jsonify({'code': 200})
+
 
 @exam_bp.route('/', methods=['GET'])
 @should_be([MENTOR, STUDENT])

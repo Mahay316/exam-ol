@@ -46,7 +46,7 @@ def get_paper():
     elif pname is not None:
         select_dict['pname'] = pname
         # results = Paper.select_papers_by(page, pname=pname)
-    results = Paper.select_papers_by(int(page), **select_dict)
+    num, results = Paper.select_papers_by(int(page), **select_dict)
 
     for result in results:
         res_json['papers'].append({
@@ -56,7 +56,6 @@ def get_paper():
             'psubject': result.Subno
         })
 
-    num = len(results)
     res_json['page_num'] = ceil(num / PAGE_SIZE)
     res_json['info_num'] = num
 
