@@ -9,10 +9,9 @@
 """
 @file function:
 """
-from sqlalchemy import Column, ForeignKey, Integer, String, text, Boolean
+from sqlalchemy import Column, ForeignKey, Integer, String, text
 from sqlalchemy.dialects.mysql import TINYINT
 from sqlalchemy.orm import relationship
-from sqlalchemy.sql.expression import outparam
 
 from models.database import Base
 from common import model_common
@@ -97,7 +96,6 @@ class Paper(Base):
 
         try:
             filter_list = []
-            filter_list.append(cls.Pisdeleted == 0)
 
             if subject:
                 filter_list.append(cls.Subno == subject)
@@ -114,8 +112,9 @@ class Paper(Base):
             if pname:
                 filter_list.append(cls.Pname.like('%' + pname + '%'))
 
-            papers = session.query(cls).filter(*filter_list).all()
-            return model_common.get_page_by_list(papers, page)
+            papers = session.query(cls).filter(*filter_list)
+            res = (papers.count(), model_common.get_page_by_list(papers.all(), page))
+            return res
 
         except Exception as e:
             session.rollback()
@@ -176,13 +175,16 @@ class Paper(Base):
         session = model_common.get_mysql_session(engine)
 
         try:
-            session.execute('CALL delete_paper({}, @out)'.format(pno))
-            result = session.execute('SELECT @out').fetchone()
+            filter_list = []
+            filter_list.append(cls.Pno == pno)
+
+            question = session.query(cls).filter(*filter_list)
+            if not question.first():
+                raise Exception('没有该试卷号记录')
+
+            question.update({'Pisdeleted': 1})
             session.commit()
-            if result[0]:
-                return True
-            else:
-                return False
+            return True
 
         except Exception as e:
             session.rollback()

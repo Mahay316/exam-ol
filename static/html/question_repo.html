@@ -71,7 +71,7 @@
                 </a>
             </li>
             <li class="nav-item d-none d-sm-inline-block">
-                <a href="#" class="nav-link active">首页</a>
+                <a href="/" class="nav-link active">首页</a>
             </li>
         </ul>
         <ul class="navbar-nav ml-auto">
@@ -105,7 +105,7 @@
                     data-accordion="false">
                     <li class="nav-header">管理</li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link " id="course-manage">
+                        <a href="/index" class="nav-link" id="course-manage">
                             <i class="nav-icon fas fa-paper-plane"></i>
                             <p>
                                 班级管理
@@ -113,7 +113,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link" id="paper-manage">
+                        <a href="/paper/manage" class="nav-link" id="paper-manage">
                             <i class="nav-icon fas fa-paperclip"></i>
                             <p>
                                 试卷管理
@@ -121,8 +121,8 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link active" id="question-manage">
-                            <i class="nav-icon fas fa-pen "></i>
+                        <a href="/question/manage" class="nav-link active" id="question-manage">
+                            <i class="nav-icon fas fa-pen"></i>
                             <p>
                                 试题管理
                             </p>
@@ -181,7 +181,7 @@
                                                        role="button" id="dropdownMenuLink1" data-toggle="dropdown"
                                                        aria-haspopup="true" aria-expanded="false">
                                                         按科目筛选
-                                                        {#                                                        TODO 筛选功能未完成#}
+                                                        <!--                                                        {#                                                        TODO 筛选功能未完成#}-->
                                                     </a>
                                                     <div class="dropdown-menu " aria-labelledby="dropdownMenuLink">
                                                         <a class="dropdown-item btn-outline-primary s0001"
@@ -201,7 +201,7 @@
                                                        role="button" id="dropdownMenuLink2" data-toggle="dropdown"
                                                        aria-haspopup="true" aria-expanded="false">
                                                         按题目类型筛选
-                                                        {#                                                        TODO 筛选功能未完成#}
+                                                        <!--                                                        {#                                                        TODO 筛选功能未完成#}-->
                                                     </a>
                                                     <div class="dropdown-menu " aria-labelledby="dropdownMenuLink">
                                                         <a class="dropdown-item btn-outline-primary" href="#">单选题</a>
@@ -315,50 +315,22 @@
 
 
     <div class="modal fade" id="modalpreview0" style="display: none;" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">试题号：1001</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hclassden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <p class="qstem">    在数据库的三级模式结构中，(      )是用户与数据库系统的接口，是用户用到的那部分数据的描述。</p>
-                        <p class="sectionA">A.外模式</p>
-                        <br>
-                        <p class="answer">答案： A</p>
-                    </div>
-                    <div class="modal-footer justify-content-end">
-                        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">关闭</button>
-                    </div>
-                </div>
-                <!-- /.modal-content -->
-            </div>
-            <!-- /.modal-dialog -->
-        </div>
-    </div>
-
-    {#    删除模态框#}
-    <div class="modal fade" id="modaldelete0" style="display: none;" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <p class="modal-title">删除试题警告</p>
+                    <h4 class="modal-title">试题号：1001</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <i class="fas fa-times"></i>
+                        <span aria-hclassden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <div class="form-group" style="text-align: center;">
-                        <br>
-                        <label><h4>确认删除试题吗？</h4></label>
-                    </div>
+                    <p class="qstem">    在数据库的三级模式结构中，(      )是用户与数据库系统的接口，是用户用到的那部分数据的描述。</p>
+                    <p class="sectionA">A.外模式</p>
+                    <br>
+                    <p class="answer">答案： A</p>
                 </div>
                 <div class="modal-footer justify-content-end">
-                    <button type="button" class="btn btn-outline-primary" data-dismiss="modal">取消</button>
-                    <button type="button" class="btn btn-outline-danger">确认删除</button>
-                    <!--                            <button type="button" class="btn btn-outline-dark">关闭</button>-->
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">关闭</button>
                 </div>
             </div>
             <!-- /.modal-content -->
@@ -366,412 +338,12 @@
         <!-- /.modal-dialog -->
     </div>
 
-
-    <div class="modal fade" id="newQuestion" data-backdrop="static" data-keyboard="false"
-         tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-scrollable">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <ul class="nav nav-tabs" id="custom-tabs-four-tab" role="tablist">
-                        <li class="nav-item">
-                            <a class="nav-link active" id="custom-tabs-four-home-tab"
-                               data-toggle="pill"
-                               href="#custom-tabs-four-home" role="tab">单选题</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="custom-tabs-four-profile-tab"
-                               data-toggle="pill"
-                               href="#custom-tabs-four-profile" role="tab">多选题</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="custom-tabs-four-messages-tab"
-                               data-toggle="pill"
-                               href="#custom-tabs-four-messages" role="tab">填空题</a>
-                        </li>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </ul>
-                </div>
-                <div class="modal-body" style="min-height: 500px;">
-                    <div class="tab-content" id="custom-tabs-four-tabContent">
-                        <div class="tab-pane fade active show" id="custom-tabs-four-home"
-                             role="tabpanel">
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <label class="input-group-text"
-                                           for="inputGroupSelect01">题目科目</label>
-                                </div>
-                                <select class="custom-select" id="inputGroupSelect01">
-                                    <option value="s0001">软件工程</option>
-                                    <option value="s0002">数据库原理</option>
-                                    <option value="s0003">编译原理</option>
-                                    <option value="s0004">流体力学</option>
-                                    <option value="s0005">工程热力学</option>
-                                    <option value="s0006">C语言程序设计</option>
-                                    <option value="s0007">Java高级语言程序设计</option>
-                                </select>
-                            </div>
-                            <div class="input-group mb-3" style="height: 150px;">
-                                <span class="input-group-text"><strong>题干部分</strong></span>
-                                <textarea class="form-control" aria-label="With textarea"
-                                          placeholder="最多输入255个字符"></textarea>
-                            </div>
-
-                            <div class="form-group">
-                                <div id="option-alternative-1" class="input-group mb-2">
-                                    <div class="input-group-prepend">
-                                        <label class="input-group-text" for="inputA">A</label>
-                                    </div>
-                                    <input type="text" class="form-control" id="inputA"
-                                           placeholder="输入A选项内容">
-                                    <div class="input-group-append" id="button-addon1">
-                                        <button class="btn btn-outline-danger" type="button">
-                                            <i class="fas fa-minus"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                                <div id="option-alternative-2" class="input-group mb-2">
-                                    <div class="input-group-prepend">
-                                        <label class="input-group-text" for="inputA">B</label>
-                                    </div>
-                                    <input type="text" class="form-control"
-                                           placeholder="输入B选项内容">
-                                    <div class="input-group-append" id="button-addon2">
-                                        <button class="btn btn-outline-danger" type="button">
-                                            <i class="fas fa-minus"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                                <div id="option-alternative-3" class="input-group mb-2">
-                                    <div class="input-group-prepend">
-                                        <label class="input-group-text" for="inputA">C</label>
-                                    </div>
-                                    <input type="text" class="form-control"
-                                           placeholder="输入C选项内容">
-                                    <div class="input-group-append" id="button-addon3">
-                                        <button class="btn btn-outline-danger" type="button">
-                                            <i class="fas fa-minus"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                                <div id="option-alternative-4" class="input-group mb-2">
-                                    <div class="input-group-prepend">
-                                        <label class="input-group-text" for="inputA">D</label>
-                                    </div>
-                                    <input type="text" class="form-control"
-                                           placeholder="输入D选项内容">
-                                    <div class="input-group-append" id="button-addon4">
-                                        <button class="btn btn-outline-danger" type="button">
-                                            <i class="fas fa-minus"></i>
-                                        </button>
-                                        <button class="btn btn-outline-success" type="button">
-                                            <i class="fas fa-plus"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tab-pane fade" id="custom-tabs-four-profile"
-                             role="tabpanel">
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <label class="input-group-text"
-                                           for="inputGroupSelect01">题目科目</label>
-                                </div>
-                                <select class="custom-select" id="inputGroupSelect02">
-                                    <option value="s0001">软件工程</option>
-                                    <option value="s0002">数据库原理</option>
-                                    <option value="s0003">编译原理</option>
-                                    <option value="s0004">流体力学</option>
-                                    <option value="s0005">工程热力学</option>
-                                    <option value="s0006">C语言程序设计</option>
-                                    <option value="s0007">Java高级语言程序设计</option>
-                                </select>
-                            </div>
-                            <div class="input-group"
-                                 style="height: 150px; margin-bottom: 15px;">
-                                <span class="input-group-text"><strong>题干部分</strong></span>
-                                <textarea class="form-control" aria-label="With textarea"
-                                          placeholder="最多输入255个字符"></textarea>
-                            </div>
-                            <div id="multi-option-alternative-1" class="input-group">
-                                <div class="input-group-prepend check-btn">
-                                    <span class="input-group-text alternative"><strong>A</strong></span>
-                                </div>
-                                <input type="text" class="form-control" placeholder="输入A选项内容">
-                            </div>
-                            <div id="multi-option-alternative-2" class="input-group">
-                                <div class="input-group-prepend  check-btn">
-                                    <span class="input-group-text alternative"><strong>B</strong></span>
-                                </div>
-                                <input type="text" class="form-control" placeholder="输入B选项内容">
-                            </div>
-                            <div id="multi-option-alternative-3" class="input-group">
-                                <div class="input-group-prepend  check-btn">
-                                    <span class="input-group-text alternative"><strong>C</strong></span>
-                                </div>
-                                <input type="text" class="form-control" placeholder="输入C选项内容">
-                            </div>
-                            <div id="multi-option-alternative-4" class="input-group">
-                                <div class="input-group-prepend  check-btn">
-                                    <span class="input-group-text alternative"><strong>D</strong></span>
-                                </div>
-                                <input type="text" class="form-control" placeholder="输入D选项内容">
-                            </div>
-                        </div>
-                        <div class="tab-pane fade" id="custom-tabs-four-messages"
-                             role="tabpanel">
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <label class="input-group-text"
-                                           for="inputGroupSelect01">题目科目</label>
-                                </div>
-                                <select class="custom-select" id="inputGroupSelect03">
-                                    <option value="s0001">软件工程</option>
-                                    <option value="s0002">数据库原理</option>
-                                    <option value="s0003">编译原理</option>
-                                    <option value="s0004">流体力学</option>
-                                    <option value="s0005">工程热力学</option>
-                                    <option value="s0006">C语言程序设计</option>
-                                    <option value="s0007">Java高级语言程序设计</option>
-                                </select>
-                            </div>
-                            <div class="input-group"
-                                 style="height: 150px; margin-bottom: 15px;">
-                                <span class="input-group-text"><strong>题干部分</strong></span>
-                                <textarea class="form-control" aria-label="With textarea"
-                                          placeholder="最多输入255个字符"></textarea>
-                            </div>
-                            <div class="form-group" style="margin-bottom: 15px;">
-                                <label>正确答案</label>
-                                <div id="completion-1" class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text alternative"><strong>1</strong></span>
-                                    </div>
-                                    <input type="text" class="form-control"
-                                           placeholder="输入填空答案，/分隔相似答案">
-                                </div>
-                                <div id="completion-2" class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text alternative"><strong>2</strong></span>
-                                    </div>
-                                    <input type="text" class="form-control"
-                                           placeholder="输入填空答案，/分隔相似答案">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">关闭</button>
-                    <button type="button" class="btn btn-outline-primary">创建试题</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="editQuestion" data-backdrop="static" data-keyboard="false"
-         tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-scrollable">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <ul class="nav nav-tabs" id="custom-tabs-four-tab" role="tablist">
-                        <li class="nav-item">
-                            <a class="nav-link active" id="custom-tabs-four-home-tab"
-                               data-toggle="pill"
-                               href="#custom-tabs-four-home" role="tab">单选题</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="custom-tabs-four-profile-tab"
-                               data-toggle="pill"
-                               href="#custom-tabs-four-profile" role="tab">多选题</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="custom-tabs-four-messages-tab"
-                               data-toggle="pill"
-                               href="#custom-tabs-four-messages" role="tab">填空题</a>
-                        </li>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </ul>
-                </div>
-                <div class="modal-body" style="min-height: 500px;">
-                    <div class="tab-content" id="custom-tabs-four-tabContent">
-                        <div class="tab-pane fade active show" id="custom-tabs-four-home"
-                             role="tabpanel">
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <label class="input-group-text"
-                                           for="inputGroupSelect01">题目科目</label>
-                                </div>
-                                <select class="custom-select" id="inputGroupSelect01">
-                                    <option value="1">数据库</option>
-                                    <option value="2">计算机组成原理</option>
-                                    <option value="3">软件工程</option>
-                                </select>
-                            </div>
-                            <div class="input-group mb-3" style="height: 150px;">
-                                <span class="input-group-text"><strong>题干部分</strong></span>
-                                <textarea class="form-control" aria-label="With textarea"
-                                          placeholder="最多输入255个字符"></textarea>
-                            </div>
-
-                            <div class="form-group">
-                                <div id="option-alternative-1" class="input-group mb-2">
-                                    <div class="input-group-prepend">
-                                        <label class="input-group-text" for="inputA">A</label>
-                                    </div>
-                                    <input type="text" class="form-control" id="inputA"
-                                           placeholder="输入A选项内容">
-                                    <div class="input-group-append" id="button-addon1">
-                                        <button class="btn btn-outline-danger" type="button">
-                                            <i class="fas fa-minus"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                                <div id="option-alternative-2" class="input-group mb-2">
-                                    <div class="input-group-prepend">
-                                        <label class="input-group-text" for="inputA">B</label>
-                                    </div>
-                                    <input type="text" class="form-control"
-                                           placeholder="输入B选项内容">
-                                    <div class="input-group-append" id="button-addon2">
-                                        <button class="btn btn-outline-danger" type="button">
-                                            <i class="fas fa-minus"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                                <div id="option-alternative-3" class="input-group mb-2">
-                                    <div class="input-group-prepend">
-                                        <label class="input-group-text" for="inputA">C</label>
-                                    </div>
-                                    <input type="text" class="form-control"
-                                           placeholder="输入C选项内容">
-                                    <div class="input-group-append" id="button-addon3">
-                                        <button class="btn btn-outline-danger" type="button">
-                                            <i class="fas fa-minus"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                                <div id="option-alternative-4" class="input-group mb-2">
-                                    <div class="input-group-prepend">
-                                        <label class="input-group-text" for="inputA">D</label>
-                                    </div>
-                                    <input type="text" class="form-control"
-                                           placeholder="输入D选项内容">
-                                    <div class="input-group-append" id="button-addon4">
-                                        <button class="btn btn-outline-danger" type="button">
-                                            <i class="fas fa-minus"></i>
-                                        </button>
-                                        <button class="btn btn-outline-success" type="button">
-                                            <i class="fas fa-plus"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tab-pane fade" id="custom-tabs-four-profile"
-                             role="tabpanel">
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <label class="input-group-text"
-                                           for="inputGroupSelect01">题目科目</label>
-                                </div>
-                                <select class="custom-select" id="inputGroupSelect02">
-                                    <option value="1">数据库</option>
-                                    <option value="2">计算机组成原理</option>
-                                    <option value="3">软件工程</option>
-                                </select>
-                            </div>
-                            <div class="input-group"
-                                 style="height: 150px; margin-bottom: 15px;">
-                                <span class="input-group-text"><strong>题干部分</strong></span>
-                                <textarea class="form-control" aria-label="With textarea"
-                                          placeholder="最多输入255个字符"></textarea>
-                            </div>
-                            <div id="multi-option-alternative-1" class="input-group">
-                                <div class="input-group-prepend check-btn">
-                                    <span class="input-group-text alternative"><strong>A</strong></span>
-                                </div>
-                                <input type="text" class="form-control" placeholder="输入A选项内容">
-                            </div>
-                            <div id="multi-option-alternative-2" class="input-group">
-                                <div class="input-group-prepend  check-btn">
-                                    <span class="input-group-text alternative"><strong>B</strong></span>
-                                </div>
-                                <input type="text" class="form-control" placeholder="输入B选项内容">
-                            </div>
-                            <div id="multi-option-alternative-3" class="input-group">
-                                <div class="input-group-prepend  check-btn">
-                                    <span class="input-group-text alternative"><strong>C</strong></span>
-                                </div>
-                                <input type="text" class="form-control" placeholder="输入C选项内容">
-                            </div>
-                            <div id="multi-option-alternative-4" class="input-group">
-                                <div class="input-group-prepend  check-btn">
-                                    <span class="input-group-text alternative"><strong>D</strong></span>
-                                </div>
-                                <input type="text" class="form-control" placeholder="输入D选项内容">
-                            </div>
-                        </div>
-                        <div class="tab-pane fade" id="custom-tabs-four-messages"
-                             role="tabpanel">
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <label class="input-group-text"
-                                           for="inputGroupSelect01">题目科目</label>
-                                </div>
-                                <select class="custom-select" id="inputGroupSelect03">
-                                    <option value="1">数据库</option>
-                                    <option value="2">计算机组成原理</option>
-                                    <option value="3">软件工程</option>
-                                </select>
-                            </div>
-                            <div class="input-group"
-                                 style="height: 150px; margin-bottom: 15px;">
-                                <span class="input-group-text"><strong>题干部分</strong></span>
-                                <textarea class="form-control" aria-label="With textarea"
-                                          placeholder="最多输入255个字符"></textarea>
-                            </div>
-                            <div class="form-group" style="margin-bottom: 15px;">
-                                <label>正确答案</label>
-                                <div id="completion-1" class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text alternative"><strong>1</strong></span>
-                                    </div>
-                                    <input type="text" class="form-control"
-                                           placeholder="输入填空答案，/分隔相似答案">
-                                </div>
-                                <div id="completion-2" class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text alternative"><strong>2</strong></span>
-                                    </div>
-                                    <input type="text" class="form-control"
-                                           placeholder="输入填空答案，/分隔相似答案">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">关闭</button>
-                    <button type="button" class="btn btn-outline-primary">创建试题</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-    <footer class="main-footer" id="footer">
-        {#            TODO 所有页面的footer复用#}
+    <footer class="main-footer">
         <div class="float-right d-none d-sm-block">
             <b>Version</b> 1.0.0
         </div>
-        <strong>Copyright © 2014-2020 <a href="#">Exam_Online</a>.</strong> All rights reserved.
+        <strong>2020 <a href="#">Exam_Online</a>.</strong> Practicum of Database.
     </footer>
-
 </div>
 
 
@@ -1129,67 +701,76 @@
         });
 
         console.log(question_list);
-        {#//预览按钮click事件#}
-        {#load_preview_modal();#}
-        {#//删除按钮click事件#}
-        {#load_delete_modal();#}
-
-        //编辑按钮click事件
-        //TODO 编辑按钮暂时不做，没时间直接删除
-        //新建试题按钮click事件
-
-        //侧边栏按钮实现
-        $('#course-manage').click(function () {
-            location.href = '/index';
-        });
-        $('#paper-manage').click(function () {
-            location.href = 'paper/manage';
-        });
-        $('#question-manage').click(function () {
-            location.href = 'question/manage';
-        });
-        $('#logout').click(function () {
-            $.ajax({
-                url: '/auth/logout',
-                method: 'post',
-                success:function (data) {
-                    if(data['code'] === 200){
-                        location.href = '/auth/login';
-                    }
+        {
+            #//预览按钮click事件#}
+            {
+                #load_preview_modal();
+                #
+            }
+            {
+                #//删除按钮click事件#}
+                {
+                    #load_delete_modal();
+                    #
                 }
-            })
-        });
 
+                //编辑按钮click事件
+                //TODO 编辑按钮暂时不做，没时间直接删除
+                //新建试题按钮click事件
 
-        //科目筛选功能实现
-        for(let i = 1; i < 8; i++){
-            let class_target = "#s000" + i;
-            $(class_target).click(function () {
-                let sub_name = subject_dict[class_target];
-                current_page = 1;
-                url_data = getQueryObject();
-                conductUrlData(url_data);
-                url_data['subject'] = sub_name;
-                url_data['page'] = current_page;
-                $.ajax({
-                    url: '/question',
-                    method: 'get',
-                    data:url_data,
-                    success: function(data){
-                        if(data['code'] === 200){
-                            question_list = data['questions'];
-                            load_table();
-                            update_page_number();
-                            judge_button_disabled();
-                        }
-                    }
+                //侧边栏按钮实现
+                $('#course-manage').click(function () {
+                    location.href = '/index';
                 });
-            });
-        }
+                $('#paper-manage').click(function () {
+                    location.href = 'paper/manage';
+                });
+                $('#question-manage').click(function () {
+                    location.href = 'question/manage';
+                });
+                $('#logout').click(function () {
+                    $.ajax({
+                        url: '/auth/logout',
+                        method: 'post',
+                        success: function (data) {
+                            if (data['code'] === 200) {
+                                location.href = '/auth/login';
+                            }
+                        }
+                    })
+                });
 
-        //
 
-    })
+                //科目筛选功能实现
+                for (let i = 1; i < 8; i++) {
+                    let class_target = "#s000" + i;
+                    $(class_target).click(function () {
+                        let sub_name = subject_dict[class_target];
+                        current_page = 1;
+                        url_data = getQueryObject();
+                        conductUrlData(url_data);
+                        url_data['subject'] = sub_name;
+                        url_data['page'] = current_page;
+                        $.ajax({
+                            url: '/question',
+                            method: 'get',
+                            data: url_data,
+                            success: function (data) {
+                                if (data['code'] === 200) {
+                                    question_list = data['questions'];
+                                    load_table();
+                                    update_page_number();
+                                    judge_button_disabled();
+                                }
+                            }
+                        });
+                    });
+                }
+
+                //
+
+            }
+        )
 </script>
 
 </body>

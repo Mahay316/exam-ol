@@ -13,11 +13,11 @@ app.config.from_pyfile('config.py')
 # 全局错误处理
 @app.route('/')
 def redirect_to_index():
-    session['no'] = 'student2_en'
-    session['role'] = STUDENT
-    session['name'] = '张三'
-    session['gender'] = '男'
-    session['major'] = 'CS'
+    # session['no'] = 'student2_en'
+    # session['role'] = STUDENT
+    # session['name'] = '张三'
+    # session['gender'] = '男'
+    # session['major'] = 'CS'
     return redirect('/index')
 
 
