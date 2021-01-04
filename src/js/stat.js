@@ -1,10 +1,11 @@
 import Vue from 'vue';
 import $ from 'jquery';
-import ('chart.js')
+import axios from "axios";
 import navBar from '../component/NavBar';
 import sideBar from '../component/SideBar';
 import mainFooter from '../component/Footer';
-import axios from "axios";
+
+import ('chart.js')
 
 // 柱形图配置
 let barChartOptions = {
@@ -42,25 +43,24 @@ const vue = new Vue({
             this.members = this.cacheMembers;
         },
         handleChangeExam(event) {
-            this.loadStat(1);
+            // 加载指定考试的统计信息
+            this.loadStat(event.target.value);
         },
         search() {
             // search按钮按一下搜索，再按一下清空搜索框
             if (this.searchSno.length && !this.adding) {
                 this.adding = true;
-                $.ajax({
-                    url: '/student/search?cno=1&sno=' + this.searchSno,
-                    method: 'GET',
-                    success(resp) {
-                        if (resp.code === 200) {
+                axios.get('/student/search?cno=1&sno=' + this.searchSno)
+                    .then(resp => {
+                        let data = resp.data;
+                        if (data.code === 200) {
                             // 此处this无法引用到Vue实例
-                            vue.members = [{sno: resp.sno, sname: resp.sname}];
-                            vue.inClass = resp.in_class;
-                        } else if (resp.code === 204) {
-                            vue.members = [];
+                            this.members = [{sno: data.sno, sname: data.sname}];
+                            this.inClass = data.in_class;
+                        } else if (resp.data === 204) {
+                            this.members = [];
                         }
-                    }
-                });
+                    });
             } else if (this.adding) {
                 this.searchSno = '';
                 this.adding = false;
@@ -85,58 +85,55 @@ const vue = new Vue({
             console.log('deleting');
             bootbox.confirm(`是否将学生${item.sname}移出该班级？`, (res) => {
                 if (res) {
-                    $.ajax({
-                        url: '/class/member?cno=1&sno=' + item.sno,
-                        method: 'DELETE',
-                        success(resp) {
-                            if (resp.code === 200)
-                                vue.loadMember(1);
-                        },
-                        error(err) {
-                            console.log(err);
-                        }
-                    });
+                    axios.delete('/class/member?cno=1&sno=' + item.sno)
+                        .then(resp => {
+                            if (resp.data.code === 200)
+                                this.loadMember(1);
+                        }).catch(err => console.log(err));
                 }
             });
         },
         loadMember(cno) {
             /* 向服务器请求班级成员列表并更新缓存 */
-            this.loadingMember = false;
-            $.ajax({
-                url: '/class/member?cno=' + cno,
-                method: 'GET',
-                success(resp) {
-                    if (resp.code === 200) {
-                        vue.members = resp.members;
+            this.loadingMember = true;
+            axios.get('/class/member?cno=' + cno)
+                .then(resp => {
+                    let data = resp.data;
+                    if (data.code === 200) {
+                        this.members = data.members;
                         // 缓存数据以减少向服务器请求的次数
-                        vue.cacheMembers = resp.members;
+                        this.cacheMembers = data.members;
                     }
-                },
-                error(err) {
-                    console.log(err);
-                },
-                complete() {
-                    vue.loadingMember = false;
-                }
-            });
+                }).catch(err => console.log(err))
+                .finally(() => this.loadingMember = false);
         },
-        loadStat(tno) {
-            $.ajax({
-                url: '/exam?tno=' + tno,
-                method: 'GET',
-                success(resp) {
-                    if (resp.code === 200) {
-                        fillBarChart($('#barChart').get(0).getContext('2d'), barChartOptions, resp.segments, resp.pscore);
-                        fillPieChart($('#pieChart').get(0).getContext('2d'), pieOptions, resp.segments);
+        loadStat(tno, create) {
+            this.loadingStat = true;
+            axios.get('/exam/?tno=' + tno)
+                .then(resp => {
+                    let data = resp.data;
+                    if (data.code === 200) {
+                        if (create) {
+                            // create为true时创建Chart对象
+                            this.barChart = fillBarChart($('#barChart').get(0).getContext('2d'),
+                                barChartOptions, data.segments, data.pscore);
+                            this.pieChart = fillPieChart($('#pieChart').get(0).getContext('2d'),
+                                pieOptions, data.segments);
+                        } else {
+                            // create为false时更新Chart对象数据集
+                            this.barChart.data.datasets[0].data = data.segments;
+                            this.barChart.data.labels = genLabels(data.pscore, 10);
+                            this.pieChart.data.datasets[0].data = [data.segments.slice(0, 6).reduce((pre, e) => pre + e)]
+                                .concat(data.segments.slice(-4));
+
+                            this.barChart.update();
+                            this.pieChart.update();
+                        }
                     }
-                },
-                complete() {
-                    vue.loadingStat = false;
-                }
-            });
+                }).finally(() => this.loadingStat = false);
         },
-        loadExam() {
-            axios.get('/class/exams?cno=1').then(resp => {
+        loadExam(cno) {
+            axios.get('/class/exams?cno=' + cno).then(resp => {
                 if (resp.data.code === 200) {
                     this.exams = resp.data.exams;
                 }
@@ -144,12 +141,15 @@ const vue = new Vue({
         }
     },
     mounted() {
-        this.loadExam();
+        this.loadExam(1);
         this.loadMember(1);
-        this.loadStat(1);
+        this.loadStat(1, true);
     }
 });
 
+/**
+ * 生成柱状图x轴的标签label
+ */
 function genLabels(maxScore, sliceNum) {
     let res = [];
     let step = maxScore / sliceNum;
@@ -161,8 +161,15 @@ function genLabels(maxScore, sliceNum) {
     return res;
 }
 
+/**
+ * 根据输入数据和配置绘制柱状图
+ * @param canvas 目标Canvas对象
+ * @param options 绘图配置
+ * @param segments 成绩数据，格式为0~maxScore分为10份，每份所占的人数
+ * @param maxScore 考试总成绩，用于生成x轴的标签label
+ */
 function fillBarChart(canvas, options, segments, maxScore) {
-    new Chart(canvas, {
+    let barChart = new Chart(canvas, {
         type: 'bar',
         data: {
             labels: genLabels(maxScore, 10),
@@ -182,13 +189,21 @@ function fillBarChart(canvas, options, segments, maxScore) {
         },
         options: options
     });
+
+    return barChart;
 }
 
 
+/**
+ * 根据输入数据和配置绘制饼图
+ * @param canvas 目标Canvas对象
+ * @param options 绘图配置
+ * @param data 成绩数据，格式为0~maxScore分为10份，每份所占的人数
+ */
 function fillPieChart(canvas, options, data) {
     // 将低6份成绩类别的学生合并成为不及格学生人数
     let processedData = [data.slice(0, 6).reduce((pre, e) => pre + e)].concat(data.slice(-4));
-    new Chart(canvas, {
+    let pieChart = new Chart(canvas, {
         type: 'pie',
         data: {
             labels: ['不及格', '合格', '中等', '良好', '优秀'],
@@ -201,4 +216,6 @@ function fillPieChart(canvas, options, data) {
         },
         options: options
     });
+
+    return pieChart;
 }
