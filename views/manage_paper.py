@@ -37,13 +37,13 @@ def get_paper():
     if subject is not None:
         select_dict['subject'] = int(subject)
         # results = Paper.select_papers_by(page, subject=subject)
-    elif used is not None:
+    if used is not None:
         select_dict['used'] = True if used == 'true' else False
         # results = Paper.select_papers_by(page, used=used)
-    elif pno is not None:
+    if pno is not None:
         select_dict['pno'] = pno
         # results = Paper.select_papers_by(page, pno=pno)
-    elif pname is not None:
+    if pname is not None:
         select_dict['pname'] = pname
         # results = Paper.select_papers_by(page, pname=pname)
     num, results = Paper.select_papers_by(int(page), **select_dict)
@@ -82,6 +82,7 @@ def add_paper():
 @should_be([MENTOR])
 def delete_paper():
     pno = int(request.args['pno'])
+    print(pno)
     Paper.delete_paper(pno)
     return jsonify({'code': 200})
 
