@@ -169,7 +169,7 @@ CREATE TABLE `test` (
   `Tno` INT NOT NULL AUTO_INCREMENT COMMENT '考试的编号',
   `Tname` varchar(20) NOT NULL COMMENT '考试的名称',
   `Tdesc` varchar(255) COMMENT '考试说明',
-  `Tstart` timestamp NOT NULL COMMENT '考试开始时间',
+  `Tstart` timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL COMMENT '考试开始时间',
   `Tend` timestamp DEFAULT NULL COMMENT '考试结束时间',
   `Pno` INT NOT NULL COMMENT '引用的试卷编号',
   `Cno` INT NOT NULL COMMENT '所属的课程编号',
