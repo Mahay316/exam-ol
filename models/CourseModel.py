@@ -1,10 +1,10 @@
 from sqlalchemy import Column, String, ForeignKey, Integer
 from sqlalchemy.orm import relationship
 
-from models.database import Base
+from common import model_common
 from models.StudentCourseModel import StudentCourse
 from models.TestModel import Test
-from common import model_common
+from models.database import Base
 
 
 class Course(Base):
@@ -162,5 +162,5 @@ class Course(Base):
                               'pscore': p.Pscore,
                               'pnum': p.Pnum,
                               'tstart': t.Tstart.timestamp(),
-                              'tend': t.Tend.timestamp()})
+                              'tend': -1 if t.Tend is None else t.Tend.timestamp()})
         return test_list

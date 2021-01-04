@@ -244,7 +244,7 @@ class Test(Base):
                 'pnum': paper.Pnum,
                 'st_blank': st.STblank,
                 'tstart': test.Tstart.timestamp(),
-                'tend': test.Tend.timestamp(),
+                'tend': -1 if test.Tend is None else test.Tend.timestamp(),
                 'tname': test.Tname,
                 'tdesc': test.Tdesc
             }
