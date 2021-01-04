@@ -4,6 +4,7 @@ import axios from "axios";
 import navBar from '../component/NavBar';
 import sideBar from '../component/SideBar';
 import mainFooter from '../component/Footer';
+import {parseSearchParam} from './util';
 
 import ('chart.js')
 
@@ -27,6 +28,7 @@ const vue = new Vue({
         adding: false,
         inClass: false,
         searchSno: '',
+        selectedTest: '',
         members: [],
         cacheMembers: [],
         exams: []
@@ -44,7 +46,7 @@ const vue = new Vue({
         },
         handleChangeExam(event) {
             // 加载指定考试的统计信息
-            this.loadStat(event.target.value);
+            this.loadStat(event.target.value, false);
         },
         search() {
             // search按钮按一下搜索，再按一下清空搜索框
@@ -136,14 +138,27 @@ const vue = new Vue({
             axios.get('/class/exams?cno=' + cno).then(resp => {
                 if (resp.data.code === 200) {
                     this.exams = resp.data.exams;
+                    if (this.params['tno']) {
+                        // 加载指定考试统计信息
+                        this.loadStat(this.params['tno'], true);
+                        // 同步更新下拉选择框
+                        this.selectedTest = this.params['tno'];
+                    } else if (this.exams.length) {
+                        // 若未指定查看的考试，则默认选择第一场考试进行查看
+                        this.loadStat(this.exams[0].tno, true);
+                        this.selectedTest = this.exams[0].tno;
+                    }
                 }
             });
         }
     },
     mounted() {
-        this.loadExam(1);
-        this.loadMember(1);
-        this.loadStat(1, true);
+        // 解析当前url的查询参数并保存
+        this.params = parseSearchParam();
+        if (this.params['cno']) {
+            this.loadExam(this.params['cno']);
+            this.loadMember(this.params['cno']);
+        }
     }
 });
 
