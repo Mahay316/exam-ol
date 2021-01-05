@@ -16,8 +16,9 @@ class Test(Base):
     Tno = Column(Integer, primary_key=True, comment='考试的编号')
     Tname = Column(String(20, 'utf8mb4_general_ci'), nullable=False, comment='考试的名称')
     Tdesc = Column(String(255, 'utf8mb4_general_ci'), comment='考试说明')
-    Tstart = Column(TIMESTAMP, nullable=False, comment='考试开始时间')
-    Tend = Column(TIMESTAMP, comment='考试结束时间')
+    #Todo tstart与tend的默认值
+    Tstart = Column(TIMESTAMP, nullable=False, default=111111, comment='考试开始时间')
+    Tend = Column(TIMESTAMP, default=111122, comment='考试结束时间')
     Pno = Column(ForeignKey('paper.Pno', ondelete='RESTRICT', onupdate='CASCADE'), nullable=False, index=True,
                  comment='引用的试卷编号')
     Cno = Column(ForeignKey('course.Cno', ondelete='RESTRICT', onupdate='CASCADE'), nullable=False, index=True,
@@ -262,6 +263,7 @@ class Test(Base):
         """
         发布考试
         同时将更新StudentTest
+        :param tname:
         :param tstart: 时间戳
         :param tend: 时间戳
         :return True if succeed else False
@@ -277,11 +279,15 @@ class Test(Base):
             test = Test(
                 Tname=tname,
                 Tdesc=tdesc,
-                Tstart=model_common.change_stamp_to_datatime(tstart),
-                Tend=model_common.change_stamp_to_datatime(tend),
                 Pno=pno,
                 Cno=cno
             )
+
+            if tstart:
+                test.Tstart=model_common.change_stamp_to_datatime(tstart)
+            if tend:
+                test.Tend = model_common.change_stamp_to_datatime(tend)
+
             session.add(test)
             session.commit()
 
@@ -289,9 +295,9 @@ class Test(Base):
             StudentTest.add_snos_and_tno(tno=test.Tno, snos=snos)
 
             return True
+
         except Exception as e:
             session.rollback()
-            raise e
             return False
 
         finally:
