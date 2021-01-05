@@ -1441,10 +1441,9 @@
                             info_num = data['info_num'];
                             page_num = data['page_num'];
                             $('#sum').text(info_num);
-                            load_table();
+                            update_all();
                         }
-                        update_page_number();
-                        judge_button_disabled();
+
                     }
                 });
             }
@@ -1468,9 +1467,7 @@
                             info_num = data['info_num'];
                             page_num = data['page_num'];
                             $('#sum').text(info_num);
-                            load_table();
-                            update_page_number();
-                            judge_button_disabled();
+                            update_all();
                         }
                     }
                 });
@@ -1496,9 +1493,7 @@
                             info_num = data['info_num'];
                             page_num = data['page_num'];
                             $('#sum').text(info_num);
-                            load_table();
-                            update_page_number();
-                            judge_button_disabled();
+                            update_all();
                         }
                     }
                 });
@@ -1533,10 +1528,8 @@
 
         //科目筛选按钮click事件
         for (let i = 0; i < 8; i++) {
-            let subno = 's000' + i;
             let subnumber = '.s000' + i;
             $(subnumber).click(function () {
-                //TODO 应ajax成功之后再修改url_data，全部都需要修改逻辑顺序
                 if (i === 0)
                     delete url_data['subject'];
                 else
@@ -1656,10 +1649,7 @@
                                         current_page = 1;
                                         $('#sum').text(info_num);
                                         paper_list = data['papers'];
-                                        load_table();
-
-                                        judge_button_disabled();
-                                        update_page_number();
+                                        update_all();
                                     }
                                 }
                             })
