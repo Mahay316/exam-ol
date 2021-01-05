@@ -231,7 +231,18 @@ class Question(Base):
             session.remove()
 
     @classmethod
-    def get_questions_by_pno(cls, pno):
+    # TODO 接口返回数据要改，我在return里给出
+    # :return: list of dict
+    # [dict1, dict2, ...]
+    # dict {
+    #     'qno': q.Qno,
+    #     'qtype': q.Qtype,
+    #     'qstem': q.Qstem,
+    #     'qanswer': q.Qanswer,
+    #     'qselect': q.Qselect,
+    #     'qpscore': QuestionPaper.QPscore
+    # }
+    def get_questions_by_pno(cls, pno) -> list:
         """
         通过试卷号获取该试卷的全部试题
         :return: list[Question]

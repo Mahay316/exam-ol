@@ -92,7 +92,7 @@ def preview_paper():
     """
     获取预览html
     """
-    return current_app.send_static_file('html/test_online.html')
+    return current_app.send_static_file('html/paper_preview.html')
 
 
 @paper_bp.route('/content', methods=['GET', 'POST'])
@@ -105,15 +105,18 @@ def get_paper_content():
             'questions': []
         }
 
-        questions = Question.get_questions_by_pno(pno)
-        for q in questions:
-            res_json['questions'].append({
-                'qno': q.Qno,
-                'qtype': q.Qtype,
-                'qstem': q.Qstem,
-                'qanswer': q.Qanswer,
-                'qselect': q.Qselect
-            })
+        # questions = Question.get_questions_by_pno(pno)
+        # for q in questions:
+        #     res_json['questions'].append({
+        #         'qno': q.Qno,
+        #         'qtype': q.Qtype,
+        #         'qstem': q.Qstem,
+        #         'qanswer': q.Qanswer,
+        #         'qselect': q.Qselect,
+        #         'qscore': q.Q
+        #     })
+
+        res_json['questions'] = Question.get_questions_by_pno(pno)
 
         return jsonify(res_json)
     else:
