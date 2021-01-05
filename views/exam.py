@@ -351,3 +351,8 @@ def delete_exam():
 @exam_bp.route('/paper')
 def get_exam_page():
     return current_app.send_static_file('html/test_online.html')
+
+
+@exam_bp.route('/detail')
+def get_exam_detail_page():
+    return current_app.send_static_file('html/test_detail.html')
