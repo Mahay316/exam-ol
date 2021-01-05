@@ -59,17 +59,12 @@ def get_questions():
 
     if subject is not None:
         select_dict['subject'] = int(subject)
-        # results = Question.select_questions_by(page, subject=subject)
-    elif qtype is not None:
+    if qtype is not None:
         select_dict['qtype'] = qtype
-        # results = Question.select_questions_by(page, qtype=qtype)
-    # elif qno is not None:
-    #     results = Question.select_questions_by(page, qno=qno)
-    elif content is not None:
+    if content is not None:
         select_dict['content'] = content
-        # results = Question.select_questions_by(page, content=content)
 
-    results = Question.select_questions_by(int(page), **select_dict)
+    num, results = Question.select_questions_by(int(page), **select_dict)
 
     for result in results:
         res_json['questions'].append({
@@ -81,7 +76,6 @@ def get_questions():
             'qsubject': result.Subno
         })
 
-    num = len(results)
     res_json['page_num'] = ceil(num / PAGE_SIZE)
     res_json['info_num'] = num
 
