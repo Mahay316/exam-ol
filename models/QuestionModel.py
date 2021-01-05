@@ -268,3 +268,14 @@ class Question(Base):
         finally:
             engine.dispose()
             session.remove()
+
+
+    # TODO
+    @classmethod
+    def get_questions_by_qnos(cls, qnos: list):
+        """
+        根据试题号列表返回试题对象
+
+        :param qnos: list of qno
+        :return: list of Question
+        """
