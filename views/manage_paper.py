@@ -1,4 +1,4 @@
-from flask import Blueprint, request, current_app, jsonify, session, redirect, url_for, abort
+from flask import Blueprint, request, current_app, jsonify, session, abort
 from models import Paper, Question
 from common.Role import *
 from decorators import should_be, login_required
@@ -37,13 +37,13 @@ def get_paper():
     if subject is not None:
         select_dict['subject'] = int(subject)
         # results = Paper.select_papers_by(page, subject=subject)
-    elif used is not None:
+    if used is not None:
         select_dict['used'] = True if used == 'true' else False
         # results = Paper.select_papers_by(page, used=used)
-    elif pno is not None:
+    if pno is not None:
         select_dict['pno'] = pno
         # results = Paper.select_papers_by(page, pno=pno)
-    elif pname is not None:
+    if pname is not None:
         select_dict['pname'] = pname
         # results = Paper.select_papers_by(page, pname=pname)
     num, results = Paper.select_papers_by(int(page), **select_dict)
@@ -92,7 +92,7 @@ def preview_paper():
     """
     获取预览html
     """
-    return current_app.send_static_file('html/paper_preview.html')
+    return current_app.send_static_file('html/test_online.html')
 
 
 @paper_bp.route('/content', methods=['GET', 'POST'])

@@ -59,15 +59,10 @@ def get_questions():
 
     if subject is not None:
         select_dict['subject'] = int(subject)
-        # results = Question.select_questions_by(page, subject=subject)
-    elif qtype is not None:
+    if qtype is not None:
         select_dict['qtype'] = qtype
-        # results = Question.select_questions_by(page, qtype=qtype)
-    # elif qno is not None:
-    #     results = Question.select_questions_by(page, qno=qno)
-    elif content is not None:
+    if content is not None:
         select_dict['content'] = content
-        # results = Question.select_questions_by(page, content=content)
 
     num, results = Question.select_questions_by(int(page), **select_dict)
 

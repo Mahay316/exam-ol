@@ -59,10 +59,10 @@ def get_students():
     if no is not None:
         select_dict['no'] = no
         # results = Paper.select_papers_by(page, subject=subject)
-    elif major is not None:
+    if major is not None:
         select_dict['major'] = major
         # results = Paper.select_papers_by(page, used=used)
-    elif name is not None:
+    if name is not None:
         select_dict['name'] = name
         # results = Paper.select_papers_by(page, pno=pno)
     num, results = Student.select_students_by(int(page), **select_dict)

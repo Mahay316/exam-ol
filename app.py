@@ -20,16 +20,14 @@ def redirect_to_index():
 @login_required('redirect')
 def index():
     """
-    负责根据用户身份在后端进行重定向，将不同身份用户定向到对应首页
-    如果未登录则定向到登录页，异常身份则报404
+    负责根据用户身份在后端进行重定向，装饰器定义了未登录的操作
+    函数体返回给用户对应页面
     """
-    if request.method == 'GET':
-        role = session.get('role')
-        if role == STUDENT or role == MENTOR:
-            return app.send_static_file('html/class_list.html')
-        elif role == ADMIN:
-            return redirect('/mentor/manage')
-            # return app.send_static_file('html/admin.html')
+    role = session.get('role')
+    if role == STUDENT or role == MENTOR:
+        return app.send_static_file('html/class_list.html')
+    elif role == ADMIN:
+        return redirect('/mentor/manage')
 
 
 @app.errorhandler(404)
