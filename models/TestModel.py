@@ -297,3 +297,11 @@ class Test(Base):
         finally:
             engine.dispose()
             session.remove()
+
+
+    # TODO
+    @classmethod
+    def delete_test(cls, tno):
+        """
+        调用存储过程删除考试
+        """

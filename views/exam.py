@@ -311,7 +311,7 @@ def get_exam_results():
     else:
         # TODO 验证学生是否有考试
         tno = int(request.args['tno'])
-        sno = request.args['sno']
+        sno = session['no']
 
         # TODO 增加判断考试是否完成的接口（已完成考试分两种情况时间截止(考了和没考)和提交卷子但时间没截止）
         # TODO 要先判断考试是否结束
@@ -369,13 +369,15 @@ def add_exam():
     return jsonify({'code': 200})
 
 
-# TODO
 @exam_bp.route('/', methods=['DELETE'])
 @should_be([MENTOR])
 def delete_exam():
     """
     删除考试
     """
+    tno = request.form.get('tno')
+    Test.delete_test(tno)
+    return jsonify({'code': 200})
 
 
 @exam_bp.route('/paper')
