@@ -312,6 +312,8 @@ def get_exam_results():
         # TODO 验证学生是否有考试
         tno = int(request.args['tno'])
         sno = request.args['sno']
+
+        # TODO 增加判断考试是否完成的接口（已完成考试分两种情况时间截止(考了和没考)和提交卷子但时间没截止）
         # TODO 要先判断考试是否结束
         # TODO 根据作答情况要是结束了没作答
 
