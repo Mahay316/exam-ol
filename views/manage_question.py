@@ -24,9 +24,9 @@ def add_question():
     向试卷库添加question
     """
     form = request.form
-    filed = ['code', 'qtype', 'qstem', 'qanswer', 'qselect', 'qsubject']
+    filed = ['qtype', 'qstem', 'qanswer', 'qselect', 'qsubject']
     try:
-        code, qtype, qstem, qanswer, qselect, qsubject = list(map(lambda x: form[x], filed))
+        qtype, qstem, qanswer, qselect, qsubject = list(map(lambda x: form[x], filed))
     except:
         return jsonify({'code': 204})
 

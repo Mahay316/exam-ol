@@ -175,6 +175,7 @@ def cache_questions():
     examID = int(request.args['examID'])
 
     test = Test.get_test(examID)
+    # TODO 增加是否判卷的判断，如果考试结束直接判卷
     # 确保权限满足且考试存在
     validated = permission_inadequate_or_exam_not_exists(test)
     if validated is not None:
@@ -225,6 +226,8 @@ def grade_exam():
     tno = int(request.form['tno'])
     # TODO 进行权限验证，即验证学生是否有该考试且考试已经开始
     paper = Test.get_paper_by_tno(tno)
+
+    # TODO 判断考试是否结束
 
     if paper is None:
         return jsonify({'code': 204})
@@ -309,6 +312,10 @@ def get_exam_results():
         # TODO 验证学生是否有考试
         tno = int(request.args['tno'])
         sno = request.args['sno']
+        # TODO 要先判断考试是否结束
+        # TODO 根据作答情况要是结束了没作答
+
+        # TODO 请求考试成绩的时候结束了的话要判个卷，主动调一下判卷接口
         infos = Test.get_student_test_info(tno, sno)
 
         if infos is None:
@@ -340,6 +347,7 @@ def add_exam():
     return jsonify({'code': 200})
 
 
+# TODO
 @exam_bp.route('/', methods=['DELETE'])
 @should_be([MENTOR])
 def delete_exam():
@@ -349,10 +357,12 @@ def delete_exam():
 
 
 @exam_bp.route('/paper')
+@should_be([STUDENT], do='404')
 def get_exam_page():
     return current_app.send_static_file('html/test_online.html')
 
 
 @exam_bp.route('/detail')
+@should_be([STUDENT], do='404')
 def get_exam_detail_page():
     return current_app.send_static_file('html/test_detail.html')

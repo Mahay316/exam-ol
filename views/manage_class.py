@@ -137,4 +137,7 @@ def get_exam_list_data():
     }
 
     res_json['exams'] = Course.get_test_info_by_cno(cno)
+
+    # TODO 判断考试是否结束
+
     return jsonify(res_json)
