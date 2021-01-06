@@ -49,8 +49,8 @@ new Vue({
                             if (ele.over) {
                                 axios.get('/exam/?tno=' + ele.tno).then(resp => {
                                     if (resp.data.code === 200) {
-                                        ele.score = resp.data.st_grade;
-                                        ele.maxScore = resp.data.pscore;
+                                        this.$set(ele, 'score', resp.data.st_grade);
+                                        this.$set(ele, 'maxScore', resp.data.pscore);
                                     }
                                 });
                             }
