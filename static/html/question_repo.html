@@ -829,19 +829,19 @@
                 <div class="modal-header">
                     <ul class="nav nav-tabs" id="custom-tabs-four-tab" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link active" id="custom-tabs-four-home-tab"
+                            <a class="nav-link active" id="selectpanel"
                                data-toggle="pill"
-                               href="#custom-tabs-four-home" role="tab">单选题</a>
+                               href="#selecttab" role="tab">单选题</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="custom-tabs-four-profile-tab"
+                            <a class="nav-link" id="multipanel"
                                data-toggle="pill"
-                               href="#custom-tabs-four-profile" role="tab">多选题</a>
+                               href="#multitab" role="tab">多选题</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="custom-tabs-four-messages-tab"
+                            <a class="nav-link" id="fillpanel"
                                data-toggle="pill"
-                               href="#custom-tabs-four-messages" role="tab">填空题</a>
+                               href="#filltab" role="tab">填空题</a>
                         </li>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
@@ -850,7 +850,7 @@
                 </div>
                 <div class="modal-body" style="min-height: 500px;">
                     <div class="tab-content" id="custom-tabs-four-tabContent">
-                        <div class="tab-pane fade active show" id="custom-tabs-four-home"
+                        <div class="tab-pane fade active show" id="selecttab"
                              role="tabpanel">
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
@@ -858,22 +858,22 @@
                                            for="inputGroupSelect01">题目科目</label>
                                 </div>
                                 <select class="custom-select" id="inputGroupSelect01">
-                                    <option value="s0001">软件工程</option>
-                                    <option value="s0002">数据库原理</option>
-                                    <option value="s0003">编译原理</option>
-                                    <option value="s0004">流体力学</option>
-                                    <option value="s0005">工程热力学</option>
-                                    <option value="s0006">C语言程序设计</option>
-                                    <option value="s0007">Java高级语言程序设计</option>
+                                    <option value="1">软件工程</option>
+                                    <option value="2">数据库原理</option>
+                                    <option value="3">编译原理</option>
+                                    <option value="4">流体力学</option>
+                                    <option value="5">工程热力学</option>
+                                    <option value="6">C语言程序设计</option>
+                                    <option value="7">Java高级语言程序设计</option>
                                 </select>
                             </div>
                             <div class="input-group mb-3" style="height: 150px;">
                                 <span class="input-group-text"><strong>题干部分</strong></span>
-                                <textarea class="form-control" aria-label="With textarea"
+                                <textarea class="form-control qstem" aria-label="With textarea"
                                           placeholder="最多输入255个字符"></textarea>
                             </div>
 
-                            <div class="form-group">
+                            <div class="form-group selectoption">
                                 <div id="option-alternative-1" class="input-group mb-2">
                                     <div class="input-group-prepend">
                                         <label class="input-group-text" for="inputA">A</label>
@@ -927,75 +927,76 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="tab-pane fade" id="custom-tabs-four-profile"
-                             role="tabpanel">
+                        <div class="tab-pane fade" id="multitab" role="tabpanel">
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <label class="input-group-text"
                                            for="inputGroupSelect01">题目科目</label>
                                 </div>
                                 <select class="custom-select" id="inputGroupSelect02">
-                                    <option value="s0001">软件工程</option>
-                                    <option value="s0002">数据库原理</option>
-                                    <option value="s0003">编译原理</option>
-                                    <option value="s0004">流体力学</option>
-                                    <option value="s0005">工程热力学</option>
-                                    <option value="s0006">C语言程序设计</option>
-                                    <option value="s0007">Java高级语言程序设计</option>
+                                    <option value="1">软件工程</option>
+                                    <option value="2">数据库原理</option>
+                                    <option value="3">编译原理</option>
+                                    <option value="4">流体力学</option>
+                                    <option value="5">工程热力学</option>
+                                    <option value="6">C语言程序设计</option>
+                                    <option value="7">Java高级语言程序设计</option>
                                 </select>
                             </div>
                             <div class="input-group"
                                  style="height: 150px; margin-bottom: 15px;">
                                 <span class="input-group-text"><strong>题干部分</strong></span>
-                                <textarea class="form-control" aria-label="With textarea"
+                                <textarea class="form-control qstem" aria-label="With textarea"
                                           placeholder="最多输入255个字符"></textarea>
                             </div>
-                            <div id="multi-option-alternative-1" class="input-group">
-                                <div class="input-group-prepend check-btn">
-                                    <span class="input-group-text alternative"><strong>A</strong></span>
+                            <div class="form-group selectoption">
+                                <div id="multi-option-alternative-1" class="input-group">
+                                    <div class="input-group-prepend check-btn">
+                                        <span class="input-group-text alternative"><strong>A</strong></span>
+                                    </div>
+                                    <input type="text" class="form-control" placeholder="输入A选项内容">
                                 </div>
-                                <input type="text" class="form-control" placeholder="输入A选项内容">
-                            </div>
-                            <div id="multi-option-alternative-2" class="input-group">
-                                <div class="input-group-prepend  check-btn">
-                                    <span class="input-group-text alternative"><strong>B</strong></span>
+                                <div id="multi-option-alternative-2" class="input-group">
+                                    <div class="input-group-prepend  check-btn">
+                                        <span class="input-group-text alternative"><strong>B</strong></span>
+                                    </div>
+                                    <input type="text" class="form-control" placeholder="输入B选项内容">
                                 </div>
-                                <input type="text" class="form-control" placeholder="输入B选项内容">
-                            </div>
-                            <div id="multi-option-alternative-3" class="input-group">
-                                <div class="input-group-prepend  check-btn">
-                                    <span class="input-group-text alternative"><strong>C</strong></span>
+                                <div id="multi-option-alternative-3" class="input-group">
+                                    <div class="input-group-prepend  check-btn">
+                                        <span class="input-group-text alternative"><strong>C</strong></span>
+                                    </div>
+                                    <input type="text" class="form-control" placeholder="输入C选项内容">
                                 </div>
-                                <input type="text" class="form-control" placeholder="输入C选项内容">
-                            </div>
-                            <div id="multi-option-alternative-4" class="input-group">
-                                <div class="input-group-prepend  check-btn">
-                                    <span class="input-group-text alternative"><strong>D</strong></span>
+                                <div id="multi-option-alternative-4" class="input-group">
+                                    <div class="input-group-prepend  check-btn">
+                                        <span class="input-group-text alternative"><strong>D</strong></span>
+                                    </div>
+                                    <input type="text" class="form-control" placeholder="输入D选项内容">
                                 </div>
-                                <input type="text" class="form-control" placeholder="输入D选项内容">
                             </div>
+
                         </div>
-                        <div class="tab-pane fade" id="custom-tabs-four-messages"
-                             role="tabpanel">
+                        <div class="tab-pane fade" id="filltab" role="tabpanel">
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <label class="input-group-text"
                                            for="inputGroupSelect01">题目科目</label>
                                 </div>
                                 <select class="custom-select" id="inputGroupSelect03">
-                                    <option value="s0001">软件工程</option>
-                                    <option value="s0002">数据库原理</option>
-                                    <option value="s0003">编译原理</option>
-                                    <option value="s0004">流体力学</option>
-                                    <option value="s0005">工程热力学</option>
-                                    <option value="s0006">C语言程序设计</option>
-                                    <option value="s0007">Java高级语言程序设计</option>
+                                    <option value="1">软件工程</option>
+                                    <option value="2">数据库原理</option>
+                                    <option value="3">编译原理</option>
+                                    <option value="4">流体力学</option>
+                                    <option value="5">工程热力学</option>
+                                    <option value="6">C语言程序设计</option>
+                                    <option value="7">Java高级语言程序设计</option>
                                 </select>
                             </div>
                             <div class="input-group"
                                  style="height: 150px; margin-bottom: 15px;">
                                 <span class="input-group-text"><strong>题干部分</strong></span>
-                                <textarea class="form-control" aria-label="With textarea"
+                                <textarea class="form-control qstem" aria-label="With textarea"
                                           placeholder="最多输入255个字符"></textarea>
                             </div>
                             <div class="form-group" style="margin-bottom: 15px;">
@@ -1020,7 +1021,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">关闭</button>
-                    <button type="button" class="btn btn-outline-primary">创建试题</button>
+                    <button type="button" class="btn btn-outline-primary" id="createquestion">创建试题</button>
                 </div>
             </div>
         </div>
@@ -1524,8 +1525,363 @@
                 });
             }
 
-            //预览
 
+            //新建试题click事件
+            question_type = "select";
+            selectnum = 4;
+            let option_content_list = new Array(30);
+
+            //清空
+            function clear_option_content_list() {
+                for (let i = 0; i < option_content_list.length; i++)
+                    option_content_list[i] = "";
+            }
+
+            option_content_list[1] = "OOO";
+            option_content_list[2] = "build";
+            option_content_list[3] = "ZIO";
+            option_content_list[4] = "decade";
+
+            function add_option(index, flag) {
+                //flag为0表示只有-，为1表示还有+,-1表示只有+
+                index;
+                let load_html = "<div id=\"option-alternative-" + index + "\" class=\"input-group mb-2\">";
+                load_html += "<div class=\"input-group-prepend\">";
+                load_html += "<label class=\"input-group-text\" for=\"input" + letter_list[index - 1] + "\" id='" + letter_list[index - 1] + "'>" + letter_list[index - 1] + "</label>";
+                load_html += "</div>";
+                load_html += "<input type=\"text\" class=\"form-control\" id=\"input" + letter_list[index - 1] + "\" placeholder=\"输入" + letter_list[index - 1] + "选项内容\">";
+                load_html += "<div class=\"input-group-append\" id=\"button-addon" + index + "\">";
+                if (flag != -1) {
+                    load_html += "<button class=\"btn btn-outline-danger\" type=\"button\" id='optiondelete" + index + "'>";
+                    load_html += "<i class=\"fas fa-minus\"></i>";
+                    load_html += "</button>";
+                }
+                if (flag === 1 || flag === -1) {
+                    load_html += "<button class=\"btn btn-outline-success\" type=\"button\" id='optionadd" + index + "'>";
+                    load_html += "<i class=\"fas fa-plus\"></i>";
+                    load_html += "</button>";
+                }
+                load_html += "</div>";
+                load_html += "</div>";
+                return load_html;
+            }
+
+            //根据选项数目刷新选项,两者公用
+            function update_option(parent_name) {
+                let selectoption = $(parent_name + " .selectoption");
+                if (selectnum === 1) {
+                    let load_html = add_option(1, -1);
+                    selectoption.empty();
+                    selectoption.append(load_html);
+                } else {
+                    selectoption.empty();
+                    for (let i = 1; i < selectnum + 1; i++) {
+                        if (i === selectnum) {
+                            let load_html = add_option(i, 1);
+                            selectoption.append(load_html);
+                        } else {
+                            let load_html = add_option(i, 0);
+                            selectoption.append(load_html);
+                        }
+                    }
+                }
+            }
+
+            //重新动态注入,两者公用
+            function content_inject(parent_name) {
+                for (let i = 1; i < selectnum + 1; i++)
+                    $(parent_name + " #input" + letter_list[i - 1]).val(option_content_list[i]);
+            }
+
+            //动态读出选项内文字(堆栈式),两者公用
+            function content_pop(parent_name) {
+                let count = 1;
+                for (let i = 1; i < selectnum + 1; i++) {
+                    let target = $(parent_name + " #input" + letter_list[i - 1]).val();
+                    if (target != "")
+                        option_content_list[count++] = target;
+                }
+            }
+
+            //动态读出选项内文字(数组式),两者公用
+            function content_out(parent_name) {
+                for (let i = 1; i < selectnum + 1; i++) {
+                    option_content_list[i] = $(parent_name + " #input" + letter_list[i - 1]).val();
+                }
+            }
+
+            //radio标签
+            let radioflag = 0;
+
+            //radio的label的click
+            function radio_label_click() {
+                let name = "#selecttab";
+                for (let i = 1; i < selectnum + 1; i++) {
+                    $(name + " #" + letter_list[i - 1]).click(function () {
+                        $(name + " #" + letter_list[radioflag - 1]).css("background-color", "#e9ecef");
+                        $(name + " #" + letter_list[i - 1]).css("background-color", "#ffa5a5");
+                        radioflag = i;
+                    });
+                }
+            }
+
+            //刷新label的css
+            function radio_update_label_css(parent_name) {
+                $(parent_name + " #" + letter_list[radioflag - 1]).css("background-color", "#ffa5a5");
+            }
+
+            //给所有加减按钮赋予事件，radio专用
+            function radio_plus_minus_click() {
+                let parent_name = "#selecttab";
+                for (let i = 1; i < selectnum + 1; i++) {
+                    $(parent_name + " #optiondelete" + i).click(function () {
+                        //把该行内容清空，清空寄存内容的数组，然后读出内容数据，更新selectnum
+                        //刷新选项数组，重新注入内容数据
+                        //重新添加事件,刷新标签格式
+                        $(parent_name + " #input" + letter_list[i - 1]).val("");
+                        clear_option_content_list();
+                        content_pop(parent_name);
+                        selectnum--;
+                        update_option(parent_name);
+                        content_inject(parent_name);
+                        radio_plus_minus_click();
+                        radio_label_click();
+                        if (radioflag === i)
+                            radioflag = 0;
+                        else
+                            radio_update_label_css(parent_name);
+                    });
+                    $(parent_name + " #optionadd" + i).click(function () {
+                        //清空内容数组，out内容数据寄存，更新selectnum
+                        //刷新选项，内容注入，重新赋予事件，刷新样式
+                        clear_option_content_list();
+                        content_out(parent_name);
+                        selectnum++;
+                        update_option(parent_name);
+                        content_inject(parent_name);
+                        radio_plus_minus_click();
+                        radio_label_click();
+                        radio_update_label_css(parent_name);
+                    });
+                }
+            }
+
+            //多选框使用的标签flag寄存器
+            let multi_option_label_list = new Array(30);
+
+            //清空multi_option_label_list（数组式）
+            function clear_multi_option_label_list() {
+                for (let i = 0; i < multi_option_label_list.length; i++)
+                    multi_option_label_list[i] = 0;
+            }
+
+            //去除一个multi元素
+            function remove_multi_index(index) {
+                for (let i = index; i < selectnum + 1; i++) {
+                    if (i === selectnum)
+                        multi_option_label_list[i] = 0;
+                    multi_option_label_list[i] = multi_option_label_list[i + 1];
+                }
+            }
+
+            //select的multiclick事件
+            function multi_label_click() {
+                let name = "#multitab";
+                for (let i = 1; i < selectnum + 1; i++) {
+                    $(name + " #" + letter_list[i - 1]).click(function () {
+                        if (multi_option_label_list[i] === 1) {
+                            $(name + " #" + letter_list[i - 1]).css("background-color", "#e9ecef");
+                            multi_option_label_list[i] = 0;
+                        } else {
+                            $(name + " #" + letter_list[i - 1]).css("background-color", "#ffa5a5");
+                            multi_option_label_list[i] = 1;
+                        }
+                    });
+                }
+            }
+
+            ////刷新multi的label的css
+            function update_multi_label_css() {
+                for (let i = 1; i < selectnum + 1; i++)
+                    if (multi_option_label_list[i] === 1)
+                        $("#multitab" + " #" + letter_list[i - 1]).css("background-color", "#ffa5a5");
+            }
+
+            function multi_plus_minus_click() {
+                let parent_name = "#multitab";
+                for (let i = 1; i < selectnum + 1; i++) {
+                    $(parent_name + " #optiondelete" + i).click(function () {
+                        //把该行内容清空，清空寄存内容的数组，然后读出内容数据，更新selectnum
+                        //刷新选项数组，重新注入内容数据
+                        //重新添加事件,刷新标签格式
+                        $(parent_name + " #input" + letter_list[i - 1]).val("");
+                        clear_option_content_list();
+                        content_pop(parent_name);
+                        selectnum--;
+                        update_option(parent_name);
+                        content_inject(parent_name);
+                        multi_plus_minus_click();
+                        multi_label_click();
+                        remove_multi_index(i);
+                        update_multi_label_css();
+                    });
+                    $(parent_name + " #optionadd" + i).click(function () {
+                        clear_option_content_list();
+                        content_out(parent_name);
+                        selectnum++;
+                        update_option(parent_name);
+                        content_inject(parent_name);
+                        multi_plus_minus_click();
+                        multi_label_click();
+                        update_multi_label_css();
+                    });
+                }
+            }
+
+            $("#newQuestion").on('show.bs.modal', function () {
+                selectnum = 4;
+                radioflag = 0;
+                update_option("#selecttab");
+                content_inject("#selecttab");
+                radio_plus_minus_click();
+                radio_label_click();
+                $('#selectpanel').click(function () {
+                    question_type = "select";
+                    selectnum = 4;
+                    radioflag = 0;
+                    update_option("#selecttab");
+                    content_inject("#selecttab");
+                    radio_plus_minus_click();
+                    radio_label_click();
+                });
+                $("#multipanel").click(function () {
+                    question_type = "multi";
+                    selectnum = 4;
+                    clear_multi_option_label_list();
+                    update_option("#multitab");
+                    content_inject("#multitab");
+                    multi_plus_minus_click();
+                    multi_label_click();
+                });
+            });
+
+
+            //判断是否有答案被选择
+            function have_answer() {
+                if (question_type === 'select')
+                    if (radioflag === 0)
+                        return false;
+                    else
+                        return true;
+                else if (question_type === 'multi') {
+                    for (let i = 1; i < selectnum + 1; i++)
+                        if (multi_option_label_list[i] === 1)
+                            return true;
+                    return false;
+                }
+            }
+
+            //获取答案列表
+            function get_answer() {
+                let typename;
+                let answer_list = new Array();
+                if (question_type === 'select') {
+                    answer_list[0] = letter_list[radioflag - 1];
+                } else if (question_type === "multi") {
+                    let count = 0;
+                    for (let i = 1; i < selectnum + 1; i++) {
+                        if (multi_option_label_list[i] === 1)
+                            answer_list[count++] = letter_list[i];
+                    }
+                } else
+                    typename = "#filltab";
+                return JSON.stringify(answer_list);
+            }
+
+            //判断选项是否都被填写
+            function all_option_filled() {
+                let typename;
+                if (question_type === 'select')
+                    typename = "#selecttab";
+                else if (question_type === "multi")
+                    typename = "#multitab";
+                else
+                    typename = "#filltab";
+                for (let i = 1; i < selectnum + 1; i++)
+                    if ($(typename + " #input" + letter_list[i - 1]).val() === "")
+                        return false;
+                return true;
+            }
+
+            //获取所有选项
+            function get_all_option() {
+                let typename;
+                if (question_type === 'select')
+                    typename = "#selecttab";
+                else if (question_type === "multi")
+                    typename = "#multitab";
+                let count = 0;
+                let option_list = new Array();
+                for (let i = 1; i < selectnum + 1; i++) {
+                    option_list[count++] = $(typename + " #input" + letter_list[i - 1]).val();
+                }
+                return JSON.stringify(option_list);
+            }
+
+            //题干是否完整 TODO 填空
+            function have_qstem() {
+                let typename;
+                if (question_type === 'select')
+                    typename = "#selecttab";
+                else if (question_type === "multi")
+                    typename = "#multitab";
+                else
+                    typename = "#filltab";
+                if ($(typename + " .qstem").val() === "")
+                    return false;
+                else
+                    return true;
+            }
+
+
+            $('#createquestion').click(function () {
+                if (have_answer() === true) {
+                    if (all_option_filled() === true)
+                        if (have_qstem() === true) {
+                            let typename;
+                            if (question_type === 'select') {
+                                typename = "#selecttab";
+
+                            } else if (question_type === "multi")
+                                typename = "#multitab";
+                            else
+                                typename = "#filltab";
+                            let data = {
+                                "qtype": question_type,
+                                "qstem": $(typename + " .qstem").val(),
+                                "qanswer": get_answer(),
+                                "qselect": get_all_option(),
+                                "qsubject": $(typename + " select").val()
+                            };
+                            console.log(data);
+
+                            $.ajax({
+                                url: '/question',
+                                method: 'post',
+                                data: data,
+                                success: function (data) {
+                                    if (data['code'] === 200) {
+                                        alert("新建成功！");
+                                    }
+                                }
+                            });
+                        } else
+                            alert("请填写题干！");
+                    else
+                        alert("所有选项都需输入！");
+                } else
+                    alert("请设置答案！");
+            });
         }
     )
 </script>
