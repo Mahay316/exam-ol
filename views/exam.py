@@ -323,6 +323,26 @@ def get_exam_results():
         if infos is None:
             return jsonify({'code': 403})
 
+        tend = infos.get('tend')
+        st_grade = infos.get('st_grade')
+        infos['over'] = False
+        if tend is not None:
+            # 如果考试限时，需要判断时间是不是截止了
+            now = datetime.now().timestamp()
+            if now > tend:
+                infos['over'] = True
+                if st_grade is None:
+                    # 考试结束但还没登记成绩
+                    # TODO 主动判卷，判卷完成后返回考试信息
+                    pass
+            else:
+                if st_grade is not None:
+                    # 考试未结束但已经交卷
+                    infos['over'] = True
+                else:
+                    # 考试未结束且未交卷
+                    infos['over'] = False
+
         infos['code'] = 200
         return jsonify(infos)
 
