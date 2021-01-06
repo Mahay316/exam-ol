@@ -231,17 +231,6 @@ class Question(Base):
             session.remove()
 
     @classmethod
-    # TODO 接口返回数据要改，我在return里给出
-    # :return: list of dict
-    # [dict1, dict2, ...]
-    # dict {
-    #     'qno': q.Qno,
-    #     'qtype': q.Qtype,
-    #     'qstem': q.Qstem,
-    #     'qanswer': q.Qanswer,
-    #     'qselect': q.Qselect,
-    #     'qpscore': QuestionPaper.QPscore
-    # }
     def get_questions_by_pno(cls, pno) -> list:
         """
         通过试卷号获取该试卷的全部试题
@@ -259,7 +248,22 @@ class Question(Base):
             for qno in qnos:
                 filter_list.append(cls.Qno == qno)
 
-            return session.query(cls).filter(or_(*filter_list)).all()
+            qs = session.query(cls).filter(or_(*filter_list)).all()
+
+            q_list = []
+            for q in qs:
+                qpscore = QuestionPaper.get_qpscore(pno=pno,qno=q.Qno)
+                q_dict = {
+                    'qno': q.Qno,
+                    'qtype': q.Qtype,
+                    'qstem': q.Qstem,
+                    'qanswer': q.Qanswer,
+                    'qselect': q.Qselect,
+                    'qpscore': qpscore
+                }
+                q_list.append(q_dict)
+
+            return q_list
 
         except Exception as e:
             session.rollback()
@@ -269,8 +273,6 @@ class Question(Base):
             engine.dispose()
             session.remove()
 
-
-    # TODO
     @classmethod
     def get_questions_by_qnos(cls, qnos: list):
         """
@@ -279,3 +281,22 @@ class Question(Base):
         :param qnos: list of qno
         :return: list of Question
         """
+
+        engine = model_common.get_mysql_engine()
+        session = model_common.get_mysql_session(engine)
+
+        try:
+            filter_list = []
+
+            for qno in qnos:
+                filter_list.append(cls.Qno == qno)
+
+            return session.query(cls).filter(or_(*filter_list)).all()
+
+        except Exception as e:
+            session.rollback()
+            raise e
+
+        finally:
+            engine.dispose()
+            session.remove()

@@ -74,6 +74,7 @@ class Paper(Base):
 
         try:
             filter_list = []
+            filter_list.append(cls.Pisdeleted == 0)
 
             return session.query(cls).filter(*filter_list).all()
 
@@ -97,6 +98,7 @@ class Paper(Base):
 
         try:
             filter_list = []
+            filter_list.append(cls.Pisdeleted == 0)
 
             if subject:
                 filter_list.append(cls.Subno == subject)
@@ -186,6 +188,7 @@ class Paper(Base):
 
         except Exception as e:
             session.rollback()
+            raise e
             return False
 
         finally:

@@ -11,12 +11,13 @@ SQLALCHEMY_TRACK_MODIFICATIONS = True
 DIALECT = 'mysql'
 DRIVER = 'pymysql'
 USERNAME = 'root'
-PASSWORD = 'mahay'
+PASSWORD = '123456'
 HOST = '127.0.0.1'
 PORT = '3306'
 DATABASE = 'exam'
 
-SQLALCHEMY_DATABASE_URI = '{}+{}://{}:{}@{}:{}/{}?charset=utf8mb4'.format(DIALECT,DRIVER,USERNAME,PASSWORD,HOST,PORT,DATABASE)
+SQLALCHEMY_DATABASE_URI = '{}+{}://{}:{}@{}:{}/{}?charset=utf8mb4'.format(DIALECT, DRIVER, USERNAME, PASSWORD, HOST,
+                                                                          PORT, DATABASE)
 
 # 数据库连接池初始化的容量
 POOL_SIZE = 5
