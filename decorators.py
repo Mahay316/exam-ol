@@ -1,6 +1,5 @@
 from functools import wraps
-from flask import session, redirect, url_for, jsonify
-from flask_login import current_user
+from flask import session, redirect, url_for, jsonify, abort
 
 #
 # def permission_required(permission):
@@ -14,7 +13,7 @@ from flask_login import current_user
 #     return decorator
 
 
-def should_be(roles:list):
+def should_be(roles:list, do='json'):
     """
     确保用户身份的装饰器
 
@@ -33,7 +32,12 @@ def should_be(roles:list):
                 return redirect(url_for('auth_bp.login'))
 
             if cur_role not in roles:
-                return jsonify({'code': 403})
+                if do == 'json':
+                    return jsonify({'code': 403})
+                elif do == '404':
+                    abort(404)
+                else:
+                    raise Exception('should_be装饰器do参数错误')
 
             return f(*args, **kwargs)
         return decorated_function

@@ -1,12 +1,10 @@
-import json
-from datetime import datetime
-
 from flask import Blueprint, request, jsonify, session, current_app
-
-from common.Role import *
-from decorators import should_be
-from models import Student
 from models import Test
+from datetime import datetime
+import json
+from models import Student, Paper
+from decorators import should_be
+from common.Role import *
 
 exam_bp = Blueprint('exam_bp', __name__)
 
@@ -126,8 +124,8 @@ def get_questions():
         cur_dict = {
             'questionID': q.Qno,
             'type': q.Qtype,
-            'stem': q.Qstem,  # 题干字符串
-            'choices': "",  # 选择题的选项，填空题无
+            'stem': q.Qstem, # 题干字符串
+            'choices': "", # 选择题的选项，填空题无
             'cache': "",
             'qpscore': qpscore
         }
@@ -135,16 +133,14 @@ def get_questions():
         # 为了后面判卷不用再次访问数据库，暂时缓存下来
         # TODO 未测试
         session['answers'][q.Qno] = {
-            'qanswer': json.loads(q.Qanswer),
+            'qanswer':json.loads(q.Qanswer),
             'qtype': q.Qtype,
             'qpscore': qpscore
         }
 
         # 如果是选择题则choices置空
         if not q.is_fill_in_blanks():
-            print(q.Qselect)
-            cur_dict['choices'] = json.loads(q.Qselect)
-            print(cur_dict['choices'])
+            cur_dict['choices'] = json.dumps(q.Qselect)
 
         # 用户已作答的缓存
         if q.Qno in session:
@@ -179,6 +175,7 @@ def cache_questions():
     examID = int(request.args['examID'])
 
     test = Test.get_test(examID)
+    # TODO 增加是否判卷的判断，如果考试结束直接判卷
     # 确保权限满足且考试存在
     validated = permission_inadequate_or_exam_not_exists(test)
     if validated is not None:
@@ -220,11 +217,6 @@ def cache_questions():
     return jsonify(res)
 
 
-@exam_bp.route('/detail')
-def get_test_detail():
-    return current_app.send_static_file('html/test_detail.html')
-
-
 @exam_bp.route('/grading', methods=['POST'])
 @should_be([STUDENT])
 def grade_exam():
@@ -234,6 +226,8 @@ def grade_exam():
     tno = int(request.form['tno'])
     # TODO 进行权限验证，即验证学生是否有该考试且考试已经开始
     paper = Test.get_paper_by_tno(tno)
+
+    # TODO 判断考试是否结束
 
     if paper is None:
         return jsonify({'code': 204})
@@ -274,7 +268,6 @@ def grade_exam():
     del session['answers']
 
     return jsonify({'code': 200})
-
 
 @exam_bp.route('/', methods=['GET'])
 @should_be([MENTOR, STUDENT])
@@ -319,10 +312,36 @@ def get_exam_results():
         # TODO 验证学生是否有考试
         tno = int(request.args['tno'])
         sno = request.args['sno']
+
+        # TODO 增加判断考试是否完成的接口（已完成考试分两种情况时间截止(考了和没考)和提交卷子但时间没截止）
+        # TODO 要先判断考试是否结束
+        # TODO 根据作答情况要是结束了没作答
+
+        # TODO 请求考试成绩的时候结束了的话要判个卷，主动调一下判卷接口
         infos = Test.get_student_test_info(tno, sno)
 
         if infos is None:
             return jsonify({'code': 403})
+
+        tend = infos.get('tend')
+        st_grade = infos.get('st_grade')
+        infos['over'] = False
+        if tend is not None:
+            # 如果考试限时，需要判断时间是不是截止了
+            now = datetime.now().timestamp()
+            if now > tend:
+                infos['over'] = True
+                if st_grade is None:
+                    # 考试结束但还没登记成绩
+                    # TODO 主动判卷，判卷完成后返回考试信息
+                    pass
+            else:
+                if st_grade is not None:
+                    # 考试未结束但已经交卷
+                    infos['over'] = True
+                else:
+                    # 考试未结束且未交卷
+                    infos['over'] = False
 
         infos['code'] = 200
         return jsonify(infos)
@@ -350,6 +369,7 @@ def add_exam():
     return jsonify({'code': 200})
 
 
+# TODO
 @exam_bp.route('/', methods=['DELETE'])
 @should_be([MENTOR])
 def delete_exam():
@@ -359,5 +379,12 @@ def delete_exam():
 
 
 @exam_bp.route('/paper')
+@should_be([STUDENT], do='404')
 def get_exam_page():
     return current_app.send_static_file('html/test_online.html')
+
+
+@exam_bp.route('/detail')
+@should_be([STUDENT], do='404')
+def get_exam_detail_page():
+    return current_app.send_static_file('html/test_detail.html')
