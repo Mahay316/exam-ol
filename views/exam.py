@@ -54,6 +54,59 @@ def guarantee_exam_begin(test: Test):
     return None
 
 
+def auto_grade(tno: int):
+    paper = Test.get_paper_by_tno(tno)
+
+    if paper is None:
+        return jsonify({'code': 204})
+
+    pnum = paper.Pnum
+    right_num, did_num, stu_grade = 0, 0, 0
+
+    cached_questionID = session.get('cached_questionID')
+
+    if cached_questionID is None:
+        # 说明没有进过考试页面，题目肯定都没作答
+        Test.set_test_grade(tno, session['no'], st_wrong=0, st_blank=pnum, st_grade=0)
+        if 'answer' in session:
+            del session['answer']
+        return jsonify({'code': 200})
+
+    for quiz_id in list(set(cached_questionID)):
+        did_num += 1
+        answer = session['answers'][quiz_id]
+        qtype = answer['qtype']
+        # ["A", "B"]
+        qanswer = answer['qanswer']
+        qpscore = answer['qpscore']
+
+        # {'choice': ["A", "B"]}
+        user_ans = session[quiz_id]['choice']
+        flag = False
+        if qtype == 'select':
+            flag = qanswer[0] == user_ans[0]
+        elif qtype == 'multi':
+            user_ans.sort()
+            qanswer.sort()
+            flag = user_ans == qanswer
+        elif qtype == 'fill':
+            flag = user_ans == qanswer
+        if flag:
+            right_num += 1
+            stu_grade += qpscore
+
+    Test.set_test_grade(tno, session['no'], st_wrong=pnum - right_num, st_blank=pnum - did_num, st_grade=stu_grade)
+
+    # TODO 清理session易出错, session存储逻辑要改变，为了
+    for quiz_id in list(set(cached_questionID)):
+        del session[quiz_id]
+    del session['cached_questionID']
+    del session['all_question_ids']
+    del session['answers']
+
+    return jsonify({'code': 200})
+
+
 @exam_bp.route('/time', methods=['GET'])
 @should_be([STUDENT])
 def get_exam_time_info():
@@ -186,6 +239,14 @@ def cache_questions():
     if validated is not None:
         return validated
 
+    tend = test.Tend
+    if tend is not None:
+        # 可能考试已经结束但前端还未退出
+        if datetime.now().timestamp() > tend:
+            # 考试已经结束，自动判卷并返回考试结束代码
+            auto_grade(examID)
+            return jsonify({'code': 204})
+
     # session缓存已保存的题目id
     if 'cached_questionID' not in session:
         # 由于session需要序列化因此不能用set(), 在这里用list然后返回时用set去重
@@ -225,49 +286,9 @@ def grade_exam():
     """
     tno = int(request.form['tno'])
     # TODO 进行权限验证，即验证学生是否有该考试且考试已经开始
-    paper = Test.get_paper_by_tno(tno)
 
-    # TODO 判断考试是否结束
+    return auto_grade(tno)
 
-    if paper is None:
-        return jsonify({'code': 204})
-
-    pnum = paper.Pnum
-    right_num, did_num, stu_grade = 0, 0, 0
-
-    for quiz_id in list(set(session['cached_questionID'])):
-        did_num += 1
-        answer = session['answers'][quiz_id]
-        qtype = answer['qtype']
-        # ["A", "B"]
-        qanswer = answer['qanswer']
-        qpscore = answer['qpscore']
-
-        # {'choice': ["A", "B"]}
-        user_ans = session[quiz_id]['choice']
-        flag = False
-        if qtype == 'select':
-            flag = qanswer[0] == user_ans[0]
-        elif qtype == 'multi':
-            user_ans.sort()
-            qanswer.sort()
-            flag = user_ans == qanswer
-        elif qtype == 'fill':
-            flag = user_ans == qanswer
-        if flag:
-            right_num += 1
-            stu_grade += qpscore
-
-    Test.set_test_grade(tno, session['no'], st_wrong=pnum - right_num, st_blank=pnum - did_num, st_grade=stu_grade)
-
-    # TODO 清理session易出错, session存储逻辑要改变，为了
-    for quiz_id in list(set(session['cached_questionID'])):
-        del session[quiz_id]
-    del session['cached_questionID']
-    del session['all_question_ids']
-    del session['answers']
-
-    return jsonify({'code': 200})
 
 @exam_bp.route('/', methods=['GET'])
 @should_be([MENTOR, STUDENT])
@@ -313,11 +334,6 @@ def get_exam_results():
         tno = int(request.args['tno'])
         sno = session['no']
 
-        # TODO 增加判断考试是否完成的接口（已完成考试分两种情况时间截止(考了和没考)和提交卷子但时间没截止）
-        # TODO 要先判断考试是否结束
-        # TODO 根据作答情况要是结束了没作答
-
-        # TODO 请求考试成绩的时候结束了的话要判个卷，主动调一下判卷接口
         infos = Test.get_student_test_info(tno, sno)
 
         if infos is None:
@@ -330,11 +346,13 @@ def get_exam_results():
             # 如果考试限时，需要判断时间是不是截止了
             now = datetime.now().timestamp()
             if now > tend:
-                infos['over'] = True
                 if st_grade is None:
                     # 考试结束但还没登记成绩
-                    # TODO 主动判卷，判卷完成后返回考试信息
-                    pass
+                    # 主动判卷，判卷后重新请求考试结果
+                    auto_grade(tno)
+                    infos = Test.get_student_test_info(tno, sno)
+
+                infos['over'] = True
             else:
                 if st_grade is not None:
                     # 考试未结束但已经交卷

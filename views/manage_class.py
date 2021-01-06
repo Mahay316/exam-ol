@@ -117,7 +117,7 @@ def change_student():
         return jsonify({'code': 200})
 
 
-@class_bp.route('stat')
+@class_bp.route('/stat')
 def get_exam_stat():
     cno = request.args.get('cno')
     if cno is None or not has_this_class(int(cno)):
@@ -137,7 +137,5 @@ def get_exam_list_data():
     }
 
     res_json['exams'] = Course.get_test_info_by_cno(cno)
-
-    # TODO 判断考试是否结束
 
     return jsonify(res_json)
