@@ -1,6 +1,6 @@
 from sqlalchemy import Column, String, ForeignKey, Integer
 from sqlalchemy.orm import relationship
-
+from datetime import datetime
 from models.database import Base
 from models.StudentCourseModel import StudentCourse
 from models.TestModel import Test
@@ -149,6 +149,8 @@ class Course(Base):
             'pnum': int
             'tstart': 时间戳
             'tend': 时间戳
+            # TODO 增加了一个字段, 请凯哥检查一下是否有误
+            'over': True or False，判断考试是否已经结束
         }]
         """
 
@@ -162,5 +164,7 @@ class Course(Base):
                               'pscore': p.Pscore,
                               'pnum': p.Pnum,
                               'tstart': t.Tstart.timestamp(),
-                              'tend': t.Tend.timestamp()})
+                              'tend': t.Tend.timestamp() if t.Tend is not None else None,
+                              'over': t.Tend.timestamp() < datetime.now().timestamp() if t.Tend is not None else False,
+            })
         return test_list
