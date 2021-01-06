@@ -19,95 +19,8 @@
 </head>
 <body class="sidebar-mini layout-fixed">
 <div class="wrapper" id="pane">
-    <!-- Navbar -->
-    <nav class="main-header navbar navbar-expand navbar-white navbar-light shadow">
-        <!-- Left navbar links -->
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link" data-widget="pushmenu" href="#" role="button">
-                    <i class="fas fa-bars">
-                    </i>
-                </a>
-            </li>
-            <li class="nav-item d-none d-sm-inline-block">
-                <a href="/" class="nav-link active">首页</a>
-            </li>
-        </ul>
-        <ul class="navbar-nav ml-auto" style="padding-right: 17px;">
-            <li class="nav-item">
-                <a class="nav-link" data-widget="fullscreen" href="#" role="button">
-                    <i class="fas fa-expand-arrows-alt"></i>
-                </a>
-            </li>
-        </ul>
-    </nav>
-    <!-- /.navbar -->
-
-    <!-- Main Sidebar Container -->
-    <aside class="main-sidebar sidebar-dark-primary elevation-4">
-        <!-- Brand Logo -->
-        <a href="#" class="brand-link">
-            <img src="/static/img/logo_white.png" alt="Logo" class="brand-image img-md elevation-3"
-                 style="opacity: .8">
-            <span class="brand-text font-weight-light">在线考试系统</span>
-        </a>
-
-        <!-- Sidebar -->
-        <div class="sidebar">
-            <!-- Sidebar user panel (optional) -->
-            <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-                <div class="image">
-                    <img src="/static/img/avatar.png" class="img-circle elevation-2" alt="User Image">
-                </div>
-                <div class="info">
-                    <a href="#" class="d-block">张三老师，您好！</a>
-                </div>
-            </div>
-
-            <!-- Sidebar Menu -->
-            <nav class="mt-2">
-                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
-                    data-accordion="false">
-                    <li class="nav-header">管理</li>
-                    <li class="nav-item">
-                        <a href="/index" class="nav-link active">
-                            <i class="nav-icon fas fa-paper-plane"></i>
-                            <p>
-                                班级管理
-                            </p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="/paper/manage" class="nav-link">
-                            <i class="nav-icon fas fa-paperclip"></i>
-                            <p>
-                                试卷管理
-                            </p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="/question/manage" class="nav-link">
-                            <i class="nav-icon fas fa-pen"></i>
-                            <p>
-                                试题管理
-                            </p>
-                        </a>
-                    </li>
-                    <li class="nav-header">账号</li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="nav-icon fas fa-door-open"></i>
-                            <p>
-                                退出登录
-                            </p>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-            <!-- /.sidebar-menu -->
-        </div>
-        <!-- /.sidebar -->
-    </aside>
+    <nav-bar></nav-bar>
+    <side-bar></side-bar>
 
     <div class="content-wrapper" style="min-height: 1370px;">
         <section class="content-header">
@@ -149,17 +62,25 @@
                                             <span class="exam-info">结束时间：{{ item.tend | formatDateTime }}</span>
                                         </div>
                                         <div class="timeline-footer text-right">
-                                            <span v-if="item.score">{{ item.score }} / {{ item.maxScore }}</span>
-                                            <a class="btn btn-primary ml-auto" v-else-if="role === 'student'"
-                                               href="/exam/detail">参加考试</a>
-                                            <a class="btn btn-primary ml-auto" v-if="role === 'mentor'"
-                                               :href="'/class/stat?cno=' + params['cno'] + '&tno=' + item.tno">
-                                                查看统计
-                                            </a>
-                                            <a class="btn btn-danger ml-auto" href="#" v-if="role === 'mentor'"
-                                               @click="deleteExam(item)">
-                                                删除考试
-                                            </a>
+                                            <template v-if="role === 'mentor'">
+                                                <a class="btn btn-primary ml-auto"
+                                                   :href="'/class/stat?cno=' + params['cno'] + '&tno=' + item.tno">
+                                                    查看统计
+                                                </a>
+                                                <a class="btn btn-danger ml-auto" href="#" v-if="role === 'mentor'"
+                                                   @click="deleteExam(item)">
+                                                    删除考试
+                                                </a>
+                                            </template>
+                                            <template v-else-if="role === 'student'">
+                                                <span v-if="item.over">
+                                                    {{ item.score }} / {{ item.maxScore }}
+                                                </span>
+                                                <a class="btn btn-primary ml-auto" v-else
+                                                   :href="'/exam/detail?tno=' + item.tno">
+                                                    参加考试
+                                                </a>
+                                            </template>
                                         </div>
                                     </div>
                                 </div>
@@ -173,40 +94,9 @@
                 </div>
             </div>
         </section>
-
-
-        <div class="modal fade" id="delete" style="display: none;" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <p class="modal-title">删除考试警告</p>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="form-group" style="text-align: center;">
-                            <br>
-                            <h4>确认删除考试吗？</h4>
-                        </div>
-                    </div>
-                    <div class="modal-footer justify-content-end">
-                        <button type="button" class="btn btn-outline-primary" data-dismiss="modal">取消</button>
-                        <button type="button" class="btn btn-outline-danger">确认删除</button>
-                    </div>
-                </div>
-                <!-- /.modal-content -->
-            </div>
-            <!-- /.modal-dialog -->
-        </div>
     </div>
 
-    <footer class="main-footer">
-        <div class="float-right d-none d-sm-block">
-            <b>Version</b> 1.0.0
-        </div>
-        <strong>Copyright © 2014-2020 <a href="#">Exam_Online</a>.</strong> All rights reserved.
-    </footer>
+    <main-footer></main-footer>
 </div>
 
 <!-- jQuery -->
@@ -215,6 +105,6 @@
 <script src="/static/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->
 <script src="/static/adminlte/js/adminlte.min.js"></script>
-<script src="/static/dist/examList.js"></script>
+<script src="/static/dist/testList.js"></script>
 </body>
 </html>

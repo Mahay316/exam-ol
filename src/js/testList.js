@@ -26,6 +26,10 @@ new Vue({
             bootbox.confirm(`是否删除考试"${item.tname}"？`, (result) => {
                 if (result) {
                     // TODO: 删除考试
+                    axios.delete('/exam?tno=' + item.tno).then(resp => {
+                        if (resp.data.code === 403)
+                            bootbox.alert('无权限删除考试！');
+                    });
                     this.loadExam(this.params['cno']);
                 }
             });
@@ -35,18 +39,16 @@ new Vue({
                 if (resp.data.code === 200) {
                     let sortedExams = resp.data.exams;
                     // 根据起始时间降序排列，最新的考试在最前面
+                    // 排序是为了生成日期标签且方便查看
                     sortedExams.sort((a, b) => Number(b.tstart) - Number(a.tstart));
 
                     this.exams = sortedExams;
                     if (this.role === 'student') {
                         // 学生获取所有已经结束的考试的成绩
                         this.exams.forEach(ele => {
-                            // 已结束考试或不限时考试
-                            // 不限时考试需要尝试获得成绩，然后再判断是否已经作答试卷
-                            if (Number(ele.tend) < Date.parse(Date())) {
+                            if (ele.over) {
                                 axios.get('/exam/?tno=' + ele.tno).then(resp => {
                                     if (resp.data.code === 200) {
-                                        console.log(resp.data);
                                         ele.score = resp.data.st_grade;
                                         ele.maxScore = resp.data.pscore;
                                     }
