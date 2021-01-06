@@ -14,7 +14,8 @@ from models import *
 
 def fun():
 
-    print(Question.get_question_num())
+    print(Test.get_student_test_info(6, 120181080102))
+    # print(Question.get_question_num())
     # for x in Question.get_questions_by_qnos([1, 3, 4, 5, 6]):
     #     print([x.Qno, x.Qstem, x.Qtype])
     # print(Question.get_questions_by_pno(1))

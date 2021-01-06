@@ -16,9 +16,8 @@ class Test(Base):
     Tno = Column(Integer, primary_key=True, comment='考试的编号')
     Tname = Column(String(20, 'utf8mb4_general_ci'), nullable=False, comment='考试的名称')
     Tdesc = Column(String(255, 'utf8mb4_general_ci'), comment='考试说明')
-    #Todo tstart与tend的默认值
-    Tstart = Column(TIMESTAMP, nullable=False, default=111111, comment='考试开始时间')
-    Tend = Column(TIMESTAMP, default=111122, comment='考试结束时间')
+    Tstart = Column(TIMESTAMP, nullable=False, default=datetime.utcnow(), comment='考试开始时间')
+    Tend = Column(TIMESTAMP, comment='考试结束时间')
     Pno = Column(ForeignKey('paper.Pno', ondelete='RESTRICT', onupdate='CASCADE'), nullable=False, index=True,
                  comment='引用的试卷编号')
     Cno = Column(ForeignKey('course.Cno', ondelete='RESTRICT', onupdate='CASCADE'), nullable=False, index=True,
@@ -238,17 +237,24 @@ class Test(Base):
             from models.StudentTestModel import StudentTest
             st = StudentTest.get_st(tno=tno, sno=sno)
 
-            return {
+            test_dict = {
                 'st_grade': st.STgrade,
                 'pscore': paper.Pscore,
                 'st_wrong': st.STwrong,
                 'pnum': paper.Pnum,
                 'st_blank': st.STblank,
                 'tstart': test.Tstart.timestamp(),
-                'tend': test.Tend.timestamp(),
                 'tname': test.Tname,
                 'tdesc': test.Tdesc
             }
+
+            if test.Tend:
+                test_dict['tend'] = test.Tend.timestamp()
+
+            else:
+                test_dict['tend'] = None
+
+            return test_dict
 
         except Exception as e:
             session.rollback()
