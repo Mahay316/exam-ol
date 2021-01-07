@@ -999,14 +999,16 @@
                                 <textarea class="form-control qstem" aria-label="With textarea"
                                           placeholder="最多输入255个字符"></textarea>
                             </div>
-                            <div class="form-group" style="margin-bottom: 15px;">
+                            <div class="form-group">
+                                <button class="btn btn-outline-primary" id="addnewfilloption">添加填空</button>
+                            </div>
+                            <div class="form-group" style="margin-bottom: 15px;" id="fillanswer">
                                 <label>正确答案</label>
                                 <div id="completion-1" class="input-group">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text alternative"><strong>1</strong></span>
                                     </div>
-                                    <input type="text" class="form-control"
-                                           placeholder="输入填空答案，/分隔相似答案">
+                                    <input type="text" class="form-control" placeholder="输入填空答案，/分隔相似答案">
                                 </div>
                                 <div id="completion-2" class="input-group">
                                     <div class="input-group-prepend">
@@ -1738,6 +1740,126 @@
                 }
             }
 
+
+            //填空题部分
+            let fill_option_count = 0;
+            let fill_option_list = new Array(30);
+            let fill_content_list = new Array(30);
+
+            //清空fill_option_list
+            function clear_fill_option_list() {
+                for (let i = 0; i < fill_option_list.length; i++)
+                    fill_option_list[i] = "";
+            }
+
+            function clear_fill_content_list() {
+                for (let i = 0; i < fill_content_list.length; i++)
+                    fill_content_list[i] = "";
+            }
+
+            //根据index获取填空题的html
+            function add_fill_option_html(index) {
+                let load_html = "";
+                load_html += "<div id=\"completion" + index + "\" class=\"input-group\">";
+                load_html += "<div class=\"input-group-prepend\">";
+                load_html += "<span class=\"input-group-text alternative\"><strong>" + index + "</strong></span>";
+                load_html += "</div>";
+                load_html += "<input type=\"text\" class=\"form-control\" placeholder=\"输入填空答案，/分隔相似答案\" id='completioninput" + index + "'>";
+                load_html += "</div>";
+                return load_html;
+            }
+
+            //根据count刷新答案框
+            function update_fill_answer() {
+                let target = $("#fillanswer");
+                target.empty();
+                target.append("<label>正确答案</label>");
+                for (let i = 1; i < fill_option_count + 1; i++) {
+                    let load_html = add_fill_option_html(i);
+                    target.append(load_html);
+                }
+            }
+
+            //搜索文本改变之后原文中还剩下的填空
+            function looking_for_index() {
+                let target_text = $("#filltab .qstem").val();
+                let temp_list = new Array();
+                let count = 0;
+                for (let i = 1; i < fill_option_count + 10; i++) {
+                    if (target_text.includes("[填空" + i + "]"))
+                        temp_list[count++] = i;
+                }
+                return temp_list;
+            }
+
+            //更新文本中的填空文本
+            function update_index(temp_list) {
+                let count = 1;
+                let target = $("#filltab .qstem");
+                let target_text = $("#filltab .qstem").val();
+                for (let i = 0; i < temp_list.length; i++) {
+                    let target_index = target_text.indexOf("[填空" + temp_list[i] + "]") + 3;
+                    target_text = target_text.substr(0, target_index) + count.toString() + target_text.substr(target_index + count.toString().length);
+                    count++;
+                }
+                target.val(target_text);
+            }
+
+            //弹出答案文本
+            function fill_content_pop() {
+                clear_fill_content_list();
+                for (let i = 1; i < fill_option_count + 1; i++) {
+                    fill_content_list[i] = $("#completioninput" + i).val();
+                }
+            }
+
+            //根据temp_list删减content元素
+            function remove_fill_content_list_index(temp_list) {
+                let index = 1;
+                for (let i = 0; i < temp_list.length + 1; i++) {
+                    while (index < temp_list[i]) {
+                        for (let j = index; j < fill_content_list.length; j++) {
+                            fill_content_list[j] = fill_content_list[j + 1];
+                        }
+                        index++;
+                    }
+                    index++;
+                }
+                console.log(temp_list);
+                console.log(fill_content_list);
+            }
+
+            //重新注入答案内容
+            function fill_content_reinject() {
+                for (let i = 1; i < fill_option_count + 1; i++) {
+                    fill_content_list[i] = $("#completioninput" + i).val(fill_content_list[i]);
+                }
+            }
+
+            function fill_update_all() {
+                //检查文本框中的填空变化
+                //将答案中的内容弹出，刷新计数器，相应更新页面，将内容填入
+                let temp_list = looking_for_index();
+                fill_content_pop();
+                remove_fill_content_list_index(temp_list);
+                fill_option_count = temp_list.length;
+                update_fill_answer();
+                update_index(temp_list);
+                fill_content_reinject();
+            }
+
+            //文本框失去焦点后更新
+            $("#filltab .qstem").change(function () {
+                fill_update_all();
+            });
+
+
+            $('#addnewfilloption').click(function () {
+                $("#filltab .qstem").val($("#filltab .qstem").val() + "[填空" + (fill_option_count + 1) + "]");
+                fill_option_count++;
+                fill_update_all();
+            });
+
             $("#newQuestion").on('show.bs.modal', function () {
                 selectnum = 4;
                 radioflag = 0;
@@ -1763,6 +1885,10 @@
                     multi_plus_minus_click();
                     multi_label_click();
                 });
+                $("#fillpanel").click(function () {
+                    question_type = "fill";
+                    fill_update_all();
+                });
             });
 
 
@@ -1778,12 +1904,28 @@
                         if (multi_option_label_list[i] === 1)
                             return true;
                     return false;
+                } else {
+                    fill_content_pop();
+                    console.log(fill_content_list);
+                    console.log(fill_option_count);
+                    if (fill_option_count === 0)
+                        return false;
+                    else if (fill_option_count === 1)
+                        if (fill_content_list[1] === "")
+                            return false;
+                        else
+                            return true;
+                    else
+                        for (let i = 1; i < fill_option_count + 1; i++) {
+                            if (fill_content_list[i] === "")
+                                return false;
+                        }
+                    return true;
                 }
             }
 
             //获取答案列表
             function get_answer() {
-                let typename;
                 let answer_list = new Array();
                 if (question_type === 'select') {
                     answer_list[0] = letter_list[radioflag - 1];
@@ -1791,10 +1933,11 @@
                     let count = 0;
                     for (let i = 1; i < selectnum + 1; i++) {
                         if (multi_option_label_list[i] === 1)
-                            answer_list[count++] = letter_list[i];
+                            answer_list[count++] = letter_list[i - 1];
                     }
-                } else
-                    typename = "#filltab";
+                } else {
+                    answer_list = fill_content_pop();
+                }
                 return JSON.stringify(answer_list);
             }
 
@@ -1820,12 +1963,17 @@
                     typename = "#selecttab";
                 else if (question_type === "multi")
                     typename = "#multitab";
+                else
+                    typename = "#filltab";
+
                 let count = 0;
                 let option_list = new Array();
                 for (let i = 1; i < selectnum + 1; i++) {
                     option_list[count++] = $(typename + " #input" + letter_list[i - 1]).val();
                 }
                 return JSON.stringify(option_list);
+
+
             }
 
             //题干是否完整 TODO 填空
@@ -1846,7 +1994,52 @@
 
             $('#createquestion').click(function () {
                 if (have_answer() === true) {
-                    if (all_option_filled() === true)
+                    if (question_type === "select" || question_type === "multi")
+                        if (all_option_filled() === true)
+                            if (have_qstem() === true) {
+                                let typename;
+                                if (question_type === 'select') {
+                                    typename = "#selecttab";
+
+                                } else if (question_type === "multi")
+                                    typename = "#multitab";
+                                else
+                                    typename = "#filltab";
+
+                                let data;
+                                if (typename === "#selecttab" || typename === "#multitab")
+                                    data = {
+                                        "qtype": question_type,
+                                        "qstem": $(typename + " .qstem").val(),
+                                        "qanswer": get_answer(),
+                                        "qselect": get_all_option(),
+                                        "qsubject": $(typename + " select").val()
+                                    };
+                                else
+                                    data = {
+                                        "qtype": question_type,
+                                        "qstem": $(typename + " .qstem").val(),
+                                        "qanswer": get_answer(),
+                                        "qsubject": $(typename + " select").val()
+                                    };
+                                console.log(data);
+
+
+                                $.ajax({
+                                    url: '/question',
+                                    method: 'post',
+                                    data: data,
+                                    success: function (data) {
+                                        if (data['code'] === 200) {
+                                            alert("新建成功！");
+                                        }
+                                    }
+                                });
+                            } else
+                                alert("请填写题干！");
+                        else
+                            alert("所有选项都需输入！");
+                    else {
                         if (have_qstem() === true) {
                             let typename;
                             if (question_type === 'select') {
@@ -1856,14 +2049,30 @@
                                 typename = "#multitab";
                             else
                                 typename = "#filltab";
-                            let data = {
-                                "qtype": question_type,
-                                "qstem": $(typename + " .qstem").val(),
-                                "qanswer": get_answer(),
-                                "qselect": get_all_option(),
-                                "qsubject": $(typename + " select").val()
-                            };
+
+                            let data;
+                            if (typename === "#selecttab" || typename === "#multitab")
+                                data = {
+                                    "qtype": question_type,
+                                    "qstem": $(typename + " .qstem").val(),
+                                    "qanswer": get_answer(),
+                                    "qselect": get_all_option(),
+                                    "qsubject": $(typename + " select").val()
+                                };
+                            else {
+                                fill_content_pop();
+                                let temp  = new Array();
+                                for(let i = 1; i < fill_option_count + 1; i++)
+                                    temp[i - 1] = fill_content_list[i];
+                                data = {
+                                    "qtype": question_type,
+                                    "qstem": $(typename + " .qstem").val(),
+                                    "qanswer": JSON.stringify(temp),
+                                    "qsubject": $(typename + " select").val()
+                                };
+                            }
                             console.log(data);
+
 
                             $.ajax({
                                 url: '/question',
@@ -1877,8 +2086,7 @@
                             });
                         } else
                             alert("请填写题干！");
-                    else
-                        alert("所有选项都需输入！");
+                    }
                 } else
                     alert("请设置答案！");
             });
