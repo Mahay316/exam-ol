@@ -140,7 +140,7 @@ def get_questions():
 
         # 如果是选择题则choices置空
         if not q.is_fill_in_blanks():
-            cur_dict['choices'] = json.dumps(q.Qselect)
+            cur_dict['choices'] = json.loads(q.Qselect)
 
         # 用户已作答的缓存
         if q.Qno in session:
