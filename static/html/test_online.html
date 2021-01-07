@@ -213,22 +213,22 @@
                 <div id="sidebar" class="answer-card">
                     <h3 style="text-align: center; margin-top: 16px;">答题卡</h3>
                     <hr/>
-                    <div class="card-item" v-if="questionRecord.select.length">
+                    <div class="card-item" v-if="questionStat.select.length">
                         <h6>单项选择题</h6>
                         <div class="list">
-                            <a :href="'#qs_' + idx" class="num" v-for="idx in questionRecord.select">{{ idx }}</a>
+                            <a :href="'#qs_' + idx" class="num" v-for="idx in questionStat.select">{{ idx }}</a>
                         </div>
                     </div>
-                    <div class="card-item" v-if="questionRecord.multi.length">
+                    <div class="card-item" v-if="questionStat.multi.length">
                         <h6>多项选择题</h6>
                         <div class="list">
-                            <a :href="'#qs_' + idx" class="num chosen" v-for="idx in questionRecord.multi">{{ idx }}</a>
+                            <a :href="'#qs_' + idx" class="num chosen" v-for="idx in questionStat.multi">{{ idx }}</a>
                         </div>
                     </div>
-                    <div class="card-item" v-if="questionRecord.fill.length">
+                    <div class="card-item" v-if="questionStat.fill.length">
                         <h6>填空题</h6>
                         <div class="list">
-                            <a :href="'#qs_' + idx" class="num chosen" v-for="idx in questionRecord.fill">{{ idx }}</a>
+                            <a :href="'#qs_' + idx" class="num chosen" v-for="idx in questionStat.fill">{{ idx }}</a>
                         </div>
                     </div>
                 </div>
@@ -255,7 +255,7 @@
             questions: [],
         },
         computed: {
-            questionRecord() {
+            questionStat() {
                 let res = {
                     select: [],
                     multi: [],
