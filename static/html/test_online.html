@@ -53,16 +53,27 @@
                                 <span>{{ index + 1 }}. </span>{{ item.stem }}
                             </div>
                             <div class="question_select">
-                                <div class="select_item" v-for="(choice, cidx) in item.choices">
+                                <!-- 填空题 -->
+                                <div class="form-group" style="margin-top: 20px;" v-if="item.type === 'fill'">
+                                    <div class="input-group mb-2" v-for="index in item.blankNum">
+                                        <div class="input-group-prepend">
+                                            <label class="input-group-text">填空{{ index }}</label>
+                                        </div>
+                                        <input type="text" class="form-control" placeholder="输入答案"
+                                               :value="answers[item.questionID].choice[index]"
+                                               @blur="handleFillAnswer(item, index, $event)"
+                                               @keydown.enter="handleFillAnswer(item, index, $event)">
+                                    </div>
+                                </div>
+                                <!-- 选择题 -->
+                                <div class="select_item" v-else v-for="(choice, cidx) in item.choices">
                                     <input class="num" type="button" name="question_1"
-                                           :value="toLetter(cidx)" @click="handleAnswer(item, $event)"
+                                           :value="toLetter(cidx)" @click="handleSelectAnswer(item, $event)"
                                            :class="{
-                                               chosen: answers[item.questionID]
-                                                        && (answers[item.questionID].choice.includes(toLetter(cidx)))
+                                               chosen: answers[item.questionID].choice.includes(toLetter(cidx))
                                            }">
                                     <span>{{ choice }}</span>
                                 </div>
-
                             </div>
                         </div>
                     </div>
@@ -102,7 +113,8 @@
                         <div class="list">
                             <a :href="'#qs_' + item.idx" class="num" v-for="item in questionStat.fill"
                                :class="{
-                                    chosen: answers[item.questionID] && (answers[item.questionID].choice.length > 0),
+                                    chosen: answers[item.questionID]
+                                        && (answers[item.questionID].choice.filter(ele => ele).length > 0),
                                     marked: marked.includes(item.idx)
                                }">
                                 {{ item.idx }}
@@ -204,15 +216,23 @@
                     this.marked.splice(i, 1);
                 console.log(this.marked);
             },
-            handleAnswer(item, event) {
+            handleFillAnswer(item, index, event) {
                 let targetAnswer = this.answers[item.questionID];
-                // 如果缓存不存在，需要临时创建缓存
-                if (!targetAnswer) {
-                    targetAnswer = this.answers[item.questionID] = {
-                        questionID: item.questionID,
-                        choice: []
-                    };
-                }
+                let val = event.target.value;
+                // 不进行无用请求
+                if (!val && targetAnswer.choice[index] === val)
+                    return;
+
+                targetAnswer.choice[index] = val;
+                // 由于多层嵌套的数组更新并不引起重绘，因此强制要求刷新
+                this.$forceUpdate();
+
+                // 更新提交时间戳
+                targetAnswer.submitTime = Date.now();
+                this.cacheQuestion([targetAnswer]);
+            },
+            handleSelectAnswer(item, event) {
+                let targetAnswer = this.answers[item.questionID];
 
                 // 单项选择题只允许缓存一个答案
                 // 但为了和其他题型的一致性，仍使用数组缓存其答案
@@ -233,13 +253,16 @@
                 // 由于多层嵌套的数组更新并不引起重绘，因此强制要求刷新
                 this.$forceUpdate();
 
+                this.cacheQuestion([targetAnswer]);
+            },
+            cacheQuestion(res) {
                 // 向服务器提交当前题目作答情况
                 $.ajax({
                     url: '/exam/questions',
                     method: 'POST',
                     data: {
                         examID: this.params['tno'],
-                        result: JSON.stringify([targetAnswer])
+                        result: JSON.stringify(res)
                     },
                     success(resp) {
                         // TODO: 需要考虑提交失败情况，进行重试操作
@@ -296,13 +319,32 @@
                     if (data.code === 200) {
                         this.questions = data.questions;
 
-                        // 如果服务器有缓存，则加载缓存
+                        // 在加载题目时，对题目做一些预处理
                         for (let item of this.questions) {
+                            let cachedChoice = [];
+                            if (item.type === 'fill') {
+                                let target = /\[填空\]/g;
+
+                                // 由于填空题的答案是有序且数量固定的，因此进行预分配空间
+                                let count = item.stem.match(target).length;
+                                item.blankNum = count;
+                                cachedChoice = Array(count);
+
+                                // 匹配填空题所有的空，并逐一替换
+                                item.stem = item.stem.replace(target, '_______');
+                            }
+
+                            // 如果服务器有缓存，则加载缓存
+                            cachedChoice = item.cache ? item.cache.choice : cachedChoice;
                             this.answers[item.questionID] = {
                                 questionID: item.questionID,
-                                choice: item.cache ? item.cache.choice : []
+                                choice: cachedChoice
                             };
+
+                            // 多层嵌套数组的更新无法触发重绘，强制刷新
+                            this.$forceUpdate();
                         }
+                        console.log(this.questions);
                     }
                 });
             }
