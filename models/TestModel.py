@@ -320,13 +320,17 @@ class Test(Base):
         session = model_common.get_mysql_session(engine)
 
         try:
-            session.execute('CALL delete_test({}, @out)'.format(tno))
-            result = session.execute('SELECT @out').fetchone()
+            filter_list = []
+            filter_list.append(cls.Tno == tno)
+
+            test = session.query(cls).filter(*filter_list).first()
+            if not test:
+                raise Exception('没有该考试记录')
+
+            session.delete(test)
             session.commit()
-            if result[0]:
-                return True
-            else:
-                return False
+
+            return True
 
         except Exception as e:
             session.rollback()
