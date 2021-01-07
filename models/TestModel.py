@@ -298,9 +298,30 @@ class Test(Base):
             engine.dispose()
             session.remove()
 
-    # TODO
     @classmethod
     def delete_test(cls, tno):
         """
         调用存储过程删除考试
         """
+
+        engine = model_common.get_mysql_engine()
+        session = model_common.get_mysql_session(engine)
+
+        try:
+            session.execute('CALL delete_test({}, @out)'.format(tno))
+            result = session.execute('SELECT @out').fetchone()
+            session.commit()
+            if result[0]:
+                return True
+            else:
+                return False
+
+        except Exception as e:
+            session.rollback()
+            return False
+
+        finally:
+            engine.dispose()
+            session.remove()
+
+
