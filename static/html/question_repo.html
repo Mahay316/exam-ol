@@ -1227,7 +1227,7 @@
                     temp_html += "<td>";
                     temp_html += "<div class=\"container\">";
                     temp_html += "<button type=\"button\" class=\"btn btn-outline-success\" style=\"margin-right: 20px;\" id='preview" + i + "'>预览</button>";
-                    temp_html += "<button type=\"button\" class=\"btn btn-outline-primary\" style=\"margin-right: 20px;\" id='editQuestion" + i + "'>编辑</button>";
+                    // temp_html += "<button type=\"button\" class=\"btn btn-outline-primary\" style=\"margin-right: 20px;\" id='editQuestion" + i + "'>编辑</button>";
                     temp_html += "<button type=\"button\" class=\"btn btn-outline-danger\" data-toggle=\"modal\" data-target=\"#modaldelete" + i + "\" id='delete" + i + "'>删除</button>";
                     temp_html += "</div>";
                     temp_html += "</td>";
@@ -1782,6 +1782,11 @@
 
             //搜索文本改变之后原文中还剩下的填空
             function looking_for_index() {
+                return $("#filltab .qstem").val().matchAll(/\[填空\d*\]/g);
+            }
+
+            //搜索文本改变之后原文中还剩下的填空
+            function real_looking_for_index() {
                 let target_text = $("#filltab .qstem").val();
                 let temp_list = new Array();
                 let count = 0;
@@ -1797,10 +1802,20 @@
                 let count = 1;
                 let target = $("#filltab .qstem");
                 let target_text = $("#filltab .qstem").val();
-                for (let i = 0; i < temp_list.length; i++) {
-                    let target_index = target_text.indexOf("[填空" + temp_list[i] + "]") + 3;
-                    target_text = target_text.substr(0, target_index) + count.toString() + target_text.substr(target_index + count.toString().length);
+                let offset = 0;
+                fill_option_count = 0
+                console.log(temp_list);
+                for (let reg of temp_list) {
+                    console.log(reg);
+                    console.log(reg.index);
+                    let target_index = reg.index + offset;
+                    let new_text = "[填空" + count + "]";
+                    console.log("修改第" + count + "次前：" + target_text);
+                    target_text = target_text.substr(0, target_index) + new_text + target_text.substr(target_index + reg[0].length);
+                    offset += new_text.length - reg[0].length;
+                    console.log("修改第" + count + "次后：" + target_text);
                     count++;
+                    fill_option_count++;
                 }
                 target.val(target_text);
             }
@@ -1814,8 +1829,10 @@
             }
 
             //根据temp_list删减content元素
-            function remove_fill_content_list_index(temp_list) {
+            function remove_fill_content_list_index() {
+                let temp_list = real_looking_for_index();
                 let index = 1;
+                let temp_length = 0;
                 for (let i = 0; i < temp_list.length + 1; i++) {
                     while (index < temp_list[i]) {
                         for (let j = index; j < fill_content_list.length; j++) {
@@ -1825,8 +1842,8 @@
                     }
                     index++;
                 }
-                console.log(temp_list);
-                console.log(fill_content_list);
+                // console.log(temp_list);
+                // console.log(fill_content_list);
             }
 
             //重新注入答案内容
@@ -1841,10 +1858,9 @@
                 //将答案中的内容弹出，刷新计数器，相应更新页面，将内容填入
                 let temp_list = looking_for_index();
                 fill_content_pop();
-                remove_fill_content_list_index(temp_list);
-                fill_option_count = temp_list.length;
-                update_fill_answer();
+                remove_fill_content_list_index();
                 update_index(temp_list);
+                update_fill_answer();
                 fill_content_reinject();
             }
 
@@ -1906,8 +1922,8 @@
                     return false;
                 } else {
                     fill_content_pop();
-                    console.log(fill_content_list);
-                    console.log(fill_option_count);
+                    // console.log(fill_content_list);
+                    // console.log(fill_option_count);
                     if (fill_option_count === 0)
                         return false;
                     else if (fill_option_count === 1)
@@ -2000,12 +2016,8 @@
                                 let typename;
                                 if (question_type === 'select') {
                                     typename = "#selecttab";
-
-                                } else if (question_type === "multi")
+                                } else
                                     typename = "#multitab";
-                                else
-                                    typename = "#filltab";
-
                                 let data;
                                 if (typename === "#selecttab" || typename === "#multitab")
                                     data = {
@@ -2023,15 +2035,14 @@
                                         "qsubject": $(typename + " select").val()
                                     };
                                 console.log(data);
-
-
                                 $.ajax({
-                                    url: '/question',
+                                    url: '/question/',
                                     method: 'post',
                                     data: data,
                                     success: function (data) {
                                         if (data['code'] === 200) {
-                                            alert("新建成功！");
+                                            console.log("新建成功！");
+                                            $("#newQuestion").modal('hide');
                                         }
                                     }
                                 });
@@ -2041,46 +2052,26 @@
                             alert("所有选项都需输入！");
                     else {
                         if (have_qstem() === true) {
-                            let typename;
-                            if (question_type === 'select') {
-                                typename = "#selecttab";
-
-                            } else if (question_type === "multi")
-                                typename = "#multitab";
-                            else
-                                typename = "#filltab";
-
-                            let data;
-                            if (typename === "#selecttab" || typename === "#multitab")
-                                data = {
-                                    "qtype": question_type,
-                                    "qstem": $(typename + " .qstem").val(),
-                                    "qanswer": get_answer(),
-                                    "qselect": get_all_option(),
-                                    "qsubject": $(typename + " select").val()
-                                };
-                            else {
-                                fill_content_pop();
-                                let temp  = new Array();
-                                for(let i = 1; i < fill_option_count + 1; i++)
-                                    temp[i - 1] = fill_content_list[i];
-                                data = {
-                                    "qtype": question_type,
-                                    "qstem": $(typename + " .qstem").val(),
-                                    "qanswer": JSON.stringify(temp),
-                                    "qsubject": $(typename + " select").val()
-                                };
-                            }
+                            let typename = "#filltab";
+                            fill_content_pop();
+                            let temp = new Array();
+                            for (let i = 1; i < fill_option_count + 1; i++)
+                                temp[i - 1] = fill_content_list[i];
+                            let data = {
+                                "qtype": question_type,
+                                "qstem": $(typename + " .qstem").val(),
+                                "qanswer": JSON.stringify(temp),
+                                "qsubject": $(typename + " select").val()
+                            };
                             console.log(data);
-
-
                             $.ajax({
-                                url: '/question',
+                                url: '/question/',
                                 method: 'post',
                                 data: data,
                                 success: function (data) {
                                     if (data['code'] === 200) {
-                                        alert("新建成功！");
+                                        console.log("新建成功！");
+                                        $("#newQuestion").modal('hide');
                                     }
                                 }
                             });
