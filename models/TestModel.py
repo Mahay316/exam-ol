@@ -289,9 +289,9 @@ class Test(Base):
             StudentTest.add_snos_and_tno(tno=test.Tno, snos=snos)
 
             return True
+
         except Exception as e:
             session.rollback()
-            raise e
             return False
 
         finally:
@@ -301,7 +301,7 @@ class Test(Base):
     @classmethod
     def delete_test(cls, tno):
         """
-        调用存储过程删除考试
+        删除考试
         """
 
         engine = model_common.get_mysql_engine()

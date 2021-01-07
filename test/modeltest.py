@@ -24,6 +24,8 @@ from datetime import datetime
 
 
 def qt():
+    for x in Course.get_test_info_by_cno(1):
+        print(x)
     # print([x.Mno for x in Mentor.select_mentors_by(tile='讲师')])
     # x = datetime.now().timestamp()
     # print(x)
