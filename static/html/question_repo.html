@@ -184,6 +184,8 @@
                                                         <!--                                                        {#                                                        TODO 筛选功能未完成#}-->
                                                     </a>
                                                     <div class="dropdown-menu " aria-labelledby="dropdownMenuLink">
+                                                        <a class="dropdown-item btn-outline-primary s0000"
+                                                           href="#">全部</a>
                                                         <a class="dropdown-item btn-outline-primary s0001"
                                                            href="#">软件工程</a>
                                                         <a class="dropdown-item btn-outline-primary s0002" href="#">数据库原理</a>
@@ -201,27 +203,30 @@
                                                        role="button" id="dropdownMenuLink2" data-toggle="dropdown"
                                                        aria-haspopup="true" aria-expanded="false">
                                                         按题目类型筛选
-                                                        <!--                                                        {#                                                        TODO 筛选功能未完成#}-->
                                                     </a>
                                                     <div class="dropdown-menu " aria-labelledby="dropdownMenuLink">
-                                                        <a class="dropdown-item btn-outline-primary" href="#">单选题</a>
-                                                        <a class="dropdown-item btn-outline-primary" href="#">多选题</a>
-                                                        <a class="dropdown-item btn-outline-primary" href="#">填空题</a>
+                                                        <a class="dropdown-item btn-outline-primary t0000"
+                                                           href="#">全部</a>
+                                                        <a class="dropdown-item btn-outline-primary t0001"
+                                                           href="#">单选题</a>
+                                                        <a class="dropdown-item btn-outline-primary t0002"
+                                                           href="#">多选题</a>
+                                                        <a class="dropdown-item btn-outline-primary t0003"
+                                                           href="#">填空题</a>
                                                     </div>
                                                 </div>
-                                                <!--                                                    <button type="button" class="btn btn-outline-primary buttons-html5">-->
-                                                <!--                                                        <span>按未使用试题筛选</span>-->
-                                                <!--                                                    </button>-->
                                             </div>
                                         </div>
                                         <div class="col-sm-12 col-md-2 offset-3">
                                             <div id="example2_filter" class="dataTables_filter">
                                                 <input type="search" class="form-control form-control-sm"
-                                                       placeholder="按内容搜索" aria-controls="example1">
+                                                       placeholder="按内容搜索" aria-controls="example1" id="searchinput">
                                             </div>
                                         </div>
                                         <div class="col-sm-12 col-md-1">
-                                            <button type="button" class="btn btn-outline-primary">搜索</button>
+                                            <button type="button" class="btn btn-outline-primary" id="contentsearch">
+                                                搜索
+                                            </button>
                                         </div>
                                     </div>
                                     <div class="row" id="question_table">
@@ -337,6 +342,692 @@
         </div>
         <!-- /.modal-dialog -->
     </div>
+    <div class="modal fade" id="modalpreview1" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">试题号：1001</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hclassden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p class="qstem">    在数据库的三级模式结构中，(      )是用户与数据库系统的接口，是用户用到的那部分数据的描述。</p>
+                    <p class="sectionA">A.外模式</p>
+                    <br>
+                    <p class="answer">答案： A</p>
+                </div>
+                <div class="modal-footer justify-content-end">
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">关闭</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <div class="modal fade" id="modalpreview2" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">试题号：1001</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hclassden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p class="qstem">    在数据库的三级模式结构中，(      )是用户与数据库系统的接口，是用户用到的那部分数据的描述。</p>
+                    <p class="sectionA">A.外模式</p>
+                    <br>
+                    <p class="answer">答案： A</p>
+                </div>
+                <div class="modal-footer justify-content-end">
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">关闭</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <div class="modal fade" id="modalpreview3" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">试题号：1001</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hclassden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p class="qstem">    在数据库的三级模式结构中，(      )是用户与数据库系统的接口，是用户用到的那部分数据的描述。</p>
+                    <p class="sectionA">A.外模式</p>
+                    <br>
+                    <p class="answer">答案： A</p>
+                </div>
+                <div class="modal-footer justify-content-end">
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">关闭</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <div class="modal fade" id="modalpreview4" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">试题号：1001</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hclassden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p class="qstem">    在数据库的三级模式结构中，(      )是用户与数据库系统的接口，是用户用到的那部分数据的描述。</p>
+                    <p class="sectionA">A.外模式</p>
+                    <br>
+                    <p class="answer">答案： A</p>
+                </div>
+                <div class="modal-footer justify-content-end">
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">关闭</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <div class="modal fade" id="modalpreview5" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">试题号：1001</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hclassden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p class="qstem">    在数据库的三级模式结构中，(      )是用户与数据库系统的接口，是用户用到的那部分数据的描述。</p>
+                    <p class="sectionA">A.外模式</p>
+                    <br>
+                    <p class="answer">答案： A</p>
+                </div>
+                <div class="modal-footer justify-content-end">
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">关闭</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <div class="modal fade" id="modalpreview6" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">试题号：1001</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hclassden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p class="qstem">    在数据库的三级模式结构中，(      )是用户与数据库系统的接口，是用户用到的那部分数据的描述。</p>
+                    <p class="sectionA">A.外模式</p>
+                    <br>
+                    <p class="answer">答案： A</p>
+                </div>
+                <div class="modal-footer justify-content-end">
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">关闭</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <div class="modal fade" id="modalpreview7" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">试题号：1001</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hclassden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p class="qstem">    在数据库的三级模式结构中，(      )是用户与数据库系统的接口，是用户用到的那部分数据的描述。</p>
+                    <p class="sectionA">A.外模式</p>
+                    <br>
+                    <p class="answer">答案： A</p>
+                </div>
+                <div class="modal-footer justify-content-end">
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">关闭</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <div class="modal fade" id="modalpreview8" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">试题号：1001</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hclassden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p class="qstem">    在数据库的三级模式结构中，(      )是用户与数据库系统的接口，是用户用到的那部分数据的描述。</p>
+                    <p class="sectionA">A.外模式</p>
+                    <br>
+                    <p class="answer">答案： A</p>
+                </div>
+                <div class="modal-footer justify-content-end">
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">关闭</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <div class="modal fade" id="modalpreview9" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">试题号：1001</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hclassden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p class="qstem">    在数据库的三级模式结构中，(      )是用户与数据库系统的接口，是用户用到的那部分数据的描述。</p>
+                    <p class="sectionA">A.外模式</p>
+                    <br>
+                    <p class="answer">答案： A</p>
+                </div>
+                <div class="modal-footer justify-content-end">
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">关闭</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
+
+    <div class="modal fade" id="modaldelete0" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <p class="modal-title">删除试题警告</p>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group" style="text-align: center;">
+                        <br>
+                        <label><h4>确认删除试题吗？</h4></label>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-end">
+                    <button type="button" class="btn btn-outline-primary" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-outline-danger" id="confirmdelete0" data-dismiss="modal">
+                        确认删除
+                    </button>
+                    <!--                            <button type="button" class="btn btn-outline-dark">关闭</button>-->
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <div class="modal fade" id="modaldelete1" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <p class="modal-title">删除试题警告</p>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group" style="text-align: center;">
+                        <br>
+                        <label><h4>确认删除试题吗？</h4></label>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-end">
+                    <button type="button" class="btn btn-outline-primary" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-outline-danger" id="confirmdelete1" data-dismiss="modal">
+                        确认删除
+                    </button>
+                    <!--                            <button type="button" class="btn btn-outline-dark">关闭</button>-->
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <div class="modal fade" id="modaldelete2" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <p class="modal-title">删除试题警告</p>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group" style="text-align: center;">
+                        <br>
+                        <label><h4>确认删除试题吗？</h4></label>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-end">
+                    <button type="button" class="btn btn-outline-primary" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-outline-danger" id="confirmdelete2" data-dismiss="modal">
+                        确认删除
+                    </button>
+                    <!--                            <button type="button" class="btn btn-outline-dark">关闭</button>-->
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <div class="modal fade" id="modaldelete3" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <p class="modal-title">删除试题警告</p>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group" style="text-align: center;">
+                        <br>
+                        <label><h4>确认删除试题吗？</h4></label>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-end">
+                    <button type="button" class="btn btn-outline-primary" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-outline-danger" id="confirmdelete3" data-dismiss="modal">
+                        确认删除
+                    </button>
+                    <!--                            <button type="button" class="btn btn-outline-dark">关闭</button>-->
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <div class="modal fade" id="modaldelete4" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <p class="modal-title">删除试题警告</p>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group" style="text-align: center;">
+                        <br>
+                        <label><h4>确认删除试题吗？</h4></label>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-end">
+                    <button type="button" class="btn btn-outline-primary" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-outline-danger" id="confirmdelete4" data-dismiss="modal">
+                        确认删除
+                    </button>
+                    <!--                            <button type="button" class="btn btn-outline-dark">关闭</button>-->
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <div class="modal fade" id="modaldelete5" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <p class="modal-title">删除试题警告</p>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group" style="text-align: center;">
+                        <br>
+                        <label><h4>确认删除试题吗？</h4></label>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-end">
+                    <button type="button" class="btn btn-outline-primary" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-outline-danger" id="confirmdelete5" data-dismiss="modal">
+                        确认删除
+                    </button>
+                    <!--                            <button type="button" class="btn btn-outline-dark">关闭</button>-->
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <div class="modal fade" id="modaldelete6" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <p class="modal-title">删除试题警告</p>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group" style="text-align: center;">
+                        <br>
+                        <label><h4>确认删除试题吗？</h4></label>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-end">
+                    <button type="button" class="btn btn-outline-primary" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-outline-danger" id="confirmdelete6" data-dismiss="modal">
+                        确认删除
+                    </button>
+                    <!--                            <button type="button" class="btn btn-outline-dark">关闭</button>-->
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <div class="modal fade" id="modaldelete7" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <p class="modal-title">删除试题警告</p>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group" style="text-align: center;">
+                        <br>
+                        <label><h4>确认删除试题吗？</h4></label>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-end">
+                    <button type="button" class="btn btn-outline-primary" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-outline-danger" id="confirmdelete7" data-dismiss="modal">
+                        确认删除
+                    </button>
+                    <!--                            <button type="button" class="btn btn-outline-dark">关闭</button>-->
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <div class="modal fade" id="modaldelete8" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <p class="modal-title">删除试题警告</p>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group" style="text-align: center;">
+                        <br>
+                        <label><h4>确认删除试题吗？</h4></label>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-end">
+                    <button type="button" class="btn btn-outline-primary" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-outline-danger" id="confirmdelete8" data-dismiss="modal">
+                        确认删除
+                    </button>
+                    <!--                            <button type="button" class="btn btn-outline-dark">关闭</button>-->
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <div class="modal fade" id="modaldelete9" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <p class="modal-title">删除试题警告</p>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group" style="text-align: center;">
+                        <br>
+                        <label><h4>确认删除试题吗？</h4></label>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-end">
+                    <button type="button" class="btn btn-outline-primary" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-outline-danger" id="confirmdelete9" data-dismiss="modal">
+                        确认删除
+                    </button>
+                    <!--                            <button type="button" class="btn btn-outline-dark">关闭</button>-->
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
+    <div class="modal fade" id="newQuestion" data-backdrop="static" data-keyboard="false"
+         tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <ul class="nav nav-tabs" id="custom-tabs-four-tab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="selectpanel"
+                               data-toggle="pill"
+                               href="#selecttab" role="tab">单选题</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="multipanel"
+                               data-toggle="pill"
+                               href="#multitab" role="tab">多选题</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="fillpanel"
+                               data-toggle="pill"
+                               href="#filltab" role="tab">填空题</a>
+                        </li>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </ul>
+                </div>
+                <div class="modal-body" style="min-height: 500px;">
+                    <div class="tab-content" id="custom-tabs-four-tabContent">
+                        <div class="tab-pane fade active show" id="selecttab"
+                             role="tabpanel">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text"
+                                           for="inputGroupSelect01">题目科目</label>
+                                </div>
+                                <select class="custom-select" id="inputGroupSelect01">
+                                    <option value="1">软件工程</option>
+                                    <option value="2">数据库原理</option>
+                                    <option value="3">编译原理</option>
+                                    <option value="4">流体力学</option>
+                                    <option value="5">工程热力学</option>
+                                    <option value="6">C语言程序设计</option>
+                                    <option value="7">Java高级语言程序设计</option>
+                                </select>
+                            </div>
+                            <div class="input-group mb-3" style="height: 150px;">
+                                <span class="input-group-text"><strong>题干部分</strong></span>
+                                <textarea class="form-control qstem" aria-label="With textarea"
+                                          placeholder="最多输入255个字符"></textarea>
+                            </div>
+
+                            <div class="form-group selectoption">
+                                <div id="option-alternative-1" class="input-group mb-2">
+                                    <div class="input-group-prepend">
+                                        <label class="input-group-text" for="inputA">A</label>
+                                    </div>
+                                    <input type="text" class="form-control" id="inputA"
+                                           placeholder="输入A选项内容">
+                                    <div class="input-group-append" id="button-addon1">
+                                        <button class="btn btn-outline-danger" type="button">
+                                            <i class="fas fa-minus"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div id="option-alternative-2" class="input-group mb-2">
+                                    <div class="input-group-prepend">
+                                        <label class="input-group-text" for="inputA">B</label>
+                                    </div>
+                                    <input type="text" class="form-control"
+                                           placeholder="输入B选项内容">
+                                    <div class="input-group-append" id="button-addon2">
+                                        <button class="btn btn-outline-danger" type="button">
+                                            <i class="fas fa-minus"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div id="option-alternative-3" class="input-group mb-2">
+                                    <div class="input-group-prepend">
+                                        <label class="input-group-text" for="inputA">C</label>
+                                    </div>
+                                    <input type="text" class="form-control"
+                                           placeholder="输入C选项内容">
+                                    <div class="input-group-append" id="button-addon3">
+                                        <button class="btn btn-outline-danger" type="button">
+                                            <i class="fas fa-minus"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div id="option-alternative-4" class="input-group mb-2">
+                                    <div class="input-group-prepend">
+                                        <label class="input-group-text" for="inputA">D</label>
+                                    </div>
+                                    <input type="text" class="form-control"
+                                           placeholder="输入D选项内容">
+                                    <div class="input-group-append" id="button-addon4">
+                                        <button class="btn btn-outline-danger" type="button">
+                                            <i class="fas fa-minus"></i>
+                                        </button>
+                                        <button class="btn btn-outline-success" type="button">
+                                            <i class="fas fa-plus"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="multitab" role="tabpanel">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text"
+                                           for="inputGroupSelect01">题目科目</label>
+                                </div>
+                                <select class="custom-select" id="inputGroupSelect02">
+                                    <option value="1">软件工程</option>
+                                    <option value="2">数据库原理</option>
+                                    <option value="3">编译原理</option>
+                                    <option value="4">流体力学</option>
+                                    <option value="5">工程热力学</option>
+                                    <option value="6">C语言程序设计</option>
+                                    <option value="7">Java高级语言程序设计</option>
+                                </select>
+                            </div>
+                            <div class="input-group"
+                                 style="height: 150px; margin-bottom: 15px;">
+                                <span class="input-group-text"><strong>题干部分</strong></span>
+                                <textarea class="form-control qstem" aria-label="With textarea"
+                                          placeholder="最多输入255个字符"></textarea>
+                            </div>
+                            <div class="form-group selectoption">
+                                <div id="multi-option-alternative-1" class="input-group">
+                                    <div class="input-group-prepend check-btn">
+                                        <span class="input-group-text alternative"><strong>A</strong></span>
+                                    </div>
+                                    <input type="text" class="form-control" placeholder="输入A选项内容">
+                                </div>
+                                <div id="multi-option-alternative-2" class="input-group">
+                                    <div class="input-group-prepend  check-btn">
+                                        <span class="input-group-text alternative"><strong>B</strong></span>
+                                    </div>
+                                    <input type="text" class="form-control" placeholder="输入B选项内容">
+                                </div>
+                                <div id="multi-option-alternative-3" class="input-group">
+                                    <div class="input-group-prepend  check-btn">
+                                        <span class="input-group-text alternative"><strong>C</strong></span>
+                                    </div>
+                                    <input type="text" class="form-control" placeholder="输入C选项内容">
+                                </div>
+                                <div id="multi-option-alternative-4" class="input-group">
+                                    <div class="input-group-prepend  check-btn">
+                                        <span class="input-group-text alternative"><strong>D</strong></span>
+                                    </div>
+                                    <input type="text" class="form-control" placeholder="输入D选项内容">
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="tab-pane fade" id="filltab" role="tabpanel">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text"
+                                           for="inputGroupSelect01">题目科目</label>
+                                </div>
+                                <select class="custom-select" id="inputGroupSelect03">
+                                    <option value="1">软件工程</option>
+                                    <option value="2">数据库原理</option>
+                                    <option value="3">编译原理</option>
+                                    <option value="4">流体力学</option>
+                                    <option value="5">工程热力学</option>
+                                    <option value="6">C语言程序设计</option>
+                                    <option value="7">Java高级语言程序设计</option>
+                                </select>
+                            </div>
+                            <div class="input-group"
+                                 style="height: 150px; margin-bottom: 15px;">
+                                <span class="input-group-text"><strong>题干部分</strong></span>
+                                <textarea class="form-control qstem" aria-label="With textarea"
+                                          placeholder="最多输入255个字符"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <button class="btn btn-outline-primary" id="addnewfilloption">添加填空</button>
+                            </div>
+                            <div class="form-group" style="margin-bottom: 15px;" id="fillanswer">
+                                <label>正确答案</label>
+                                <div id="completion-1" class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text alternative"><strong>1</strong></span>
+                                    </div>
+                                    <input type="text" class="form-control" placeholder="输入填空答案，/分隔相似答案">
+                                </div>
+                                <div id="completion-2" class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text alternative"><strong>2</strong></span>
+                                    </div>
+                                    <input type="text" class="form-control"
+                                           placeholder="输入填空答案，/分隔相似答案">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-outline-primary" id="createquestion">创建试题</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <footer class="main-footer">
         <div class="float-right d-none d-sm-block">
@@ -359,421 +1050,1040 @@
 
 <script type="text/javascript">
     $(function () {
-        //存储科目信息
-        subject_dict = new Object();
-        subject_dict['s0001'] = '软件工程';
-        subject_dict['s0002'] = '数据库原理';
-        subject_dict['s0003'] = '编译原理';
-        subject_dict['s0004'] = '流体力学';
-        subject_dict['s0005'] = '工程热力学';
-        subject_dict['s0006'] = 'C语言程序设计';
-        subject_dict['s0007'] = 'Java高级语言程序设计';
-        //当前页面初始化为1
-        let current_page = 1;
-        let page_num = 0;
-        let info_num = 0;
-        let info_qno_list = [];
-        let letter_list = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
-        let question_list = new Array(10);
-        //获取初始试题界面的第一页试题
-        let temp_html;
-        let url_data;
+            //存储科目信息
+            subject_dict = new Object();
+            subject_dict[0] = null;
+            subject_dict[1] = '软件工程';
+            subject_dict[2] = '数据库原理';
+            subject_dict[3] = '编译原理';
+            subject_dict[4] = '流体力学';
+            subject_dict[5] = '工程热力学';
+            subject_dict[6] = 'C语言程序设计';
+            subject_dict[7] = 'Java高级语言程序设计';
+            //当前页面初始化为1
+            let current_page = 1;
+            let page_num = 0;
+            let info_num = 0;
+            let info_qno_list = [];
+            let letter_list = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+            let question_list = new Array(10);
+            //获取初始试题界面的第一页试题
+            let temp_html;
+            let url_data = new Object();
 
-        //解析URL
-        function getQueryObject(url) {
-            url = url == null ? window.location.href : url;
-            var search = url.substring(url.lastIndexOf("?") + 1);
-            var obj = {};
-            var reg = /([^?&=]+)=([^?&=]*)/g;
-            search.replace(reg, function (rs, $1, $2) {
-                var name = decodeURIComponent($1);
-                var val = decodeURIComponent($2);
-                val = String(val);
-                obj[name] = val;
-                return rs;
-            });
-            return obj;
-        }
+            //解析URL
+            function getQueryObject(url) {
+                url = url == null ? window.location.href : url;
+                var search = url.substring(url.lastIndexOf("?") + 1);
+                var obj = {};
+                var reg = /([^?&=]+)=([^?&=]*)/g;
+                search.replace(reg, function (rs, $1, $2) {
+                    var name = decodeURIComponent($1);
+                    var val = decodeURIComponent($2);
+                    val = String(val);
+                    obj[name] = val;
+                    return rs;
+                });
+                return obj;
+            }
 
-        //处理url_data
-        function conductUrlData(url_data) {
-            let key;
-            for (key in url_data) {
-                if (url_data[key] === undefined) {
-                    url_data[key] = null;
+            //处理url_data
+            function conductUrlData(url_data) {
+                let key;
+                for (key in url_data) {
+                    if (url_data[key] === undefined) {
+                        url_data[key] = null;
+                    }
                 }
             }
-        }
 
+            //判断按钮是否禁用
+            function judge_button_disabled() {
+                if (current_page === 1) {
+                    $('#prepage').addClass('disabled');
+                    $('#prepage').attr('disabled', 'disabled');
+                } else {
+                    $('#prepage').removeClass('disabled');
+                    $('#prepage').removeAttr('disabled');
+                }
 
-        function judge_button_disabled() {
-            if (current_page === 1) {
-                $('#prepage').addClass('disabled');
-                $('#prepage').attr('disabled', 'disabled');
-            } else {
-                $('#prepage').removeClass('disabled');
-                $('#prepage').removeAttr('disabled');
+                if (current_page === page_num) {
+                    $('#nextpage').addClass('disabled');
+                    $('#nextpage').attr('disabled', 'disabled');
+                } else {
+                    $('#nextpage').removeClass('disabled');
+                    $('#nextpage').removeAttr('disabled');
+                }
             }
 
-            if (current_page === page_num) {
-                $('#nextpage').addClass('disabled');
-                $('#nextpage').attr('disabled', 'disabled');
-            } else {
-                $('#nextpage').removeClass('disabled');
-                $('#nextpage').removeAttr('disabled');
-            }
-        }
-
-        function update_page_number() {
-            //左下角数据记录修改
-            $('#begin').text((current_page - 1) * 10 + 1);
-            let after_num = info_num - (current_page - 1) * 10;
-            if (after_num >= 10)
-                $('#end').text(current_page * 10);
-            else
-                $('#end').text(info_num);
-            //当前页面修改
-            $('#currentpage').text(current_page);
-        }
-
-        //数组操作函数
-        function array_clear_out(array_list) {
-            for (let i = 0; i < array_list.length; i++) {
-                array_list[i] = null;
-            }
-        }
-
-        function array_copy(array_list_a, array_list_b) {
-            for (let i = 0; i < array_list_b.length; i++) {
-                array_list_a[i] = array_list_b[i];
-            }
-        }
-
-        //动态加载模态框 TODO 理解错误模态框的动态实现
-        function load_preview_modal() {
-            for (let i = 0; i < question_list.length; i++) {
-                let temp_button_modal_id = '#modalpreview' + i;
-                $(temp_button_modal_id).empty();
-                //temp_html = "<div class=\"modal fade\" id=\"modalpreview" + i + "\" style=\"display: none;\" aria-hidden=\"true\">";
-                temp_html = "<div class=\"modal-dialog\">";
-                temp_html += "<div class=\"modal-content\">";
-                temp_html += "<div class=\"modal-header\">";
-                temp_html += "<h4 class=\"modal-title\">试题号：" + question_list[i]['qno'] + "</h4>";
-                temp_html += "<button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">";
-                temp_html += "<span aria-hidden=\"true\">&times;</span>";
-                temp_html += "</button>";
-                temp_html += "</div>";
-                temp_html += "<div class=\"modal-body\">";
-                temp_html += "<p>&nbsp;&nbsp;&nbsp;&nbsp;" + question_list[i]['qstem'] + "</p>";
-                if (question_list[i]['qtype'] === 'fill')
-                    ;
+            //更新页码
+            function update_page_number() {
+                //左下角数据记录修改
+                $('#begin').text((current_page - 1) * 10 + 1);
+                let after_num = info_num - (current_page - 1) * 10;
+                if (after_num >= 10)
+                    $('#end').text(current_page * 10);
                 else
-                    for (let j = 0; j < question_list[i]['qselect'].length; j++)
-                        temp_html += "<p id=\"section" + letter_list[j] + "\">" + letter_list[j] + "." + question_list[i]['qselect'][j] + "</p>";
-
-                temp_html += "<br>";
-                temp_html += "<p>答案：</p>";
-                if (question_list[i]['qtype'] === 'fill')
-                    for (let j = 0; j < question_list[i]['qanswer'].length; j++)
-                        temp_html += "<p id=\"answer" + j + "\">" + j + "." + question_list[i]['qanswer'][j] + "</p>";
-                else {
-                    temp_html += "<p id=\"answer\">";
-                    for (let j = 0; j < question_list[i]['qanswer'].length; j++)
-                        temp_html += +question_list[i]['qanswer'][j];
-                    temp_html += "</p>";
-                }
-                temp_html += "</div>";
-                temp_html += "<div class=\"modal-footer justify-content-end\">";
-                temp_html += "<button type=\"button\" class=\"btn btn-outline-secondary\" data-dismiss=\"modal\">关闭</button>";
-                temp_html += "</div>";
-                temp_html += "</div>";
-                temp_html += "</div>";
-                //temp_html += "</div>";
-                console.log(temp_html);
-                $(temp_button_modal_id).append(temp_html);
+                    $('#end').text(info_num);
+                //当前页面修改
+                $('#currentpage').text(current_page);
             }
-        }
 
-        function load_delete_modal() {
-            for (let i = 0; i < question_list.length; i++) {
-                let temp_button_modal_id = '#modaldelete' + i;
-                $(temp_button_modal_id).remove();
-                temp_html += "<div class=\"modal-dialog\">";
-                temp_html += "<div class=\"modal-content\">";
-                temp_html += "<div class=\"modal-header\">";
-                temp_html += "<p class=\"modal-title\">删除试题警告</p>";
-                temp_html += "<button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">";
-                temp_html += "<i class=\"fas fa-times\"></i>";
-                temp_html += "</button>";
-                temp_html += "</div>";
-                temp_html += "<div class=\"modal-body\">";
-                temp_html += "<div class=\"form-group\" style=\"text-align: center;\">";
-                temp_html += "<br>";
-                temp_html += "<label><h4>确认删除试题吗？</h4></label>";
-                temp_html += "</div>";
-                temp_html += "</div>";
-                temp_html += "<div class=\"modal-footer justify-content-end\">";
-                temp_html += "<button type=\"button\" class=\"btn btn-outline-primary\" data-dismiss=\"modal\">取消</button>";
-                temp_html += "<button type=\"button\" class=\"btn btn-outline-danger\" data-dismiss=\"modal\" id='modaldeleteButton" + i + "'>确认删除</button>";
-                temp_html += "</div>";
-                temp_html += "</div>";
-                temp_html += "</div>";
-                temp_html += "</div>";
-                $('.wrapper').append(temp_html);
-                //添加确定删除按钮的click事件
-                let temp_delete_button = "#modaldeleteButton" + i;
-                $(temp_delete_button).click(function () {
+            //数组操作函数
+            function array_clear_out(array_list) {
+                for (let i = 0; i < array_list.length; i++) {
+                    array_list[i] = null;
+                }
+            }
+
+            function array_copy(array_list_a, array_list_b) {
+                for (let i = 0; i < array_list_b.length; i++) {
+                    array_list_a[i] = array_list_b[i];
+                }
+            }
+
+            function parse_string_to_list(target_string) {
+                target_string = target_string.replace("[", "").replace("]", "");
+                target_string = target_string.split("\"");
+                let temp_list = new Array();
+                let j = 0;
+                for (let i = 0; i < target_string.length; i++)
+                    if (i % 2 === 1)
+                        temp_list[j++] = target_string[i];
+                return temp_list;
+            }
+
+            //预览界面的试题加载html
+            function modal_html_append(index) {
+                let load_html = "";
+                load_html += "<p class=\"qstem\">&nbsp;&nbsp;&nbsp;&nbsp;" + question_list[index]['qstem'] + "</p>";
+                if (question_list[index]['qtype'] === '填空题') {
+                    load_html += "<br>";
+                    load_html += "<p>答案：</p>";
+                    let temp_list = parse_string_to_list(question_list[index]['qanswer']);
+                    for (let i = 0; i < temp_list.length; i++)
+                        load_html += "<p>&nbsp;&nbsp;&nbsp;&nbsp;" + temp_list[i] + "</p>";
+                    return load_html;
+                } else {
+                    let temp_select_list = parse_string_to_list(question_list[index]['qselect']);
+                    for (let i = 0; i < temp_select_list.length; i++)
+                        load_html += "<p>" + temp_select_list[i] + "</p>"
+                    load_html += "<br>";
+                    load_html += "<p>答案：</p>";
+                    let temp_list = parse_string_to_list(question_list[index]['qanswer']);
+                    for (let i = 0; i < temp_list.length; i++)
+                        load_html += "<p>&nbsp;&nbsp;&nbsp;&nbsp;" + letter_list[i] + "." + temp_list[i] + "</p>";
+                    return load_html;
+                }
+            }
+
+            //动态加载预览模态框
+            function load_preview_modal() {
+                for (let i = 0; i < question_list.length; i++) {
+                    let name = '#preview' + i;
+                    let modal_name = '#modalpreview' + i;
+                    $(modal_name).on('show.bs.modal', function () {
+                        $(modal_name + " h4").empty();
+                        $(modal_name + " h4").text("试题号：" + info_qno_list[i]);
+                        let load_html = modal_html_append(i);
+                        let course_name = modal_name + " .modal-body";
+                        $(course_name).empty();
+                        $(course_name).append(load_html);
+                    });
+
+                    $(name).click(function () {
+                        $(modal_name).modal('show');
+                    });
+                }
+            }
+
+
+            //动态载入表单    TODO 每次申请表单的时候在for循环之外更新右侧按钮
+            function load_table() {
+                $('#info_table').empty();
+                //动态载入数据
+                for (let i = 0; i < question_list.length; i++) {
+                    //TODO 保存试题号
+                    info_qno_list[i] = question_list[i]['qno'];
+                    let qtype;
+                    if (question_list[i]['qtype'] === 'select') {
+                        question_list[i]['qtype'] = '单选题';
+                        qtype = '单选题';
+                    } else if (question_list[i]['qtype'] === 'multi') {
+                        question_list[i]['qtype'] = '多选题';
+                        qtype = '多选题';
+                    } else {
+                        question_list[i]['qtype'] = '填空题';
+                        qtype = '填空题';
+                    }
+
+                    //表格信息html添加
+                    temp_html = "<tr role='row' class='odd'>";
+                    temp_html += "<td>";
+                    temp_html += "<strong>" + question_list[i]['qstem'] + "</strong>";
+                    temp_html += "</td>";
+                    temp_html += "<td><strong>" + qtype + "</strong></td>";
+                    temp_html += "<td><strong>" + subject_dict[question_list[i]['qsubject']] + "</strong></td>";
+                    temp_html += "<td>";
+                    temp_html += "<div class=\"container\">";
+                    temp_html += "<button type=\"button\" class=\"btn btn-outline-success\" style=\"margin-right: 20px;\" id='preview" + i + "'>预览</button>";
+                    // temp_html += "<button type=\"button\" class=\"btn btn-outline-primary\" style=\"margin-right: 20px;\" id='editQuestion" + i + "'>编辑</button>";
+                    temp_html += "<button type=\"button\" class=\"btn btn-outline-danger\" data-toggle=\"modal\" data-target=\"#modaldelete" + i + "\" id='delete" + i + "'>删除</button>";
+                    temp_html += "</div>";
+                    temp_html += "</td>";
+                    temp_html += "</tr>";
+                    $('table').append(temp_html);
+                }
+                load_preview_modal();
+            }
+
+            function update_all() {
+                load_table();
+                judge_button_disabled();
+                update_page_number();
+            }
+
+            //获取初始试题界面的总页数并分页
+            $.ajax({
+                url: '/question/page_num',
+                method: 'get',
+                success: function (data) {
+                    if (data['code'] === 200) {
+                        page_num = data['page_num'];
+                        info_num = data['info_num'];
+                        $('#sum').text(info_num);
+                        update_page_number();
+                    } else {
+                        console.log('获取页面出错！');
+                    }
+                },
+            });
+
+            array_clear_out(question_list);
+
+            //请求第一页数据
+            url_data['page'] = 1;
+            $.ajax({
+                url: '/question',
+                method: 'get',
+                data: url_data,
+                success: function (data) {
+                    if (data['code'] === 200) {
+                        question_list = data['questions'];
+                        load_table();
+                        //初始化翻页按钮
+                        judge_button_disabled();
+                    }
+                }
+            });
+
+
+            //前翻页按钮click事件
+            $('#prepage').click(function () {
+                current_page--;
+                if (current_page <= 0 || current_page > page_num)
+                    console.log("当前页码标定错误！");
+                else {
+                    url_data['page'] = current_page;
                     $.ajax({
-                        url: "/question",
-                        method: "DELETE",
-                        data: {
-                            'qno': question_list[i]['qno']
-                        },
+                        url: '/question',
+                        method: 'get',
+                        data: url_data,
                         success: function (data) {
                             if (data['code'] === 200) {
-                                //TODO 为简单处理直接刷新页面
-                                $.ajax({
-                                    url: 'question/manage'
-                                });
+                                question_list = data['questions'];
+                                info_num = data['info_num'];
+                                page_num = data['page_num'];
+                                $('#sum').text(info_num);
+                                update_all();
                             }
                         }
                     });
-                });
-            }
-        }
-
-        //动态载入表单
-        function load_table() {
-            $('#info_table').empty();
-            //动态载入数据
-            for (let i = 0; i < question_list.length; i++) {
-                //TODO 保存试题号
-                info_qno_list[i] = question_list[i]['qno'];
-                let qtype;
-                if (question_list[i]['qtype'] === 'select') {
-                    question_list[i]['qtype'] = '单选题';
-                    qtype = '单选题';
-                } else if (question_list[i]['qtype'] === 'multi') {
-                    question_list[i]['qtype'] = '多选题';
-                    qtype = '多选题';
-                } else {
-                    question_list[i]['qtype'] = '填空题';
-                    qtype = '填空题';
                 }
 
-                //表格信息html添加
-                temp_html = "<tr role='row' class='odd'>";
-                temp_html += "<td>";
-                temp_html += "<strong>" + question_list[i]['qstem'] + "</strong>";
-                temp_html += "</td>";
-                temp_html += "<td><strong>" + qtype + "</strong></td>";
-                temp_html += "<td><strong>" + question_list[i]['qsubject'] + "</strong></td>";
-                temp_html += "<td>";
-                temp_html += "<div class=\"container\">";
-                temp_html += "<button type=\"button\" class=\"btn btn-outline-success\" style=\"margin-right: 20px;\" data-toggle=\"modal\" data-target=\"#modalpreview" + i + "\" id='preview" + i + "'>预览</button>";
-                temp_html += "<button type=\"button\" class=\"btn btn-outline-primary\" style=\"margin-right: 20px;\" data-toggle=\"modal\" data-target=\"#modaleditQuestion" + i + "\" id='editQuestion" + i + "'>编辑</button>";
-                temp_html += "<button type=\"button\" class=\"btn btn-outline-danger\" data-toggle=\"modal\" data-target=\"#modaldelete" + i + "\" id='delete" + i + "'>删除</button>";
-                temp_html += "</div>";
-                temp_html += "</td>";
-                temp_html += "</tr>";
-                $('table').append(temp_html);
-            }
-        }
+            });
 
-        //获取初始试题界面的总页数并分页
-        $.ajax({
-            url: '/question/page_num',
-            method: 'get',
-            success: function (data) {
-                if (data['code'] === 200) {
-                    page_num = data['page_num'];
-                    info_num = data['info_num'];
-                    $('#sum').text(info_num);
-                    update_page_number();
-                } else {
-                    console.log('获取页面出错！');
-                }
-            },
-        });
-
-        array_clear_out(question_list);
-
-        $.ajax({
-                url: '/question',
-                method: 'get',
-                data: {
-                    'page': 1,
-                },
-                success: function (data) {
-                    if (data['code'] === 200) {
-                        array_copy(question_list, data['questions']);
-                        load_table();
-
-                    }
-                }
-            }
-        );
-
-        //初始化翻页按钮
-        judge_button_disabled();
-
-
-        //前翻页按钮click事件
-        $('#prepage').click(function () {
-            current_page--;
-            console.log('前翻页', current_page);
-            if (current_page <= 0 || current_page > page_num)
-                console.log("当前页码标定错误！");
-            else {
-                url_data = getQueryObject();
-                conductUrlData(url_data);
-                url_data['page'] = current_page;
-                $.ajax({
-                    url: '/question',
-                    method: 'get',
-                    data: url_data,
-                    success: function (data) {
-                        if (data['code'] === 200) {
-                            question_list = data['questions'];
-                            load_table();
-
-                            update_page_number();
-                            judge_button_disabled();
-                        }
-                    }
-                });
-            }
-
-        });
-
-        //后翻页按钮click事件
-        $('#nextpage').click(function () {
-            current_page++;
-            console.log('后翻页', current_page);
-            if (current_page <= 0 || current_page > page_num)
-                console.log("当前页码标定错误！");
-            else {
-                url_data = getQueryObject();
-                conductUrlData(url_data);
-                url_data['page'] = current_page;
-                $.ajax({
-                    url: '/question',
-                    method: 'get',
-                    data: url_data,
-                    success: function (data) {
-                        if (data['code'] === 200) {
-                            question_list = data['questions'];
-                            load_table();
-
-                            update_page_number();
-                            judge_button_disabled();
-                        }
-                    }
-                });
-            }
-
-        });
-
-        //跳转页按钮click事件
-        $('#gotoButton').click(function () {
-            let goto = parseInt($.trim($('#gotopage').val()));
-            if (goto < 1 || goto > page_num)
-                alert('页码超出范围！');
-            else {
-                current_page = goto;
-                url_data = getQueryObject();
-                conductUrlData(url_data);
-                url_data['page'] = current_page;
-                $.ajax({
-                    url: '/question',
-                    method: 'get',
-                    data: url_data,
-                    success: function (data) {
-                        if (data['code'] === 200) {
-                            question_list = data['questions'];
-                            load_table();
-                            update_page_number();
-                            judge_button_disabled();
-                        }
-                    }
-                });
-            }
-        });
-
-        console.log(question_list);
-        {
-            #//预览按钮click事件#}
-            {
-                #load_preview_modal();
-                #
-            }
-            {
-                #//删除按钮click事件#}
-                {
-                    #load_delete_modal();
-                    #
-                }
-
-                //编辑按钮click事件
-                //TODO 编辑按钮暂时不做，没时间直接删除
-                //新建试题按钮click事件
-
-                //侧边栏按钮实现
-                $('#course-manage').click(function () {
-                    location.href = '/index';
-                });
-                $('#paper-manage').click(function () {
-                    location.href = 'paper/manage';
-                });
-                $('#question-manage').click(function () {
-                    location.href = 'question/manage';
-                });
-                $('#logout').click(function () {
+            //后翻页按钮click事件
+            $('#nextpage').click(function () {
+                current_page++;
+                if (current_page <= 0 || current_page > page_num)
+                    console.log("当前页码标定错误！");
+                else {
+                    url_data['page'] = current_page;
                     $.ajax({
-                        url: '/auth/logout',
-                        method: 'post',
+                        url: '/question',
+                        method: 'get',
+                        data: url_data,
                         success: function (data) {
                             if (data['code'] === 200) {
-                                location.href = '/auth/login';
+                                question_list = data['questions'];
+                                info_num = data['info_num'];
+                                page_num = data['page_num'];
+                                $('#sum').text(info_num);
+                                update_all();
+                            }
+                        }
+                    });
+                }
+
+            });
+
+            //跳转页按钮click事件
+            $('#gotoButton').click(function () {
+                let goto = parseInt($.trim($('#gotopage').val()));
+                if (goto < 1 || goto > page_num)
+                    alert('页码超出范围！');
+                else {
+                    current_page = goto;
+                    url_data['page'] = current_page;
+                    $.ajax({
+                        url: '/question',
+                        method: 'get',
+                        data: url_data,
+                        success: function (data) {
+                            if (data['code'] === 200) {
+                                question_list = data['questions'];
+                                info_num = data['info_num'];
+                                page_num = data['page_num'];
+                                $('#sum').text(info_num);
+                                update_all();
+                            }
+                        }
+                    });
+                }
+            });
+
+
+            //编辑按钮click事件
+            //TODO 编辑按钮暂时不做，没时间直接删除
+            //新建试题按钮click事件
+
+            //侧边栏按钮实现
+            $('#course-manage').click(function () {
+                location.href = '/index';
+            });
+            $('#paper-manage').click(function () {
+                location.href = 'paper/manage';
+            });
+            $('#question-manage').click(function () {
+                location.href = 'question/manage';
+            });
+            $('#logout').click(function () {
+                $.ajax({
+                    url: '/auth/logout',
+                    method: 'post',
+                    success: function (data) {
+                        if (data['code'] === 200) {
+                            location.href = '/auth/login';
+                        }
+                    }
+                })
+            });
+
+
+            //科目筛选功能实现
+            for (let i = 0; i < 8; i++) {
+                let subnumber = '.s000' + i;
+                $(subnumber).click(function () {
+                    if (i === 0)
+                        delete url_data['subject'];
+                    else
+                        url_data['subject'] = i;
+                    url_data['page'] = 1;
+                    $.ajax({
+                        url: '/question',
+                        method: 'get',
+                        data: url_data,
+                        success: function (data) {
+                            if (data['code'] === 200) {
+                                if (i === 0) {
+                                    console.log("Halo");
+                                    $('#dropdownMenuLink1').text('按科目筛选');
+                                    $('#dropdownMenuLink1').addClass('btn-outline-primary');
+                                    $('#dropdownMenuLink1').removeClass('btn-primary');
+                                } else {
+                                    console.log("Bye");
+                                    $('#dropdownMenuLink1').text('按' + subject_dict[i] + '筛选');
+                                    $('#dropdownMenuLink1').addClass('btn-primary');
+                                    $('#dropdownMenuLink1').removeClass('btn-outline-primary');
+                                }
+                                info_num = data['info_num'];
+                                page_num = data['page_num'];
+                                current_page = 1;
+                                $('#sum').text(info_num);
+                                question_list = data['questions'];
+                                update_all();
                             }
                         }
                     })
                 });
+            }
 
-
-                //科目筛选功能实现
-                for (let i = 1; i < 8; i++) {
-                    let class_target = "#s000" + i;
-                    $(class_target).click(function () {
-                        let sub_name = subject_dict[class_target];
-                        current_page = 1;
-                        url_data = getQueryObject();
-                        conductUrlData(url_data);
-                        url_data['subject'] = sub_name;
-                        url_data['page'] = current_page;
-                        $.ajax({
-                            url: '/question',
-                            method: 'get',
-                            data: url_data,
-                            success: function (data) {
-                                if (data['code'] === 200) {
-                                    question_list = data['questions'];
-                                    load_table();
-                                    update_page_number();
-                                    judge_button_disabled();
+            //题目类型筛选功能实现
+            for (let i = 0; i < 8; i++) {
+                let typenumber = '.t000' + i;
+                $(typenumber).click(function () {
+                    if (i === 0)
+                        delete url_data['type'];
+                    else if (i === 1)
+                        url_data['type'] = 'select';
+                    else if (i === 2)
+                        url_data['type'] = 'multi';
+                    else
+                        url_data['type'] = 'fill';
+                    url_data['page'] = 1;
+                    $.ajax({
+                        url: '/question',
+                        method: 'get',
+                        data: url_data,
+                        success: function (data) {
+                            if (data['code'] === 200) {
+                                if (i === 0) {
+                                    $('#dropdownMenuLink2').text('按题目类型筛选');
+                                    $('#dropdownMenuLink2').addClass('btn-outline-primary');
+                                    $('#dropdownMenuLink2').removeClass('btn-primary');
+                                } else {
+                                    if (i === 1)
+                                        $('#dropdownMenuLink2').text('按单选题筛选');
+                                    else if (i === 2)
+                                        $('#dropdownMenuLink2').text('按多选题筛选');
+                                    else
+                                        $('#dropdownMenuLink2').text('按填空题筛选');
+                                    $('#dropdownMenuLink2').addClass('btn-primary');
+                                    $('#dropdownMenuLink2').removeClass('btn-outline-primary');
                                 }
+                                info_num = data['info_num'];
+                                page_num = data['page_num'];
+                                current_page = 1;
+                                $('#sum').text(info_num);
+                                question_list = data['questions'];
+                                update_all();
                             }
-                        });
-                    });
+                        }
+                    })
+                });
+            }
+
+            //试卷名搜索按钮click事件
+            $('#contentsearch').click(function () {
+                let content_input = $('#searchinput').val();
+                if (content_input === null)
+                    ;
+                else {
+                    url_data['content'] = content_input;
+                    url_data['page'] = 1;
+                    $.ajax({
+                        url: '/question',
+                        method: 'get',
+                        data: url_data,
+                        success: function (data) {
+                            if (data['code'] === 200) {
+                                info_num = data['info_num'];
+                                page_num = data['page_num'];
+                                current_page = 1;
+                                $('#sum').text(info_num);
+                                question_list = data['questions'];
+                                update_all();
+                            }
+                        }
+                    })
                 }
 
-                //
+            });
+
+            //删除按钮click事件
+            for (let i = 0; i < question_list.length; i++) {
+                let name = '#confirmdelete' + i;
+
+                $(name).click(function () {
+
+                    $.ajax({
+                        url: '/question/?qno=' + info_qno_list[i],
+                        method: 'DELETE',
+                        success: function (data) {
+                            if (data['code'] === 200) {
+                                info_num--;
+                                page_num = Math.ceil(info_num);
+                                $('#sum').text(info_num);
+                                url_data['page'] = 1;
+                                $.ajax({
+                                    url: '/question',
+                                    method: 'get',
+                                    data: url_data,
+                                    success: function (data) {
+                                        if (data['code'] === 200) {
+                                            info_num = data['info_num'];
+                                            page_num = data['page_num'];
+                                            current_page = 1;
+                                            $('#sum').text(info_num);
+                                            question_list = data['questions'];
+                                            update_all();
+                                        }
+                                    }
+                                })
+                            }
+                        }
+                    });
+                });
+            }
+
+
+            //新建试题click事件
+            question_type = "select";
+            selectnum = 4;
+            let option_content_list = new Array(30);
+
+            //清空
+            function clear_option_content_list() {
+                for (let i = 0; i < option_content_list.length; i++)
+                    option_content_list[i] = "";
+            }
+
+            option_content_list[1] = "OOO";
+            option_content_list[2] = "build";
+            option_content_list[3] = "ZIO";
+            option_content_list[4] = "decade";
+
+            function add_option(index, flag) {
+                //flag为0表示只有-，为1表示还有+,-1表示只有+
+                index;
+                let load_html = "<div id=\"option-alternative-" + index + "\" class=\"input-group mb-2\">";
+                load_html += "<div class=\"input-group-prepend\">";
+                load_html += "<label class=\"input-group-text\" for=\"input" + letter_list[index - 1] + "\" id='" + letter_list[index - 1] + "'>" + letter_list[index - 1] + "</label>";
+                load_html += "</div>";
+                load_html += "<input type=\"text\" class=\"form-control\" id=\"input" + letter_list[index - 1] + "\" placeholder=\"输入" + letter_list[index - 1] + "选项内容\">";
+                load_html += "<div class=\"input-group-append\" id=\"button-addon" + index + "\">";
+                if (flag != -1) {
+                    load_html += "<button class=\"btn btn-outline-danger\" type=\"button\" id='optiondelete" + index + "'>";
+                    load_html += "<i class=\"fas fa-minus\"></i>";
+                    load_html += "</button>";
+                }
+                if (flag === 1 || flag === -1) {
+                    load_html += "<button class=\"btn btn-outline-success\" type=\"button\" id='optionadd" + index + "'>";
+                    load_html += "<i class=\"fas fa-plus\"></i>";
+                    load_html += "</button>";
+                }
+                load_html += "</div>";
+                load_html += "</div>";
+                return load_html;
+            }
+
+            //根据选项数目刷新选项,两者公用
+            function update_option(parent_name) {
+                let selectoption = $(parent_name + " .selectoption");
+                if (selectnum === 1) {
+                    let load_html = add_option(1, -1);
+                    selectoption.empty();
+                    selectoption.append(load_html);
+                } else {
+                    selectoption.empty();
+                    for (let i = 1; i < selectnum + 1; i++) {
+                        if (i === selectnum) {
+                            let load_html = add_option(i, 1);
+                            selectoption.append(load_html);
+                        } else {
+                            let load_html = add_option(i, 0);
+                            selectoption.append(load_html);
+                        }
+                    }
+                }
+            }
+
+            //重新动态注入,两者公用
+            function content_inject(parent_name) {
+                for (let i = 1; i < selectnum + 1; i++)
+                    $(parent_name + " #input" + letter_list[i - 1]).val(option_content_list[i]);
+            }
+
+            //动态读出选项内文字(堆栈式),两者公用
+            function content_pop(parent_name) {
+                let count = 1;
+                for (let i = 1; i < selectnum + 1; i++) {
+                    let target = $(parent_name + " #input" + letter_list[i - 1]).val();
+                    if (target != "")
+                        option_content_list[count++] = target;
+                }
+            }
+
+            //动态读出选项内文字(数组式),两者公用
+            function content_out(parent_name) {
+                for (let i = 1; i < selectnum + 1; i++) {
+                    option_content_list[i] = $(parent_name + " #input" + letter_list[i - 1]).val();
+                }
+            }
+
+            //radio标签
+            let radioflag = 0;
+
+            //radio的label的click
+            function radio_label_click() {
+                let name = "#selecttab";
+                for (let i = 1; i < selectnum + 1; i++) {
+                    $(name + " #" + letter_list[i - 1]).click(function () {
+                        $(name + " #" + letter_list[radioflag - 1]).css("background-color", "#e9ecef");
+                        $(name + " #" + letter_list[i - 1]).css("background-color", "#ffa5a5");
+                        radioflag = i;
+                    });
+                }
+            }
+
+            //刷新label的css
+            function radio_update_label_css(parent_name) {
+                $(parent_name + " #" + letter_list[radioflag - 1]).css("background-color", "#ffa5a5");
+            }
+
+            //给所有加减按钮赋予事件，radio专用
+            function radio_plus_minus_click() {
+                let parent_name = "#selecttab";
+                for (let i = 1; i < selectnum + 1; i++) {
+                    $(parent_name + " #optiondelete" + i).click(function () {
+                        //把该行内容清空，清空寄存内容的数组，然后读出内容数据，更新selectnum
+                        //刷新选项数组，重新注入内容数据
+                        //重新添加事件,刷新标签格式
+                        $(parent_name + " #input" + letter_list[i - 1]).val("");
+                        clear_option_content_list();
+                        content_pop(parent_name);
+                        selectnum--;
+                        update_option(parent_name);
+                        content_inject(parent_name);
+                        radio_plus_minus_click();
+                        radio_label_click();
+                        if (radioflag === i)
+                            radioflag = 0;
+                        else
+                            radio_update_label_css(parent_name);
+                    });
+                    $(parent_name + " #optionadd" + i).click(function () {
+                        //清空内容数组，out内容数据寄存，更新selectnum
+                        //刷新选项，内容注入，重新赋予事件，刷新样式
+                        clear_option_content_list();
+                        content_out(parent_name);
+                        selectnum++;
+                        update_option(parent_name);
+                        content_inject(parent_name);
+                        radio_plus_minus_click();
+                        radio_label_click();
+                        radio_update_label_css(parent_name);
+                    });
+                }
+            }
+
+            //多选框使用的标签flag寄存器
+            let multi_option_label_list = new Array(30);
+
+            //清空multi_option_label_list（数组式）
+            function clear_multi_option_label_list() {
+                for (let i = 0; i < multi_option_label_list.length; i++)
+                    multi_option_label_list[i] = 0;
+            }
+
+            //去除一个multi元素
+            function remove_multi_index(index) {
+                for (let i = index; i < selectnum + 1; i++) {
+                    if (i === selectnum)
+                        multi_option_label_list[i] = 0;
+                    multi_option_label_list[i] = multi_option_label_list[i + 1];
+                }
+            }
+
+            //select的multiclick事件
+            function multi_label_click() {
+                let name = "#multitab";
+                for (let i = 1; i < selectnum + 1; i++) {
+                    $(name + " #" + letter_list[i - 1]).click(function () {
+                        if (multi_option_label_list[i] === 1) {
+                            $(name + " #" + letter_list[i - 1]).css("background-color", "#e9ecef");
+                            multi_option_label_list[i] = 0;
+                        } else {
+                            $(name + " #" + letter_list[i - 1]).css("background-color", "#ffa5a5");
+                            multi_option_label_list[i] = 1;
+                        }
+                    });
+                }
+            }
+
+            ////刷新multi的label的css
+            function update_multi_label_css() {
+                for (let i = 1; i < selectnum + 1; i++)
+                    if (multi_option_label_list[i] === 1)
+                        $("#multitab" + " #" + letter_list[i - 1]).css("background-color", "#ffa5a5");
+            }
+
+            function multi_plus_minus_click() {
+                let parent_name = "#multitab";
+                for (let i = 1; i < selectnum + 1; i++) {
+                    $(parent_name + " #optiondelete" + i).click(function () {
+                        //把该行内容清空，清空寄存内容的数组，然后读出内容数据，更新selectnum
+                        //刷新选项数组，重新注入内容数据
+                        //重新添加事件,刷新标签格式
+                        $(parent_name + " #input" + letter_list[i - 1]).val("");
+                        clear_option_content_list();
+                        content_pop(parent_name);
+                        selectnum--;
+                        update_option(parent_name);
+                        content_inject(parent_name);
+                        multi_plus_minus_click();
+                        multi_label_click();
+                        remove_multi_index(i);
+                        update_multi_label_css();
+                    });
+                    $(parent_name + " #optionadd" + i).click(function () {
+                        clear_option_content_list();
+                        content_out(parent_name);
+                        selectnum++;
+                        update_option(parent_name);
+                        content_inject(parent_name);
+                        multi_plus_minus_click();
+                        multi_label_click();
+                        update_multi_label_css();
+                    });
+                }
+            }
+
+
+            //填空题部分
+            let fill_option_count = 0;
+            let fill_option_list = new Array(30);
+            let fill_content_list = new Array(30);
+
+            //清空fill_option_list
+            function clear_fill_option_list() {
+                for (let i = 0; i < fill_option_list.length; i++)
+                    fill_option_list[i] = "";
+            }
+
+            function clear_fill_content_list() {
+                for (let i = 0; i < fill_content_list.length; i++)
+                    fill_content_list[i] = "";
+            }
+
+            //根据index获取填空题的html
+            function add_fill_option_html(index) {
+                let load_html = "";
+                load_html += "<div id=\"completion" + index + "\" class=\"input-group\">";
+                load_html += "<div class=\"input-group-prepend\">";
+                load_html += "<span class=\"input-group-text alternative\"><strong>" + index + "</strong></span>";
+                load_html += "</div>";
+                load_html += "<input type=\"text\" class=\"form-control\" placeholder=\"输入填空答案，/分隔相似答案\" id='completioninput" + index + "'>";
+                load_html += "</div>";
+                return load_html;
+            }
+
+            //根据count刷新答案框
+            function update_fill_answer() {
+                let target = $("#fillanswer");
+                target.empty();
+                target.append("<label>正确答案</label>");
+                for (let i = 1; i < fill_option_count + 1; i++) {
+                    let load_html = add_fill_option_html(i);
+                    target.append(load_html);
+                }
+            }
+
+            //搜索文本改变之后原文中还剩下的填空
+            function looking_for_index() {
+                return $("#filltab .qstem").val().matchAll(/\[填空\d*\]/g);
+            }
+
+            //搜索文本改变之后原文中还剩下的填空
+            function real_looking_for_index() {
+                let target_text = $("#filltab .qstem").val();
+                let temp_list = new Array();
+                let count = 0;
+                for (let i = 1; i < fill_option_count + 10; i++) {
+                    if (target_text.includes("[填空" + i + "]"))
+                        temp_list[count++] = i;
+                }
+                return temp_list;
+            }
+
+            //更新文本中的填空文本
+            function update_index(temp_list) {
+                let count = 1;
+                let target = $("#filltab .qstem");
+                let target_text = $("#filltab .qstem").val();
+                let offset = 0;
+                fill_option_count = 0
+                console.log(temp_list);
+                for (let reg of temp_list) {
+                    console.log(reg);
+                    console.log(reg.index);
+                    let target_index = reg.index + offset;
+                    let new_text = "[填空" + count + "]";
+                    console.log("修改第" + count + "次前：" + target_text);
+                    target_text = target_text.substr(0, target_index) + new_text + target_text.substr(target_index + reg[0].length);
+                    offset += new_text.length - reg[0].length;
+                    console.log("修改第" + count + "次后：" + target_text);
+                    count++;
+                    fill_option_count++;
+                }
+                target.val(target_text);
+            }
+
+            //弹出答案文本
+            function fill_content_pop() {
+                clear_fill_content_list();
+                for (let i = 1; i < fill_option_count + 1; i++) {
+                    fill_content_list[i] = $("#completioninput" + i).val();
+                }
+            }
+
+            //根据temp_list删减content元素
+            function remove_fill_content_list_index() {
+                let temp_list = real_looking_for_index();
+                let index = 1;
+                let temp_length = 0;
+                for (let i = 0; i < temp_list.length + 1; i++) {
+                    while (index < temp_list[i]) {
+                        for (let j = index; j < fill_content_list.length; j++) {
+                            fill_content_list[j] = fill_content_list[j + 1];
+                        }
+                        index++;
+                    }
+                    index++;
+                }
+                // console.log(temp_list);
+                // console.log(fill_content_list);
+            }
+
+            //重新注入答案内容
+            function fill_content_reinject() {
+                for (let i = 1; i < fill_option_count + 1; i++) {
+                    fill_content_list[i] = $("#completioninput" + i).val(fill_content_list[i]);
+                }
+            }
+
+            function fill_update_all() {
+                //检查文本框中的填空变化
+                //将答案中的内容弹出，刷新计数器，相应更新页面，将内容填入
+                let temp_list = looking_for_index();
+                fill_content_pop();
+                remove_fill_content_list_index();
+                update_index(temp_list);
+                update_fill_answer();
+                fill_content_reinject();
+            }
+
+            //文本框失去焦点后更新
+            $("#filltab .qstem").change(function () {
+                fill_update_all();
+            });
+
+
+            $('#addnewfilloption').click(function () {
+                $("#filltab .qstem").val($("#filltab .qstem").val() + "[填空" + (fill_option_count + 1) + "]");
+                fill_option_count++;
+                fill_update_all();
+            });
+
+            $("#newQuestion").on('show.bs.modal', function () {
+                selectnum = 4;
+                radioflag = 0;
+                update_option("#selecttab");
+                content_inject("#selecttab");
+                radio_plus_minus_click();
+                radio_label_click();
+                $('#selectpanel').click(function () {
+                    question_type = "select";
+                    selectnum = 4;
+                    radioflag = 0;
+                    update_option("#selecttab");
+                    content_inject("#selecttab");
+                    radio_plus_minus_click();
+                    radio_label_click();
+                });
+                $("#multipanel").click(function () {
+                    question_type = "multi";
+                    selectnum = 4;
+                    clear_multi_option_label_list();
+                    update_option("#multitab");
+                    content_inject("#multitab");
+                    multi_plus_minus_click();
+                    multi_label_click();
+                });
+                $("#fillpanel").click(function () {
+                    question_type = "fill";
+                    fill_update_all();
+                });
+            });
+
+
+            //判断是否有答案被选择
+            function have_answer() {
+                if (question_type === 'select')
+                    if (radioflag === 0)
+                        return false;
+                    else
+                        return true;
+                else if (question_type === 'multi') {
+                    for (let i = 1; i < selectnum + 1; i++)
+                        if (multi_option_label_list[i] === 1)
+                            return true;
+                    return false;
+                } else {
+                    fill_content_pop();
+                    // console.log(fill_content_list);
+                    // console.log(fill_option_count);
+                    if (fill_option_count === 0)
+                        return false;
+                    else if (fill_option_count === 1)
+                        if (fill_content_list[1] === "")
+                            return false;
+                        else
+                            return true;
+                    else
+                        for (let i = 1; i < fill_option_count + 1; i++) {
+                            if (fill_content_list[i] === "")
+                                return false;
+                        }
+                    return true;
+                }
+            }
+
+            //获取答案列表
+            function get_answer() {
+                let answer_list = new Array();
+                if (question_type === 'select') {
+                    answer_list[0] = letter_list[radioflag - 1];
+                } else if (question_type === "multi") {
+                    let count = 0;
+                    for (let i = 1; i < selectnum + 1; i++) {
+                        if (multi_option_label_list[i] === 1)
+                            answer_list[count++] = letter_list[i - 1];
+                    }
+                } else {
+                    answer_list = fill_content_pop();
+                }
+                return JSON.stringify(answer_list);
+            }
+
+            //判断选项是否都被填写
+            function all_option_filled() {
+                let typename;
+                if (question_type === 'select')
+                    typename = "#selecttab";
+                else if (question_type === "multi")
+                    typename = "#multitab";
+                else
+                    typename = "#filltab";
+                for (let i = 1; i < selectnum + 1; i++)
+                    if ($(typename + " #input" + letter_list[i - 1]).val() === "")
+                        return false;
+                return true;
+            }
+
+            //获取所有选项
+            function get_all_option() {
+                let typename;
+                if (question_type === 'select')
+                    typename = "#selecttab";
+                else if (question_type === "multi")
+                    typename = "#multitab";
+                else
+                    typename = "#filltab";
+
+                let count = 0;
+                let option_list = new Array();
+                for (let i = 1; i < selectnum + 1; i++) {
+                    option_list[count++] = $(typename + " #input" + letter_list[i - 1]).val();
+                }
+                return JSON.stringify(option_list);
+
 
             }
-        )
+
+            //题干是否完整 TODO 填空
+            function have_qstem() {
+                let typename;
+                if (question_type === 'select')
+                    typename = "#selecttab";
+                else if (question_type === "multi")
+                    typename = "#multitab";
+                else
+                    typename = "#filltab";
+                if ($(typename + " .qstem").val() === "")
+                    return false;
+                else
+                    return true;
+            }
+
+
+            $('#createquestion').click(function () {
+                if (have_answer() === true) {
+                    if (question_type === "select" || question_type === "multi")
+                        if (all_option_filled() === true)
+                            if (have_qstem() === true) {
+                                let typename;
+                                if (question_type === 'select') {
+                                    typename = "#selecttab";
+                                } else
+                                    typename = "#multitab";
+                                let data;
+                                if (typename === "#selecttab" || typename === "#multitab")
+                                    data = {
+                                        "qtype": question_type,
+                                        "qstem": $(typename + " .qstem").val(),
+                                        "qanswer": get_answer(),
+                                        "qselect": get_all_option(),
+                                        "qsubject": $(typename + " select").val()
+                                    };
+                                else
+                                    data = {
+                                        "qtype": question_type,
+                                        "qstem": $(typename + " .qstem").val(),
+                                        "qanswer": get_answer(),
+                                        "qsubject": $(typename + " select").val()
+                                    };
+                                console.log(data);
+                                $.ajax({
+                                    url: '/question/',
+                                    method: 'post',
+                                    data: data,
+                                    success: function (data) {
+                                        if (data['code'] === 200) {
+                                            console.log("新建成功！");
+                                            $("#newQuestion").modal('hide');
+                                        }
+                                    }
+                                });
+                            } else
+                                alert("请填写题干！");
+                        else
+                            alert("所有选项都需输入！");
+                    else {
+                        if (have_qstem() === true) {
+                            let typename = "#filltab";
+                            fill_content_pop();
+                            let temp = new Array();
+                            for (let i = 1; i < fill_option_count + 1; i++)
+                                temp[i - 1] = fill_content_list[i];
+                            let data = {
+                                "qtype": question_type,
+                                "qstem": $(typename + " .qstem").val(),
+                                "qanswer": JSON.stringify(temp),
+                                "qsubject": $(typename + " select").val()
+                            };
+                            console.log(data);
+                            $.ajax({
+                                url: '/question/',
+                                method: 'post',
+                                data: data,
+                                success: function (data) {
+                                    if (data['code'] === 200) {
+                                        console.log("新建成功！");
+                                        $("#newQuestion").modal('hide');
+                                    }
+                                }
+                            });
+                        } else
+                            alert("请填写题干！");
+                    }
+                } else
+                    alert("请设置答案！");
+            });
+        }
+    )
 </script>
 
 </body>
 </html>
-
-{#TODO刷新页面的地址需要修改#}
