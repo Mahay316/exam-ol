@@ -82,7 +82,7 @@ INSERT INTO `student_course`(`Cno`, `Sno`) VALUES (5, '120181080116');
 INSERT INTO `student_course`(`Cno`, `Sno`) VALUES (5, '120181110111');
 
 INSERT INTO `test`(`Tname`, `Tdesc`, `Tstart`, `Tend`, `Pno`, `Cno`) VALUES ('数据库期末考试', NULL, '2020-12-15 15:57:42', '2020-12-15 15:57:42', 1, 1);
-INSERT INTO `test`(`Tname`, `Tdesc`, `Tstart`, `Tend`, `Pno`, `Cno`) VALUES ('流体力学期中考试', '考试说明测试', '2020-12-18 15:00:00', '2020-12-19 15:00:00', 3, 1);
+INSERT INTO `test`(`Tname`, `Tdesc`, `Tstart`, `Pno`, `Cno`) VALUES ('流体力学期中考试', '考试说明测试', '2020-12-18 15:00:00', 3, 1);
 
 INSERT INTO `student_test`(`Tno`, `Sno`, `STwrong`, `STblank`, `STgrade`) VALUES (1, '120181080102', 0, 0, 100);
 INSERT INTO `student_test`(`Tno`, `Sno`) VALUES (1, '120181080116');

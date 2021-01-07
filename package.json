@@ -24,6 +24,7 @@
     "bootstrap": "^4.5.0",
     "chart.js": "^2.9.4",
     "jquery": "^3.5.1",
+    "moment": "^2.29.1",
     "style-loader": "^2.0.0",
     "vue": "^2.6.12"
   }

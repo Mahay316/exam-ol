@@ -127,7 +127,7 @@ def get_exam_stat():
 
 
 @class_bp.route('/exams')
-@should_be([MENTOR])
+@should_be([MENTOR, STUDENT])
 def get_exam_list_data():
     cno = int(request.args['cno'])
 
