@@ -26,7 +26,7 @@ new Vue({
             bootbox.confirm(`是否删除考试"${item.tname}"？`, (result) => {
                 if (result) {
                     // TODO: 删除考试
-                    axios.delete('/exam?tno=' + item.tno).then(resp => {
+                    axios.delete('/exam/?tno=' + item.tno).then(resp => {
                         if (resp.data.code === 403)
                             bootbox.alert('无权限删除考试！');
                     });
