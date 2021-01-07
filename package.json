@@ -26,6 +26,7 @@
     "jquery": "^3.5.1",
     "moment": "^2.29.1",
     "style-loader": "^2.0.0",
+    "sweetalert2": "^10.13.0",
     "vue": "^2.6.12"
   }
 }

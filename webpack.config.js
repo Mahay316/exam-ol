@@ -6,7 +6,9 @@ module.exports = {
     entry: {
         // stat: './src/js/stat.js',
         // classList: './src/js/classList.js',
-        testList: './src/js/testList.js'
+        // testList: './src/js/testList.js',
+        // testDetail: './src/js/testDetail.js',
+        testOnline: './src/js/testOnline.js'
     },
     output: {
         path: path.resolve(__dirname, 'static/dist'),
