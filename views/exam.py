@@ -204,7 +204,6 @@ def get_questions():
             'type': q.Qtype,
             'stem': q.Qstem,  # 题干字符串
             'choices': "",  # 选择题的选项，填空题无
-            'cache': "",
             'qpscore': qpscore
         }
 

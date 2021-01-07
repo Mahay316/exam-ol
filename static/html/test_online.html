@@ -69,19 +69,28 @@
                     <div class="card-item" v-if="questionStat.select.length">
                         <h6>单项选择题</h6>
                         <div class="list">
-                            <a :href="'#qs_' + idx" class="num" v-for="idx in questionStat.select">{{ idx }}</a>
+                            <a :href="'#qs_' + item.idx" class="num" v-for="item in questionStat.select"
+                               :class="{chosen: answers[item.questionID] && (answers[item.questionID].choice.length > 0)}">
+                                {{ item.idx }}
+                            </a>
                         </div>
                     </div>
                     <div class="card-item" v-if="questionStat.multi.length">
                         <h6>多项选择题</h6>
                         <div class="list">
-                            <a :href="'#qs_' + idx" class="num chosen" v-for="idx in questionStat.multi">{{ idx }}</a>
+                            <a :href="'#qs_' + item.idx" class="num" v-for="item in questionStat.multi"
+                               :class="{chosen: answers[item.questionID] && (answers[item.questionID].choice.length > 0)}">
+                                {{ item.idx }}
+                            </a>
                         </div>
                     </div>
                     <div class="card-item" v-if="questionStat.fill.length">
                         <h6>填空题</h6>
                         <div class="list">
-                            <a :href="'#qs_' + idx" class="num chosen" v-for="idx in questionStat.fill">{{ idx }}</a>
+                            <a :href="'#qs_' + item.idx" class="num" v-for="item in questionStat.fill"
+                               :class="{chosen: answers[item.questionID] && (answers[item.questionID].choice.length > 0)}">
+                                {{ item.idx }}
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -241,6 +250,14 @@
                     let data = resp.data;
                     if (data.code === 200) {
                         this.questions = data.questions;
+
+                        // 如果服务器有缓存，则加载缓存
+                        for (let item of this.questions) {
+                            this.answers[item.questionID] = {
+                                questionID: item.questionID,
+                                choice: item.cache ? item.cache.choice : []
+                            };
+                        }
                     }
                 });
             }
@@ -258,15 +275,16 @@
 
                 // 分别记录选择题、多选题和填空题对应的题号
                 for (let i = 0; i < this.questions.length; i++) {
+                    let tmp = {idx: i + 1, questionID: this.questions[i].questionID};
                     switch (this.questions[i].type) {
                         case 'select':
-                            res.select.push(i + 1);
+                            res.select.push(tmp);
                             break;
                         case 'multi':
-                            res.multi.push(i + 1);
+                            res.multi.push(tmp);
                             break;
                         case 'fill':
-                            res.fill.push(i + 1);
+                            res.fill.push(tmp);
                             break;
                     }
                 }
