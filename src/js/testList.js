@@ -27,10 +27,11 @@ new Vue({
                 if (result) {
                     // TODO: 删除考试
                     axios.delete('/exam/?tno=' + item.tno).then(resp => {
-                        if (resp.data.code === 403)
+                        if (resp.data.code === 200)
+                            this.loadExam(this.params['cno']);
+                        else if (resp.data.code === 403)
                             bootbox.alert('无权限删除考试！');
                     });
-                    this.loadExam(this.params['cno']);
                 }
             });
         },

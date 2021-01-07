@@ -375,7 +375,7 @@ def delete_exam():
     """
     删除考试
     """
-    tno = request.form.get('tno')
+    tno = request.args.get('tno')
     Test.delete_test(tno)
     return jsonify({'code': 200})
 
