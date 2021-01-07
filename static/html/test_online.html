@@ -14,6 +14,7 @@
     <!-- 侧边栏跟随组件 -->
     <script src="/static/js/accessory.js"></script>
     <link rel="stylesheet" href="/static/css/test_online.css"/>
+    <link rel="stylesheet" href="/static/fontawesome/css/all.min.css">
 </head>
 <body>
 <div id="pane">
@@ -40,7 +41,9 @@
             <!-- 试卷主体 -->
             <div class="col-9">
                 <div>
-                    <div class="question" v-for="(item, index) in questions" :id="'qs_' + index">
+                    <div class="question" v-for="(item, index) in questions"
+                         :id="'qs_' + index" @dblclick="handleMark(index + 1)"
+                         :class="{marked: marked.includes(index + 1)}">
                         <div class="topic_type">
                             <em></em>
                             <h2>{{ item.type | typeToStr }} <span>（本题{{ item.qpscore }}分）</span></h2>
@@ -53,7 +56,10 @@
                                 <div class="select_item" v-for="(choice, cidx) in item.choices">
                                     <input class="num" type="button" name="question_1"
                                            :value="toLetter(cidx)" @click="handleAnswer(item, $event)"
-                                           :class="{chosen: answers[item.questionID] && (answers[item.questionID].choice.includes(toLetter(cidx)))}">
+                                           :class="{
+                                               chosen: answers[item.questionID]
+                                                        && (answers[item.questionID].choice.includes(toLetter(cidx)))
+                                           }">
                                     <span>{{ choice }}</span>
                                 </div>
                             </div>
@@ -70,7 +76,10 @@
                         <h6>单项选择题</h6>
                         <div class="list">
                             <a :href="'#qs_' + item.idx" class="num" v-for="item in questionStat.select"
-                               :class="{chosen: answers[item.questionID] && (answers[item.questionID].choice.length > 0)}">
+                               :class="{
+                                    chosen: answers[item.questionID] && (answers[item.questionID].choice.length > 0),
+                                    marked: marked.includes(item.idx)
+                               }">
                                 {{ item.idx }}
                             </a>
                         </div>
@@ -79,7 +88,10 @@
                         <h6>多项选择题</h6>
                         <div class="list">
                             <a :href="'#qs_' + item.idx" class="num" v-for="item in questionStat.multi"
-                               :class="{chosen: answers[item.questionID] && (answers[item.questionID].choice.length > 0)}">
+                               :class="{
+                                    chosen: answers[item.questionID] && (answers[item.questionID].choice.length > 0),
+                                    marked: marked.includes(item.idx)
+                               }">
                                 {{ item.idx }}
                             </a>
                         </div>
@@ -88,7 +100,10 @@
                         <h6>填空题</h6>
                         <div class="list">
                             <a :href="'#qs_' + item.idx" class="num" v-for="item in questionStat.fill"
-                               :class="{chosen: answers[item.questionID] && (answers[item.questionID].choice.length > 0)}">
+                               :class="{
+                                    chosen: answers[item.questionID] && (answers[item.questionID].choice.length > 0),
+                                    marked: marked.includes(item.idx)
+                               }">
                                 {{ item.idx }}
                             </a>
                         </div>
@@ -130,14 +145,15 @@
         showCloseButton: true,
     });
 
-    new Vue({
+    let pane = new Vue({
         el: '#pane',
         data: {
             testName: '',
             timeLeft: 0,
             timer: -1,
             questions: [],
-            answers: {} // answers用于缓存已作答的题目答案
+            answers: {}, // answers用于缓存已作答的题目答案,
+            marked: []  // 保存标记了的题号
         },
         methods: {
             submitPaper() {
@@ -163,6 +179,15 @@
                         });
                     }
                 });
+            },
+            handleMark(idx) {
+                // 调用一次标记指定题目，再调用取消标记
+                let i = this.marked.indexOf(idx);
+                if (i < 0)
+                    this.marked.push(idx);
+                else
+                    this.marked.splice(i, 1);
+                console.log(this.marked);
             },
             handleAnswer(item, event) {
                 let targetAnswer = this.answers[item.questionID];
