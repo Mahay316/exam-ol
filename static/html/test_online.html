@@ -210,7 +210,7 @@
                                 <div class="select_item" v-for="(choice, cidx) in item.choices">
                                     <input class="num" type="button" name="question_1"
                                            :value="toLetter(cidx)" @click="handleAnswer(item, $event)"
-                                           :class="{chosen: answers[item.questionID] && (toLetter(cidx) in answers[item.questionID].choice)}">
+                                           :class="{chosen: answers[item.questionID] && (answers[item.questionID].choice.includes(toLetter(cidx)))}">
                                     <span>{{ choice }}</span>
                                 </div>
                             </div>
@@ -298,6 +298,8 @@
                 targetAnswer.choice.push(event.target.value);
                 // 更新提交时间戳
                 targetAnswer.submitTime = Date.now();
+                // 由于多层嵌套的数组更新并不引起重绘，因此强制要求刷新
+                this.$forceUpdate();
 
                 // 向服务器提交当前题目作答情况
                 $.ajax({

@@ -263,7 +263,7 @@ def cache_questions():
             return jsonify({'code': 204})
 
     # session缓存本次考试的信息
-    assert examID not in session
+    assert str(examID) in session
 
     cur_exam_session = session[str(examID)]
 
@@ -275,13 +275,15 @@ def cache_questions():
     for per_res in result:
         assert isinstance(per_res, dict)
         # TODO 未判断题目是否存在
-        questionID = int(per_res.pop('questionID'))
-        # cached_questionID.add(questionID)
-        cur_exam_session[questionID] = per_res
+        questionID = per_res.pop('questionID')
+        cur_exam_session[str(questionID)] = per_res
         cur_exam_session['cached_questionID'].append(questionID)
 
+    print(cur_exam_session)
+    session.update()
+
     # session缓存所有题目id
-    if 'all_question_ids' not in session:
+    if 'all_question_ids' not in cur_exam_session:
         cur_exam_session['all_question_ids'] = Test.get_all_question_id(examID)
 
     res = {
