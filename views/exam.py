@@ -61,6 +61,11 @@ def auto_grade(tno: int):
     if paper is None:
         return jsonify({'code': 204})
 
+    infos = Test.get_student_test_info(tno, session['no'])
+    if infos.get('st_grade') is not None:
+        # 已经有成绩了，不能重复调用
+        return jsonify({'code': 203})
+
     pnum = paper.Pnum
     right_num, did_num, stu_grade = 0, 0, 0
 
@@ -73,6 +78,7 @@ def auto_grade(tno: int):
 
     cached_questionID = cur_exam_session.get('cached_questionID')
     for quiz_id in list(set(cached_questionID)):
+        assert isinstance(quiz_id, str)
         did_num += 1
         answer = cur_exam_session['answers'][quiz_id]
         qtype = answer['qtype']
@@ -186,6 +192,10 @@ def get_questions():
         # 由于session需要序列化因此不能用set(), 在这里用list然后返回时用set去重
         cur_exam_session['cached_questionID'] = list()
 
+    # session缓存所有题目id
+    if 'all_question_ids' not in cur_exam_session:
+        cur_exam_session['all_question_ids'] = Test.get_all_question_id(examID)
+
     for tp in test.get_all_questions():
         q = tp[0]
         qpscore = tp[1]
@@ -200,7 +210,8 @@ def get_questions():
 
         # 为了后面判卷不用再次访问数据库，暂时缓存下来
         # TODO 未测试
-        cur_exam_session['answers'][q.Qno] = {
+        qno = str(q.Qno)
+        cur_exam_session['answers'][qno] = {
             'qanswer': json.loads(q.Qanswer),
             'qtype': q.Qtype,
             'qpscore': qpscore
@@ -211,11 +222,11 @@ def get_questions():
             cur_dict['choices'] = json.loads(q.Qselect)
 
         # 用户已作答的缓存
-        if q.Qno in cur_exam_session:
+        if qno in cur_exam_session:
             tmp = {
                 'questionID': q.Qno,
-                'choice': cur_exam_session[q.Qno]['choice'],
-                'submitTime': cur_exam_session[q.Qno]['submitTime']
+                'choice': cur_exam_session[qno]['choice'],
+                'submitTime': cur_exam_session[qno]['submitTime']
             }
             cur_dict['cache'] = tmp
 
@@ -275,16 +286,12 @@ def cache_questions():
     for per_res in result:
         assert isinstance(per_res, dict)
         # TODO 未判断题目是否存在
-        questionID = per_res.pop('questionID')
-        cur_exam_session[str(questionID)] = per_res
+        questionID = str(per_res.pop('questionID'))
+        cur_exam_session[questionID] = per_res
         cur_exam_session['cached_questionID'].append(questionID)
 
     print(cur_exam_session)
     session.update()
-
-    # session缓存所有题目id
-    if 'all_question_ids' not in cur_exam_session:
-        cur_exam_session['all_question_ids'] = Test.get_all_question_id(examID)
 
     res = {
         'code': 200,
