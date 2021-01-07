@@ -1,9 +1,11 @@
-from flask import Blueprint, request, jsonify, session, current_app
-from models import Test, Student
-from datetime import datetime
 import json
-from decorators import should_be
+from datetime import datetime
+
+from flask import Blueprint, request, jsonify, session, current_app
+
 from common.Role import *
+from decorators import should_be
+from models import Test, Student
 
 exam_bp = Blueprint('exam_bp', __name__)
 
@@ -62,9 +64,9 @@ def auto_grade(tno: int):
     pnum = paper.Pnum
     right_num, did_num, stu_grade = 0, 0, 0
 
-    cur_exam_session = session.get(tno)
+    cur_exam_session = session.get(str(tno))
 
-    if  cur_exam_session is None:
+    if cur_exam_session is None:
         # 说明没有进过考试页面或, 题目肯定都没作答
         Test.set_test_grade(tno, session['no'], st_wrong=0, st_blank=pnum, st_grade=0)
         return jsonify({'code': 200})
@@ -101,7 +103,7 @@ def auto_grade(tno: int):
     # del session['cached_questionID']
     # del session['all_question_ids']
     # del session['answers']
-    del session[tno]
+    del session[str(tno)]
 
     return jsonify({'code': 200})
 
@@ -167,6 +169,8 @@ def get_questions():
     }
     res = res_dict['questions']
 
+    # 将examID作为session的key，使用int型时会报错
+    examID = str(examID)
     # session缓存本次考试的信息
     if examID not in session:
         session[examID] = {}
@@ -259,10 +263,9 @@ def cache_questions():
             return jsonify({'code': 204})
 
     # session缓存本次考试的信息
-    if examID not in session:
-        session[examID] = {}
+    assert examID not in session
 
-    cur_exam_session = session[examID]
+    cur_exam_session = session[str(examID)]
 
     # 获得的result是个list，元素为dict
     result = json.loads(request.form['result'])
