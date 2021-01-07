@@ -81,12 +81,25 @@ class StudentTest(Base):
         session = model_common.get_mysql_session(engine)
 
         try:
-            st = StudentTest(Tno=tno,
-                             Sno=sno,
-                             STwrong=stwrong,
-                             STblank=stblank,
-                             STgrade=stgrade)
-            session.add(st)
+            filter_list = []
+            filter_list.append(cls.Tno == tno)
+            filter_list.append(cls.Sno == sno)
+
+            x = session.query(cls).filter(*filter_list)
+            if x:
+                info = {
+                    'STwrong': stwrong,
+                    'STblank': stblank,
+                    'STgrade': stgrade
+                }
+                x.update(info)
+            else:
+                st = StudentTest(Tno=tno,
+                                 Sno=sno,
+                                 STwrong=stwrong,
+                                 STblank=stblank,
+                                 STgrade=stgrade)
+                session.add(st)
             session.commit()
             return True
 

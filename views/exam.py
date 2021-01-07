@@ -101,7 +101,7 @@ def auto_grade(tno: int):
             right_num += 1
             stu_grade += qpscore
 
-    Test.set_test_grade(tno, session['no'], st_wrong=pnum - right_num, st_blank=pnum - did_num, st_grade=stu_grade)
+    Test.set_test_grade(tno, session['no'], st_wrong=did_num - right_num, st_blank=pnum - did_num, st_grade=stu_grade)
 
     # TODO 清理session易出错, session存储逻辑要改变，为了
     # for quiz_id in list(set(cached_questionID)):
@@ -268,7 +268,7 @@ def cache_questions():
     tend = test.Tend
     if tend is not None:
         # 可能考试已经结束但前端还未退出
-        if datetime.now().timestamp() > tend:
+        if datetime.now() > tend:
             # 考试已经结束，自动判卷并返回考试结束代码
             auto_grade(examID)
             return jsonify({'code': 204})
@@ -302,13 +302,13 @@ def cache_questions():
     return jsonify(res)
 
 
-@exam_bp.route('/grading', methods=['POST'])
+@exam_bp.route('/grading', methods=['GET'])
 @should_be([STUDENT])
 def grade_exam():
     """
     试卷判分接口，直接使用后端缓存的数据
     """
-    tno = int(request.form['tno'])
+    tno = int(request.args['tno'])
     # TODO 进行权限验证，即验证学生是否有该考试且考试已经开始
 
     return auto_grade(tno)
@@ -366,7 +366,7 @@ def get_exam_results():
         tend = infos.get('tend')
         st_grade = infos.get('st_grade')
         infos['over'] = False
-        if tend is not None:
+        if tend > 0:
             # 如果考试限时，需要判断时间是不是截止了
             now = datetime.now().timestamp()
             if now > tend:
@@ -384,6 +384,9 @@ def get_exam_results():
                 else:
                     # 考试未结束且未交卷
                     infos['over'] = False
+        else:
+            if st_grade is not None:
+                infos['over'] = True
 
         infos['code'] = 200
         return jsonify(infos)
