@@ -244,7 +244,7 @@ class Test(Base):
                 'pnum': paper.Pnum,
                 'st_blank': st.STblank,
                 'tstart': test.Tstart.timestamp(),
-                'tend': test.Tend.timestamp(),
+                'tend': -1 if test.Tend is None else test.Tend.timestamp(),
                 'tname': test.Tname,
                 'tdesc': test.Tdesc
             }
@@ -289,11 +289,43 @@ class Test(Base):
             StudentTest.add_snos_and_tno(tno=test.Tno, snos=snos)
 
             return True
+
         except Exception as e:
             session.rollback()
-            raise e
             return False
 
         finally:
             engine.dispose()
             session.remove()
+
+    @classmethod
+    def delete_test(cls, tno):
+        """
+        删除考试
+        """
+
+        engine = model_common.get_mysql_engine()
+        session = model_common.get_mysql_session(engine)
+
+        try:
+            filter_list = []
+            filter_list.append(cls.Tno == tno)
+
+            test = session.query(cls).filter(*filter_list).first()
+            if not test:
+                raise Exception('没有该考试记录')
+
+            session.delete(test)
+            session.commit()
+
+            return True
+
+        except Exception as e:
+            session.rollback()
+            return False
+
+        finally:
+            engine.dispose()
+            session.remove()
+
+
