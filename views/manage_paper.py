@@ -142,7 +142,7 @@ def get_paper_content():
                 'qstem': q.Qstem,
                 'qanswer': q.Qanswer,
                 'qselect': q.Qselect,
-                'qscore': search_dict[q.Qno]
+                'qpscore': search_dict[q.Qno]
 
             })
 

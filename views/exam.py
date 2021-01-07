@@ -62,25 +62,24 @@ def auto_grade(tno: int):
     pnum = paper.Pnum
     right_num, did_num, stu_grade = 0, 0, 0
 
-    cached_questionID = session.get('cached_questionID')
+    cur_exam_session = session.get(tno)
 
-    if cached_questionID is None:
-        # 说明没有进过考试页面，题目肯定都没作答
+    if  cur_exam_session is None:
+        # 说明没有进过考试页面或, 题目肯定都没作答
         Test.set_test_grade(tno, session['no'], st_wrong=0, st_blank=pnum, st_grade=0)
-        if 'answer' in session:
-            del session['answer']
         return jsonify({'code': 200})
 
+    cached_questionID = cur_exam_session.get('cached_questionID')
     for quiz_id in list(set(cached_questionID)):
         did_num += 1
-        answer = session['answers'][quiz_id]
+        answer = cur_exam_session['answers'][quiz_id]
         qtype = answer['qtype']
         # ["A", "B"]
         qanswer = answer['qanswer']
         qpscore = answer['qpscore']
 
         # {'choice': ["A", "B"]}
-        user_ans = session[quiz_id]['choice']
+        user_ans = cur_exam_session[quiz_id]['choice']
         flag = False
         if qtype == 'select':
             flag = qanswer[0] == user_ans[0]
@@ -97,11 +96,12 @@ def auto_grade(tno: int):
     Test.set_test_grade(tno, session['no'], st_wrong=pnum - right_num, st_blank=pnum - did_num, st_grade=stu_grade)
 
     # TODO 清理session易出错, session存储逻辑要改变，为了
-    for quiz_id in list(set(cached_questionID)):
-        del session[quiz_id]
-    del session['cached_questionID']
-    del session['all_question_ids']
-    del session['answers']
+    # for quiz_id in list(set(cached_questionID)):
+    #     del session[quiz_id]
+    # del session['cached_questionID']
+    # del session['all_question_ids']
+    # del session['answers']
+    del session[tno]
 
     return jsonify({'code': 200})
 
@@ -167,8 +167,20 @@ def get_questions():
     }
     res = res_dict['questions']
 
-    if 'answers' not in session:
-        session['answers'] = {}
+    # session缓存本次考试的信息
+    if examID not in session:
+        session[examID] = {}
+
+    cur_exam_session = session[examID]
+
+    # 缓存题目正确答案
+    if 'answers' not in cur_exam_session:
+        cur_exam_session['answers'] = {}
+
+    # 缓存已保存的题目id
+    if 'cached_questionID' not in cur_exam_session:
+        # 由于session需要序列化因此不能用set(), 在这里用list然后返回时用set去重
+        cur_exam_session['cached_questionID'] = list()
 
     for tp in test.get_all_questions():
         q = tp[0]
@@ -184,7 +196,7 @@ def get_questions():
 
         # 为了后面判卷不用再次访问数据库，暂时缓存下来
         # TODO 未测试
-        session['answers'][q.Qno] = {
+        cur_exam_session['answers'][q.Qno] = {
             'qanswer': json.loads(q.Qanswer),
             'qtype': q.Qtype,
             'qpscore': qpscore
@@ -195,11 +207,11 @@ def get_questions():
             cur_dict['choices'] = json.loads(q.Qselect)
 
         # 用户已作答的缓存
-        if q.Qno in session:
+        if q.Qno in cur_exam_session:
             tmp = {
                 'questionID': q.Qno,
-                'choice': session[q.Qno]['choice'],
-                'submitTime': session[q.Qno]['submitTime']
+                'choice': cur_exam_session[q.Qno]['choice'],
+                'submitTime': cur_exam_session[q.Qno]['submitTime']
             }
             cur_dict['cache'] = tmp
 
@@ -224,7 +236,7 @@ def cache_questions():
     """
     缓存考生作答情况
     """
-    examID = int(request.args['examID'])
+    examID = int(request.form['examID'])
 
     test = Test.get_test(examID)
     # TODO 增加是否判卷的判断，如果考试结束直接判卷
@@ -246,10 +258,11 @@ def cache_questions():
             auto_grade(examID)
             return jsonify({'code': 204})
 
-    # session缓存已保存的题目id
-    if 'cached_questionID' not in session:
-        # 由于session需要序列化因此不能用set(), 在这里用list然后返回时用set去重
-        session['cached_questionID'] = list()
+    # session缓存本次考试的信息
+    if examID not in session:
+        session[examID] = {}
+
+    cur_exam_session = session[examID]
 
     # 获得的result是个list，元素为dict
     result = json.loads(request.form['result'])
@@ -259,19 +272,19 @@ def cache_questions():
     for per_res in result:
         assert isinstance(per_res, dict)
         # TODO 未判断题目是否存在
-        questionID = per_res.pop('questionID')
+        questionID = int(per_res.pop('questionID'))
         # cached_questionID.add(questionID)
-        session[questionID] = per_res
-        session['cached_questionID'].append(questionID)
+        cur_exam_session[questionID] = per_res
+        cur_exam_session['cached_questionID'].append(questionID)
 
     # session缓存所有题目id
     if 'all_question_ids' not in session:
-        session['all_question_ids'] = Test.get_all_question_id(examID)
+        cur_exam_session['all_question_ids'] = Test.get_all_question_id(examID)
 
     res = {
         'code': 200,
-        'cached': list(set(session['cached_questionID'])),
-        'all': list(session['all_question_ids'])
+        'cached': list(set(cur_exam_session['cached_questionID'])),
+        'all': list(cur_exam_session['all_question_ids'])
     }
 
     return jsonify(res)
