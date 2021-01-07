@@ -160,12 +160,13 @@ class Course(Base):
         test_list = []
         for t in tests:
             p = Test.get_paper_by_tno(t.Tno)
-            test_list.append({'tno': t.Tno,
-                              'tname': t.Tname,
-                              'pscore': p.Pscore,
-                              'pnum': p.Pnum,
-                              'tstart': t.Tstart.timestamp(),
-                              'tend': t.Tend.timestamp() if t.Tend is not None else None,
-                              'over': t.Tend.timestamp() < datetime.now().timestamp() if t.Tend is not None else False,
+            test_list.append({
+                'tno': t.Tno,
+                'tname': t.Tname,
+                'pscore': p.Pscore,
+                'pnum': p.Pnum,
+                'tstart': t.Tstart.timestamp(),
+                'tend': t.Tend.timestamp() if t.Tend is not None else None,
+                'over': t.Tend.timestamp() < datetime.now().timestamp() if t.Tend is not None else False,
             })
         return test_list

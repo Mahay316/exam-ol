@@ -26,7 +26,7 @@ def add_question():
     form = request.form
     filed = ['qtype', 'qstem', 'qanswer', 'qselect', 'qsubject']
     try:
-        qtype, qstem, qanswer, qselect, qsubject = list(map(lambda x: form[x], filed))
+        qtype, qstem, qanswer, qselect, qsubject = list(map(lambda x: form.get(x), filed))
     except:
         return jsonify({'code': 204})
 
