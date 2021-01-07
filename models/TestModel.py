@@ -310,10 +310,32 @@ class Test(Base):
             engine.dispose()
             session.remove()
 
-
-    # TODO
     @classmethod
     def delete_test(cls, tno):
         """
         调用存储过程删除考试
         """
+
+        engine = model_common.get_mysql_engine()
+        session = model_common.get_mysql_session(engine)
+
+        try:
+            filter_list = []
+            filter_list.append(cls.Tno == tno)
+
+            test = session.query(cls).filter(*filter_list).first()
+            if not test:
+                raise Exception('没有该考试记录')
+
+            session.delete(test)
+            session.commit()
+
+            return True
+
+        except Exception as e:
+            session.rollback()
+            return False
+
+        finally:
+            engine.dispose()
+            session.remove()
