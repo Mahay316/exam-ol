@@ -1,8 +1,7 @@
 from flask import Blueprint, request, jsonify, session, current_app
-from models import Test
+from models import Test, Student
 from datetime import datetime
 import json
-from models import Student, Paper
 from decorators import should_be
 from common.Role import *
 
@@ -177,8 +176,8 @@ def get_questions():
         cur_dict = {
             'questionID': q.Qno,
             'type': q.Qtype,
-            'stem': q.Qstem, # 题干字符串
-            'choices': "", # 选择题的选项，填空题无
+            'stem': q.Qstem,  # 题干字符串
+            'choices': "",  # 选择题的选项，填空题无
             'cache': "",
             'qpscore': qpscore
         }
@@ -186,14 +185,14 @@ def get_questions():
         # 为了后面判卷不用再次访问数据库，暂时缓存下来
         # TODO 未测试
         session['answers'][q.Qno] = {
-            'qanswer':json.loads(q.Qanswer),
+            'qanswer': json.loads(q.Qanswer),
             'qtype': q.Qtype,
             'qpscore': qpscore
         }
 
         # 如果是选择题则choices置空
         if not q.is_fill_in_blanks():
-            cur_dict['choices'] = json.dumps(q.Qselect)
+            cur_dict['choices'] = json.loads(q.Qselect)
 
         # 用户已作答的缓存
         if q.Qno in session:
@@ -393,7 +392,7 @@ def delete_exam():
     """
     删除考试
     """
-    tno = request.form.get('tno')
+    tno = request.args.get('tno')
     Test.delete_test(tno)
     return jsonify({'code': 200})
 
