@@ -25,6 +25,10 @@
             left: 0;
         }
 
+        .header > .container {
+            padding: 12px 15px;
+        }
+
         .exam-title {
             position: absolute;
             top: 50%;
@@ -162,13 +166,17 @@
             font-size: 18px;
             color: #666666;
         }
+
+        #main {
+            margin-top: 85px;
+        }
     </style>
 </head>
 <body>
 <div id="pane">
     <!-- 顶部固定标题栏 -->
-    <div class="container-fluid shadow header" style="border: 0px solid red;">
-        <div class="container" style="border: 0px solid red; padding: 12px 15px;">
+    <div class="container-fluid shadow header">
+        <div class="container">
             <div class="row">
                 <div class="col-2 exam-title">{{ testName }}</div>
                 <div class="col-3 exam-info">
@@ -184,8 +192,8 @@
     </div>
 
     <!-- 试卷内容部分 -->
-    <div id="main" class="container" style="border: 0px solid red; margin-top: 85px;">
-        <div class="row" style="border: 0px solid blue">
+    <div id="main" class="container">
+        <div class="row">
             <!-- 试卷主体 -->
             <div class="col-9">
                 <div>
@@ -200,7 +208,9 @@
                             </div>
                             <div class="question_select">
                                 <div class="select_item" v-for="(choice, cidx) in item.choices">
-                                    <input class="num" type="button" name="question_1" :value="cidx | toLetter">
+                                    <input class="num" type="button" name="question_1"
+                                           :value="toLetter(cidx)" @click="handleAnswer(item, $event)"
+                                           :class="{chosen: answers[item.questionID] && (toLetter(cidx) in answers[item.questionID].choice)}">
                                     <span>{{ choice }}</span>
                                 </div>
                             </div>
@@ -244,15 +254,68 @@
 <script src="/static/js/vue.js"></script>
 <script src="/static/js/axios.js"></script>
 <script>
+    function parseSearchParam() {
+        let res = {};
+        let params = location.search.substring(1).split('&');
+        params.forEach(ele => {
+            // 拆分成键值对，放入res对象中
+            let pair = ele.split('=');
+            res[pair[0]] = pair[1];
+        });
 
-</script>
-<script>
+        return res;
+    }
+
+    // answers用于缓存已作答的题目答案，格式为
+    // {
+    //     questionID: { questionID: 'str', choice: [],  submitTime: timestamp},
+    //     questionID: { questionID: 'str', choice: [],  submitTime: timestamp},
+    //     ...
+    // }
     new Vue({
         el: '#pane',
         data: {
             testName: '',
             timeLeft: 0,
             questions: [],
+            answers: {}
+        },
+        methods: {
+            handleAnswer(item, event) {
+                let targetAnswer = this.answers[item.questionID];
+                // 如果缓存不存在，需要临时创建缓存
+                if (!targetAnswer) {
+                    targetAnswer = this.answers[item.questionID] = {
+                        questionID: item.questionID,
+                        choice: []
+                    };
+                }
+
+                // 单项选择题只允许缓存一个答案
+                // 但为了和其他题型的一致性，仍使用数组缓存其答案
+                if (item.type === 'select')
+                    targetAnswer.choice.pop();
+                targetAnswer.choice.push(event.target.value);
+                // 更新提交时间戳
+                targetAnswer.submitTime = Date.now();
+
+                // 向服务器提交当前题目作答情况
+                $.ajax({
+                    url: '/exam/questions',
+                    method: 'POST',
+                    data: {
+                        examID: this.params['tno'],
+                        result: JSON.stringify([targetAnswer])
+                    },
+                    success(resp) {
+                        // TODO: 需要考虑提交失败情况，进行重试操作
+                        console.log(resp.code);
+                    }
+                });
+            },
+            toLetter(idx) {
+                return String.fromCharCode('A'.charCodeAt(0) + idx);
+            }
         },
         computed: {
             questionStat() {
@@ -261,6 +324,10 @@
                     multi: [],
                     fill: []
                 };
+                // 防止报错，貌似计算属性先于普通属性创建
+                if (!this.questions)
+                    return res;
+
                 // 分别记录选择题、多选题和填空题对应的题号
                 for (let i = 0; i < this.questions.length; i++) {
                     switch (this.questions[i].type) {
@@ -295,9 +362,6 @@
 
                 return res;
             },
-            toLetter(idx) {
-                return String.fromCharCode('A'.charCodeAt(0) + idx);
-            },
             formatTime(seconds) {
                 let n = 2;
                 let hours = (Array(n).join('0') + String((seconds / 3600).toFixed(0))).slice(-n);
@@ -311,6 +375,7 @@
             }
         },
         mounted() {
+            this.params = parseSearchParam();
             axios.get('/exam/questions?examID=2').then(resp => {
                 let data = resp.data;
                 if (data.code === 200) {

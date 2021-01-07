@@ -172,7 +172,7 @@ def cache_questions():
     """
     缓存考生作答情况
     """
-    examID = int(request.args['examID'])
+    examID = int(request.form.get('examID'))
 
     test = Test.get_test(examID)
     # TODO 增加是否判卷的判断，如果考试结束直接判卷
@@ -193,6 +193,7 @@ def cache_questions():
 
     # 获得的result是个list，元素为dict
     result = json.loads(request.form['result'])
+    print(result)
     assert isinstance(result, list)
 
     # 将内容缓存
