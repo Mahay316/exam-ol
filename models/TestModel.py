@@ -299,6 +299,7 @@ class Test(Base):
 
         except Exception as e:
             session.rollback()
+            raise e
             return False
 
         finally:
