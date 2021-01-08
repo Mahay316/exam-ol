@@ -342,6 +342,7 @@ def get_exam_results():
             stat_dict[i] = 0
 
         for grade in infos['grades']:
+            print(grade)
             stat_dict[grade // 10] += 1
 
         stat_dict[9] += stat_dict[10]

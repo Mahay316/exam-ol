@@ -125,7 +125,7 @@ class StudentTest(Base):
             grades = []
 
             for st in sts:
-                if st.STgrade:
+                if st.STgrade is not None:
                     grades.append(st.STgrade)
             return grades
 
