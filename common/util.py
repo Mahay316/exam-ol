@@ -1,5 +1,7 @@
 from flask import session
 from common.Role import *
+from datetime import datetime
+from views.exam import auto_grade
 
 
 def save_session(role, user, remember_me: str):
@@ -26,3 +28,35 @@ def save_session(role, user, remember_me: str):
     elif role == ADMIN:
         session['role'] = role
         session['no'] = user.Ano
+
+
+def if_test_end(tno, tend, st_grade):
+    """
+    判断考试是否结束
+
+    :param tend: None or timestamp 
+    :param st_grade: None or int
+    :return: True if test ends else False
+    """
+    flag = False
+    if tend > 0:
+        # 如果考试限时，需要判断时间是不是截止了
+        now = datetime.now().timestamp()
+        if now > tend:
+            if st_grade is None:
+                # 考试结束但还没登记成绩
+                # 主动判卷，判卷后重新请求考试结果
+                auto_grade(tno)
+
+            flag = True
+        else:
+            if st_grade is not None:
+                # 考试未结束但已经交卷
+                flag = True
+            else:
+                # 考试未结束且未交卷
+                flag = False
+    else:
+        if st_grade is not None:
+            flag = True
+    return flag
