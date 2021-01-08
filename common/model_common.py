@@ -9,11 +9,13 @@
 """
 @file function:
 """
+from datetime import datetime
+
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 
 import config
-from datetime import datetime
+
 
 
 def get_mysql_engine():
