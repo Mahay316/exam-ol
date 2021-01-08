@@ -59,7 +59,7 @@ const vue = new Vue({
                         if (data.code === 200) {
                             this.members = [{sno: data.sno, sname: data.sname}];
                             this.inClass = data.in_class;
-                        } else if (resp.data === 204) {
+                        } else if (data.code === 204) {
                             this.members.splice(0, this.members.length);
                         }
                     });
@@ -160,7 +160,6 @@ const vue = new Vue({
             this.loadMember(this.params['cno']);
             axios.get('/class/info?cno=' + this.params['cno']).then(resp => {
                 let data = resp.data;
-                console.log(data);
                 if (data.code === 200) {
                     this.className = data.cname;
                 }
