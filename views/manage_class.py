@@ -154,5 +154,14 @@ def get_exam_list_data():
         'exams': []
     }
 
-    res_json['exams'] = Course.get_test_info_by_cno(cno)
+    if session['role'] == MENTOR:
+        res_json['exams'] = Course.get_test_info_by_cno(cno)
+    else:
+        exams = Course.get_test_info_by_cno(cno, session['no'])
+        from .exam import auto_grade
+        for idx, dic in enumerate(exams):
+            need_grading = exams[idx].pop('need_grading')
+            if need_grading:
+                auto_grade(dic['tno'])
+        res_json['exams'] = exams
     return jsonify(res_json)

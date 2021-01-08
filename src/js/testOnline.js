@@ -79,10 +79,8 @@ new Vue({
                 return;
 
             targetAnswer.choice[index] = val;
-            console.log(targetAnswer.choice);
             // 由于多层嵌套的数组更新并不引起重绘，因此强制要求刷新
             this.$forceUpdate();
-            console.log(targetAnswer.choice);
 
             // 更新提交时间戳
             targetAnswer.submitTime = Date.now();

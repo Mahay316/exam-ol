@@ -137,7 +137,7 @@ class Course(Base):
         return StudentCourse.del_class_member(cno=cno, sno=sno)
 
     @classmethod
-    def get_test_info_by_cno(cls, cno):
+    def get_test_info_by_cno(cls, cno, sno=None):
         """
         给出cno返回该课程下的全部考试的信息
 
@@ -156,14 +156,18 @@ class Course(Base):
         tests = Course.get_tests_by_no(cno)
 
         test_list = []
-        for t in tests:
-            p = Test.get_paper_by_tno(t.Tno)
-            test_list.append({'tno': t.Tno,
-                              'tname': t.Tname,
-                              'pscore': p.Pscore,
-                              'pnum': p.Pnum,
-                              'tstart': t.Tstart.timestamp(),
-                              'tend': t.Tend.timestamp() if t.Tend is not None else -1,
-                              'over': t.Tend.timestamp() < datetime.now().timestamp() if t.Tend is not None else False,
-            })
+        if sno is None:
+            for t in tests:
+                p = Test.get_paper_by_tno(t.Tno)
+                test_list.append({'tno': t.Tno,
+                                  'tname': t.Tname,
+                                  'pscore': p.Pscore,
+                                  'pnum': p.Pnum,
+                                  'tstart': t.Tstart.timestamp(),
+                                  'tend': t.Tend.timestamp() if t.Tend is not None else -1,
+                })
+        else:
+            pass
+            # 学生的
+            # 加参数over和need_grading
         return test_list
