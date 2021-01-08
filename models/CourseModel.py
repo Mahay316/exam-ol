@@ -163,7 +163,7 @@ class Course(Base):
                               'pscore': p.Pscore,
                               'pnum': p.Pnum,
                               'tstart': t.Tstart.timestamp(),
-                              'tend': t.Tend.timestamp() if t.Tend is not None else None,
+                              'tend': t.Tend.timestamp() if t.Tend is not None else -1,
                               'over': t.Tend.timestamp() < datetime.now().timestamp() if t.Tend is not None else False,
             })
         return test_list

@@ -31,7 +31,8 @@ const vue = new Vue({
         selectedTest: '',
         members: [],
         cacheMembers: [],
-        exams: []
+        exams: [],
+        className: ''
     },
     components: {
         navBar,
@@ -56,11 +57,10 @@ const vue = new Vue({
                     .then(resp => {
                         let data = resp.data;
                         if (data.code === 200) {
-                            // 此处this无法引用到Vue实例
                             this.members = [{sno: data.sno, sname: data.sname}];
                             this.inClass = data.in_class;
                         } else if (resp.data === 204) {
-                            this.members = [];
+                            this.members.splice(0, this.members.length);
                         }
                     });
             } else if (this.adding) {
@@ -158,6 +158,13 @@ const vue = new Vue({
         if (this.params['cno']) {
             this.loadExam(this.params['cno']);
             this.loadMember(this.params['cno']);
+            axios.get('/class/info?cno=' + this.params['cno']).then(resp => {
+                let data = resp.data;
+                console.log(data);
+                if (data.code === 200) {
+                    this.className = data.cname;
+                }
+            });
         }
     }
 });

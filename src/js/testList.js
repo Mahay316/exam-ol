@@ -92,6 +92,6 @@ new Vue({
     mounted() {
         this.params = parseSearchParam();
         this.loadRole();
-        this.loadExam(1);
+        this.loadExam(this.params['cno']);
     }
 });
