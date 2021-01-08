@@ -178,3 +178,24 @@ class StudentTest(Base):
         finally:
             engine.dispose()
             session.remove()
+
+    @classmethod
+    def get_grade(cls, tno, sno):
+        engine = model_common.get_mysql_engine()
+        session = model_common.get_mysql_session(engine)
+
+        try:
+            filter_list = []
+            filter_list.append(cls.Tno == tno)
+            filter_list.append(cls.Sno == sno)
+
+            st = session.query(cls).filter(*filter_list).first()
+            return st.STgrade
+
+        except Exception as e:
+            session.rollback()
+            raise e
+
+        finally:
+            engine.dispose()
+            session.remove()
