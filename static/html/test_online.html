@@ -60,7 +60,7 @@
                                             <label class="input-group-text">填空{{ index }}</label>
                                         </div>
                                         <input type="text" class="form-control" placeholder="输入答案"
-                                               :value.once="answers[item.questionID].choice[index]"
+                                               :value="answers[item.questionID].choice[index]"
                                                @blur="handleFillAnswer(item, index - 1, $event)"
                                                @keydown.enter="handleFillAnswer(item, index - 1, $event)">
                                     </div>

@@ -245,14 +245,9 @@ class Test(Base):
                 'st_blank': st.STblank,
                 'tstart': test.Tstart.timestamp(),
                 'tname': test.Tname,
-                'tdesc': test.Tdesc
+                'tdesc': test.Tdesc,
+                'tend': -1 if test.Tend is None else test.Tend.timestamp()
             }
-
-            if test.Tend:
-                test_dict['tend'] = test.Tend.timestamp()
-
-            else:
-                test_dict['tend'] = None
 
             return test_dict
 

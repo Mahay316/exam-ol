@@ -137,7 +137,7 @@ class Course(Base):
         return StudentCourse.del_class_member(cno=cno, sno=sno)
 
     @classmethod
-    def get_test_info_by_cno(cls, cno, sno=None):
+    def get_test_info_by_cno(cls, cno):
         """
         给出cno返回该课程下的全部考试的信息
 
@@ -156,35 +156,14 @@ class Course(Base):
         tests = Course.get_tests_by_no(cno)
 
         test_list = []
-        if sno is None:
-            for t in tests:
-                p = Test.get_paper_by_tno(t.Tno)
-                test_list.append({'tno': t.Tno,
-                                  'tname': t.Tname,
-                                  'pscore': p.Pscore,
-                                  'pnum': p.Pnum,
-                                  'tstart': t.Tstart.timestamp(),
-                                  'tend': t.Tend.timestamp() if t.Tend is not None else -1,
-                })
-        else:
-            for t in tests:
-                p = Test.get_paper_by_tno(t.Tno)
-
-                from models.StudentTestModel import StudentTest
-                grade = StudentTest.get_grade(t.Tno, sno)
-
-                if not t.Tend:
-                    flag = -1
-                else:
-                    flag = 1
-                overinfo = model_common.if_test_end(flag, grade)
-                test_list.append({'tno': t.Tno,
-                                  'tname': t.Tname,
-                                  'pscore': p.Pscore,
-                                  'pnum': p.Pnum,
-                                  'tstart': t.Tstart.timestamp(),
-                                  'tend': t.Tend.timestamp() if t.Tend is not None else -1,
-                                  'over': overinfo['over'],
-                                  'need_grading': overinfo['need_grading']
-                                  })
+        for t in tests:
+            p = Test.get_paper_by_tno(t.Tno)
+            test_list.append({'tno': t.Tno,
+                              'tname': t.Tname,
+                              'pscore': p.Pscore,
+                              'pnum': p.Pnum,
+                              'tstart': t.Tstart.timestamp(),
+                              'tend': t.Tend.timestamp() if t.Tend is not None else -1,
+                              'over': t.Tend.timestamp() < datetime.now().timestamp() if t.Tend is not None else False,
+            })
         return test_list

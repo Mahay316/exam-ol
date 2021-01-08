@@ -135,7 +135,7 @@ def change_student():
         return jsonify({'code': 200})
 
 
-@class_bp.route('/stat')
+@class_bp.route('stat')
 def get_exam_stat():
     cno = request.args.get('cno')
     if cno is None or not has_this_class(int(cno)):
@@ -154,14 +154,5 @@ def get_exam_list_data():
         'exams': []
     }
 
-    if session['role'] == MENTOR:
-        res_json['exams'] = Course.get_test_info_by_cno(cno)
-    else:
-        exams = Course.get_test_info_by_cno(cno, session['no'])
-        from .exam import auto_grade
-        for idx, dic in enumerate(exams):
-            need_grading = exams[idx].pop('need_grading')
-            if need_grading:
-                auto_grade(dic['tno'])
-        res_json['exams'] = exams
+    res_json['exams'] = Course.get_test_info_by_cno(cno)
     return jsonify(res_json)

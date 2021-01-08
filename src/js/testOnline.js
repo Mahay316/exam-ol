@@ -12,7 +12,7 @@ const Toast = Swal.mixin({
     showCloseButton: true,
 });
 
-let pane = new Vue({
+new Vue({
     el: '#pane',
     data: {
         testName: '',
@@ -79,8 +79,10 @@ let pane = new Vue({
                 return;
 
             targetAnswer.choice[index] = val;
+            console.log(targetAnswer.choice);
             // 由于多层嵌套的数组更新并不引起重绘，因此强制要求刷新
             this.$forceUpdate();
+            console.log(targetAnswer.choice);
 
             // 更新提交时间戳
             targetAnswer.submitTime = Date.now();
@@ -142,7 +144,6 @@ let pane = new Vue({
                     if (this.timeLeft > 0) {
                         this.timer = setInterval(() => {
                             this.timeLeft--;
-                            console.log(this.timeLeft);
                             if (this.timeLeft <= 0) {
                                 clearInterval(this.timer);
                                 // 考试结束
