@@ -177,6 +177,7 @@ class Course(Base):
                     flag = -1
                 else:
                     flag = 1
+
                 overinfo = model_common.if_test_end(flag, grade)
                 test_list.append({'tno': t.Tno,
                                   'tname': t.Tname,

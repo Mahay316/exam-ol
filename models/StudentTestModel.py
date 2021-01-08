@@ -190,6 +190,8 @@ class StudentTest(Base):
             filter_list.append(cls.Sno == sno)
 
             st = session.query(cls).filter(*filter_list).first()
+            if not st:
+                return None
             return st.STgrade
 
         except Exception as e:
