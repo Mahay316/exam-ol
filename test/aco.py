@@ -126,16 +126,19 @@
 #     test = relationship('Test')
 #
 #
-# # engine = model_common.get_mysql_engine()
-# # session = model_common.get_mysql_session(engine)
-# #
-# # try:
-# #   filter_list = []
-# #
-# # except Exception as e:
-# #     session.rollback()
-# #     return False
-# #
-# # finally:
-# #     engine.dispose()
-# #     session.remove()
+from common import model_common
+
+
+engine = model_common.get_mysql_engine()
+session = model_common.get_mysql_session(engine)
+
+try:
+  filter_list = []
+
+except Exception as e:
+    session.rollback()
+    raise e
+
+finally:
+    engine.dispose()
+    session.remove()

@@ -1,0 +1,35 @@
+digraph "classes" {
+charset="utf-8"
+rankdir=TB
+A [dir=LR, label="{models.CourseModel.Course|Cname\lCno\lMno\lSubno\lstudentcourse\ltests\l|add_class_member(cls, cno, sno)\ldel_class_member(cls, cno, sno)\lget_class(cls, Cno)\lget_students_by_no(cls, course_no)\lget_test_info_by_cno(cls, cno)\lget_tests_by_no(cls, course_no)\l}", shape="record"];
+B [label="{models.PaperModel.Paper|Pisdeleted\lPname\lPno\lPnum\lPreference\lPscore\lSubno\lquestionpaper\l|add_paper(cls, questions, pname, subno)\ldelete_paper(cls, pno)\lget_all_papers(cls)\lget_paper(cls, pno)\lget_paper_num(cls)\lget_questions_id(cls, Pno)\lselect_papers_by(cls, page, subject, used, pno, pname)\l}", shape="record"];
+C [label="{models.QuestionModel.Question|Qanswer\lQisdeleted\lQno\lQreference\lQselect\lQstem\lQtype\lSubno\lquestionpaper\l|add_question(cls, qtype, qstem, qanswer, qselect, qsubject)\ldelete_question(cls, qno)\lget_question_num(cls)\lget_questions(cls, Qnos)\lget_questions_by_pno(cls, pno)\lget_questions_by_qnos(cls, qnos)\lis_fill_in_blanks()\lselect_questions_by(cls, page, subject, qtype, qno, content)\lupdate_question(cls, old_qno, qtype, qstem, qanswer, qselect, qsubject)\l}", shape="record"];
+D [label="{models.QuestionPaperModel.QuestionPaper|Pno\lQPscore\lQno\l|add_questions_to_paper(cls, pno, questions)\lget_qpscore(cls, pno, qno)\l}", shape="record"];
+E [label="{models.StudentCourseModel.StudentCourse|Cno\lSno\l|add_class_member(cls, cno, sno)\ldel_class_member(cls, cno, sno)\l}", shape="record"];
+F [label="{models.StudentTestModel.StudentTest|STblank\lSTgrade\lSTwrong\lSno\lTno\ltest\l|add_snos_and_tno(cls, tno, snos)\ladd_st(cls, tno, sno, stwrong, stblank, stgrade)\lget_all_grades(cls, tno)\lget_st(cls, tno, sno)\lget_st_by_tno(cls, tno)\l}", shape="record"];
+G [label="{models.SubjectModel.Subject|Subname\lSubno\l|get_all_subs(cls)\lget_subno_by_subname(cls, subname)\l}", shape="record"];
+H [label="{models.TestModel.Test|Cno\lPno\lTdesc\lTend\lTend\lTname\lTno\lTstart\lTstart\lpaper\l|add_test(cls, pno, cno, tname, tdesc, tstart, tend)\ldelete_test(cls, tno)\lget_all_question_id(cls, Tno)\lget_all_questions()\lget_begin_time()\lget_end_time()\lget_paper_by_tno(cls, tno)\lget_student_test_info(cls, tno, sno)\lget_test(cls, Tno)\lget_test_infos(cls, tno)\lset_test_grade(cls, tno, sno, st_wrong, st_blank, st_grade)\l}", shape="record"];
+I [label="{models.UserModel.Admin|Ano\lApassword\l|get_user(cls, no)\l}", shape="record"];
+J [label="{models.UserModel.Mentor|Mgender\lMname\lMno\lMpassword\lMtitle\lcourse\l|get_classes(cls, no)\lget_user(cls, no)\lhas_this_class(cls, mentor_no, course_no)\lselect_mentors_by(cls, page, no, title, name)\l}", shape="record"];
+K [label="{models.UserModel.Student|Sgender\lSmajor\lSname\lSno\lSpassword\lstudentcourse\lstudenttest\l|get_all_test_ids()\lget_classes(cls, no)\lget_user(cls, no)\lhas_this_class(cls, student_no, course_no)\lselect_students_by(cls, page, no, name, major)\l}", shape="record"];
+L [label="{models.UserModel.User|\l|get_user(cls, no)\lget_user_by_role(cls, no, role)\lis_admin()\lis_mentor()\lis_student()\lverify_password(password)\l}", shape="record"];
+M [label="{sqlalchemy.sql.schema.Column|lcomment\ldefault\lforeign_keys\lindex\lkey\lnullable\lprimary_key\l|append_foreign_key(fk)\lreferences(column)\l}", shape="record"];
+
+L -> I [arrowhead="none", arrowtail="empty", dir="back"];
+L -> J [arrowhead="none", arrowtail="empty", dir="back"];
+L -> K [arrowhead="none", arrowtail="empty", dir="back"];
+
+M -> A [arrowhead="diamond", arrowtail="none"];
+M -> B [arrowhead="diamond", arrowtail="none"];
+M -> C [arrowhead="diamond", arrowtail="none"];
+M -> D [arrowhead="diamond", arrowtail="none"];
+M -> E [arrowhead="diamond", arrowtail="none"];
+M -> F [arrowhead="diamond", arrowtail="none"];
+M -> G [arrowhead="diamond", arrowtail="none"];
+M -> H [arrowhead="diamond", arrowtail="none"];
+
+I -> M [arrowhead="none", arrowtail="diamond", dir="back"];
+J -> M [arrowhead="none", arrowtail="diamond", dir="back"];
+K -> M [arrowhead="none", arrowtail="diamond", dir="back"];
+
+}

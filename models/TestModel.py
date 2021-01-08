@@ -290,9 +290,9 @@ class Test(Base):
             )
 
             if tstart:
-                test.Tstart=model_common.change_stamp_to_datatime(tstart)
+                test.Tstart=model_common.change_stamp_to_datatime(int(tstart))
             if tend:
-                test.Tend = model_common.change_stamp_to_datatime(tend)
+                test.Tend = model_common.change_stamp_to_datatime(int(tend))
 
             session.add(test)
             session.commit()
