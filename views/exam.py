@@ -1,10 +1,11 @@
-from flask import Blueprint, request, jsonify, session, current_app
-from models import Test
-from datetime import datetime
 import json
-from models import Student, Paper
-from decorators import should_be
+from datetime import datetime
+
+from flask import Blueprint, request, jsonify, session, current_app
+
 from common.Role import *
+from decorators import should_be
+from models import Test, Student
 
 exam_bp = Blueprint('exam_bp', __name__)
 
@@ -52,6 +53,65 @@ def guarantee_exam_begin(test: Test):
         return jsonify(res)
 
     return None
+
+
+def auto_grade(tno: int):
+    paper = Test.get_paper_by_tno(tno)
+
+    if paper is None:
+        return jsonify({'code': 204})
+
+    infos = Test.get_student_test_info(tno, session['no'])
+    if infos.get('st_grade') is not None:
+        # 已经有成绩了，不能重复调用
+        return jsonify({'code': 203})
+
+    pnum = paper.Pnum
+    right_num, did_num, stu_grade = 0, 0, 0
+
+    cur_exam_session = session.get(str(tno))
+
+    if cur_exam_session is None:
+        # 说明没有进过考试页面或, 题目肯定都没作答
+        Test.set_test_grade(tno, session['no'], st_wrong=0, st_blank=pnum, st_grade=0)
+        return jsonify({'code': 200})
+
+    cached_questionID = cur_exam_session.get('cached_questionID')
+    for quiz_id in list(set(cached_questionID)):
+        assert isinstance(quiz_id, str)
+        did_num += 1
+        answer = cur_exam_session['answers'][quiz_id]
+        qtype = answer['qtype']
+        # ["A", "B"]
+        qanswer = answer['qanswer']
+        qpscore = answer['qpscore']
+
+        # {'choice': ["A", "B"]}
+        user_ans = cur_exam_session[quiz_id]['choice']
+        flag = False
+        if qtype == 'select':
+            flag = qanswer[0] == user_ans[0]
+        elif qtype == 'multi':
+            user_ans.sort()
+            qanswer.sort()
+            flag = user_ans == qanswer
+        elif qtype == 'fill':
+            flag = user_ans == qanswer
+        if flag:
+            right_num += 1
+            stu_grade += qpscore
+
+    Test.set_test_grade(tno, session['no'], st_wrong=did_num - right_num, st_blank=pnum - did_num, st_grade=stu_grade)
+
+    # TODO 清理session易出错, session存储逻辑要改变，为了
+    # for quiz_id in list(set(cached_questionID)):
+    #     del session[quiz_id]
+    # del session['cached_questionID']
+    # del session['all_question_ids']
+    # del session['answers']
+    del session[str(tno)]
+
+    return jsonify({'code': 200})
 
 
 @exam_bp.route('/time', methods=['GET'])
@@ -115,8 +175,26 @@ def get_questions():
     }
     res = res_dict['questions']
 
-    if 'answers' not in session:
-        session['answers'] = {}
+    # 将examID作为session的key，使用int型时会报错
+    examID = str(examID)
+    # session缓存本次考试的信息
+    if examID not in session:
+        session[examID] = {}
+
+    cur_exam_session = session[examID]
+
+    # 缓存题目正确答案
+    if 'answers' not in cur_exam_session:
+        cur_exam_session['answers'] = {}
+
+    # 缓存已保存的题目id
+    if 'cached_questionID' not in cur_exam_session:
+        # 由于session需要序列化因此不能用set(), 在这里用list然后返回时用set去重
+        cur_exam_session['cached_questionID'] = list()
+
+    # session缓存所有题目id
+    if 'all_question_ids' not in cur_exam_session:
+        cur_exam_session['all_question_ids'] = Test.get_all_question_id(examID)
 
     for tp in test.get_all_questions():
         q = tp[0]
@@ -124,30 +202,30 @@ def get_questions():
         cur_dict = {
             'questionID': q.Qno,
             'type': q.Qtype,
-            'stem': q.Qstem, # 题干字符串
-            'choices': "", # 选择题的选项，填空题无
-            'cache': "",
+            'stem': q.Qstem,  # 题干字符串
+            'choices': "",  # 选择题的选项，填空题无
             'qpscore': qpscore
         }
 
         # 为了后面判卷不用再次访问数据库，暂时缓存下来
         # TODO 未测试
-        session['answers'][q.Qno] = {
-            'qanswer':json.loads(q.Qanswer),
+        qno = str(q.Qno)
+        cur_exam_session['answers'][qno] = {
+            'qanswer': json.loads(q.Qanswer),
             'qtype': q.Qtype,
             'qpscore': qpscore
         }
 
         # 如果是选择题则choices置空
         if not q.is_fill_in_blanks():
-            cur_dict['choices'] = json.dumps(q.Qselect)
+            cur_dict['choices'] = json.loads(q.Qselect)
 
         # 用户已作答的缓存
-        if q.Qno in session:
+        if qno in cur_exam_session:
             tmp = {
                 'questionID': q.Qno,
-                'choice': session[q.Qno]['choice'],
-                'submitTime': session[q.Qno]['submitTime']
+                'choice': cur_exam_session[qno]['choice'],
+                'submitTime': cur_exam_session[qno]['submitTime']
             }
             cur_dict['cache'] = tmp
 
@@ -172,7 +250,7 @@ def cache_questions():
     """
     缓存考生作答情况
     """
-    examID = int(request.args['examID'])
+    examID = int(request.form['examID'])
 
     test = Test.get_test(examID)
     # TODO 增加是否判卷的判断，如果考试结束直接判卷
@@ -186,10 +264,18 @@ def cache_questions():
     if validated is not None:
         return validated
 
-    # session缓存已保存的题目id
-    if 'cached_questionID' not in session:
-        # 由于session需要序列化因此不能用set(), 在这里用list然后返回时用set去重
-        session['cached_questionID'] = list()
+    tend = test.Tend
+    if tend is not None:
+        # 可能考试已经结束但前端还未退出
+        if datetime.now() > tend:
+            # 考试已经结束，自动判卷并返回考试结束代码
+            auto_grade(examID)
+            return jsonify({'code': 204})
+
+    # session缓存本次考试的信息
+    assert str(examID) in session
+
+    cur_exam_session = session[str(examID)]
 
     # 获得的result是个list，元素为dict
     result = json.loads(request.form['result'])
@@ -199,75 +285,33 @@ def cache_questions():
     for per_res in result:
         assert isinstance(per_res, dict)
         # TODO 未判断题目是否存在
-        questionID = per_res.pop('questionID')
-        # cached_questionID.add(questionID)
-        session[questionID] = per_res
-        session['cached_questionID'].append(questionID)
+        questionID = str(per_res.pop('questionID'))
+        cur_exam_session[questionID] = per_res
+        cur_exam_session['cached_questionID'].append(questionID)
 
-    # session缓存所有题目id
-    if 'all_question_ids' not in session:
-        session['all_question_ids'] = Test.get_all_question_id(examID)
+    print(cur_exam_session)
+    session.update()
 
     res = {
         'code': 200,
-        'cached': list(set(session['cached_questionID'])),
-        'all': list(session['all_question_ids'])
+        'cached': list(set(cur_exam_session['cached_questionID'])),
+        'all': list(cur_exam_session['all_question_ids'])
     }
 
     return jsonify(res)
 
 
-@exam_bp.route('/grading', methods=['POST'])
+@exam_bp.route('/grading', methods=['GET'])
 @should_be([STUDENT])
 def grade_exam():
     """
     试卷判分接口，直接使用后端缓存的数据
     """
-    tno = int(request.form['tno'])
+    tno = int(request.args['tno'])
     # TODO 进行权限验证，即验证学生是否有该考试且考试已经开始
-    paper = Test.get_paper_by_tno(tno)
 
-    # TODO 判断考试是否结束
+    return auto_grade(tno)
 
-    if paper is None:
-        return jsonify({'code': 204})
-
-    pnum = paper.Pnum
-    right_num, did_num, stu_grade = 0, 0, 0
-
-    for quiz_id in list(set(session['cached_questionID'])):
-        did_num += 1
-        answer = session['answers'][quiz_id]
-        qtype = answer['qtype']
-        # ["A", "B"]
-        qanswer = answer['qanswer']
-        qpscore = answer['qpscore']
-
-        # {'choice': ["A", "B"]}
-        user_ans = session[quiz_id]['choice']
-        flag = False
-        if qtype == 'select':
-            flag = qanswer[0] == user_ans[0]
-        elif qtype == 'multi':
-            user_ans.sort()
-            qanswer.sort()
-            flag = user_ans == qanswer
-        elif qtype == 'fill':
-            flag = user_ans == qanswer
-        if flag:
-            right_num += 1
-            stu_grade += qpscore
-
-    Test.set_test_grade(tno, session['no'], st_wrong=pnum - right_num, st_blank=pnum - did_num, st_grade=stu_grade)
-
-    # TODO 清理session易出错, session存储逻辑要改变，为了
-    for quiz_id in list(set(session['cached_questionID'])):
-        del session[quiz_id]
-    del session['cached_questionID']
-    del session['all_question_ids']
-    del session['answers']
-
-    return jsonify({'code': 200})
 
 @exam_bp.route('/', methods=['GET'])
 @should_be([MENTOR, STUDENT])
@@ -311,13 +355,9 @@ def get_exam_results():
     else:
         # TODO 验证学生是否有考试
         tno = int(request.args['tno'])
+        sno = session['no']
 
-        # TODO 增加判断考试是否完成的接口（已完成考试分两种情况时间截止(考了和没考)和提交卷子但时间没截止）
-        # TODO 要先判断考试是否结束
-        # TODO 根据作答情况要是结束了没作答
-
-        # TODO 请求考试成绩的时候结束了的话要判个卷，主动调一下判卷接口
-        infos = Test.get_student_test_info(tno, session['no'])
+        infos = Test.get_student_test_info(tno, sno)
 
         if infos is None:
             return jsonify({'code': 403})
@@ -325,15 +365,17 @@ def get_exam_results():
         tend = infos.get('tend')
         st_grade = infos.get('st_grade')
         infos['over'] = False
-        if tend is not None:
+        if tend > 0:
             # 如果考试限时，需要判断时间是不是截止了
             now = datetime.now().timestamp()
             if now > tend:
-                infos['over'] = True
                 if st_grade is None:
                     # 考试结束但还没登记成绩
-                    # TODO 主动判卷，判卷完成后返回考试信息
-                    pass
+                    # 主动判卷，判卷后重新请求考试结果
+                    auto_grade(tno)
+                    infos = Test.get_student_test_info(tno, sno)
+
+                infos['over'] = True
             else:
                 if st_grade is not None:
                     # 考试未结束但已经交卷
@@ -341,6 +383,9 @@ def get_exam_results():
                 else:
                     # 考试未结束且未交卷
                     infos['over'] = False
+        else:
+            if st_grade is not None:
+                infos['over'] = True
 
         infos['code'] = 200
         return jsonify(infos)
@@ -368,7 +413,6 @@ def add_exam():
     return jsonify({'code': 200})
 
 
-# TODO
 @exam_bp.route('/', methods=['DELETE'])
 @should_be([MENTOR])
 def delete_exam():

@@ -137,12 +137,11 @@
                                             <div class="dt-buttons btn-group flex-wrap">
                                                 <div class="dropdown">
                                                     <a class="btn btn-outline-primary  dropdown-toggle" href="#"
-                                                       role="button" id="dropdownMenuLink" data-toggle="dropdown"
+                                                       role="button" id="dropdownMenuLink1" data-toggle="dropdown"
                                                        aria-haspopup="true" aria-expanded="false">
                                                         按科目筛选
-                                                        <!--TODO 筛选功能需要修改-->
+                                                        <!--                                                        {#                                                        TODO 筛选功能未完成#}-->
                                                     </a>
-
                                                     <div class="dropdown-menu " aria-labelledby="dropdownMenuLink">
                                                         <a class="dropdown-item btn-outline-primary s0000"
                                                            href="#">全部</a>
@@ -163,9 +162,7 @@
                                                        role="button" id="dropdownMenuLink2" data-toggle="dropdown"
                                                        aria-haspopup="true" aria-expanded="false">
                                                         按题目类型筛选
-                                                        <!--TODO 筛选功能需要修改-->
                                                     </a>
-
                                                     <div class="dropdown-menu " aria-labelledby="dropdownMenuLink">
                                                         <a class="dropdown-item btn-outline-primary t0000"
                                                            href="#">全部</a>
@@ -182,7 +179,7 @@
                                         <div class="col-sm-12 col-md-2 offset-3">
                                             <div id="example2_filter" class="dataTables_filter">
                                                 <input type="search" class="form-control form-control-sm"
-                                                       placeholder="按题干内容搜索" aria-controls="example1" id="searchinput">
+                                                       placeholder="按内容搜索" aria-controls="example1" id="searchinput">
                                             </div>
                                         </div>
                                         <div class="col-sm-12 col-md-1">
@@ -205,7 +202,7 @@
                                                         rowspan="1" colspan="1" style="width: 100px;">题目类型
                                                     </th>
                                                     <th class="sorting" tabindex="0" aria-controls="example1"
-                                                        rowspan="1" colspan="1" style="width: 100px;">科目
+                                                        rowspan="1" colspan="1" style="width: 120px;">科目
                                                     </th>
                                                     <th class="sorting" tabindex="0" aria-controls="example1"
                                                         rowspan="1" colspan="1" style="width: 100px">预览
@@ -551,49 +548,301 @@
             </div>
         </section>
 
-
-        <div class="modal fade" id="preview" style="display: none;" aria-hidden="true">
+        <div class="modal fade" id="modalpreview0" style="display: none;" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h4 class="modal-title">试题号：1001</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
+                            <span aria-hclassden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                        <p>    在数据库的三级模式结构中，(      )是用户与数据库系统的接口，是用户用到的那部分数据的描述。</p>
-                        <p id="sectionA">A.外模式</p>
-                        <p id="sectionB">B.内模式</p>
-                        <p id="sectionC">C.存储模式</p>
-                        <p id="sectionD">D.模式</p>
+                        <p class="qstem">    在数据库的三级模式结构中，(      )是用户与数据库系统的接口，是用户用到的那部分数据的描述。</p>
+                        <p class="sectionA">A.外模式</p>
                         <br>
-                        <p id="answer">答案： A</p>
+                        <p class="answer">答案： A</p>
                     </div>
                     <div class="modal-footer justify-content-end">
-                        <button type="button" class="btn btn-outline-dark" data-dismiss="modal">关闭</button>
+                        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">关闭</button>
                     </div>
                 </div>
                 <!-- /.modal-content -->
             </div>
             <!-- /.modal-dialog -->
         </div>
+        <div class="modal fade" id="modalpreview1" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">试题号：1001</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hclassden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p class="qstem">    在数据库的三级模式结构中，(      )是用户与数据库系统的接口，是用户用到的那部分数据的描述。</p>
+                        <p class="sectionA">A.外模式</p>
+                        <br>
+                        <p class="answer">答案： A</p>
+                    </div>
+                    <div class="modal-footer justify-content-end">
+                        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">关闭</button>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+        <div class="modal fade" id="modalpreview2" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">试题号：1001</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hclassden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p class="qstem">    在数据库的三级模式结构中，(      )是用户与数据库系统的接口，是用户用到的那部分数据的描述。</p>
+                        <p class="sectionA">A.外模式</p>
+                        <br>
+                        <p class="answer">答案： A</p>
+                    </div>
+                    <div class="modal-footer justify-content-end">
+                        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">关闭</button>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+        <div class="modal fade" id="modalpreview3" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">试题号：1001</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hclassden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p class="qstem">    在数据库的三级模式结构中，(      )是用户与数据库系统的接口，是用户用到的那部分数据的描述。</p>
+                        <p class="sectionA">A.外模式</p>
+                        <br>
+                        <p class="answer">答案： A</p>
+                    </div>
+                    <div class="modal-footer justify-content-end">
+                        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">关闭</button>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+        <div class="modal fade" id="modalpreview4" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">试题号：1001</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hclassden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p class="qstem">    在数据库的三级模式结构中，(      )是用户与数据库系统的接口，是用户用到的那部分数据的描述。</p>
+                        <p class="sectionA">A.外模式</p>
+                        <br>
+                        <p class="answer">答案： A</p>
+                    </div>
+                    <div class="modal-footer justify-content-end">
+                        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">关闭</button>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+        <div class="modal fade" id="modalpreview5" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">试题号：1001</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hclassden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p class="qstem">    在数据库的三级模式结构中，(      )是用户与数据库系统的接口，是用户用到的那部分数据的描述。</p>
+                        <p class="sectionA">A.外模式</p>
+                        <br>
+                        <p class="answer">答案： A</p>
+                    </div>
+                    <div class="modal-footer justify-content-end">
+                        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">关闭</button>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+        <div class="modal fade" id="modalpreview6" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">试题号：1001</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hclassden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p class="qstem">    在数据库的三级模式结构中，(      )是用户与数据库系统的接口，是用户用到的那部分数据的描述。</p>
+                        <p class="sectionA">A.外模式</p>
+                        <br>
+                        <p class="answer">答案： A</p>
+                    </div>
+                    <div class="modal-footer justify-content-end">
+                        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">关闭</button>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+        <div class="modal fade" id="modalpreview7" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">试题号：1001</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hclassden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p class="qstem">    在数据库的三级模式结构中，(      )是用户与数据库系统的接口，是用户用到的那部分数据的描述。</p>
+                        <p class="sectionA">A.外模式</p>
+                        <br>
+                        <p class="answer">答案： A</p>
+                    </div>
+                    <div class="modal-footer justify-content-end">
+                        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">关闭</button>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+        <div class="modal fade" id="modalpreview8" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">试题号：1001</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hclassden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p class="qstem">    在数据库的三级模式结构中，(      )是用户与数据库系统的接口，是用户用到的那部分数据的描述。</p>
+                        <p class="sectionA">A.外模式</p>
+                        <br>
+                        <p class="answer">答案： A</p>
+                    </div>
+                    <div class="modal-footer justify-content-end">
+                        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">关闭</button>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+        <div class="modal fade" id="modalpreview9" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">试题号：1001</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hclassden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p class="qstem">    在数据库的三级模式结构中，(      )是用户与数据库系统的接口，是用户用到的那部分数据的描述。</p>
+                        <p class="sectionA">A.外模式</p>
+                        <br>
+                        <p class="answer">答案： A</p>
+                    </div>
+                    <div class="modal-footer justify-content-end">
+                        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">关闭</button>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+
     </div>
 
     <footer class="main-footer shadow-lg">
         <div class="container-fluid" style="height: 40px; line-height: 40px;">
-            <span class="col-2" style="margin-right: 50px;"><strong>已选单选题数量: </strong><span class="numOfOption"><strong id="selecetnum">0</strong></span><strong> 题</strong></span>
-            <span class="col-2" style="margin-right: 50px;"><strong>已选多选题数量: </strong><span class="numOfMulOption"><strong id="multinum">0</strong></span><strong> 题</strong></span>
-            <span class="col-2" style="margin-right: 50px;"><strong>已选填空题数量: </strong><span class="numOfCompletion"><strong id="fillnum">0</strong></span><strong> 题</strong></span>
-            <span class="col-2" style="margin-right: 50px;"><strong>目前总题数: </strong><span class="sumOfPaper"><strong id="sumnum">0</strong></span><strong> 题</strong></span>
-            <span class="col-2"><strong>目前总分: </strong><span class="sumOfPaper"><strong id="sumscore">0</strong></span><strong> 分</strong></span>
+            <span class="col-2" style="margin-right: 50px;"><strong>已选单选题数量: </strong><span class="numOfOption"><strong
+                    id="selecetnum">0</strong></span><strong> 题</strong></span>
+            <span class="col-2" style="margin-right: 50px;"><strong>已选多选题数量: </strong><span
+                    class="numOfMulOption"><strong id="multinum">0</strong></span><strong> 题</strong></span>
+            <span class="col-2" style="margin-right: 50px;"><strong>已选填空题数量: </strong><span
+                    class="numOfCompletion"><strong id="fillnum">0</strong></span><strong> 题</strong></span>
+            <span class="col-2" style="margin-right: 50px;"><strong>目前总题数: </strong><span class="sumOfPaper"><strong
+                    id="sumnum">0</strong></span><strong> 题</strong></span>
+            <span class="col-2"><strong>目前总分: </strong><span class="sumOfPaper"><strong
+                    id="sumscore">0</strong></span><strong> 分</strong></span>
             <div class="float-right">
-                <button type="button" class="btn btn-success" style="margin-right: 10px;">预览试卷</button>
-                <button type="button" class="btn btn-primary">发布试卷</button>
+                <button type="button" class="btn btn-success" style="margin-right: 10px;" id="previewpaper">预览试卷
+                </button>
+                <button type="button" class="btn btn-primary" id="releasepaper" data-toggle="modal"
+                        data-target="#release">发布试卷
+                </button>
             </div>
         </div>
     </footer>
 
+    <div class="modal fade" tabindex="-1" id="release">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">发布试卷</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <div class="input-group"
+                             style="margin-bottom: 15px;">
+                            <span class="input-group-text"><strong>试卷名称</strong></span>
+                            <textarea class="form-control" aria-label="With textarea" placeholder="最多输入255个字符"
+                                      style="resize: none" id="papername"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Select</label>
+                        <select class="form-control" style="margin-bottom: 15px;">
+                            <option value="1">软件工程</option>
+                            <option value="2">数据库原理</option>
+                            <option value="3">编译原理</option>
+                            <option value="4">流体力学</option>
+                            <option value="5">工程热力学</option>
+                            <option value="6">C语言程序设计</option>
+                            <option value="7">Java高级语言程序设计</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-outline-primary" data-dismiss="modal" id="confirmrelease">发布
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <!-- REQUIRED SCRIPTS -->
@@ -608,19 +857,15 @@
 <script>
     $(function () {
         $('.check-btn').click(function () {
-            if ($(this).attr('checked')) {
+            if ($(this).attr('checked') === 'checked') {
                 $(this).removeAttr('checked');
-                $(this).text('未加入');
                 $(this).removeClass('btn-primary');
                 $(this).addClass('btn-outline-primary');
             } else {
-                $(this).attr('checked', 'true');
-                $(this).text('已加入');
+                $(this).attr('checked', true);
                 $(this).removeClass('btn-outline-primary');
                 $(this).addClass('btn-primary');
             }
-
-            console.log('checked: ', $('.check-btn[checked]').length);
         });
     });
 </script>
@@ -637,16 +882,6 @@
         subject_dict[5] = '工程热力学';
         subject_dict[6] = 'C语言程序设计';
         subject_dict[7] = 'Java高级语言程序设计';
-
-        type_dict = new Object();
-        type_dict[0] = null;
-        type_dict[1] = 'select';
-        type_dict[2] = 'multi';
-        type_dict[3] = 'fill';
-        target_dict = new Object();
-        target_dict[1] = '单选题';
-        target_dict[2] = '多选题';
-        target_dict[3] = '填空题';
         //当前页面初始化为1
         let current_page = 1;
         let page_num = 0;
@@ -656,6 +891,8 @@
         let question_list = new Array(10);
         let url_data = new Object();
         let temp_html;
+        let paper_qno_list = new Array();
+        let qno_score_list = new Array();
 
         //判断按钮是否禁用
         function judge_button_disabled() {
@@ -696,49 +933,151 @@
             }
         }
 
-        function load_select_func() {
+        //动态请求数据时加载按钮分值
+        function load_status() {
+            for (let i = 0; i < info_qno_list.length; i++) {
+                if (paper_qno_list[info_qno_list[i]] === 1) {
+                    let name = "#isSelected" + i;
+                    $(name).attr('checked', true);
+                    $(name).removeClass('btn-outline-primary');
+                    $(name).addClass('btn-primary');
+                    $(name).text("已加入");
+                    let inputname = "#score" + i;
+                    $(inputname).val(qno_score_list[info_qno_list[i]]);
+                }
+            }
+        }
+
+        //更新mainfooter
+        function update_main_footer(index, score) {
+            console.log(paper_qno_list[info_qno_list[index]]);
+            if (paper_qno_list[info_qno_list[index]] === 0 || paper_qno_list[info_qno_list[index]] === undefined) {
+                paper_qno_list[info_qno_list[index]] = 1;
+                if (question_list[index]['qtype'] === "单选题")
+                    $("#selecetnum").text(parseInt($("#selecetnum").text()) + 1);
+                else if (question_list[index]['qtype'] === "多选题")
+                    $("#multinum").text(parseInt($("#multinum").text()) + 1);
+                else
+                    $("#fillnum").text(parseInt($("#fillnum").text()) + 1);
+                $("#sumnum").text(parseInt($("#sumnum").text()) + 1);
+                $("#sumscore").text(parseInt($("#sumscore").text()) + score);
+                qno_score_list[info_qno_list[index]] = score;
+            } else {
+                paper_qno_list[info_qno_list[index]] = 0;
+                if (question_list[index]['qtype'] === "单选题")
+                    $("#selecetnum").text(parseInt($("#selecetnum").text()) - 1);
+                else if (question_list[index]['qtype'] === "多选题")
+                    $("#multinum").text(parseInt($("#multinum").text()) - 1);
+                else
+                    $("#fillnum").text(parseInt($("#fillnum").text()) - 1);
+                $("#sumnum").text(parseInt($("#sumnum").text()) - 1);
+                $("#sumscore").text(parseInt($("#sumscore").text()) - score);
+                qno_score_list[info_qno_list[index]] = 0;
+            }
+        }
+
+        //加入试卷按钮click事件编写
+        function load_select() {
             for (let i = 0; i < question_list.length; i++) {
-                let selecet_name = "#isSelected" + i;
-                let score_name = "#score" + i;
-                $(selecet_name).click(function () {
+                let name = "#isSelected" + i;
+                $(name).click(function () {
+                        if ($(this).attr('checked') === 'checked') {
+                            update_main_footer(i, parseInt($('#score' + i).val()));
+                            $('#score' + i).val("");
+                            $(this).removeAttr('checked');
+                            $(this).removeClass('btn-primary');
+                            $(this).addClass('btn-outline-primary');
+                            $(this).text("未加入");
+                        } else {
+                            let score = $('#score' + i).val();
+                            if (score === "")
+                                alert("请输入分值！");
+                            else {
+                                update_main_footer(i, parseInt(score));
+                                $(this).attr('checked', true);
+                                $(this).removeClass('btn-outline-primary');
+                                $(this).addClass('btn-primary');
+                                $(this).text("已加入");
 
-                    console.log($.trim($().val()));
-                    console.log(typeof $.trim($(score_name).val()));
-                    console.log(parseInt($.trim($(score_name).val())));
-                    console.log(typeof parseInt($.trim($(score_name).val())));
-
-                    if ($(selecet_name).attr('checked')) {
-                        //若选中则清空
-                        $(score_name).text('');
-                        $(selecet_name).removeAttr('checked');
-                        $(selecet_name).text('未加入');
-                        $(selecet_name).removeClass('btn-primary');
-                        $(selecet_name).addClass('btn-outline-primary');
-                    } else {
-                        if ($(score_name).text() === "")
-                            ;
-                        else {
-                            //需要把分值加给footer的sum，对应的题目数量增加
-                            //保存在list里面
-                            //按钮的样式发生改变
-                            $('#sumscore').val(parseInt($.trim($('#sumscore').val())) + parseInt($.trim($(score_name).val())));
-                            if (question_list[i]['qtype'] == '单选题')
-                                $('#selectnum').val(parseInt($.trim($('#selectnum').val())) + 1);
-                            else if (question_list[i]['qtype'] == '多选题')
-                                $('#multinum').val(parseInt($.trim($('#multinum').val())) + 1);
-                            else
-                                $('#fillnum').val(parseInt($.trim($('#fillnum').val())) + 1);
-
-                            $('#sumnum').val(parseInt( $.trim($('#sumnum').val())) + 1);
-
-                            question_num_list[question_num_list.length + 1] = info_qno_list[i];
-                            $(selecet_name).attr('checked', 'true');
-                            $(selecet_name).text('已加入');
-                            $(selecet_name).removeClass('btn-outline-primary');
-                            $(selecet_name).addClass('btn-primary');
+                            }
                         }
                     }
+                );
+            }
+        }
 
+        //输入分值onchange事件
+        function load_input() {
+            for (let i = 0; i < question_list.length; i++) {
+                let name = "#score" + i;
+                $(name).change(function () {
+                    let score = parseInt($(this).val());
+                    if (score === NaN || score <= 0 || Math.floor(score) != score) {
+                        alert("请输入正整数！")
+                        $(this).val(0);
+                        qno_score_list[info_qno_list[i]] = 0;
+                        $("#sumscore").text(parseInt($("#sumscore").text()) - qno_score_list[info_qno_list[i]]);
+                        qno_score_list[info_qno_list[i]] = 0;
+                    } else if ($("#isSelected" + i).attr("checked") === 'checked') {
+                        $("#sumscore").text(parseInt($("#sumscore").text()) - qno_score_list[info_qno_list[i]] + score);
+                        qno_score_list[info_qno_list[i]] = score;
+                    }
+                });
+            }
+        }
+
+        //解析试题答案选项
+        function parse_string_to_list(target_string) {
+            target_string = target_string.replace("[", "").replace("]", "");
+            target_string = target_string.split("\"");
+            let temp_list = new Array();
+            let j = 0;
+            for (let i = 0; i < target_string.length; i++)
+                if (i % 2 === 1)
+                    temp_list[j++] = target_string[i];
+            return temp_list;
+        }
+
+        //预览界面的试题加载html
+        function modal_html_append(index) {
+            let load_html = "";
+            load_html += "<p class=\"qstem\">&nbsp;&nbsp;&nbsp;&nbsp;" + question_list[index]['qstem'] + "</p>";
+            if (question_list[index]['qtype'] === '填空题') {
+                load_html += "<br>";
+                load_html += "<p>答案：</p>";
+                let temp_list = parse_string_to_list(question_list[index]['qanswer']);
+                for (let i = 0; i < temp_list.length; i++)
+                    load_html += "<p>&nbsp;&nbsp;&nbsp;&nbsp;" + temp_list[i] + "</p>";
+                return load_html;
+            } else {
+                let temp_select_list = parse_string_to_list(question_list[index]['qselect']);
+                for (let i = 0; i < temp_select_list.length; i++)
+                    load_html += "<p>" + temp_select_list[i] + "</p>"
+                load_html += "<br>";
+                load_html += "<p>答案：</p>";
+                let temp_list = parse_string_to_list(question_list[index]['qanswer']);
+                for (let i = 0; i < temp_list.length; i++)
+                    load_html += "<p>&nbsp;&nbsp;&nbsp;&nbsp;" + letter_list[i] + "." + temp_list[i] + "</p>";
+                return load_html;
+            }
+        }
+
+        //动态加载预览模态框
+        function load_preview_modal() {
+            for (let i = 0; i < question_list.length; i++) {
+                let name = '#preview' + i;
+                let modal_name = '#modalpreview' + i;
+                $(modal_name).on('show.bs.modal', function () {
+                    $(modal_name + " h4").empty();
+                    $(modal_name + " h4").text("试题号：" + info_qno_list[i]);
+                    let load_html = modal_html_append(i);
+                    let course_name = modal_name + " .modal-body";
+                    $(course_name).empty();
+                    $(course_name).append(load_html);
+                });
+
+                $(name).click(function () {
+                    $(modal_name).modal('show');
                 });
             }
         }
@@ -752,23 +1091,25 @@
                 //TODO 保存试题号
                 info_qno_list[i] = question_list[i]['qno'];
                 let qtype;
-
+                if (question_list[i]['qtype'] === 'select') {
+                    question_list[i]['qtype'] = '单选题';
+                    qtype = '单选题';
+                } else if (question_list[i]['qtype'] === 'multi') {
+                    question_list[i]['qtype'] = '多选题';
+                    qtype = '多选题';
+                } else {
+                    question_list[i]['qtype'] = '填空题';
+                    qtype = '填空题';
+                }
                 //表格信息html添加
                 temp_html = "<tr role='row' class='odd'>";
                 temp_html += "<td title=\"" + question_list[i]['qstem'] + "\"><strong>" + question_list[i]['qstem'] + "</strong>";
                 temp_html += "</td>";
-                //console.log(question_list[i]['preference']);
-                if (question_list[i]['qtype'] === "select")
-                    qtype = '单选题';
-                else if (question_list[i]['qtype'] === "multi")
-                    qtype = '多选题';
-                else
-                    qtype = '填空题';
                 temp_html += "<td><strong>" + qtype + "</strong></td>";
                 temp_html += "<td><strong>" + subject_dict[question_list[i]['qsubject']] + "</strong></td>";
                 temp_html += "<td>";
                 temp_html += "<div class=\"container\">";
-                temp_html += "<button type=\"button\" class=\"btn btn-outline-success\" data-toggle=\"modal\" data-target=\"#modalpreview" + i + "\" id='preview" + i + "'>预览</button>";
+                temp_html += "<button type=\"button\" class=\"btn btn-outline-success\" id='preview" + i + "'>预览</button>";
                 temp_html += "</div>";
                 temp_html += "</td>";
                 temp_html += "<td>";
@@ -779,9 +1120,35 @@
                 temp_html += "</td>";
                 temp_html += "</tr>";
                 $('table').append(temp_html);
-
             }
+            load_preview_modal();
+            load_select();
+            load_input();
         }
+
+        //获取所有组卷试题
+        function get_question_list() {
+            let temp_list = new Array();
+            let count = 0;
+            for (let i = 0; i < paper_qno_list.length; i++) {
+                if (paper_qno_list[i] === 1) {
+                    temp_list[count] = {
+                        'qno': i,
+                        'qpscore': qno_score_list[i]
+                    }
+                    count++;
+                }
+            }
+            return temp_list;
+        }
+
+        function update_all() {
+            load_table();
+            judge_button_disabled();
+            update_page_number();
+            load_status();
+        }
+
 
         //解析URL
         function getQueryObject(url) {
@@ -835,13 +1202,11 @@
             data: url_data,
             success: function (data) {
                 if (data['code'] === 200) {
-                    //console.log(paper_list);
-                    //console.log(data['papers']);
                     question_list = data['questions'];
                     load_table();
                     //初始化翻页按钮
                     judge_button_disabled();
-                    load_select_func();
+                    // load_select_func(); TODO 筛选
                 }
             }
         });
@@ -866,10 +1231,8 @@
                             info_num = data['info_num'];
                             page_num = data['page_num'];
                             $('#sum').text(info_num);
-                            load_table();
+                            update_all();
                         }
-                        update_page_number();
-                        judge_button_disabled();
                     }
                 });
             }
@@ -894,9 +1257,7 @@
                             info_num = data['info_num'];
                             page_num = data['page_num'];
                             $('#sum').text(info_num);
-                            load_table();
-                            update_page_number();
-                            judge_button_disabled();
+                            update_all();
                         }
                     }
                 });
@@ -923,9 +1284,7 @@
                             info_num = data['info_num'];
                             page_num = data['page_num'];
                             $('#sum').text(info_num);
-                            load_table();
-                            update_page_number();
-                            judge_button_disabled();
+                            update_all();
                         }
                     }
                 });
@@ -956,12 +1315,10 @@
             })
         });
 
-        //科目筛选按钮click事件
+        //科目筛选功能实现
         for (let i = 0; i < 8; i++) {
-            let subno = 's000' + i;
             let subnumber = '.s000' + i;
             $(subnumber).click(function () {
-                //TODO 应ajax成功之后再修改url_data，全部都需要修改逻辑顺序
                 if (i === 0)
                     delete url_data['subject'];
                 else
@@ -974,23 +1331,22 @@
                     success: function (data) {
                         if (data['code'] === 200) {
                             if (i === 0) {
-                                $('#dropdownMenuLink').text('按科目筛选');
-                                $('#dropdownMenuLink').addClass('btn-outline-primary');
-                                $('#dropdownMenuLink').removeClass('btn-primary');
+                                console.log("Halo");
+                                $('#dropdownMenuLink1').text('按科目筛选');
+                                $('#dropdownMenuLink1').addClass('btn-outline-primary');
+                                $('#dropdownMenuLink1').removeClass('btn-primary');
                             } else {
-                                $('#dropdownMenuLink').text('按' + subject_dict[i] + '筛选');
-                                $('#dropdownMenuLink').addClass('btn-primary');
-                                $('#dropdownMenuLink').removeClass('btn-outline-primary');
+                                console.log("Bye");
+                                $('#dropdownMenuLink1').text('按' + subject_dict[i] + '筛选');
+                                $('#dropdownMenuLink1').addClass('btn-primary');
+                                $('#dropdownMenuLink1').removeClass('btn-outline-primary');
                             }
                             info_num = data['info_num'];
                             page_num = data['page_num'];
                             current_page = 1;
                             $('#sum').text(info_num);
                             question_list = data['questions'];
-                            load_table();
-
-                            judge_button_disabled();
-                            update_page_number();
+                            update_all();
                         }
                     }
                 })
@@ -998,16 +1354,18 @@
         }
 
 
-        //按题目类型筛选按钮click事件
+        //题目类型筛选功能实现
         for (let i = 0; i < 8; i++) {
-            let typeno = 't000' + i;
             let typenumber = '.t000' + i;
             $(typenumber).click(function () {
-                //TODO 应ajax成功之后再修改url_data，全部都需要修改逻辑顺序
                 if (i === 0)
                     delete url_data['type'];
+                else if (i === 1)
+                    url_data['type'] = 'select';
+                else if (i === 2)
+                    url_data['type'] = 'multi';
                 else
-                    url_data['type'] = type_dict[i];
+                    url_data['type'] = 'fill';
                 url_data['page'] = 1;
                 $.ajax({
                     url: '/question',
@@ -1020,7 +1378,12 @@
                                 $('#dropdownMenuLink2').addClass('btn-outline-primary');
                                 $('#dropdownMenuLink2').removeClass('btn-primary');
                             } else {
-                                $('#dropdownMenuLink2').text('按' + target_dict[i] + '筛选');
+                                if (i === 1)
+                                    $('#dropdownMenuLink2').text('按单选题筛选');
+                                else if (i === 2)
+                                    $('#dropdownMenuLink2').text('按多选题筛选');
+                                else
+                                    $('#dropdownMenuLink2').text('按填空题筛选');
                                 $('#dropdownMenuLink2').addClass('btn-primary');
                                 $('#dropdownMenuLink2').removeClass('btn-outline-primary');
                             }
@@ -1029,18 +1392,15 @@
                             current_page = 1;
                             $('#sum').text(info_num);
                             question_list = data['questions'];
-                            load_table();
-
-                            judge_button_disabled();
-                            update_page_number();
+                            update_all();
                         }
                     }
-                })
+                });
             });
         }
 
-
-        //题干内容搜索按钮click事件
+// TODO 单独改分值框
+        //试卷名搜索按钮click事件
         $('#contentsearch').click(function () {
             let content_input = $('#searchinput').val();
             if (content_input === null)
@@ -1059,10 +1419,7 @@
                             current_page = 1;
                             $('#sum').text(info_num);
                             question_list = data['questions'];
-                            load_table();
-
-                            judge_button_disabled();
-                            update_page_number();
+                            update_all();
                         }
                     }
                 })
@@ -1070,12 +1427,44 @@
 
         });
 
-        let question_num_list = new Object();
+        //预览试卷click事件
+        $('#previewpaper').click(function () {
+            let temp_list = get_question_list();
+            //要发送的参数
+            let params = {
+                "questions": temp_list
+            };
+            window["filter"] = params;
+            window.open("/paper/preview");
+        });
 
-        //isSelected按钮click事件
-
-
-
+        //发布试卷click事件
+        $('#confirmrelease').click(function () {
+            let papername = $('#papername').val();
+            if (papername === "")
+                ;
+            else {
+                let temp_list = new Array();
+                temp_list = get_question_list();
+                temp_list = JSON.stringify(temp_list);
+                let subject = $("#release select").val();
+                let data = {
+                    "questions": temp_list,
+                    "pname": papername,
+                    "subno": subject
+                };
+                $.ajax({
+                    url: '/paper/',
+                    method: 'post',
+                    data: data,
+                    success: function (data) {
+                        if (data['code'] === 200) {
+                            alert("发布成功！");
+                        }
+                    }
+                });
+            }
+        });
     });
 
 

@@ -14,7 +14,7 @@ new Vue({
     },
     computed: {
         testDuration() {
-            if (!this.examInfo.tend)
+            if (this.examInfo.tend < 0)
                 return '不限时';
             let start = moment.unix(this.examInfo.tstart);
             let end = moment.unix(this.examInfo.tend);
@@ -35,7 +35,7 @@ new Vue({
     },
     mounted() {
         this.params = parseSearchParam();
-        axios.get('/exam?tno=' + this.params['tno']).then(resp => {
+        axios.get('/exam/?tno=' + this.params['tno']).then(resp => {
             if (resp.data.code === 200) {
                 this.examInfo = resp.data;
                 console.log(resp.data);
@@ -52,7 +52,7 @@ new Vue({
     },
     filters: {
         formatDateTime(timestamp) {
-            if (!timestamp)
+            if (timestamp < 0)
                 return '不限时';
             return moment.unix(timestamp).format('YYYY-MM-DD / HH:mm / dddd');
         }

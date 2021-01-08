@@ -1,0 +1,177 @@
+/* 以下为顶部标题栏样式 */
+.header {
+    position: fixed;
+    background: #fcfcfc;
+    z-index: 999;
+    height: 62px;
+    top: 0;
+    left: 0;
+}
+
+.header > .container {
+    padding: 12px 15px;
+}
+
+.exam-title {
+    position: absolute;
+    top: 50%;
+    transform: translate(0, -50%);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 17px;
+}
+
+.exam-info {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    text-align: center;
+    transform: translate(-50%, -50%);
+    padding: 0;
+}
+
+.exam-info .exam-time {
+    font-weight: 600;
+    color: dodgerblue;
+}
+
+.exam-info .time-alert {
+    color: red;
+}
+
+/* 以下为选项或答题卡中题号的样式 */
+.num {
+    width: 34px;
+    height: 34px;
+    box-sizing: content-box;
+    outline: none;
+    border-radius: 50%;
+    background-color: #aaaaaa;
+    line-height: 34px;
+    text-align: center;
+    color: white;
+    border: 1px solid #333333;
+    padding: 0;
+    z-index: 2;
+}
+
+/* 选中或已作答 */
+.chosen {
+    background-color: #559bf5 !important;
+}
+
+/* 以下为答题卡相关样式 */
+.answer-card {
+    padding: 0;
+    background-color: #fafafa;
+    border: 1px solid #dddddd;
+    box-shadow: 3px 3px 20px #dddddd;
+}
+
+.card-item {
+    padding: 5px 11px;
+}
+
+.card-item .list {
+    overflow: hidden;
+    padding: 0;
+}
+
+.card-item .list a {
+    display: block;
+    float: left;
+    text-decoration: none;
+    margin: 8px;
+}
+
+/* 以下为完整的一道题的样式 */
+.question {
+    margin-bottom: 15px;
+    background-color: #fafafa;
+    border: 1px solid #dddddd;
+    box-shadow: 0 0 10px #dddddd;
+}
+
+.topic_type em {
+    float: left;
+    width: 5px;
+    height: 22px;
+    margin: 4px 20px 0 0;
+    background: #31c6ce;
+}
+
+.topic_type h2 {
+    height: 30px;
+    line-height: 30px;
+    font-size: 16px;
+    font-weight: bold;
+    overflow: hidden;
+}
+
+.topic_type h2 span {
+    font-size: 12px;
+    color: #999;
+    line-height: 12px;
+    margin-left: 15px;
+}
+
+.question .question_content {
+    padding: 10px 15px;
+    font-size: 14px;
+}
+
+.question_content .question_select {
+    margin-top: 10px;
+}
+
+.question_select .select_item {
+    height: 50px;
+}
+
+.select_item span {
+    line-height: 50px;
+    white-space: nowrap;
+    margin-left: 10px;
+}
+
+/* 以下为页面footer的样式 */
+.decoration-line {
+    border-bottom: 1px solid #dddddd;
+    height: 25px;
+    margin: 15px 100px 60px;
+    text-align: center;
+}
+
+.end {
+    padding: 0 10px;
+    background-color: #ffffff;
+    line-height: 50px;
+    font-size: 18px;
+    color: #666666;
+}
+
+#main {
+    margin-top: 85px;
+}
+
+.marked {
+    position: relative;
+}
+
+.marked:before {
+    content: '';
+    width: 20px;
+    height: 17px;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-image: url('/static/img/flag.png');
+    position: absolute;
+    z-index: 1;
+    top: -10px;
+    right: -10px;
+}
+
+.marked em {
+    background: red;
+}
