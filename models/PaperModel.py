@@ -13,8 +13,8 @@ from sqlalchemy import Column, ForeignKey, Integer, String, text
 from sqlalchemy.dialects.mysql import TINYINT
 from sqlalchemy.orm import relationship
 
-from models.database import Base
 from common import model_common
+from models.database import Base
 
 
 class Paper(Base):
@@ -96,6 +96,7 @@ class Paper(Base):
 
         try:
             filter_list = []
+            filter_list.append(cls.Pisdeleted == 0)
 
             if subject:
                 filter_list.append(cls.Subno == subject)

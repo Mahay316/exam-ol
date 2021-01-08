@@ -12,7 +12,7 @@ const Toast = Swal.mixin({
     showCloseButton: true,
 });
 
-let pane = new Vue({
+new Vue({
     el: '#pane',
     data: {
         testName: '',
@@ -142,7 +142,6 @@ let pane = new Vue({
                     if (this.timeLeft > 0) {
                         this.timer = setInterval(() => {
                             this.timeLeft--;
-                            console.log(this.timeLeft);
                             if (this.timeLeft <= 0) {
                                 clearInterval(this.timer);
                                 // 考试结束

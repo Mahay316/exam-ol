@@ -29,7 +29,7 @@ new Vue({
                 console.log('查看试卷');
             } else {
                 // 跳转到在线考试test_online页面
-                location.href = '/exam/paper?tno=' + this.examInfo.tno;
+                location.href = '/exam/paper?tno=' + this.params['tno'];
             }
         }
     },

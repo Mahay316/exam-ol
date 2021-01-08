@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify, abort, session, current_app
-from datetime import datetime
+
 from common.Role import *
 from decorators import should_be, login_required
 from models import Mentor, Student, Course
@@ -22,6 +22,24 @@ def has_this_class(cno):
 @class_bp.route('/')
 def get_class():
     return current_app.send_static_file('html/test_stat.html')
+
+
+@class_bp.route('/info', methods=['GET'])
+@should_be([MENTOR, STUDENT])
+def get_class_info():
+    cno = int(request.args.get('cno'))
+
+    course = Course.get_class(cno)
+    if course is None:
+        return jsonify({'code': 204})
+
+    return jsonify({
+        'code': 200,
+        'cno': cno,
+        'cname': course.Cname,
+        'subno': course.Subno,
+        'mno': course.Mno
+    })
 
 
 @class_bp.route('/list')
@@ -136,5 +154,14 @@ def get_exam_list_data():
         'exams': []
     }
 
-    res_json['exams'] = Course.get_test_info_by_cno(cno)
+    if session['role'] == MENTOR:
+        res_json['exams'] = Course.get_test_info_by_cno(cno)
+    else:
+        exams = Course.get_test_info_by_cno(cno, session['no'])
+        from .exam import auto_grade
+        for idx, dic in enumerate(exams):
+            need_grading = exams[idx].pop('need_grading')
+            if need_grading:
+                auto_grade(dic['tno'])
+        res_json['exams'] = exams
     return jsonify(res_json)

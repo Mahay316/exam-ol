@@ -1,10 +1,12 @@
-from flask import Blueprint, request, current_app, jsonify, session, redirect, url_for, abort
-from models import Paper, Question
-from common.Role import *
-from decorators import should_be, login_required
 import json
-from config import PAGE_SIZE
 from math import ceil
+
+from flask import Blueprint, request, current_app, jsonify, session, abort
+
+from common.Role import *
+from config import PAGE_SIZE
+from decorators import should_be, login_required
+from models import Paper, Question
 
 paper_bp = Blueprint('paper_bp', __name__)
 
@@ -37,13 +39,13 @@ def get_paper():
     if subject is not None:
         select_dict['subject'] = int(subject)
         # results = Paper.select_papers_by(page, subject=subject)
-    elif used is not None:
+    if used is not None:
         select_dict['used'] = True if used == 'true' else False
         # results = Paper.select_papers_by(page, used=used)
-    elif pno is not None:
+    if pno is not None:
         select_dict['pno'] = pno
         # results = Paper.select_papers_by(page, pno=pno)
-    elif pname is not None:
+    if pname is not None:
         select_dict['pname'] = pname
         # results = Paper.select_papers_by(page, pname=pname)
     num, results = Paper.select_papers_by(int(page), **select_dict)
@@ -105,20 +107,48 @@ def get_paper_content():
             'questions': []
         }
 
-        questions = Question.get_questions_by_pno(pno)
-        for q in questions:
+        # questions = Question.get_questions_by_pno(pno)
+        # for q in questions:
+        #     res_json['questions'].append({
+        #         'qno': q.Qno,
+        #         'qtype': q.Qtype,
+        #         'qstem': q.Qstem,
+        #         'qanswer': q.Qanswer,
+        #         'qselect': q.Qselect,
+        #         'qscore': q.Q
+        #     })
+
+        res_json['questions'] = Question.get_questions_by_pno(pno)
+
+        return jsonify(res_json)
+    else:
+        questions = request.form.get('questions')
+        if questions is None:
+            return jsonify({'code': 204})
+
+        questions = json.loads(questions)
+        search_dict = {}
+
+        def tmp_fun(dic: dict):
+            search_dict[int(dic['qno'])] = dic['qpscore']
+            return dic['qno']
+
+        qnos = list(map(tmp_fun, questions))
+        quiz_detail = Question.get_questions_by_qnos(qnos)
+
+        res_json = {'code': 200, 'questions': []}
+        for q in quiz_detail:
             res_json['questions'].append({
                 'qno': q.Qno,
                 'qtype': q.Qtype,
                 'qstem': q.Qstem,
                 'qanswer': q.Qanswer,
-                'qselect': q.Qselect
+                'qselect': q.Qselect,
+                'qpscore': search_dict[q.Qno]
+
             })
 
         return jsonify(res_json)
-    else:
-        # TODO 用于正在组卷的预览
-        pass
 
 
 @paper_bp.route('/page_num')
