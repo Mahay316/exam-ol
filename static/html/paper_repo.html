@@ -1317,7 +1317,7 @@
         function modal_html_append(index) {
             let load_html = '';
             for (let i = 0; i < course_list.length; i++)
-                load_html += "<option value=\"" + i + "\">" + course_list[i] + "</option>";
+                load_html += "<option value=\"" + course_num_list[i] + "\">" + course_list[i] + "</option>";
             return load_html;
         }
 
@@ -1665,21 +1665,26 @@
                 let cno = $("#courseselect" + i).val();
                 let timelimit_option = $("#timelimitselect" + i).val();
                 let reservation = ($("#reservationtime" + i).val()).split(" - ");
-                let start_time = Date.parse(reservation[0]);
-                let end_time = Date.parse(reservation[1]);
+                console.log(reservation);
+                let start_time = (new Date(reservation[0])).getTime() / 1000;
+                let end_time = (new Date(reservation[1])).getTime() / 1000;
+                console.log(start_time);
+                console.log(end_time);
                 let describe_text = $("#describe" + i).val();
-
-                if (timelimit_option === 2) {
+                console.log(typeof timelimit_option);
+                if (timelimit_option === "1") {
                     $.ajax({
-                        url: "/exam",
+                        url: "/exam/",
                         method: 'post',
                         data: {
-                            "pno": i,
+                            "pno": info_pno_list[i],
                             "cno": cno,
                             "tname": test_name,
                             "tdesc": describe_text,
                         },
                         success: function (data) {
+                            console.log(data);
+                            console.log(data['code']);
                             if(data["code"] == 200){
                                 console.log("发布成功！");
                             }else{
@@ -1689,10 +1694,10 @@
                     });
                 }else{
                     $.ajax({
-                        url: "/exam",
+                        url: "/exam/",
                         method: 'post',
                         data: {
-                            "pno": i,
+                            "pno": info_pno_list[i],
                             "cno": cno,
                             "tname": test_name,
                             "tdesc": describe_text,
@@ -1700,6 +1705,8 @@
                             "tend": end_time
                         },
                         success: function (data) {
+                            console.log(data);
+                            console.log(data['code']);
                             if(data["code"] == 200){
                                 console.log("发布成功！");
                             }else{
