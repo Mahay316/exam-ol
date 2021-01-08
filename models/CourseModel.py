@@ -167,7 +167,24 @@ class Course(Base):
                                   'tend': t.Tend.timestamp() if t.Tend is not None else -1,
                 })
         else:
-            pass
-            # 学生的
-            # 加参数over和need_grading
+            for t in tests:
+                p = Test.get_paper_by_tno(t.Tno)
+
+                from models.StudentTestModel import StudentTest
+                grade = StudentTest.get_grade(t.Tno, sno)
+
+                if not t.Tend:
+                    flag = -1
+                else:
+                    flag = 1
+                overinfo = model_common.if_test_end(flag, grade)
+                test_list.append({'tno': t.Tno,
+                                  'tname': t.Tname,
+                                  'pscore': p.Pscore,
+                                  'pnum': p.Pnum,
+                                  'tstart': t.Tstart.timestamp(),
+                                  'tend': t.Tend.timestamp() if t.Tend is not None else -1,
+                                  'over': overinfo['over'],
+                                  'need_grading': overinfo['need_grading']
+                                  })
         return test_list
