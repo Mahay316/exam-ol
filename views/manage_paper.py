@@ -107,20 +107,48 @@ def get_paper_content():
             'questions': []
         }
 
-        questions = Question.get_questions_by_pno(pno)
-        for q in questions:
+        # questions = Question.get_questions_by_pno(pno)
+        # for q in questions:
+        #     res_json['questions'].append({
+        #         'qno': q.Qno,
+        #         'qtype': q.Qtype,
+        #         'qstem': q.Qstem,
+        #         'qanswer': q.Qanswer,
+        #         'qselect': q.Qselect,
+        #         'qscore': q.Q
+        #     })
+
+        res_json['questions'] = Question.get_questions_by_pno(pno)
+
+        return jsonify(res_json)
+    else:
+        questions = request.form.get('questions')
+        if questions is None:
+            return jsonify({'code': 204})
+
+        questions = json.loads(questions)
+        search_dict = {}
+
+        def tmp_fun(dic: dict):
+            search_dict[int(dic['qno'])] = dic['qpscore']
+            return dic['qno']
+
+        qnos = list(map(tmp_fun, questions))
+        quiz_detail = Question.get_questions_by_qnos(qnos)
+
+        res_json = {'code': 200, 'questions': []}
+        for q in quiz_detail:
             res_json['questions'].append({
                 'qno': q.Qno,
                 'qtype': q.Qtype,
                 'qstem': q.Qstem,
                 'qanswer': q.Qanswer,
-                'qselect': q.Qselect
+                'qselect': q.Qselect,
+                'qpscore': search_dict[q.Qno]
+
             })
 
         return jsonify(res_json)
-    else:
-        # TODO 用于正在组卷的预览
-        pass
 
 
 @paper_bp.route('/page_num')

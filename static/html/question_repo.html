@@ -1167,12 +1167,12 @@
                 } else {
                     let temp_select_list = parse_string_to_list(question_list[index]['qselect']);
                     for (let i = 0; i < temp_select_list.length; i++)
-                        load_html += "<p>" + temp_select_list[i] + "</p>"
+                        load_html += "<p>&nbsp;&nbsp;&nbsp;&nbsp;" + letter_list[i] + '. ' + temp_select_list[i] + "</p>"
                     load_html += "<br>";
                     load_html += "<p>答案：</p>";
                     let temp_list = parse_string_to_list(question_list[index]['qanswer']);
                     for (let i = 0; i < temp_list.length; i++)
-                        load_html += "<p>&nbsp;&nbsp;&nbsp;&nbsp;" + letter_list[i] + "." + temp_list[i] + "</p>";
+                        load_html += "<p>&nbsp;&nbsp;&nbsp;&nbsp;" + temp_list[i] + "</p>";
                     return load_html;
                 }
             }
@@ -1538,11 +1538,6 @@
                 for (let i = 0; i < option_content_list.length; i++)
                     option_content_list[i] = "";
             }
-
-            option_content_list[1] = "OOO";
-            option_content_list[2] = "build";
-            option_content_list[3] = "ZIO";
-            option_content_list[4] = "decade";
 
             function add_option(index, flag) {
                 //flag为0表示只有-，为1表示还有+,-1表示只有+
@@ -2042,7 +2037,8 @@
                                     success: function (data) {
                                         if (data['code'] === 200) {
                                             console.log("新建成功！");
-                                            $("#newQuestion").modal('hide');
+                                            location.reload();
+                                            // $("#newQuestion").modal('hide');
                                         }
                                     }
                                 });
@@ -2071,7 +2067,8 @@
                                 success: function (data) {
                                     if (data['code'] === 200) {
                                         console.log("新建成功！");
-                                        $("#newQuestion").modal('hide');
+                                        location.reload();
+                                        // $("#newQuestion").modal('hide');
                                     }
                                 }
                             });

@@ -1,13 +1,11 @@
 from sqlalchemy import Column, ForeignKey, String, text, or_, Integer, Index
 from sqlalchemy.dialects.mysql import INTEGER, TINYINT, ENUM
 from sqlalchemy.orm import relationship
-from sqlalchemy import func
 
-from models.database import Base
 from common import model_common
-from models.SubjectModel import Subject
 from models.QuestionPaperModel import QuestionPaper
 from models.PaperModel import Paper
+from models.database import Base
 
 
 class Question(Base):
@@ -103,8 +101,15 @@ class Question(Base):
             if content:
                 filter_list.append(cls.Qstem.like('%' + content + '%'))
 
-            questions = session.query(cls).filter(*filter_list).all()
-            return model_common.get_page_by_list(questions, page)
+            questions = session.query(cls).filter(*filter_list)
+            if not questions.all():
+                res = (0, [])
+
+            else:
+                l = list(reversed(questions.all()))
+                res = (questions.count(), model_common.get_page_by_list(l, page))
+
+            return res
 
         except Exception as e:
             raise e
@@ -230,7 +235,7 @@ class Question(Base):
             session.remove()
 
     @classmethod
-    def get_questions_by_pno(cls, pno):
+    def get_questions_by_pno(cls, pno) -> list:
         """
         通过试卷号获取该试卷的全部试题
         :return: list[Question]
@@ -243,6 +248,48 @@ class Question(Base):
             filter_list = []
 
             qnos = Paper.get_questions_id(pno)
+
+            for qno in qnos:
+                filter_list.append(cls.Qno == qno)
+
+            qs = session.query(cls).filter(or_(*filter_list)).all()
+
+            q_list = []
+            for q in qs:
+                qpscore = QuestionPaper.get_qpscore(pno=pno, qno=q.Qno)
+                q_dict = {
+                    'qno': q.Qno,
+                    'qtype': q.Qtype,
+                    'qstem': q.Qstem,
+                    'qanswer': q.Qanswer,
+                    'qselect': q.Qselect,
+                    'qpscore': qpscore
+                }
+                q_list.append(q_dict)
+
+            return q_list
+
+        except Exception as e:
+            session.rollback()
+            raise e
+
+        finally:
+            engine.dispose()
+            session.remove()
+
+    @classmethod
+    def get_questions_by_qnos(cls, qnos: list):
+        """
+        根据试题号列表返回试题对象
+        :param qnos: list of qno
+        :return: list of Question
+        """
+
+        engine = model_common.get_mysql_engine()
+        session = model_common.get_mysql_session(engine)
+
+        try:
+            filter_list = []
 
             for qno in qnos:
                 filter_list.append(cls.Qno == qno)
