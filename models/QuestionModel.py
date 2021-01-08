@@ -104,7 +104,13 @@ class Question(Base):
                 filter_list.append(cls.Qstem.like('%' + content + '%'))
 
             questions = session.query(cls).filter(*filter_list)
-            res = (questions.count(), model_common.get_page_by_list(questions.all().reverse(), page))
+            if not questions.all():
+                res = (0, [])
+
+            else:
+                l = list(reversed(questions.all()))
+                res = (questions.count(), model_common.get_page_by_list(l, page))
+
             return res
 
         except Exception as e:

@@ -116,7 +116,13 @@ class Paper(Base):
                 filter_list.append(cls.Pname.like('%' + pname + '%'))
 
             papers = session.query(cls).filter(*filter_list)
-            res = (papers.count(), model_common.get_page_by_list(papers.all(), page))
+            if not papers.all():
+                res = (0, [])
+
+            else:
+                l = list(reversed(papers.all()))
+                res = (papers.count(), model_common.get_page_by_list(l, page))
+
             return res
 
         except Exception as e:

@@ -219,7 +219,39 @@ class Student(Base, User):
     @classmethod
     def select_students_by(cls, page=1, no=None, name=None, major=None):
         """查询学生"""
+        engine = model_common.get_mysql_engine()
+        session = model_common.get_mysql_session(engine)
 
+        try:
+            filter_list = []
+
+            if no:
+                filter_list.append(cls.Sno == no)
+
+            if major:
+                filter_list.append(cls.Smajor == major)
+
+            if name:
+                filter_list.append(cls.Sname == name)
+
+            students = session.query(cls).filter(*filter_list)
+
+            if not students.all():
+                res = (0, [])
+
+            else:
+                l = list(reversed(students.all()))
+                res = (students.count(), model_common.get_page_by_list(l, page))
+
+            return res
+
+        except Exception as e:
+            session.rollback()
+            raise e
+
+        finally:
+            engine.dispose()
+            session.remove()
 
 class Mentor(Base, User):
     __tablename__ = 'mentor'
@@ -336,9 +368,16 @@ class Mentor(Base, User):
             if name:
                 filter_list.append(cls.Mname == name)
 
-            mentors = session.query(cls).filter(*filter_list).all()
+            mentors = session.query(cls).filter(*filter_list)
 
-            return model_common.get_page_by_list(mentors, page)
+            if not mentors.all():
+                res = (0, [])
+
+            else:
+                l = list(reversed(mentors.all()))
+                res = (mentors.count(), model_common.get_page_by_list(l, page))
+
+            return res
 
         except Exception as e:
             session.rollback()

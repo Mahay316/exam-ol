@@ -14,7 +14,11 @@ from models import *
 
 
 def fun():
-    print(Test.add_test(3, 1, 'a', 'r', 1610035200, 1610121540))
+    print(Student.select_students_by())
+    # print(Mentor.select_mentors_by())
+    # print(Paper.select_papers_by(pno=1111))
+    # print(Question.select_questions_by(qno=1111))
+    # print(Test.add_test(3, 1, 'a', 'r', 1610035200, 1610121540))
     # print(StudentTest.add_st(1,120181080116,2,2,2))
     # print(Test.delete_test(6))
     # print(Test.get_student_test_info(6, 120181080102))
