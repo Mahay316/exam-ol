@@ -19,7 +19,9 @@ new Vue({
             let start = moment.unix(this.examInfo.tstart);
             let end = moment.unix(this.examInfo.tend);
             let d = moment.duration(end.diff(start));
-            return `${d.hours()} 小时 ${d.minutes()} 分钟`;
+
+            // TODO: 存在时长溢出的问题，如间隔超过month、year
+            return `${d.hours() + d.days() * 24} 小时 ${d.minutes()} 分钟`;
         }
     },
     methods: {

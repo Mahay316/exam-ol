@@ -190,7 +190,7 @@ class StudentTest(Base):
             filter_list.append(cls.Sno == sno)
 
             st = session.query(cls).filter(*filter_list).first()
-            return st.STgrade
+            return None if st is None else st.STgrade
 
         except Exception as e:
             session.rollback()

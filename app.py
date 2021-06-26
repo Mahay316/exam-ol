@@ -1,4 +1,5 @@
-from flask import Flask, redirect, request, session, url_for
+from flask import Flask, redirect, request, session
+
 from common.Role import *
 from decorators import login_required
 from models import init_db

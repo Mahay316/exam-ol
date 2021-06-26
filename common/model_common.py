@@ -60,9 +60,9 @@ def if_test_end(tend, st_grade):
     """
     flag = False
     need_grading = False
-    if tend > 0:
+    if tend is not None:
         # 如果考试限时，需要判断时间是不是截止了
-        now = datetime.now().timestamp()
+        now = datetime.now()
         if now > tend:
             if st_grade is None:
                 # 考试结束但还没登记成绩

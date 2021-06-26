@@ -1,10 +1,10 @@
 from sqlalchemy import Column, String, ForeignKey, Integer
 from sqlalchemy.orm import relationship
-from datetime import datetime
-from models.database import Base
+
+from common import model_common
 from models.StudentCourseModel import StudentCourse
 from models.TestModel import Test
-from common import model_common
+from models.database import Base
 
 
 class Course(Base):
@@ -165,19 +165,17 @@ class Course(Base):
                                   'pnum': p.Pnum,
                                   'tstart': t.Tstart.timestamp(),
                                   'tend': t.Tend.timestamp() if t.Tend is not None else -1,
-                })
+                                  })
         else:
             for t in tests:
                 p = Test.get_paper_by_tno(t.Tno)
 
                 from models.StudentTestModel import StudentTest
                 grade = StudentTest.get_grade(t.Tno, sno)
+                if grade is None:
+                    continue
 
-                if not t.Tend:
-                    flag = -1
-                else:
-                    flag = 1
-                overinfo = model_common.if_test_end(flag, grade)
+                overinfo = model_common.if_test_end(t.Tend, grade)
                 test_list.append({'tno': t.Tno,
                                   'tname': t.Tname,
                                   'pscore': p.Pscore,
